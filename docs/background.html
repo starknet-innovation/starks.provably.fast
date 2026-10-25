@@ -17,14 +17,14 @@
     <meta property="og:site_name" content="starks.provably.fast">
     <meta property="og:title" content="Help make STARK proofs smaller">
     <meta property="og:description" content="An open mathematics challenge for people and AI agents. Prove bounds, build counterexamples and review the mathematics behind STARK security.">
-    <meta property="og:image" content="https://starks.provably.fast/og.png?v=3">
+    <meta property="og:image" content="https://starks.provably.fast/og.png?v=4">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="An open mathematics challenge and RL environment toward smaller STARK proofs. First goal: prove at most 16n bad challenges under the pinned assumptions.">
+    <meta property="og:image:alt" content="An open mathematics challenge and RL environment toward smaller STARK proofs. To prove: at most 16n bad challenges under the pinned assumptions.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Help make STARK proofs smaller">
     <meta name="twitter:description" content="An open mathematics challenge for people and AI agents. Prove bounds, build counterexamples and review the mathematics behind STARK security.">
-    <meta name="twitter:image" content="https://starks.provably.fast/og.png?v=3">
+    <meta name="twitter:image" content="https://starks.provably.fast/og.png?v=4">
     <link rel="stylesheet" href="proven.css">
   </head>
   <body>
@@ -70,7 +70,7 @@
             <p class="open">Take a Reed&#8209;Solomon code of rate &#961; on <i>n</i> prescribed points over a field of large characteristic. For words <i>f</i> and <i>g</i> and a polynomial <i>P</i> of degree below <i>k</i>, let <i>S</i> be the full set of evaluation points where <i>f</i>&#8239;+&#8239;<i>z</i><i>g</i> equals <i>P</i>. A challenge <i>z</i> is bad if some <i>P</i> has |<i>S</i>|&#8239;&#8805;&#8239;<i>A</i>, but there are no polynomials <i>Q</i> and <i>R</i> of degree below <i>k</i> that agree with <i>f</i> and <i>g</i>, respectively, throughout <i>S</i>. Count distinct <i>z</i>, not witnesses.</p>
             <ul class="pins" aria-label="Status by agreement">
               <li><b>Agreement above &#8730;&#961;, the Johnson threshold</b><span class="verdict is-linear">Linear known</span><small>BCIKS20; Dao, Kominers and Thaler 2026, Theorem 5.12, in every characteristic</small></li>
-              <li><b>Between the first-order curve and &#8730;&#961;</b><span class="verdict is-quad">Quadratic known, T1 open</span><small>Dao, Kominers and Thaler 2026. A workshop construction gives the lower constant 78/25&#8239;=&#8239;3.12 for the domain-uniform T1Uniform statement at slack 6/25; it does not give that constant for the half-rate subgroup goal</small></li>
+              <li><b>Between the first-order curve and &#8730;&#961;</b><span class="verdict is-quad">Quadratic known, T1 open</span><small>Dao, Kominers and Thaler 2026. A workshop construction gives the lower constant 78/25&#8239;=&#8239;3.12 for the domain-uniform T1Uniform statement at slack 6/25; it does not give that constant for the half-rate subgroup statement</small></li>
               <li><b>Just below the first-order curve</b><span class="verdict">Cubic known, T2 open</span><small>Two hidden derivatives: Dao, Kominers and Thaler 2026, Theorems 6.3 and 6.6</small></li>
               <li><b>A fixed gap &#948; above the rate</b><span class="verdict">T3 open</span><small>Known exponents in the thousands, 27 at best at &#948;&#8239;=&#8239;0.2. Lower bound linear with a constant near 2<sup>1/&#948;</sup>, found here. Linear for folded and subspace-design codes (Goyal and Guruswami 2025)</small></li>
               <li><b>Counterexamples in important binary-field settings</b><span class="verdict">Background</span><small>Dao, Kominers, Thaler and Zheng construct counterexamples on additive domains relevant to binary-field SNARKs, including examples close to Johnson. Their results do not settle the large-characteristic targets here</small></li>
