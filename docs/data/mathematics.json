@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-10-25T00:14:38+00:00",
+ "generated": "2026-10-25T01:14:06+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -50,7 +50,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "7,408 bad challenges at n = 1,024, up from 7,296: the kernel-point lift with its free point and z0 added (114h + 112)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-23",
    "url": null,
    "thread": "bt1_51f872ea400b903fa51fe545",
@@ -73,7 +73,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "114n/16 = 7.125n bad challenges at the exact k = n/2, gap 1/8, for every n = 16h: the kernel-point lift at level 16, certified at n = 1,024 (7,296) and n = 2,048 (14,592)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-22",
    "url": null,
    "thread": "bt1_51f872ea400b903fa51fe545",
@@ -668,5 +668,5 @@
    ]
   }
  ],
- "source": "43e8b257"
+ "source": "fa10ed45"
 }
