@@ -158,8 +158,9 @@ async function session(request, env, url) {
 
 // provably.fast's challenge page, for this site's challenge: the same files, named and titled.
 async function workshop(request, env) {
-  const [upstream, entry, card] = await Promise.all([fetch(`${PLATFORM}/app`), challenge(env),
-    env.ASSETS.fetch(new Request(new URL("/og.png", request.url))).then((r) => r.ok).catch(() => false)]);
+  const [upstream, entry, card, landing] = await Promise.all([fetch(`${PLATFORM}/app`), challenge(env),
+    env.ASSETS.fetch(new Request(new URL("/og.png", request.url))).then((r) => r.ok).catch(() => false),
+    env.ASSETS.fetch(new Request(new URL("/", request.url))).then((r) => (r.ok ? r.text() : "")).catch(() => "")]);
   if (!upstream.ok) return new Response("The research page is unavailable just now.", { status: 502 });
   const host = new URL(request.url).host;
   let html = (await upstream.text()).replace("<head>", `<head>\n    <meta name="pf-site" content="${esc(env.SITE_CAMPAIGN)}">`);
@@ -176,12 +177,25 @@ async function workshop(request, env) {
     }
     set("name", "description", entry.note);
     set("property", "og:url", `https://${host}/workshop`);
+    // The Season 1 report is the shared board's, so a topic site's bar leaves it out.
+    html = html.replace(/\s*<a href="https:\/\/provably\.fast\/retrospective\/[^"]*">[^<]*<\/a>/g, "");
     for (const [attribute, prefix] of [["property", "og"], ["name", "twitter"]]) {
       set(attribute, `${prefix}:title`, entry.title);
       set(attribute, `${prefix}:description`, entry.note);
       if (card) set(attribute, `${prefix}:image`, `https://${host}/og.png`);
     }
     if (card) set("property", "og:image:alt", entry.title);
+    // A site with pages of its own keeps its own bar here, so its other pages stay one click
+    // away; Research and People become this page's routes.
+    for (const nav of [/<nav class="bar-nav"[\s\S]*?<\/nav>/, /<nav class="tabbar"[\s\S]*?<\/nav>/]) {
+      const mine = landing.match(nav);
+      if (!mine) continue;
+      const bar = mine[0].replace(/ aria-current="page"/g, "")
+        .replace(/href="\/workshop#\/people"/g, 'href="#/people" data-route="people"')
+        .replace(/href="\/workshop"/g, 'href="#/workshop" data-route="workshop"');
+      html = html.replace(nav, () => bar);
+    }
   }
   return new Response(html, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-cache" } });
 }
+
