@@ -1,5 +1,6 @@
-// starks.provably.fast: the regime chart, the loop graph, the brief, and data/mathematics.json
-// (written by `python3 -m proven.mathematics board`). Everything renders at its final state without motion.
+// starks.provably.fast: the targets board, the query count, Built together and the brief on the
+// home page (kit.css draws them), the record page and the background's regime chart, all from
+// data/mathematics.json (written by `python3 -m proven.mathematics board`). Nothing moves.
 (() => {
   "use strict";
 
@@ -56,16 +57,6 @@
       }
     }, { threshold: 0.15 });
     nodes.forEach((n) => io.observe(n));
-  }
-
-  function pointerGlow() {
-    for (const stat of document.querySelectorAll(".stat")) {
-      stat.addEventListener("pointermove", (event) => {
-        const box = stat.getBoundingClientRect();
-        stat.style.setProperty("--mx", `${event.clientX - box.left}px`);
-        stat.style.setProperty("--my", `${event.clientY - box.top}px`);
-      });
-    }
   }
 
   // Agreement thresholds by rate. a1 is the first-order curve of Dao, Kominers and Thaler
@@ -168,7 +159,7 @@
     pill("is-t2", 0.36, a1(0.36) - 0.07, "T2");
     // The first rung of T3: rate 1/2, agreement 0.625 (gap 1/8 above the rate), where provers run.
     notes.append(svgEl("circle", { class: "rg-rung", cx: X(0.5), cy: Y(0.625), r: 6 }));
-    pill("is-t3", 0.5, 0.625, narrow ? "T3 goal" : "T3 goal: rate 1/2, agreement 0.625", "start");
+    pill("is-t3", 0.5, 0.625, narrow ? "T3" : "T3: rate 1/2, agreement 0.625", "start");
     svg.append(notes);
     // Crosshair: the four thresholds at one rate.
     const cross = svgEl("g", { class: "rg-fade", style: "--d: 1.5s" });
@@ -201,126 +192,6 @@
     root.replaceChildren(svg);
   }
 
-  // How a theorem gets made: the provably.fast loop graph with this workshop's steps.
-  const LOOP_NODES = [
-    { id: "seed", x: 70, y: 200, r: 13, tone: "seed", at: 0, title: "Question", text: "A target or a hunch", role: "Originator", who: "person" },
-    { id: "lead", x: 300, y: 200, r: 12, tone: "lead", at: 0.16, title: "Idea", text: "An approach to try", role: "Explorer", who: "agent" },
-    { id: "source", x: 180, y: 330, r: 8, tone: "source", at: 0.24, below: true, title: "Source", text: "A paper, a lemma or a trick", role: "Sourcer", who: "person" },
-    { id: "e1", x: 540, y: 110, r: 9, tone: "experiment", at: 0.38, fails: true, title: "Lemmas", text: "Steps that can be checked", role: "Author or falsifier", who: "agent" },
-    { id: "e2", x: 540, y: 200, r: 10, tone: "experiment", at: 0.39 },
-    { id: "e3", x: 540, y: 290, r: 9, tone: "experiment", at: 0.4, fails: true },
-    { id: "talk", x: 436, y: 318, r: 5.5, tone: "discussion", at: 0.46, below: true, title: "Discussion", text: "What was tried and what failed", role: "Helper or reviewer", who: "person" },
-    { id: "talk2", x: 462, y: 300, r: 4, tone: "discussion", at: 0.47 },
-    { id: "talk3", x: 476, y: 326, r: 3.5, tone: "discussion", at: 0.48 },
-    { id: "record", x: 850, y: 200, r: 15, tone: "experiment", at: 0.68, solid: true, below: true, title: "Result", text: "Meets a pinned statement", role: "Author", who: "agent" },
-    { id: "repro", x: 1080, y: 200, r: 12, tone: "repro", at: 0.8, end: true, title: "Lean", text: "Checked against ArkLib", role: "Formalizer", who: "agent" },
-    { id: "curation", x: 975, y: 330, r: 8, tone: "curation", at: 0.88, below: true, title: "Curation", text: "Summaries and hand-offs", role: "Steward", who: "agent" },
-  ];
-  const LOOP_EDGES = [["seed", "lead", 0.07], ["source", "lead", 0.2], ["lead", "e1", 0.3], ["lead", "e2", 0.31], ["lead", "e3", 0.32],
-    ["talk3", "e1", 0.43], ["talk", "e2", 0.44], ["talk2", "e3", 0.45], ["e2", "record", 0.62], ["record", "repro", 0.74], ["curation", "record", 0.85], ["curation", "repro", 0.86]];
-  const GATE_X = 700;
-  const TONE_VAR = { seed: "--pink", lead: "--accent", experiment: "--record", repro: "--platform", source: "--amber", discussion: "--violet", curation: "--coral" };
-  const PACE = 2.2; // seconds for the whole drawing
-
-  function loopGlyph(who) {
-    const g = svgEl("g", { class: "loop-glyph" });
-    if (who === "agent") {
-      g.append(svgEl("rect", { class: "loop-glyph-bg", x: 0, y: -11, width: 14, height: 14, rx: 4 }), svgEl("circle", { class: "loop-glyph-ink", cx: 4.8, cy: -4, r: 1.4 }), svgEl("circle", { class: "loop-glyph-ink", cx: 9.2, cy: -4, r: 1.4 }));
-    } else {
-      g.append(svgEl("circle", { class: "loop-glyph-bg", cx: 7, cy: -4, r: 7 }), svgEl("circle", { class: "loop-glyph-ink", cx: 7, cy: -5.6, r: 2.3 }), svgEl("path", { class: "loop-glyph-line", d: "M 3.4 0.4 a 3.6 3 0 0 1 7.2 0" }));
-    }
-    return g;
-  }
-  function loopLabel(node) {
-    const end = Boolean(node.end);
-    const top = node.below ? node.y + node.r + 26 : node.y - node.r - 52;
-    const place = svgEl("g", { class: `s-${node.tone}`, transform: `translate(${node.x + (end ? 12 : -12)} ${top})`, "text-anchor": end ? "end" : "start" });
-    const label = svgEl("g", { class: "loop-label", style: `--d: ${(node.at * PACE + 0.1).toFixed(2)}s` });
-    const line = (cls, y, text) => { const t = svgEl("text", { class: cls, y }); t.textContent = text; return t; };
-    const role = svgEl("g", { class: "loop-role", transform: `translate(${end ? -14 : 0} 36)` });
-    const roleText = svgEl("text", { x: end ? -6 : 20, y: 0 }); roleText.textContent = node.role;
-    role.append(loopGlyph(node.who), roleText);
-    label.append(line("loop-title", 0, node.title), line("loop-text", 18, node.text), role);
-    place.append(label);
-    return place;
-  }
-  function buildLoop() {
-    const svg = svgEl("svg", { class: "loop-svg", viewBox: "0 0 1200 420", role: "img", "aria-labelledby": "loop-desc" });
-    const byId = new Map(LOOP_NODES.map((n) => [n.id, n]));
-    const curve = (a, b) => { const mx = (a.x + b.x) / 2; return `M ${a.x} ${a.y} C ${mx} ${a.y} ${mx} ${b.y} ${b.x} ${b.y}`; };
-    const defs = svgEl("defs");
-    const grid = svgEl("pattern", { id: "loop-grid", width: 24, height: 24, patternUnits: "userSpaceOnUse" });
-    grid.append(svgEl("circle", { class: "loop-grid-dot", cx: 12, cy: 12, r: 1 }));
-    defs.append(grid);
-    svg.append(defs, svgEl("rect", { class: "loop-grid", x: 0, y: 30, width: 1200, height: 370, fill: "url(#loop-grid)" }));
-    const edges = svgEl("g", { class: "loop-edges" });
-    const spine = [];
-    LOOP_EDGES.forEach(([from, to, at], i) => {
-      const a = byId.get(from), b = byId.get(to);
-      const gradient = svgEl("linearGradient", { id: `loop-edge-${i}`, gradientUnits: "userSpaceOnUse", x1: a.x, y1: a.y, x2: b.x, y2: b.y });
-      gradient.append(svgEl("stop", { offset: 0, style: `stop-color: var(${TONE_VAR[a.tone]})` }), svgEl("stop", { offset: 1, style: `stop-color: var(${TONE_VAR[b.tone]})` }));
-      defs.append(gradient);
-      const faint = a.tone === "discussion" || a.tone === "curation" || a.tone === "source";
-      const path = svgEl("path", { class: `loop-edge${faint ? " is-faint" : ""}`, d: curve(a, b), stroke: `url(#loop-edge-${i})`, pathLength: 1, style: `--d: ${(at * PACE).toFixed(2)}s` });
-      edges.append(path);
-      if (["seed:lead", "lead:e2", "e2:record", "record:repro"].includes(`${from}:${to}`)) spine.push(path);
-    });
-    // Review: a gate the lemmas run into. Two stop there; one passes.
-    edges.append(svgEl("line", { class: "loop-gate", x1: GATE_X, x2: GATE_X, y1: 86, y2: 312, style: `--d: ${(0.5 * PACE).toFixed(2)}s` }));
-    for (const id of ["e1", "e3"]) {
-      const n = byId.get(id);
-      edges.append(svgEl("path", { class: "loop-edge s-experiment is-faint", d: `M ${n.x} ${n.y} H ${GATE_X}`, pathLength: 1, style: `--d: ${(0.54 * PACE).toFixed(2)}s` }));
-      edges.append(svgEl("path", { class: "loop-x", d: `M ${GATE_X - 5} ${n.y - 5} L ${GATE_X + 5} ${n.y + 5} M ${GATE_X + 5} ${n.y - 5} L ${GATE_X - 5} ${n.y + 5}`, style: `--d: ${(0.6 * PACE).toFixed(2)}s` }));
-    }
-    const gateLabel = svgEl("g", { transform: `translate(${GATE_X + 14} 334)` });
-    const gateInner = svgEl("g", { class: "loop-gate-label", style: `--d: ${(0.56 * PACE).toFixed(2)}s` });
-    const g1 = svgEl("text", { class: "loop-title", y: 0 }); g1.textContent = "Review";
-    const g2 = svgEl("text", { class: "loop-text", y: 18 }); g2.textContent = "Independent reviewers decide";
-    gateInner.append(g1, g2); gateLabel.append(gateInner);
-    svg.append(edges, gateLabel);
-    svg.append(svgEl("circle", { class: "loop-halo", cx: byId.get("record").x, cy: byId.get("record").y, r: 27, style: `--d: ${(0.72 * PACE).toFixed(2)}s` }));
-    for (const node of LOOP_NODES) {
-      const g = svgEl("g", { class: `loop-node s-${node.tone}`, style: `--d: ${(node.at * PACE).toFixed(2)}s` });
-      const k = node.r * 1.3;
-      const dot = node.tone === "curation"
-        ? svgEl("path", { class: "loop-dot", d: `M ${node.x} ${node.y - k} L ${node.x + k} ${node.y} L ${node.x} ${node.y + k} L ${node.x - k} ${node.y} Z` })
-        : svgEl("circle", { class: `loop-dot${node.solid ? " is-solid" : ""}`, cx: node.x, cy: node.y, r: node.r });
-      g.append(dot);
-      if (node.fails) g.append(svgEl("circle", { class: "loop-fail", cx: node.x, cy: node.y, r: node.r, style: `--d: ${(0.6 * PACE).toFixed(2)}s` }));
-      svg.append(g);
-      if (node.title) svg.append(loopLabel(node));
-    }
-    return { svg, spine };
-  }
-  // Once drawn, work keeps moving along the spine: a pulse from the question to Lean.
-  function flowLoop(svg, spine) {
-    spine.forEach((path, i) => {
-      const id = `loop-spine-${i}`; path.id = id;
-      const pulse = svgEl("circle", { class: "loop-pulse", r: 2.6, opacity: 0 });
-      const timing = { dur: "3.2s", repeatCount: "indefinite", begin: `${i * 0.8}s` };
-      const move = svgEl("animateMotion", { ...timing, keyPoints: "0;1;1", keyTimes: "0;0.25;1", calcMode: "linear" });
-      move.append(svgEl("mpath", { href: `#${id}` }));
-      const fade = svgEl("animate", { ...timing, attributeName: "opacity", values: "0;1;1;0;0", keyTimes: "0;0.04;0.21;0.25;1" });
-      pulse.append(move, fade); svg.append(pulse);
-    });
-  }
-  function renderLoop() {
-    const root = $("loop");
-    if (!root) return;
-    const { svg, spine } = buildLoop();
-    const step = (tone, title, text, role) => el("li", { class: `s-${tone}` }, el("b", {}, title), el("span", {}, text), role ? el("small", {}, role) : null);
-    const list = el("ol", { class: "loop-steps", id: "loop-desc" });
-    for (const node of LOOP_NODES) {
-      if (!node.title) continue;
-      if (node.id === "record") list.append(step("discussion", "Review", "Independent reviewers decide", null));
-      list.append(step(node.tone, node.title, node.text, node.role));
-    }
-    root.replaceChildren(svg, list);
-    if (still) return;
-    root.classList.add("is-armed");
-    reveal([root], () => setTimeout(() => flowLoop(svg, spine), PACE * 1000 + 600));
-  }
-
   // The prompt: the lines shown, which send the agent to the brief on provably.fast.
   function initBrief() {
     const button = $("prompt-copy"), status = $("prompt-status"), text = $("prompt-text");
@@ -345,17 +216,8 @@
     proof: "Proof", formalization: "Lean", review: "Review", source: "Source" };
   const STATUS_WORDS = { open: "open", claimed: "claimed, under review", solved: "solved", refuted: "refuted" };
   const day = (iso) => (iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }) : "");
-  function renderTargets(record) {
-    for (const target of record.targets || []) {
-      const chip = document.querySelector(`.target.is-${target.id.toLowerCase()} .chip`);
-      if (!chip) continue;
-      chip.textContent = STATUS_WORDS[target.status] || target.status;
-      chip.className = `chip is-${target.status}`;
-      if (target.lean_checked) chip.after(el("span", { class: "chip is-lean" }, "Lean-checked"));
-    }
-  }
   const TARGET_ORDER = ["T3", "T2", "T1", "other"];
-  const LEVEL_WORDS = { "open": "open", "open, with a first goal pinned in Lean": "first goal pinned in Lean" };
+  const LEVEL_WORDS = { "open": "open", "open, with a first goal pinned in Lean": "first case pinned in Lean" };
   const personName = (name) => {
     const m = /^participant_([0-9a-f]{12})$/.exec(name);
     return m ? `Participant ${m[1].slice(0, 4)}` : name;
@@ -414,18 +276,18 @@
         el("h3", { class: "record-group-title" }, el("span", { class: "record-target" }, id), t ? t.title : "Other"),
         el("ol", { class: "record-list" }, items));
     });
-    const people = (record.people || []).filter((p) => !/same operator/i.test(p.name)).slice(0, 12).map((p) => `${personName(p.name)}${p.agent ? " (agent)" : ""}`);
+    const people = crewOf(record).map((m) => `${personName(m.name)}${m.agents.size ? ` (${[...m.agents].join(", ")})` : m.agent ? " (agent)" : ""}`);
     root.replaceChildren(board, ...groups,
       people.length ? el("p", { class: "record-people" }, `Contributors: ${people.join(", ")}. Agents say who runs them; pseudonyms are the workshop's.`) : null);
   }
-  // The board: queries for 100 bits at rate 1/2, as a proven staircase toward the rung.
-  // bits per query = -log2(agreement); unique decoding (1 + rho)/2, Johnson sqrt(rho), the rung
-  // rho + 1/8, capacity rho. A new step needs an accepted theorem with its parameters.
+  // The query count: queries for 100 bits at rate 1/2, as a proven staircase over the limit.
+  // bits per query = -log2(agreement); unique decoding (1 + rho)/2, Johnson sqrt(rho), capacity
+  // rho. A new step needs an accepted theorem with its parameters.
   const QUERY_STEPS = [
     { year: 2018, queries: 241, label: "unique decoding", who: "Ben-Sasson, Bentov, Horesh and Riabzev" },
     { year: 2020, queries: 200, label: "Johnson", who: "Ben-Sasson, Carmon, Ishai, Kopparty and Saraf" },
   ];
-  const RUNG_QUERIES = 150, CAPACITY_QUERIES = 100;
+  const CAPACITY_QUERIES = 100;
   const hueOf = (text) => { let h = 0; for (const ch of text) h = (h * 31 + ch.charCodeAt(0)) % 360; return h; };
   function pseudonymMark(name, size = 28) {
     const tag = (/^participant_([0-9a-f]{12})$/.exec(name) || [])[1];
@@ -441,7 +303,7 @@
       const qTop = 260, qBottom = 90;
       const X = (yr) => padL + ((yr - y0) / (y1 - y0)) * (w - padL - padR);
       const Y = (q) => padT + ((qTop - q) / (qTop - qBottom)) * (h - padT - padB);
-      const svg = svgEl("svg", { class: "board-svg", viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": `Query arithmetic, queries for a 100-bit query term at rate 1/2: ${QUERY_STEPS[0].queries} with unique decoding, ${QUERY_STEPS[QUERY_STEPS.length - 1].queries} proven today, ${RUNG_QUERIES} is the goal, ${CAPACITY_QUERIES} is the limit` });
+      const svg = svgEl("svg", { class: "board-svg", viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": `Query arithmetic, queries for a 100-bit query term at rate 1/2: ${QUERY_STEPS[0].queries} with unique decoding, ${QUERY_STEPS[QUERY_STEPS.length - 1].queries} proven today, ${CAPACITY_QUERIES} is the limit` });
       const defs = svgEl("defs");
       const pat = svgEl("pattern", { id: "board-dots", width: 9, height: 9, patternUnits: "userSpaceOnUse" });
       pat.append(svgEl("circle", { class: "board-dot", cx: 4.5, cy: 4.5, r: 1.4 }));
@@ -455,9 +317,8 @@
       const now = QUERY_STEPS[QUERY_STEPS.length - 1].queries;
       d += ` H ${X(y1).toFixed(1)}`;
       svg.append(svgEl("path", { class: "board-area", d: `${d} V ${Y(qBottom).toFixed(1)} H ${X(y0).toFixed(1)} Z`, fill: "url(#board-dots)" }));
-      // The rung and capacity, as lines to reach.
-      const rungY = Y(RUNG_QUERIES), capY = Y(CAPACITY_QUERIES);
-      svg.append(svgEl("line", { class: "board-rung", x1: padL, x2: X(y1) + 4, y1: rungY, y2: rungY }));
+      // Capacity, the count no bound can go below.
+      const capY = Y(CAPACITY_QUERIES);
       svg.append(svgEl("line", { class: "board-cap", x1: padL, x2: X(y1) + 4, y1: capY, y2: capY }));
       svg.append(svgEl("path", { class: "board-line", d }));
       const t0 = svgEl("text", { class: "board-label", x: padL + 2, y: Y(QUERY_STEPS[0].queries) - 10 }); t0.textContent = `${QUERY_STEPS[0].queries} · ${QUERY_STEPS[0].label}, ${QUERY_STEPS[0].year}`; svg.append(t0);
@@ -470,10 +331,7 @@
       const end = { x: X(y1), y: Y(now) };
       svg.append(svgEl("circle", { class: "board-end", cx: end.x, cy: end.y, r: 5 }));
       const tn = svgEl("text", { class: "board-label is-now", x: end.x + 10, y: end.y + 4 }); tn.textContent = `${now} proven`; svg.append(tn);
-      const tr = svgEl("text", { class: "board-rung-label", x: end.x + 10, y: rungY + 4 }); tr.textContent = `${RUNG_QUERIES} · the goal`; svg.append(tr);
       const tc = svgEl("text", { class: "board-cap-label", x: end.x + 10, y: capY + 4 }); tc.textContent = `${CAPACITY_QUERIES} · the limit`; svg.append(tc);
-      const togo = svgEl("line", { class: "board-togo", x1: end.x, x2: end.x, y1: end.y + 7, y2: rungY - 3 }); svg.append(togo);
-      const tg = svgEl("text", { class: "board-togo-label", x: end.x + 10, y: (end.y + rungY) / 2 + 4 }); tg.textContent = `${now - RUNG_QUERIES} to go`; svg.append(tg);
       const ax0 = svgEl("text", { class: "board-axis", x: padL, y: h - 8 }); ax0.textContent = "2018";
       const ax1 = svgEl("text", { class: "board-axis", x: end.x, y: h - 8, "text-anchor": "middle" }); ax1.textContent = "today";
       svg.append(ax0, ax1);
@@ -482,45 +340,118 @@
     draw();
     if ("ResizeObserver" in window) new ResizeObserver(() => requestAnimationFrame(draw)).observe(root);
   }
-  function renderBoard(record) {
-    const chart = $("board-chart");
-    if (chart) boardChart(chart);
-    const thanks = $("board-thanks");
-    const rows = (record && record.contributions) || [];
-    const names = [...new Set(rows.flatMap((r) => r.who))].filter((n) => !/same operator/i.test(n));
-    if (thanks && names.length) {
-      const marks = el("span", { class: "board-marks" }, ...names.slice(0, 12).map((n) => pseudonymMark(n)));
-      thanks.replaceChildren(marks, el("span", { class: "board-thanks-text" }, "Thanks to everyone here"));
+  const nOf = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+  const independent = (name) => !/same operator/i.test(name);
+  // The targets board: each row's status, and its contributions over time on one scale for all three.
+  function renderTargets(record) {
+    const rows = record.contributions || [];
+    const times = rows.map((r) => Date.parse(r.date)).filter(Number.isFinite);
+    const start = times.length ? Math.min(...times) : Date.now();
+    const most = Math.max(1, ...(record.targets || []).map((t) => rows.filter((r) => r.target === t.id).length));
+    for (const target of record.targets || []) {
+      const row = document.querySelector(`.target-row[data-target="${target.id}"]`);
+      if (!row) continue;
+      const pill = row.querySelector("[data-status]");
+      const word = STATUS_WORDS[target.status] || target.status;
+      pill.textContent = word.charAt(0).toUpperCase() + word.slice(1);
+      pill.className = `kit-pill ${target.status === "solved" ? "is-yes" : "is-now"}`;
+      if (target.lean_checked) pill.after(el("span", { class: "kit-pill is-yes" }, "Lean-checked"));
+      const mine = rows.filter((r) => r.target === target.id);
+      const people = new Set(mine.flatMap((r) => r.who).filter(independent)).size;
+      row.querySelector("[data-trend]").replaceChildren(countSpark(mine, start, most),
+        el("small", {}, mine.length ? `${nOf(mine.length, "contribution")} · ${nOf(people, "person", "people")}` : "None yet"));
     }
-    const proved = $("board-proved");
-    if (!proved) return;
-    const outside = (x) => !/same operator/i.test(x.by || "");
-    const counts = {
-      posted: rows.length,
-      formal: rows.filter((r) => r.kind === "formalization").length,
-      // A formalization counts as Lean-checked only once accepted with a holding review; the kind alone is a submission.
-      lean: rows.filter((r) => r.kind === "formalization" && r.status === "accepted").length,
-      checked: rows.filter((r) => (r.reviews || []).length && (r.reviews || []).every((x) => !outside(x))).length,
-      partial: rows.filter((r) => (r.reviews || []).some((x) => outside(x) && x.verdict === "partial")).length,
-      reviewed: rows.filter((r) => r.reviewed && (r.reviews || []).some(outside)).length,
-      settled: ((record && record.targets) || []).filter((t) => t.status === "solved" || t.status === "refuted").length,
-    };
-    const latest = rows.slice(0, 5).map((row) => {
+  }
+  // A target's contributions as a count climbing over time.
+  function countSpark(rows, start, most) {
+    const svg = svgEl("svg", { class: "kit-spark", viewBox: "0 0 120 28", preserveAspectRatio: "none", "aria-hidden": "true", focusable: "false" });
+    const times = rows.map((r) => Date.parse(r.date)).filter(Number.isFinite).sort((a, b) => a - b);
+    const end = Math.max(Date.now(), start + 1);
+    const x = (t) => ((t - start) / (end - start)) * 120, y = (k) => 26 - (k / most) * 24;
+    let d = `M0 ${y(0)}`;
+    times.forEach((t, i) => { d += ` L${x(t).toFixed(1)} ${y(i).toFixed(1)} L${x(t).toFixed(1)} ${y(i + 1).toFixed(1)}`; });
+    svg.append(svgEl("path", { class: "kit-line", d: `${d} L120 ${y(times.length).toFixed(1)}` }));
+    return svg;
+  }
+  // The newest contributions beside the query count: what each is, how far it is reviewed, who made it.
+  function renderNewest(record) {
+    const root = $("starks-newest");
+    if (!root) return;
+    const items = (record.contributions || []).slice(0, 3).map((row) => {
       const href = THREAD.test(row.thread || "") ? `/threads/${row.thread}` : row.url;
       const [state, label] = recordState(row);
-      return el("li", { class: `board-row is-${row.kind}` },
-        el("span", { class: "record-kind" }, KIND_WORDS[row.kind] || row.kind),
-        el("span", { class: "record-target" }, row.target),
-        href ? el("a", { href }, row.title) : el("span", {}, row.title),
-        el("span", { class: `verdict is-${state}` }, label));
+      const body = [
+        el("span", { class: "starks-item-top" }, el("span", { class: `starks-kind is-${row.target.toLowerCase()}` }, `${row.target} · ${KIND_WORDS[row.kind] || row.kind}`), el("span", { class: `verdict is-${state}` }, label)),
+        el("span", { class: "starks-item-title" }, row.title),
+        el("small", {}, [row.who.map(personName).join(", "), day(row.date)].filter(Boolean).join(" · ")),
+      ];
+      return el("li", {}, href ? el("a", { class: "starks-item", href }, body) : el("span", { class: "starks-item" }, body));
     });
-    const leanNote = counts.lean ? ` (${counts.lean} Lean-checked)` : "";
-    const nOf = (n, one, many) => `${n} ${n === 1 ? one : many}`;
-    proved.replaceChildren(
-      el("div", { class: "board-proved-head" }, el("h3", {}, "Recent contributions"),
-        el("p", { class: "board-counts" }, `${nOf(counts.posted, "contribution", "contributions")} posted · ${nOf(counts.formal, "formalization", "formalizations")} submitted${leanNote} · ${counts.checked} with maintainer checks · ${counts.partial} with a partial outside review · ${counts.reviewed} with a completed independent review · ${nOf(counts.settled, "target", "targets")} settled`)),
-      el("ol", { class: "board-list" }, latest),
-      el("p", { class: "board-more" }, el("a", { href: "/record" }, "The full record, with reviews")));
+    root.replaceChildren(el("h3", { class: "starks-newest-title" }, "Newest contributions"), el("ol", { class: "starks-list" }, items),
+      el("a", { class: "starks-more", href: "/record" }, "The full record, with reviews \u2192"));
+  }
+  // Built together: every contributor with what they made for each target, the reviews they wrote,
+  // and the agents they named. A review names its author first, then the agent in brackets
+  // ("nadai2010 (Claude Code agent): ..."); a description with no name is credited in the record only.
+  const REVIEWER = /^([A-Za-z0-9][\w.-]*) \(([^,)]*?)\s*agent\b/;
+  function crewOf(record) {
+    const rows = record.contributions || [];
+    const crew = new Map();
+    const member = (name) => {
+      if (!crew.has(name)) crew.set(name, { name, agent: false, runs: null, per: { T3: 0, T2: 0, T1: 0 }, reviews: 0, agents: new Set(), since: null });
+      return crew.get(name);
+    };
+    const seen = (m, date) => { if (date && (!m.since || date < m.since)) m.since = date; };
+    for (const p of record.people || []) {
+      if (!/^[A-Za-z0-9][\w.-]*$/.test(p.name) || !independent(p.name)) continue;
+      Object.assign(member(p.name), { agent: Boolean(p.agent), runs: p.runs || null });
+    }
+    for (const row of rows) {
+      for (const name of row.who) {
+        if (!crew.has(name)) continue;
+        const m = crew.get(name);
+        if (row.target in m.per) m.per[row.target] += 1;
+        seen(m, row.date);
+      }
+      for (const review of row.reviews || []) {
+        const found = REVIEWER.exec(review.by || "");
+        if (!found || !independent(review.by)) continue;
+        const m = member(found[1]);
+        m.reviews += 1; m.agent = true;
+        if (found[2]) m.agents.add(found[2]);
+        seen(m, review.date || row.date);
+      }
+    }
+    const total = (m) => m.per.T3 + m.per.T2 + m.per.T1 + m.reviews;
+    return [...crew.values()].sort((a, b) => total(b) - total(a) || a.name.localeCompare(b.name));
+  }
+  function renderCrew(record) {
+    const root = $("crew");
+    if (!root) return;
+    const crew = crewOf(record);
+    const ids = ["T3", "T2", "T1"];
+    const head = el("tr", {}, el("th", { scope: "col" }, "Contributor"), ...ids.map((id) => el("th", { scope: "col", class: `is-${id.toLowerCase()}` }, id)),
+      el("th", { scope: "col" }, "Reviews"), el("th", { scope: "col" }, "Since"));
+    const body = crew.map((m) => {
+      const tags = [...m.agents].map((name) => el("span", { class: "kit-model" }, name));
+      if (!tags.length && m.agent) tags.push(el("span", { class: "kit-model" }, "agent"));
+      if (m.runs && m.runs !== m.name) tags.push(el("span", { class: "kit-model is-quiet" }, `run by ${personName(m.runs)}`));
+      const person = el("span", { class: "kit-person" }, pseudonymMark(m.name, 32),
+        el("span", { class: "kit-person-body" }, el("span", { class: "kit-person-name" }, personName(m.name)), tags.length ? el("span", { class: "kit-models" }, tags) : null));
+      const count = (n) => el("td", n ? {} : { class: "is-zero" }, n ? el("b", {}, String(n)) : "\u00b7");
+      return el("tr", {}, el("th", { scope: "row" }, person), ...ids.map((id) => count(m.per[id])), count(m.reviews), el("td", { class: "kit-joined" }, day(m.since)));
+    });
+    root.replaceChildren(el("table", { class: "kit-crew" }, el("thead", {}, head), el("tbody", {}, body)));
+    const sub = $("crew-sub");
+    const named = new Set(crew.flatMap((m) => [...m.agents]));
+    if (sub) sub.replaceChildren(el("b", {}, nOf(crew.length, "contributor")), `, people and their agents${named.size ? `, with ${[...named].join(", ")}` : ""}.`);
+  }
+  function homeLive(record) {
+    const node = $("home-live");
+    if (!node) return;
+    const rows = record.contributions || [];
+    const people = new Set(rows.flatMap((r) => r.who).filter(independent)).size;
+    node.textContent = `Live · ${nOf((record.targets || []).length, "target")} · ${nOf(rows.length, "contribution")} · ${nOf(people, "person", "people")}`;
   }
   async function renderMathematics() {
     try {
@@ -528,15 +459,17 @@
       if (!response.ok) throw new Error(String(response.status));
       const record = await response.json();
       renderTargets(record);
+      renderNewest(record);
+      renderCrew(record);
+      homeLive(record);
       renderRecord(record);
-      renderBoard(record);
       const version = $("foot-version");
       if (version && record.source) version.textContent = `Built from provably.fast ${record.source} · ArkLib ${record.lean.commit.slice(0, 8)}`;
     } catch {
-      const root = $("record-list");
-      if (root) root.replaceChildren(el("p", { class: "loading" }, "The record could not be read."));
-      const proved = $("board-proved");
-      if (proved) proved.replaceChildren(el("p", { class: "loading" }, "Research status unavailable. ", el("a", { href: "/record" }, "The record")));
+      for (const id of ["record-list", "starks-newest", "crew"]) {
+        const root = $(id);
+        if (root) root.replaceChildren(el("p", { class: "loading" }, "The record could not be read. ", el("a", { href: "/record" }, "The record")));
+      }
     }
   }
 
@@ -549,9 +482,8 @@
   if (moved()) return;
   window.addEventListener("hashchange", moved);
   initTheme();
-  pointerGlow();
   regimeChart();
-  renderLoop();
+  if ($("board-chart")) boardChart($("board-chart"));
   initBrief();
   reveal([...document.querySelectorAll(".reveal")]);
   renderMathematics();
