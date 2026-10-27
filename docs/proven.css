@@ -108,22 +108,46 @@ main:focus { outline: none; }
 
 
 /* The query count as a proven staircase, in the style of stwo's memory chart, and the pseudonym marks. */
-.board-mark { display: inline-grid; place-items: center; width: var(--size, 28px); height: var(--size, 28px); margin-left: -8px; border-radius: 50%; border: 2px solid var(--bg-2); background: hsl(var(--hue) 55% 42%); color: #fff; font: 600 11px var(--sans); letter-spacing: .02em; text-transform: uppercase; }
-.board-mark:first-child { margin-left: 0; }
 .board-chart { min-width: 0; }
 .board-svg { display: block; width: 100%; height: auto; overflow: visible; }
-.board-dot { fill: color-mix(in srgb, var(--accent) 70%, transparent); }
-.board-dot.is-dim { fill: color-mix(in srgb, var(--ink) 10%, transparent); }
-.board-area { opacity: .9; }
 path.board-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linejoin: round; }
 .board-step { fill: var(--bg-2); stroke: var(--accent); stroke-width: 2.2; }
 .board-end { fill: var(--accent); }
 .board-cap { stroke: var(--amber); stroke-dasharray: 3 5; stroke-width: 1.2; opacity: .8; }
-.board-label { fill: var(--muted); font: 11.5px var(--sans); }
-.board-label.is-step { fill: var(--ink-2); }
-.board-label.is-now { fill: var(--ink); font-weight: 600; font-size: 13px; }
 .board-cap-label { fill: var(--amber); font: 11.5px var(--sans); }
 .board-axis { fill: var(--muted); font: 11.5px var(--sans); }
+.board-grid { stroke: var(--line); stroke-width: 1; }
+.board-pick { stroke: var(--muted); stroke-dasharray: 2 4; stroke-width: 1; }
+.board-step, .board-end { cursor: pointer; }
+.board-step:focus-visible, .board-end:focus-visible { outline: none; stroke-width: 3.2; }
+/* Every record's card and who set them, as postquantum's (pq-card, pq-who). */
+.rec-chart-col { display: grid; gap: 14px; min-width: 0; }
+.rec-who-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; }
+.rec-who-label { color: var(--muted); font-size: 13px; margin-right: 2px; }
+.rec-who { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 3px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--ink); font-size: 13px; font-variant-numeric: tabular-nums; }
+.rec-card { display: grid; gap: 10px; align-content: start; padding: 20px; border: 1px solid var(--line-2); border-radius: 16px; background: var(--bg); }
+.rec-card p { margin: 0; }
+.rec-card-eyebrow { color: var(--muted); font-size: 12.5px; }
+.rec-card-who { display: flex; align-items: center; gap: 12px; font-size: 16px; }
+.rec-card-more { color: var(--muted); font-size: 13px; }
+.rec-card-value b { color: var(--record); font: 650 30px/1.1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.rec-card-value span { color: var(--muted); font-size: 13.5px; }
+.rec-card-line { color: var(--ink-2); font-size: 14px; font-variant-numeric: tabular-nums; }
+.rec-card-title { display: -webkit-box; overflow: hidden; color: var(--ink-2); font-size: 14px; line-height: 1.45; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
+.rec-card-date { color: var(--muted); font-size: 13px; }
+.rec-card-links { display: flex; gap: 16px; font-size: 14px; font-weight: 600; }
+.rec-card-links a { color: var(--accent); text-decoration: none; }
+.rec-card-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* How many checks: four figures, borderless; the one T3 would reach in its family colour. */
+.starks-figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 28px; margin: 18px 0 0; }
+.starks-fig { display: grid; gap: 4px; margin: 0; }
+.starks-fig b { color: var(--ink); font: 650 clamp(30px, 3.4vw, 44px)/1 var(--display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.starks-fig span { color: var(--muted); font-size: 13.5px; }
+.starks-fig.is-now b { color: var(--accent); }
+.starks-fig.is-target b { color: var(--amber); }
+.starks-fig.is-limit b { color: var(--muted); }
+.starks-checks .kit-note { margin: 16px 0 0; }
+@media (max-width: 640px) { .starks-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Where each bound holds: agreement thresholds by rate, the bands between them. */
 .regime { margin: 26px 0 0; padding: 22px 22px 16px; border: 1px solid var(--line); border-radius: 16px; }
@@ -216,13 +240,10 @@ path.board-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-l
 }
 
 /* Bring your agent: one panel, the brief on the left, the three steps on the right. */
-.prompt { margin-top: 8px; border: 1px solid var(--line-2); border-radius: 14px; background: var(--bg); overflow: hidden; }
-.prompt-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 10px 9px 16px; border-bottom: 1px solid var(--line); }
 .prompt-name { color: var(--muted); font: 13px var(--code); text-decoration: none; transition: color .2s; }
 .prompt-name:hover { color: var(--ink); }
 .prompt-copy { padding: 7px 16px; border: 0; border-radius: 999px; background: var(--record); color: var(--record-ink); font: 600 13px var(--sans); cursor: pointer; transition: transform .45s var(--spring), background-color .25s, color .25s; }
 .prompt-copy.is-done { transform: scale(1.06); background: var(--ink); color: var(--bg); }
-.prompt-text { margin: 0; padding: 16px 16px 12px; color: var(--ink-2); font: 13px/1.6 var(--code); white-space: pre-wrap; }
 .prompt-status { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: 13px; }
 .prompt-status:empty { display: none; }
 
@@ -339,9 +360,9 @@ path.board-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-l
 .target-row .kit-name-top { flex-wrap: nowrap; align-items: flex-start; }
 .target-row .kit-dot { margin-top: 8px; }
 .starks-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); align-items: start; gap: 18px 28px; }
-.starks-panel > .kit-note { grid-column: 1 / -1; margin: 0; }
-.starks-newest-title { margin: 0 0 6px 10px; color: var(--ink); font: 600 15px/1.3 var(--sans); }
 .starks-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.starks-latest .starks-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; }
+@media (max-width: 900px) { .starks-latest .starks-list { grid-template-columns: 1fr; } }
 .starks-item { display: grid; gap: 4px; padding: 8px 10px; border-radius: 12px; color: inherit; text-decoration: none; }
 a.starks-item:hover { background: var(--card-hi); }
 .starks-item-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
@@ -353,10 +374,27 @@ a.starks-item:hover { background: var(--card-hi); }
 .starks-item small { color: var(--muted); font-size: 12.5px; }
 .starks-more { display: inline-block; margin: 8px 10px 0; color: var(--ink-2); font-size: 13px; text-decoration: none; }
 .starks-more:hover { color: var(--ink); }
-.kit-person .board-mark { margin-left: 0; border-color: var(--card); }
 .kit-model.is-quiet { border-style: dashed; }
-.starks-agent { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; gap: 18px 32px; }
-.starks-agent .agent-note { margin: 0; }
+/* Built together as on postquantum.provably.fast (kit.css draws the table): faces, and nothing in an
+   empty cell. */
+.starks-face { width: var(--s, 32px); height: var(--s, 32px); flex: none; border-radius: 50%; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line-2); object-fit: cover; }
+.kit-model-mark.is-kimi { border-radius: 3px; }
+/* The professor at the board, wider than the kit's standing pets: a little taller, so the board reads. */
+.kit-art img.starks-professor { height: clamp(220px, 22vw, 320px); }
+@media (max-width: 900px) { .kit-art img.starks-professor { height: 210px; } }
+.starks-face.is-anon { display: inline-grid; place-items: center; color: var(--muted); font: 600 calc(var(--s, 32px) * .36) var(--sans); }
+/* Bring your agent as on postquantum.provably.fast: the copy and its button beside the prompt in a terminal. */
+.starks-agent { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: center; gap: 24px clamp(32px, 5vw, 72px); }
+.starks-agent-copy { display: grid; gap: 10px; align-content: start; }
+.starks-agent-lead { margin: 0; max-width: 44ch; color: var(--ink-2); font-size: 16px; }
+.starks-agent-copy .agent-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 4px 0 0; }
+.starks-agent-copy .prompt-status { padding: 0; }
+.starks-agent-copy .agent-note { margin: 0; }
+.starks-term { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: 0 24px 60px -40px rgb(0 0 0 / .6); }
+.starks-term-bar { display: flex; align-items: center; gap: 12px; margin: 0; padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--muted); font: 12px var(--code); }
+.starks-term-dots { display: inline-flex; gap: 6px; }
+.starks-term-dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
+.starks-prompt { margin: 0; padding: 20px 22px; color: var(--ink-2); font: 13.5px/1.65 var(--code); white-space: pre-wrap; overflow-wrap: anywhere; }
 /* Between a phone and a laptop (901 to 1100 px) the six columns kept their desktop minimums and the Read
    column ran past the board's edge; narrower minimums and gaps keep it inside. */
 @media (max-width: 1100px) and (min-width: 901px) {

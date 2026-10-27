@@ -90,6 +90,13 @@ class Validation(unittest.TestCase):
     def setUp(self):
         self.targets = m.load_targets()
 
+    def test_count_is_a_construction_at_a_size(self):
+        # A construction's count at one size reaches the site's record chart; anything else is refused.
+        m.validate(self.targets, [row("M-0001", count={"n": 1024, "value": 7408})])
+        for bad in ({"n": 1024}, {"n": 0, "value": 3}, {"n": 1024, "value": "7408"}, [1024, 7408]):
+            with self.assertRaises(m.RecordError):
+                m.validate(self.targets, [row("M-0001", count=bad)])
+
     def test_builds_on_must_resolve(self):
         thread, record = "bt1_" + "0a" * 12, "rgr1_" + "ab" * 32
         m.validate(self.targets, [row("M-0001", builds_on=["DKT26", thread, record]), row("M-0002", builds_on=["M-0001"])])
