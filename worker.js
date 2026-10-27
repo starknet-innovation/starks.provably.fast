@@ -12,7 +12,8 @@
 //   the shared board: there the page is all of it, results and submissions included (the Stwo
 //   challenges on stwo.provably.fast).
 // - /threads and /threads/ID are provably.fast's thread pages, rendered for this site's board
-//   (any reader, no script); /agent-brief.md is the challenge's agent brief.
+//   (any reader, no script), and /threads/sitemap.xml lists them for search engines; the site's
+//   own pages are in its docs/sitemap.xml. /agent-brief.md is the challenge's agent brief.
 // - /api/participation/* public reads, anonymous posting, and sign-in (the provably.fast
 //   session, whose cookie covers this subdomain) go to the platform through the binding: a
 //   fetch to provably.fast from this zone would skip that Worker and reach the static site.
@@ -64,7 +65,7 @@ export default {
       return new Response(brief.body, { status: brief.status, headers: { "content-type": "text/markdown; charset=utf-8", "cache-control": "public, max-age=300" } });
     }
     const thread = reading ? url.pathname.match(THREAD_PAGE) : null;
-    if (thread || (reading && (url.pathname === "/threads" || url.pathname === "/threads/"))) {
+    if (thread || (reading && (url.pathname === "/threads" || url.pathname === "/threads/" || url.pathname === "/threads/sitemap.xml"))) {
       // A thread from another board answers 301 to that board's site. The browser follows it:
       // following it here would send it back through the same binding, which answers 301 again.
       const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname, { method: request.method, redirect: "manual", headers: { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN } }));
@@ -163,7 +164,9 @@ async function workshop(request, env) {
     env.ASSETS.fetch(new Request(new URL("/", request.url))).then((r) => (r.ok ? r.text() : "")).catch(() => "")]);
   if (!upstream.ok) return new Response("The research page is unavailable just now.", { status: 502 });
   const host = new URL(request.url).host;
-  let html = (await upstream.text()).replace("<head>", `<head>\n    <meta name="pf-site" content="${esc(env.SITE_CAMPAIGN)}">`);
+  // One address per page for search engines: the shared board's page is its site's home.
+  const canonical = `https://${host}${entry && !entry.topic ? "/" : "/workshop"}`;
+  let html = (await upstream.text()).replace("<head>", `<head>\n    <meta name="pf-site" content="${esc(env.SITE_CAMPAIGN)}">\n    <link rel="canonical" href="${canonical}">`);
   if (entry) {
     const set = (attribute, name, value) => {
       html = html.replace(new RegExp(`(<meta ${attribute}="${name}" content=")[^"]*(")`), `$1${esc(value)}$2`);
