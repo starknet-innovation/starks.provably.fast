@@ -357,6 +357,12 @@ a.starks-item:hover { background: var(--card-hi); }
 .kit-model.is-quiet { border-style: dashed; }
 .starks-agent { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; gap: 18px 32px; }
 .starks-agent .agent-note { margin: 0; }
+/* Between a phone and a laptop (901 to 1100 px) the six columns kept their desktop minimums and the Read
+   column ran past the board's edge; narrower minimums and gaps keep it inside. */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .starks-board .kit-table { --kit-cols: minmax(176px, 1.7fr) minmax(112px, 1fr) minmax(100px, .9fr) 90px minmax(112px, 1fr) 128px; }
+  .starks-board .kit-row { gap: 12px; padding: 14px 16px; }
+}
 @media (max-width: 900px) {
   .starks-panel, .starks-agent { grid-template-columns: 1fr; }
   .target-row { grid-template-areas: "name status" "known prove" "trend trend" "code code"; }
