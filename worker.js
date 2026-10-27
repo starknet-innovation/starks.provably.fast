@@ -182,6 +182,11 @@ async function workshop(request, env) {
     set("property", "og:url", `https://${host}/workshop`);
     // The Season 1 report is the shared board's, so a topic site's bar leaves it out.
     html = html.replace(/\s*<a href="https:\/\/provably\.fast\/retrospective\/[^"]*">[^<]*<\/a>/g, "");
+    // So are the shared board's words about Stwo and who runs it: a topic site speaks for its challenge
+    // alone (starks.provably.fast invites researchers from anywhere).
+    html = html.replace(/(<p class="kit-sub">)[^<]*(<\/p>)/, (_, open, close) => `${open}${esc(entry.note)}${close}`)
+      .replace(/\s*<p class="kit-orgs-row"><span class="kit-org-label">Run by<\/span><a class="kit-org kit-org-sf"[^>]*><\/a><\/p>/, "")
+      .replace(/(<p class="ws-lede">Every thread and result, in the order it arrived\.)[^<]*(<\/p>)/, "$1$2");
     for (const [attribute, prefix] of [["property", "og"], ["name", "twitter"]]) {
       set(attribute, `${prefix}:title`, entry.title);
       set(attribute, `${prefix}:description`, entry.note);

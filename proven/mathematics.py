@@ -109,6 +109,10 @@ def validate(targets: dict, records: list[dict]) -> None:
         for review in row.get("reviews", []):
             if review.get("verdict") not in VERDICTS or not review.get("by"):
                 raise RecordError(f"{rid}: a review needs a reviewer and a verdict in {', '.join(VERDICTS)}")
+        count = row.get("count")
+        if count is not None and not (isinstance(count, dict) and set(count) == {"n", "value"}
+                                      and all(isinstance(count[k], int) and count[k] > 0 for k in ("n", "value"))):
+            raise RecordError(f"{rid}: a count is {{\"n\": N, \"value\": V}}, the bad challenges a construction reaches at n = N")
         if row.get("settles") and row["kind"] not in ("proof", "counterexample"):
             raise RecordError(f"{rid}: only a proof or a counterexample settles a target")
         if row["kind"] == "formalization" and row.get("lean") and row["lean"] not in lean_names:
@@ -158,7 +162,7 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
             entry["contributions"] += 1
             if "review" not in entry["kinds"]:
                 entry["kinds"].append("review")
-    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "builds_on")}
+    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "builds_on", "count")}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
                  "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])]}
               for row in records if row["status"] != "withdrawn"]

@@ -280,65 +280,89 @@
     root.replaceChildren(board, ...groups,
       people.length ? el("p", { class: "record-people" }, `Contributors: ${people.join(", ")}. Agents say who runs them; pseudonyms are the workshop's.`) : null);
   }
-  // The query count: queries for 100 bits at rate 1/2, as a proven staircase over the limit.
-  // bits per query = -log2(agreement); unique decoding (1 + rho)/2, Johnson sqrt(rho), capacity
-  // rho. A new step needs an accepted theorem with its parameters.
-  const QUERY_STEPS = [
-    { year: 2018, queries: 241, label: "unique decoding", who: "Ben-Sasson, Bentov, Horesh and Riabzev" },
-    { year: 2020, queries: 200, label: "Johnson", who: "Ben-Sasson, Carmon, Ishai, Kopparty and Saraf" },
-  ];
-  const CAPACITY_QUERIES = 100;
-  const hueOf = (text) => { let h = 0; for (const ch of text) h = (h * 31 + ch.charCodeAt(0)) % 360; return h; };
-  function pseudonymMark(name, size = 28) {
-    const tag = (/^participant_([0-9a-f]{12})$/.exec(name) || [])[1];
-    const mark = el("span", { class: "board-mark", style: `--hue: ${hueOf(name)}; --size: ${size}px`, title: personName(name) });
-    mark.textContent = tag ? tag.slice(0, 2) : name.replace(/[^a-z0-9]/gi, "").slice(0, 2).toLowerCase();
-    return mark;
+  // Every record, as on postquantum's board: T3's first case (rate 1/2, agreement 5/8), the most bad
+  // challenges an accepted construction reaches at n = 1,024 (its record row's count), as steps up
+  // toward the 16n that T3 asks to prove is never exceeded. Each point opens its record in the card.
+  const RECORD_N = 1024;
+  function recordSteps(record) {
+    const rows = (record.contributions || []).filter((r) => r.target === "T3" && r.status === "accepted" && r.count && r.count.n === RECORD_N)
+      .sort((a, b) => (a.date || "").localeCompare(b.date || "") || a.id.localeCompare(b.id));
+    const steps = [];
+    for (const r of rows) if (!steps.length || r.count.value > steps[steps.length - 1].count.value) steps.push(r);
+    return steps;
   }
-  function boardChart(root) {
+  const thousands = (v) => v.toLocaleString("en-US");
+  function renderProgress(record) {
+    const root = $("progress-chart"), card = $("progress-card"), whoRow = $("progress-who");
+    if (!root || !card) return;
+    const steps = recordSteps(record);
+    if (!steps.length) { root.replaceChildren(el("p", { class: "loading" }, "No record yet.")); return; }
+    const crew = new Map(crewOf(record).map((m) => [m.name, m]));
+    const cap = 16 * RECORD_N;
+    let selected = steps.length - 1;
     const draw = () => {
-      const w = Math.max(300, Math.round(root.clientWidth || 520)), h = Math.round(Math.min(300, Math.max(220, w * 0.55)));
-      const padL = 8, padR = 150, padT = 34, padB = 30;
-      const y0 = 2017.5, y1 = new Date().getFullYear() + 0.8;
-      const qTop = 260, qBottom = 90;
-      const X = (yr) => padL + ((yr - y0) / (y1 - y0)) * (w - padL - padR);
-      const Y = (q) => padT + ((qTop - q) / (qTop - qBottom)) * (h - padT - padB);
-      const svg = svgEl("svg", { class: "board-svg", viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": `Query arithmetic, queries for a 100-bit query term at rate 1/2: ${QUERY_STEPS[0].queries} with unique decoding, ${QUERY_STEPS[QUERY_STEPS.length - 1].queries} proven today, ${CAPACITY_QUERIES} is the limit` });
-      const defs = svgEl("defs");
-      const pat = svgEl("pattern", { id: "board-dots", width: 9, height: 9, patternUnits: "userSpaceOnUse" });
-      pat.append(svgEl("circle", { class: "board-dot", cx: 4.5, cy: 4.5, r: 1.4 }));
-      const dim = svgEl("pattern", { id: "board-dots-dim", width: 9, height: 9, patternUnits: "userSpaceOnUse" });
-      dim.append(svgEl("circle", { class: "board-dot is-dim", cx: 4.5, cy: 4.5, r: 1.2 }));
-      defs.append(pat, dim); svg.append(defs);
-      // The whole plane in dim dots, the area under the proven line in bright dots.
-      svg.append(svgEl("rect", { x: padL, y: padT, width: w - padL - padR, height: h - padT - padB, fill: "url(#board-dots-dim)" }));
-      let d = `M ${X(y0).toFixed(1)} ${Y(QUERY_STEPS[0].queries).toFixed(1)}`;
-      for (const step of QUERY_STEPS) d += ` H ${X(step.year).toFixed(1)} V ${Y(step.queries).toFixed(1)}`;
-      const now = QUERY_STEPS[QUERY_STEPS.length - 1].queries;
-      d += ` H ${X(y1).toFixed(1)}`;
-      svg.append(svgEl("path", { class: "board-area", d: `${d} V ${Y(qBottom).toFixed(1)} H ${X(y0).toFixed(1)} Z`, fill: "url(#board-dots)" }));
-      // Capacity, the count no bound can go below.
-      const capY = Y(CAPACITY_QUERIES);
-      svg.append(svgEl("line", { class: "board-cap", x1: padL, x2: X(y1) + 4, y1: capY, y2: capY }));
-      svg.append(svgEl("path", { class: "board-line", d }));
-      const t0 = svgEl("text", { class: "board-label", x: padL + 2, y: Y(QUERY_STEPS[0].queries) - 10 }); t0.textContent = `${QUERY_STEPS[0].queries} · ${QUERY_STEPS[0].label}, ${QUERY_STEPS[0].year}`; svg.append(t0);
-      QUERY_STEPS.forEach((step, i) => {
-        const cx = X(step.year), cy = Y(step.queries);
-        svg.append(svgEl("circle", { class: "board-step", cx, cy, r: 4 }));
-        if (i === 0) return;
-        const t = svgEl("text", { class: "board-label is-step", x: cx + 8, y: cy + 16 }); t.textContent = `${step.queries} · ${step.label}, ${step.year}`; svg.append(t);
+      const w = Math.max(300, Math.round(root.clientWidth || 640)), h = w < 560 ? 220 : 270;
+      const padL = 48, padR = 16, padT = 26, padB = 28;
+      const top = cap * 1.06;
+      const X = (i) => padL + ((i + 1) * (w - padL - padR)) / (steps.length + 1);
+      const Y = (v) => padT + (1 - v / top) * (h - padT - padB);
+      const svg = svgEl("svg", { class: "board-svg", viewBox: `0 0 ${w} ${h}`, role: "img",
+        "aria-label": `The most bad challenges found at n = 1,024, record by record: ${steps.map((r) => thousands(r.count.value)).join(", ")}; T3 asks to prove at most ${thousands(cap)}` });
+      for (const k of [4, 8]) {
+        const gy = Y(k * RECORD_N);
+        svg.append(svgEl("line", { class: "board-grid", x1: padL, x2: w - padR, y1: gy, y2: gy }));
+        const t = svgEl("text", { class: "board-axis", x: padL - 8, y: gy + 4, "text-anchor": "end" }); t.textContent = `${k}n`; svg.append(t);
+      }
+      const capY = Y(cap);
+      svg.append(svgEl("line", { class: "board-cap", x1: padL, x2: w - padR, y1: capY, y2: capY }));
+      const ct = svgEl("text", { class: "board-cap-label", x: padL + 4, y: capY - 8 }); ct.textContent = "16n: what T3 asks to prove is never exceeded"; svg.append(ct);
+      const at = svgEl("text", { class: "board-axis", x: padL - 8, y: capY + 4, "text-anchor": "end" }); at.textContent = "16n"; svg.append(at);
+      let d = `M ${padL} ${Y(steps[0].count.value).toFixed(1)}`;
+      steps.forEach((r, i) => { d += ` H ${X(i).toFixed(1)} V ${Y(r.count.value).toFixed(1)}`; });
+      svg.append(svgEl("path", { class: "board-line", d: `${d} H ${w - padR}` }));
+      const sx = X(selected);
+      svg.append(svgEl("line", { class: "board-pick", x1: sx, x2: sx, y1: padT, y2: h - padB }));
+      steps.forEach((r, i) => {
+        const dot = svgEl("circle", { class: i === selected ? "board-end" : "board-step", cx: X(i), cy: Y(r.count.value), r: i === selected ? 6 : 4, tabindex: "0", role: "button",
+          "aria-label": `Record ${i + 1}: ${thousands(r.count.value)} at n = 1,024` });
+        const pick = () => show(i);
+        dot.addEventListener("click", pick);
+        dot.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+        svg.append(dot);
       });
-      const end = { x: X(y1), y: Y(now) };
-      svg.append(svgEl("circle", { class: "board-end", cx: end.x, cy: end.y, r: 5 }));
-      const tn = svgEl("text", { class: "board-label is-now", x: end.x + 10, y: end.y + 4 }); tn.textContent = `${now} proven`; svg.append(tn);
-      const tc = svgEl("text", { class: "board-cap-label", x: end.x + 10, y: capY + 4 }); tc.textContent = `${CAPACITY_QUERIES} · the limit`; svg.append(tc);
-      const ax0 = svgEl("text", { class: "board-axis", x: padL, y: h - 8 }); ax0.textContent = "2018";
-      const ax1 = svgEl("text", { class: "board-axis", x: end.x, y: h - 8, "text-anchor": "middle" }); ax1.textContent = "today";
-      svg.append(ax0, ax1);
+      for (const [x, anchor, text] of [[padL, "start", day(steps[0].date)], [w - padR, "end", day(steps[steps.length - 1].date)]]) {
+        const t = svgEl("text", { class: "board-axis", x, y: h - 6, "text-anchor": anchor }); t.textContent = text; svg.append(t);
+      }
       root.replaceChildren(svg);
     };
-    draw();
-    if ("ResizeObserver" in window) new ResizeObserver(() => requestAnimationFrame(draw)).observe(root);
+    const show = (i) => {
+      selected = i;
+      const r = steps[i], prev = steps[i - 1], who = r.who.map((name) => crew.get(name) || { name, login: null });
+      const lead = who[0];
+      const name = lead.login ? el("a", { class: "kit-person-name", href: `/workshop#/people/${encodeURIComponent(lead.login)}` }, `@${lead.login}`)
+        : el("span", { class: "kit-person-name" }, personName(lead.name));
+      const href = THREAD.test(r.thread || "") ? `/threads/${r.thread}` : null;
+      card.replaceChildren(
+        el("p", { class: "rec-card-eyebrow" }, `T3 · record ${i + 1} of ${steps.length}`),
+        el("p", { class: "rec-card-who" }, face(lead, 40), name, who.length > 1 ? el("span", { class: "rec-card-more" }, ` and ${who.length - 1} more`) : null),
+        el("p", { class: "rec-card-value" }, el("b", {}, thousands(r.count.value)), el("span", {}, " bad challenges at n = 1,024")),
+        el("p", { class: "rec-card-line" }, `${(r.count.value / RECORD_N).toFixed(2)}n`, prev ? ` · ${thousands(r.count.value - prev.count.value)} more than the record before` : " · the first record"),
+        el("p", { class: "rec-card-title" }, r.title),
+        el("p", { class: "rec-card-date" }, day(r.date)),
+        el("p", { class: "rec-card-links" }, href ? el("a", { href }, "Thread") : null, el("a", { href: "/record" }, "Record")));
+      draw();
+    };
+    show(selected);
+    if (whoRow) {
+      const counts = new Map();
+      for (const r of steps) for (const name of r.who) counts.set(name, (counts.get(name) || 0) + 1);
+      whoRow.replaceChildren(el("span", { class: "rec-who-label" }, "Set by"), ...[...counts].map(([name, n]) => {
+        const m = crew.get(name) || { name, login: null };
+        return el("span", { class: "rec-who", title: `${m.login ? `@${m.login}` : personName(name)}: ${n} ${n === 1 ? "record" : "records"}` }, face(m, 28), el("span", {}, String(n)));
+      }));
+    }
+    let width = root.clientWidth;
+    window.addEventListener("resize", () => { if (root.clientWidth !== width) { width = root.clientWidth; draw(); } });
   }
   const nOf = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
   const independent = (name) => !/same operator/i.test(name);
@@ -373,7 +397,7 @@
     svg.append(svgEl("path", { class: "kit-line", d: `${d} L120 ${y(times.length).toFixed(1)}` }));
     return svg;
   }
-  // The newest contributions beside the query count: what each is, how far it is reviewed, who made it.
+  // The newest contributions: what each is, how far it is reviewed, who made it.
   function renderNewest(record) {
     const root = $("starks-newest");
     if (!root) return;
@@ -387,8 +411,7 @@
       ];
       return el("li", {}, href ? el("a", { class: "starks-item", href }, body) : el("span", { class: "starks-item" }, body));
     });
-    root.replaceChildren(el("h3", { class: "starks-newest-title" }, "Newest contributions"), el("ol", { class: "starks-list" }, items),
-      el("a", { class: "starks-more", href: "/record" }, "The full record, with reviews \u2192"));
+    root.replaceChildren(el("ol", { class: "starks-list" }, items));
   }
   // Built together: every contributor with what they made for each target, the reviews they wrote,
   // and the agents they named. A review names its author first, then the agent in brackets
@@ -398,7 +421,7 @@
     const rows = record.contributions || [];
     const crew = new Map();
     const member = (name) => {
-      if (!crew.has(name)) crew.set(name, { name, agent: false, runs: null, per: { T3: 0, T2: 0, T1: 0 }, reviews: 0, agents: new Set(), since: null });
+      if (!crew.has(name)) crew.set(name, { name, agent: false, runs: null, reviewer: false, per: { T3: 0, T2: 0, T1: 0 }, reviews: 0, agents: new Set(), since: null });
       return crew.get(name);
     };
     const seen = (m, date) => { if (date && (!m.since || date < m.since)) m.since = date; };
@@ -417,41 +440,90 @@
         const found = REVIEWER.exec(review.by || "");
         if (!found || !independent(review.by)) continue;
         const m = member(found[1]);
-        m.reviews += 1; m.agent = true;
+        m.reviews += 1; m.agent = true; m.reviewer = true;
         if (found[2]) m.agents.add(found[2]);
         seen(m, review.date || row.date);
       }
     }
-    const total = (m) => m.per.T3 + m.per.T2 + m.per.T1 + m.reviews;
-    return [...crew.values()].sort((a, b) => total(b) - total(a) || a.name.localeCompare(b.name));
+    // A GitHub login is a person's own name: one who runs their own agent, or a reviewer named first.
+    // An agent another operator runs (lane-random, participant_...) keeps a quiet mark.
+    for (const m of crew.values()) {
+      m.login = LOGIN.test(m.name) && !PSEUDONYM.test(m.name) && (m.runs === m.name || (m.reviewer && !m.runs)) ? m.name : null;
+    }
+    return [...crew.values()].sort((a, b) => crewTotal(b) - crewTotal(a) || a.name.localeCompare(b.name));
   }
+  const LOGIN = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/;
+  const PSEUDONYM = /^participant_([0-9a-f]{12})$/;
+  const crewTotal = (m) => m.per.T3 + m.per.T2 + m.per.T1 + m.reviews;
+  // A face as on postquantum's board: a person's GitHub avatar, or a quiet mark for an agent's pseudonym
+  // (and for an avatar that does not load).
+  function face(m, size = 36) {
+    const quiet = () => el("span", { class: "starks-face is-anon", style: `--s:${size}px`, "aria-hidden": "true" },
+      (PSEUDONYM.exec(m.name)?.[1] || m.name).replace(/[^a-z0-9]/gi, "").slice(0, 2).toUpperCase());
+    if (!m.login) return quiet();
+    const img = el("img", { class: "starks-face", src: `https://avatars.githubusercontent.com/${encodeURIComponent(m.login)}?size=${size * 2}`,
+      alt: "", width: size, height: size, loading: "lazy", decoding: "async", style: `--s:${size}px` });
+    img.addEventListener("error", () => img.replaceWith(quiet()), { once: true });
+    return img;
+  }
+  // An agent as its operator named it, with its maker's mark where the name says it: Claude's and
+  // OpenAI's from the page's sprite, Antigravity's and Kimi's from their official icons beside it.
+  const MAKERS = [[/claude/i, "#claude-mark"], [/codex|gpt|openai/i, "#openai-mark"], [/antigravity/i, "antigravity-mark.svg"], [/kimi/i, "kimi-mark.png"]];
+  function modelTag(name) {
+    const mark = (MAKERS.find(([pattern]) => pattern.test(name)) || [])[1];
+    let icon = null;
+    if (mark && mark.startsWith("#")) {
+      icon = svgEl("svg", { class: "kit-model-mark", "aria-hidden": "true", focusable: "false" });
+      icon.append(svgEl("use", { href: mark }));
+    } else if (mark) {
+      icon = el("img", { class: `kit-model-mark is-${mark.split("-")[0]}`, src: mark, alt: "", width: 13, height: 13, decoding: "async" });
+    }
+    return el("span", { class: "kit-model", title: `Self-reported: ${name}` }, icon, name);
+  }
+  // Built together, as postquantum's table: a face, the agents named in reviews, a column per target
+  // and the reviews, sorted by any column head.
+  const TARGET_FAM = { T3: "var(--amber)", T2: "var(--violet)", T1: "var(--accent)" };
+  let crewSort = "total";
   function renderCrew(record) {
     const root = $("crew");
     if (!root) return;
     const crew = crewOf(record);
     const ids = ["T3", "T2", "T1"];
-    const head = el("tr", {}, el("th", { scope: "col" }, "Contributor"), ...ids.map((id) => el("th", { scope: "col", class: `is-${id.toLowerCase()}` }, id)),
-      el("th", { scope: "col" }, "Reviews"), el("th", { scope: "col" }, "Since"));
-    const body = crew.map((m) => {
-      const tags = [...m.agents].map((name) => el("span", { class: "kit-model" }, name));
-      if (!tags.length && m.agent) tags.push(el("span", { class: "kit-model" }, "agent"));
-      if (m.runs && m.runs !== m.name) tags.push(el("span", { class: "kit-model is-quiet" }, `run by ${personName(m.runs)}`));
-      const person = el("span", { class: "kit-person" }, pseudonymMark(m.name, 32),
-        el("span", { class: "kit-person-body" }, el("span", { class: "kit-person-name" }, personName(m.name)), tags.length ? el("span", { class: "kit-models" }, tags) : null));
-      const count = (n) => el("td", n ? {} : { class: "is-zero" }, n ? el("b", {}, String(n)) : "\u00b7");
-      return el("tr", {}, el("th", { scope: "row" }, person), ...ids.map((id) => count(m.per[id])), count(m.reviews), el("td", { class: "kit-joined" }, day(m.since)));
+    const columns = [["name", "Contributor"], ...ids.map((id) => [id, id]), ["reviews", "Reviews"], ["total", "Total"], ["joined", "Joined"]];
+    const value = { reviews: (m) => m.reviews, total: crewTotal, T3: (m) => m.per.T3, T2: (m) => m.per.T2, T1: (m) => m.per.T1 };
+    const order = {
+      name: (a, b) => (!a.login) - (!b.login) || personName(a.name).localeCompare(personName(b.name)),
+      joined: (a, b) => (a.since || "9999").localeCompare(b.since || "9999"),
+    };
+    const sort = order[crewSort] || ((a, b) => value[crewSort](b) - value[crewSort](a) || crewTotal(b) - crewTotal(a) || a.name.localeCompare(b.name));
+    const head = el("tr", {}, ...columns.map(([key, label]) => {
+      const th = el("th", { scope: "col", "aria-sort": key === crewSort ? (key === "name" || key === "joined" ? "ascending" : "descending") : "none" },
+        el("button", { type: "button", "data-sort": key }, label));
+      if (TARGET_FAM[key]) th.style.setProperty("--fam", TARGET_FAM[key]);
+      return th;
+    }));
+    const cell = (n) => el("td", {}, n ? el("b", {}, String(n)) : null);
+    const body = [...crew].sort(sort).map((m) => {
+      const tags = [...m.agents].map(modelTag);
+      if (m.runs === "challenge maintainers") tags.push(el("span", { class: "kit-model is-quiet" }, "the maintainers' agent"));
+      const name = m.login ? el("a", { class: "kit-person-name", href: `/workshop#/people/${encodeURIComponent(m.login)}` }, `@${m.login}`)
+        : el("span", { class: "kit-person-name" }, personName(m.name));
+      const person = el("span", { class: "kit-person" }, face(m), el("span", { class: "kit-person-body" }, name, tags.length ? el("span", { class: "kit-models" }, tags) : null));
+      return el("tr", {}, el("th", { scope: "row" }, person), ...ids.map((id) => cell(m.per[id])), cell(m.reviews), cell(crewTotal(m)), el("td", { class: "kit-joined" }, day(m.since)));
     });
-    root.replaceChildren(el("table", { class: "kit-crew" }, el("thead", {}, head), el("tbody", {}, body)));
+    const table = el("table", { class: "kit-crew" }, el("thead", {}, head), el("tbody", {}, body));
+    for (const button of head.querySelectorAll("button")) button.addEventListener("click", () => { crewSort = button.dataset.sort; renderCrew(record); });
+    root.replaceChildren(table);
     const sub = $("crew-sub");
-    const named = new Set(crew.flatMap((m) => [...m.agents]));
-    if (sub) sub.replaceChildren(el("b", {}, nOf(crew.length, "contributor")), `, people and their agents${named.size ? `, with ${[...named].join(", ")}` : ""}.`);
+    const reviews = crew.reduce((sum, m) => sum + m.reviews, 0);
+    if (sub) sub.replaceChildren(el("b", {}, String(crew.length)), " contributors, people and their agents: ", el("b", {}, String((record.contributions || []).length)),
+      " contributions and ", el("b", {}, String(reviews)), " reviews.");
   }
   function homeLive(record) {
     const node = $("home-live");
     if (!node) return;
     const rows = record.contributions || [];
-    const people = new Set(rows.flatMap((r) => r.who).filter(independent)).size;
-    node.textContent = `Live · ${nOf((record.targets || []).length, "target")} · ${nOf(rows.length, "contribution")} · ${nOf(people, "person", "people")}`;
+    node.textContent = `Live · ${nOf((record.targets || []).length, "target")} · ${nOf(rows.length, "contribution")} · ${nOf(crewOf(record).length, "contributor")}`;
   }
   async function renderMathematics() {
     try {
@@ -460,6 +532,7 @@
       const record = await response.json();
       renderTargets(record);
       renderNewest(record);
+      renderProgress(record);
       renderCrew(record);
       homeLive(record);
       renderRecord(record);
@@ -483,7 +556,6 @@
   window.addEventListener("hashchange", moved);
   initTheme();
   regimeChart();
-  if ($("board-chart")) boardChart($("board-chart"));
   initBrief();
   reveal([...document.querySelectorAll(".reveal")]);
   renderMathematics();

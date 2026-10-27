@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-10-27T20:00:09+00:00",
+ "generated": "2026-10-27T21:14:46+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -55,6 +55,7 @@
    "url": null,
    "thread": "bt1_18bc5409e37c2ad42e65f55d",
    "builds_on": [],
+   "count": null,
    "who": [
     "participant_5992277f3a8b"
    ],
@@ -71,6 +72,7 @@
    "url": null,
    "thread": "bt1_5d39cc287ef17e8f4e0bfc43",
    "builds_on": [],
+   "count": null,
    "who": [
     "participant_5992277f3a8b"
    ],
@@ -89,6 +91,7 @@
    "builds_on": [
     "M-0017"
    ],
+   "count": null,
    "who": [
     "participant_1d925b5543ae"
    ],
@@ -112,6 +115,10 @@
    "builds_on": [
     "M-0017"
    ],
+   "count": {
+    "n": 1024,
+    "value": 7408
+   },
    "who": [
     "participant_dbbfaeddbe89"
    ],
@@ -133,6 +140,10 @@
    "url": null,
    "thread": "bt1_51f872ea400b903fa51fe545",
    "builds_on": [],
+   "count": {
+    "n": 1024,
+    "value": 7296
+   },
    "who": [
     "participant_1d925b5543ae"
    ],
@@ -157,6 +168,7 @@
     "M-0015",
     "M-0014"
    ],
+   "count": null,
    "who": [
     "nadai2010"
    ],
@@ -175,6 +187,7 @@
    "builds_on": [
     "M-0014"
    ],
+   "count": null,
    "who": [
     "adrienlacombe"
    ],
@@ -199,6 +212,10 @@
     "M-0013",
     "M-0012"
    ],
+   "count": {
+    "n": 1024,
+    "value": 2992
+   },
    "who": [
     "omarespejel"
    ],
@@ -226,6 +243,10 @@
    "builds_on": [
     "M-0012"
    ],
+   "count": {
+    "n": 1024,
+    "value": 2800
+   },
    "who": [
     "adrienlacombe"
    ],
@@ -254,6 +275,10 @@
     "M-0011",
     "M-0007"
    ],
+   "count": {
+    "n": 1024,
+    "value": 2304
+   },
    "who": [
     "adrienlacombe"
    ],
@@ -285,6 +310,7 @@
    "builds_on": [
     "M-0007"
    ],
+   "count": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -309,6 +335,7 @@
     "DKTZ26",
     "M-0007"
    ],
+   "count": null,
    "who": [
     "participant_a549d771d932"
    ],
@@ -328,6 +355,7 @@
     "KKH26",
     "M-0007"
    ],
+   "count": null,
    "who": [
     "participant_76f90b5bdad9"
    ],
@@ -346,6 +374,7 @@
    "builds_on": [
     "DKT26"
    ],
+   "count": null,
    "who": [
     "participant_d36c13dad8f8"
    ],
@@ -364,6 +393,7 @@
    "builds_on": [
     "M-0001"
    ],
+   "count": null,
    "who": [
     "lane-random"
    ],
@@ -382,6 +412,7 @@
    "builds_on": [
     "M-0003"
    ],
+   "count": null,
    "who": [
     "participant_59b459ae3e96"
    ],
@@ -401,6 +432,7 @@
     "M-0003",
     "DKTZ26"
    ],
+   "count": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -424,6 +456,7 @@
    "builds_on": [
     "M-0003"
    ],
+   "count": null,
    "who": [
     "participant_d709f2e0e773"
    ],
@@ -443,6 +476,7 @@
     "DKT26",
     "M-0001"
    ],
+   "count": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -461,6 +495,7 @@
    "builds_on": [
     "M-0001"
    ],
+   "count": null,
    "who": [
     "participant_4370a4f467f7"
    ],
@@ -484,6 +519,7 @@
    "builds_on": [
     "DKT26"
    ],
+   "count": null,
    "who": [
     "lane-random"
    ],
@@ -741,5 +777,5 @@
    ]
   }
  ],
- "source": "514d1982"
+ "source": "8b872d8d"
 }
