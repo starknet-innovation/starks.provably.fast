@@ -359,7 +359,16 @@ path.board-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-l
 .target-status { display: flex; flex-wrap: wrap; gap: 6px; }
 .target-row .kit-name-top { flex-wrap: nowrap; align-items: flex-start; }
 .target-row .kit-dot { margin-top: 8px; }
-.starks-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); align-items: start; gap: 18px 28px; }
+.starks-panel { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); align-items: start; gap: 18px 28px; }
+/* The pet stacks blocks on the record's panel, a block per record; the heading keeps clear of it. */
+.starks-progress { --tower: clamp(132px, 11.5vw, 164px); }
+.starks-progress .kit-band-head { padding-right: calc(var(--tower) * .93 + 40px); }
+.starks-tower { position: absolute; right: 28px; bottom: calc(100% - 2px); width: auto; height: var(--tower); pointer-events: none; user-select: none; }
+@media (max-width: 640px) {
+  .starks-progress { --tower: 96px; }
+  .starks-progress .kit-band-head { padding-right: calc(var(--tower) * .93 + 18px); }
+  .starks-tower { right: 14px; }
+}
 .starks-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
 .starks-latest .starks-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; }
 @media (max-width: 900px) { .starks-latest .starks-list { grid-template-columns: 1fr; } }
@@ -379,6 +388,17 @@ a.starks-item:hover { background: var(--card-hi); }
    empty cell. */
 .starks-face { width: var(--s, 32px); height: var(--s, 32px); flex: none; border-radius: 50%; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line-2); object-fit: cover; }
 .kit-model-mark.is-kimi { border-radius: 3px; }
+/* What the challenge is built on, under the hero, centred when the strip wraps on a phone. Lean's logo
+   as Lean FRO provides it, with the trademark sign its policy asks for; Harbor's logo is its name in a
+   monospace face; ArkLib, Mathlib and Comparator have no logo, so their names stand in. */
+.starks-built { justify-content: center; }
+.starks-built a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+.starks-built a:hover, .starks-built a:focus-visible { color: var(--ink); }
+.built-lean { display: inline-flex; align-items: flex-start; gap: 2px; }
+.built-lean svg { width: auto; height: 20px; fill: none; stroke: #386ee0; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.built-lean sup { color: var(--muted); font-size: 9px; line-height: 1; }
+.built-name { font-size: 16px; font-weight: 700; letter-spacing: -.02em; }
+.built-name.is-harbor { font: 500 16px var(--code); letter-spacing: -.01em; }
 /* The professor at the board, wider than the kit's standing pets: a little taller, so the board reads. */
 .kit-art img.starks-professor { height: clamp(220px, 22vw, 320px); }
 @media (max-width: 900px) { .kit-art img.starks-professor { height: 210px; } }
