@@ -91,6 +91,17 @@ main:focus { outline: none; }
 .bar-nav a { padding: 6px 10px; border-radius: 999px; color: var(--muted); text-decoration: none; font-size: 14px; transition: color .2s, background-color .2s; }
 .bar-nav a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 7%, transparent); }
 .bar-end { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+/* The autoresearch club on Telegram, as on postquantum.provably.fast: a pill in the bar, a second
+   button beside the hero's, and a line where people bring their agent. */
+.tg-link { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--ink); font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color .2s; }
+.tg-link:hover { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+.tg-link svg { flex: none; width: 15px; height: 15px; }
+.tg-link.tg-club { gap: 10px; height: auto; padding: 14px 24px; font-size: 17px; }
+.tg-club svg { width: 18px; height: 18px; }
+.join-club a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.join-club a:hover { text-decoration: underline; }
+/* Between 861 and 960px the sections and the call to action leave it its icon alone. */
+@media (min-width: 861px) and (max-width: 960px) { .bar .tg-link { gap: 0; width: 36px; padding: 0; justify-content: center; font-size: 0; } }
 .cta {
   display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px;
   background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 500; font-size: 14px;
