@@ -13,7 +13,10 @@ listed challenge fails.
 
 For large n, list each distinct witness once in "witness_sets" and give a challenge's witness as
 its index there (the bulletin's proven/BadChallengeInstance@2): at n = 1024 that is tens of KiB
-instead of megabytes. Both forms certify the same way.
+instead of megabytes. For n in the thousands, give each witness as a hex bitmask over the domain in
+"witness_masks" (bit i of the number is domain index i) and list each witness's z together, as
+{"witness": index, "z": [...]} (@3). All three forms certify the same way. The report also counts
+the certified challenges whose agreement set has at least A + 1 points.
 
 Cost: interpolation is O(k^2) through the master product prod (X - x_j) and one synthetic
 division per point, and a witness shared by many challenges is interpolated once (P = F + z G,
@@ -92,7 +95,23 @@ def interpolable(points, values, k, p):
     return all(evaluate(c, x, p) == y for x, y in zip(points[k:], values[k:]))
 
 
-def check(inst):
+def expand(inst):
+    """@3's compact form as @2: each mask's set bits a witness, each group's z a challenge."""
+    if "witness_masks" not in inst:
+        return inst
+    sets = []
+    for mask in inst["witness_masks"]:
+        value = int(mask, 16)
+        sets.append([i for i in range(value.bit_length()) if value >> i & 1])
+    challenges = [{"z": z, "witness": group["witness"]} for group in inst["challenges"] for z in group["z"]]
+    rest = {key: value for key, value in inst.items() if key != "witness_masks"}
+    return {**rest, "witness_sets": sets, "challenges": challenges}
+
+
+def check(inst, strict=None):
+    """The distinct bad z and the failures. Given a set, strict collects the bad z whose agreement
+    set has at least A + 1 points."""
+    inst = expand(inst)
     p, k, A = inst["p"], inst["k"], inst["A"]
     dom, f, g = inst["domain"], inst["f"], inst["g"]
     n = len(dom)
@@ -137,14 +156,18 @@ def check(inst):
             failures.append((z, "explained: f and g are jointly interpolable on S"))
             continue
         bad.add(z)
+        if strict is not None and len(S) > A:
+            strict.add(z)
     return bad, failures
 
 
 if __name__ == "__main__":
-    inst = json.load(open(sys.argv[1]))
-    bad, failures = check(inst)
+    inst = expand(json.load(open(sys.argv[1])))
+    strict = set()
+    bad, failures = check(inst, strict)
     n, k, A = len(inst["domain"]), inst["k"], inst["A"]
     print(json.dumps({"n": n, "k": k, "A": A, "rate": round(k / n, 4), "gap": round((A - k) / n, 4),
                       "listed": len(inst["challenges"]), "certified_distinct_bad": len(bad),
+                      "certified_at_A_plus_1": len(strict),
                       "per_n": round(len(bad) / n, 3), "failures": failures[:5], "n_failures": len(failures)}))
     sys.exit(1 if failures else 0)
