@@ -104,6 +104,13 @@ class Validation(unittest.TestCase):
             with self.subTest(ref=ref), self.assertRaises(m.RecordError):
                 m.validate(self.targets, [row("M-0001", builds_on=[ref])])
 
+    def test_new_rows_build_on_a_graph_record(self):
+        record = "rgr1_" + "ab" * 32
+        m.validate(self.targets, [row("M-0021"), row("M-0022", builds_on=[record]),
+                                  row("M-0023", "source"), row("M-0024", "review", builds_on=["M-0022"])])
+        with self.assertRaises(m.RecordError):
+            m.validate(self.targets, [row("M-0022", builds_on=["DKT26"])])
+
     def test_a_row_names_the_thread_it_was_posted_in(self):
         m.validate(self.targets, [row("M-0001", thread="bt1_" + "0a" * 12)])
         with self.assertRaises(m.RecordError):

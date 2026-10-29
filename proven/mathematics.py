@@ -18,7 +18,7 @@ thread they were posted in. A target's status follows from the rows:
     python3 -m proven.mathematics check                 # validate both files
     python3 -m proven.mathematics board                 # writes results/mathematics.json
     python3 -m proven.mathematics record --target T1 --kind idea --title "..." --who NAME \\
-        [--agent --runs NAME] [--thread bt1_...] [--url URL] [--builds-on DKT26,M-0002,rgr1_...] [--settles]
+        [--agent --runs NAME] [--thread bt1_...] [--url URL] --builds-on rgr1_...[,DKT26,M-0002] [--settles]
     python3 -m proven.mathematics review M-0003 --by NAME --verdict holds|fails|partial --url URL
     python3 -m proven.mathematics reviewing M-0003 --by NAME     # who is reading it now (the queue shows it)
     python3 -m proven.mathematics accept M-0003         # or: refute / withdraw, with --reason "..."
@@ -50,6 +50,9 @@ RECORD_ID = re.compile(r"^M-\d{4}$")
 # A provably.fast thread, and a record in the mathematics research graph.
 THREAD_ID = re.compile(r"^bt1_[0-9a-f]{24}$")
 GRAPH_RECORD = re.compile(r"^rgr1_[0-9a-f]{64}$")
+# From this row on, a contribution builds on at least one graph record, so every result on the board
+# is on the graph too. Earlier rows predate the rule; a source or a review has no lead of its own.
+GRAPH_REQUIRED_FROM = 22
 
 
 class RecordError(ValueError):
@@ -111,6 +114,9 @@ def validate(targets: dict, records: list[dict]) -> None:
         for ref in row.get("builds_on", []):
             if not (ref in sources or ref in seen or THREAD_ID.match(ref) or GRAPH_RECORD.match(ref)):
                 raise RecordError(f"{rid}: builds_on {ref!r} is not a source, an earlier record, a thread or a graph record")
+        if int(rid[2:]) >= GRAPH_REQUIRED_FROM and row["kind"] not in ("source", "review") \
+                and not any(GRAPH_RECORD.match(ref) for ref in row.get("builds_on", [])):
+            raise RecordError(f"{rid}: builds_on names no graph record (rgr1_...); propose its lead first")
         for review in row.get("reviews", []):
             if review.get("verdict") not in VERDICTS or not review.get("by"):
                 raise RecordError(f"{rid}: a review needs a reviewer and a verdict in {', '.join(VERDICTS)}")
