@@ -361,6 +361,40 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .lane-dot.is-record { stroke: var(--amber); stroke-width: 2.4; }
 .lane-svg a:hover .lane-dot, .lane-svg a:focus-visible .lane-dot { stroke: var(--ink); stroke-width: 2.6; }
 .lane-svg a:focus { outline: none; }
+.certmap .board-chart { overflow-x: auto; }
+.certmap .certmap-svg.is-grid { min-width: 820px; }
+.certmap-views { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+.certmap-views button { cursor: pointer; background: none; font: inherit; font-size: 12.5px; }
+.certmap-views button[aria-pressed="true"] { border-color: var(--ink-2); background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
+.certmap-guide { max-width: 72ch; margin: 0 0 10px; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
+/* Rate colours kept clear of T1 to T3's blue, violet and amber and the record's green. */
+.certmap { --rate-14: #22aab5; --rate-18: #ee7d3a; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .certmap { --rate-14: #007a85; --rate-18: #c2410c; } }
+:root[data-theme="light"] .certmap { --rate-14: #007a85; --rate-18: #c2410c; }
+.certmap .is-r18 { --hue: var(--rate-18); }
+.certmap .is-r14 { --hue: var(--rate-14); }
+.certmap .is-other { --hue: var(--muted); }
+.certmap .is-r12 { --hue: var(--ink); }
+.certmap .regime-aim { margin: 0 0 12px; max-width: 80ch; }
+.certmap-key { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.certmap-key i { width: 7px; height: 7px; margin-right: -8px; border: 1.3px solid var(--ink-2); border-radius: 50%; }
+.certmap-key i.is-lead { background: var(--ink-2); }
+.certmap-rate-key { display: inline-flex; align-items: center; gap: 6px; }
+.certmap-rate-key::before { content: ""; width: 14px; height: 3px; border-radius: 2px; background: var(--hue); }
+.certmap-series { color: var(--hue); transition: opacity .15s; }
+.certmap-svg.is-focus .certmap-series:not(.is-lit) { opacity: .15; }
+.certmap-line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.certmap-best { fill: currentColor; stroke: var(--bg-2); stroke-width: 1.5; }
+.certmap-sub { fill: currentColor; opacity: .3; }
+.certmap-label { fill: currentColor; font: 650 12px var(--sans); paint-order: stroke; stroke: var(--bg-2); stroke-width: 4px; stroke-linejoin: round; }
+.certmap-rate { fill: var(--hue); font: 650 12px var(--sans); }
+.certmap-g { color: var(--ink); }
+.certmap-cell { fill: color-mix(in srgb, var(--ink) var(--heat), transparent); }
+.certmap-g:hover .certmap-cell { stroke: var(--ink); stroke-width: 1.5; }
+.certmap-dot { fill: var(--bg-2); stroke: currentColor; stroke-width: 1.1; }
+.certmap-dot.is-lead { fill: currentColor; }
+.certmap-svg a:hover :is(.certmap-dot, .certmap-sub, .certmap-best), .certmap-svg a:focus-visible :is(.certmap-dot, .certmap-sub, .certmap-best) { r: 5; opacity: 1; }
+.certmap-svg .board-axis.is-on { fill: var(--ink); font-weight: 700; }
 .record-progress { gap: 14px 24px; }
 .record-progress .rec-card { background: var(--bg); }
 @media (max-width: 760px) { .record-progress { grid-template-columns: 1fr; } }
