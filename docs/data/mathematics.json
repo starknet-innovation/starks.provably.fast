@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-10-29T04:20:39+00:00",
+ "generated": "2026-10-29T11:18:27+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -218,7 +218,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "Every punctured-pullback tower over both six-classes to level 512: two more eleven-pair towers with 1,496 slots, and no three-dimensional quotient",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-14",
    "url": null,
    "thread": "bt1_ba5c0da885f5744398dd24c1",
@@ -237,11 +237,13 @@
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": null
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-10-29"
    },
-   "credits": []
+   "credits": [
+    "omarespejel"
+   ]
   },
   {
    "id": "M-0014",
@@ -389,9 +391,12 @@
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": null
+    "state": "reviewing",
+    "label": "under review by challenge maintainers since 29 Oct",
+    "by": [
+     "challenge maintainers"
+    ],
+    "since": "2026-10-29"
    },
    "credits": []
   },
@@ -547,9 +552,12 @@
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-10-10"
+    "state": "reviewing",
+    "label": "under review by challenge maintainers since 29 Oct",
+    "by": [
+     "challenge maintainers"
+    ],
+    "since": "2026-10-29"
    },
    "credits": []
   },
@@ -609,7 +617,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "At least 3.12n with leftover points: any T1Uniform constant is at least 3.12",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-10",
    "url": null,
    "thread": "bt1_2d4fe4b0beaf68697656ebb0",
@@ -628,18 +636,20 @@
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-10-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-10-29"
    },
-   "credits": []
+   "credits": [
+    "lane-random"
+   ]
   },
   {
    "id": "M-0001",
    "target": "T1",
    "kind": "lemma",
    "title": "At least 3n bad challenges on the subgroup of order n, at rates just above 1/4",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-10",
    "url": null,
    "thread": "bt1_2d4fe4b0beaf68697656ebb0",
@@ -658,9 +668,9 @@
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-10-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-10-29"
    },
    "credits": []
   }
@@ -677,7 +687,8 @@
    "credits": {
     "made": [
      "M-0012",
-     "M-0013"
+     "M-0013",
+     "M-0015"
     ],
     "reviewed": [
      "M-0014"
@@ -726,9 +737,12 @@
     "lemma"
    ],
    "credits": {
-    "made": [],
+    "made": [
+     "M-0001"
+    ],
     "reviewed": [],
     "built_on": [
+     "M-0002",
      "M-0012"
     ]
    }
@@ -821,7 +835,8 @@
    "credits": {
     "made": [],
     "reviewed": [
-     "M-0014"
+     "M-0014",
+     "M-0015"
     ],
     "built_on": []
    }
@@ -897,7 +912,9 @@
     "reviewed": [
      "M-0013"
     ],
-    "built_on": []
+    "built_on": [
+     "M-0015"
+    ]
    }
   },
   {
@@ -923,7 +940,9 @@
     "lemma"
    ],
    "credits": {
-    "made": [],
+    "made": [
+     "M-0002"
+    ],
     "reviewed": [],
     "built_on": []
    }
@@ -1102,5 +1121,5 @@
    }
   }
  ],
- "source": "d41fe711"
+ "source": "696fde77"
 }
