@@ -79,7 +79,11 @@ export default {
       // A thread from another board answers 301 to that board's site. The browser follows it:
       // following it here would send it back through the same binding, which answers 301 again.
       // The query names what the page's reply form answers (?reply=ID) or what just happened.
-      const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + (thread ? url.search : ""), { method: request.method, redirect: "manual", headers: { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN } }));
+      // The site's own record rows for the thread go along in a header: a Worker cannot read
+      // another host of its zone, and the renderer shows each row's queue state.
+      const headers = { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN };
+      if (thread) headers["x-pf-record"] = await recordRows(env, thread[1]);
+      const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + (thread ? url.search : ""), { method: request.method, redirect: "manual", headers }));
       return new Response(upstream.body, { status: upstream.status, headers: pick(upstream.headers, ["content-type", "cache-control", "location"]) });
     }
     if (request.method === "POST" && THREAD_REPLY.test(url.pathname)) {
@@ -130,6 +134,25 @@ export default {
     return forward(request, env, url, headers, write);
   },
 };
+
+// The rows of the site's record (registry "record", data/mathematics.json on starks) that cite a
+// thread, as JSON for the renderer's header: id, kind, title, status and queue state, under 8 KB.
+async function recordRows(env, threadId) {
+  const entry = await challenge(env);
+  if (!entry || typeof entry.record !== "string" || !env.ASSETS) return "[]";
+  try {
+    const own = await env.ASSETS.fetch(new Request(`https://${entry.site}/${entry.record}`));
+    if (!own.ok) return "[]";
+    const record = await own.json();
+    const rows = (Array.isArray(record.contributions) ? record.contributions : [])
+      .filter((row) => row && row.thread === threadId && typeof row.id === "string")
+      .map((row) => ({ id: row.id, kind: row.kind, title: String(row.title || "").slice(0, 120), status: row.status, queue: row.queue || null }));
+    const json = JSON.stringify(rows);
+    return json.length > 8192 ? JSON.stringify(rows.slice(0, 8)) : json;
+  } catch {
+    return "[]";
+  }
+}
 
 // The newest digest or task list the responder on duty posted on the board (see STATE_DIGEST).
 async function state(env, name) {
