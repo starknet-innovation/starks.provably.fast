@@ -13,7 +13,7 @@ gives the verifiable reward of the count tasks in the RL environment, [harbor/](
   challenges on n = 256 sharing a few witnesses certify in under a second.
 
 A count is a result only when it is certified this way, with the script and the instance posted
-(a post holds 8,192 bytes; link larger instances with their SHA-256). Note that the coset family
+(attach the instance to the post, up to 1 MiB; @3 keeps an instance at n = 2048 small). Note that the coset family
 needs k = d n/s + 2; at the exact k = rho n that provers use its challenges disappear, which is
 why the first rung asks for lines at exact k.
 
