@@ -20,7 +20,12 @@ thread they were posted in. A target's status follows from the rows:
     python3 -m proven.mathematics record --target T1 --kind idea --title "..." --who NAME \\
         [--agent --runs NAME] [--thread bt1_...] [--url URL] [--builds-on DKT26,M-0002,rgr1_...] [--settles]
     python3 -m proven.mathematics review M-0003 --by NAME --verdict holds|fails|partial --url URL
-    python3 -m proven.mathematics accept M-0003         # or: refute / withdraw
+    python3 -m proven.mathematics reviewing M-0003 --by NAME     # who is reading it now (the queue shows it)
+    python3 -m proven.mathematics accept M-0003         # or: refute / withdraw, with --reason "..."
+
+Every row carries a queue state the site and the thread pages show: posted (waiting for a reader),
+under review by whom since when, accepted, or declined with its reason. An accepted row credits
+its authors, its reviewers, and the authors of every record it builds on.
 
 Standard library only; no network.
 """
@@ -113,6 +118,11 @@ def validate(targets: dict, records: list[dict]) -> None:
         if count is not None and not (isinstance(count, dict) and set(count) == {"n", "value"}
                                       and all(isinstance(count[k], int) and count[k] > 0 for k in ("n", "value"))):
             raise RecordError(f"{rid}: a count is {{\"n\": N, \"value\": V}}, the bad challenges a construction reaches at n = N")
+        for reader in row.get("reviewing", []):
+            if not reader.get("by") or not reader.get("since"):
+                raise RecordError(f"{rid}: a reviewing entry names who reads it and since when")
+        if row.get("reason") is not None and not isinstance(row["reason"], str):
+            raise RecordError(f"{rid}: a reason is a sentence")
         if row.get("settles") and row["kind"] not in ("proof", "counterexample"):
             raise RecordError(f"{rid}: only a proof or a counterexample settles a target")
         if row["kind"] == "formalization" and row.get("lean") and row["lean"] not in lean_names:
@@ -144,9 +154,84 @@ def target_status(target: dict, records: list[dict]) -> dict:
             "contributions": len(mine)}
 
 
+def _day(iso: str | None) -> str:
+    """2026-10-27 -> 27 Oct, for the queue's words."""
+    if not iso:
+        return ""
+    try:
+        return datetime.strptime(iso[:10], "%Y-%m-%d").strftime("%-d %b")
+    except ValueError:
+        return iso
+
+
+def queue_state(row: dict) -> dict:
+    """Where a row stands, in the words the site and the thread pages show."""
+    if row["status"] == "accepted":
+        return {"state": "accepted", "label": "accepted", "since": row.get("accepted_on") or row.get("date")}
+    if row["status"] in ("refuted", "withdrawn"):
+        word = "declined" if row["status"] == "refuted" else "withdrawn"
+        reason = row.get("reason")
+        return {"state": word, "label": f"{word}: {reason}" if reason else word, "reason": reason}
+    reading = row.get("reviewing", [])
+    if reading:
+        names = ", ".join(r["by"] for r in reading)
+        since = min(r["since"] for r in reading)
+        return {"state": "reviewing", "label": f"under review by {names} since {_day(since)}", "by": [r["by"] for r in reading], "since": since}
+    reviews = row.get("reviews", [])
+    if reviews:
+        verdicts = sorted({r.get("verdict", "") for r in reviews})
+        return {"state": "reviewed", "label": "reviewed: " + ", ".join(verdicts) + ", awaiting a decision", "since": reviews[-1].get("date")}
+    if row.get("count"):
+        return {"state": "certified", "label": "certified count, awaiting entry", "since": row.get("date")}
+    return {"state": "posted", "label": "posted, awaiting a reviewer", "since": row.get("date")}
+
+
+def credits(records: list[dict]) -> dict[str, dict]:
+    """What each accepted row pays out: its authors (made), its reviewers (reviewed) and the authors
+    of the records it builds on (built on). By name."""
+    by_id = {row["id"]: row for row in records}
+    out: dict[str, dict] = {}
+
+    def pay(name: str, kind: str, rid: str) -> None:
+        bucket = out.setdefault(name, {"made": [], "reviewed": [], "built_on": []})[kind]
+        if rid not in bucket:
+            bucket.append(rid)
+
+    for row in records:
+        if row["status"] != "accepted":
+            continue
+        for who in row["who"]:
+            pay(who["name"], "made", row["id"])
+        for review in row.get("reviews", []):
+            name = reviewer_name(review.get("by", ""))
+            if name and name.lower() not in authors(row):
+                pay(name, "reviewed", row["id"])
+        for ref in row.get("builds_on", []):
+            base = by_id.get(ref)
+            if base is None or base["status"] == "withdrawn":
+                continue
+            for who in base["who"]:
+                if who["name"].lower() not in authors(row):
+                    pay(who["name"], "built_on", row["id"])
+    return out
+
+
+REVIEWER = re.compile(r"^([A-Za-z0-9][\w.-]*)")
+
+
+def reviewer_name(by: str) -> str:
+    """A review's "by" starts with the reviewer's name and may go on to say what they checked. The
+    maintainers' own checks ("challenge maintainers (same operator, ...)") credit nobody."""
+    if "same operator" in by.lower() or by.lower().startswith(("challenge maintainers", "provably.fast")):
+        return ""
+    found = REVIEWER.match(by.strip())
+    return found.group(1) if found else ""
+
+
 def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
     validate(targets, records)
     people: dict[str, dict] = {}
+    paid = credits(records)
     for row in records:
         if row["status"] == "withdrawn":
             continue
@@ -162,9 +247,17 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
             entry["contributions"] += 1
             if "review" not in entry["kinds"]:
                 entry["kinds"].append("review")
+    for name, entry in people.items():
+        entry["credits"] = paid.get(name, {"made": [], "reviewed": [], "built_on": []})
+    for name, credit in paid.items():
+        if name not in people:
+            people[name] = {"name": name, "agent": False, "runs": None, "contributions": 0, "kinds": [], "credits": credit}
     public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "builds_on", "count")}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
-                 "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])]}
+                 "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])],
+                 "queue": queue_state(row),
+                 "credits": sorted({w["name"] for ref in row.get("builds_on", []) for w in next((r for r in records if r["id"] == ref), {"who": []})["who"]}
+                                   - {w["name"] for w in row["who"]}) if row["status"] == "accepted" else []}
               for row in records if row["status"] != "withdrawn"]
     return {
         "schema": "proven-mathematics/0",
@@ -214,8 +307,14 @@ def main(argv: list[str] | None = None) -> int:
     rev.add_argument("--by", required=True)
     rev.add_argument("--verdict", required=True, choices=VERDICTS)
     rev.add_argument("--url")
+    reading = sub.add_parser("reviewing", help="note who is reading a record now; the queue shows it")
+    reading.add_argument("record")
+    reading.add_argument("--by", required=True)
+    reading.add_argument("--done", action="store_true", help="remove the reader instead")
     for name in ("accept", "refute", "withdraw"):
-        sub.add_parser(name).add_argument("record")
+        decision = sub.add_parser(name)
+        decision.add_argument("record")
+        decision.add_argument("--reason", help="one sentence the queue shows (declined: ...)")
     args = parser.parse_args(argv)
     targets, records = load_targets(), load_records()
     today = datetime.now(timezone.utc).date().isoformat()
@@ -248,14 +347,30 @@ def main(argv: list[str] | None = None) -> int:
             validate(targets, records)
             rewrite(records)
             print(f"{args.record}: review by {args.by} ({args.verdict})")
+        elif args.command == "reviewing":
+            row = next((r for r in records if r["id"] == args.record), None)
+            if row is None:
+                raise RecordError(f"no record {args.record}")
+            readers = [r for r in row.get("reviewing", []) if r["by"].lower() != args.by.lower()]
+            if not args.done:
+                readers.append({"by": args.by, "since": today})
+            row["reviewing"] = readers
+            validate(targets, records)
+            rewrite(records)
+            print(f"{args.record}: {queue_state(row)['label']}")
         elif args.command in ("accept", "refute", "withdraw"):
             row = next((r for r in records if r["id"] == args.record), None)
             if row is None:
                 raise RecordError(f"no record {args.record}")
             row["status"] = {"accept": "accepted", "refute": "refuted", "withdraw": "withdrawn"}[args.command]
+            row.pop("reviewing", None)
+            if args.command == "accept":
+                row["accepted_on"] = today
+            if args.reason:
+                row["reason"] = args.reason
             validate(targets, records)
             rewrite(records)
-            print(f"{args.record}: {row['status']}")
+            print(f"{args.record}: {queue_state(row)['label']}")
     except RecordError as error:
         print(f"refused: {error}", file=sys.stderr)
         return 2

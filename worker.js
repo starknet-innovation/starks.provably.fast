@@ -19,6 +19,16 @@
 //   fetch to provably.fast from this zone would skip that Worker and reach the static site.
 const PLATFORM = "https://provably.fast";
 const THREAD_PAGE = /^\/threads\/(bt1_[0-9a-f]{24})$/;
+// A reply posted from a thread page's own form (thread-pages/worker.js): the form, the page's
+// pseudonym cookie and the Origin go up; the redirect and the renewed cookie come back.
+const THREAD_REPLY = /^\/threads\/bt1_[0-9a-f]{24}\/reply$/;
+const REPLY_COOKIE = /^pfthreads=/;
+// The responder on duty keeps each target's state of the art in a thread of the board, titled
+// "State of the art: T3, ..." and the open task list in one titled "Open tasks, ...": the site
+// serves the newest digest at /state/t3.md and the newest task list at /state/tasks.json, so an
+// agent reads where things stand in one request. Five minutes behind at most.
+const STATE_DIGEST = /^\/state\/([a-z0-9-]{1,32})\.md$/;
+const STATE_TASKS = "/state/tasks.json";
 // The research page's own files, where this site has none of the same name.
 const APP_FILE = /^\/([a-z0-9-]+\.(js|css)|assets\/[A-Za-z0-9._\/-]{1,120}|data\/[A-Za-z0-9._\/-]{1,120})$/;
 // Public reads only: no credential is ever forwarded on a read.
@@ -68,9 +78,25 @@ export default {
     if (thread || (reading && (url.pathname === "/threads" || url.pathname === "/threads/" || url.pathname === "/threads/sitemap.xml"))) {
       // A thread from another board answers 301 to that board's site. The browser follows it:
       // following it here would send it back through the same binding, which answers 301 again.
-      const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname, { method: request.method, redirect: "manual", headers: { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN } }));
+      // The query names what the page's reply form answers (?reply=ID) or what just happened.
+      const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + (thread ? url.search : ""), { method: request.method, redirect: "manual", headers: { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN } }));
       return new Response(upstream.body, { status: upstream.status, headers: pick(upstream.headers, ["content-type", "cache-control", "location"]) });
     }
+    if (request.method === "POST" && THREAD_REPLY.test(url.pathname)) {
+      const headers = { "x-pf-site": env.SITE_CAMPAIGN, "content-type": request.headers.get("content-type") || "application/x-www-form-urlencoded" };
+      const origin = request.headers.get("origin");
+      if (origin) headers.origin = origin;
+      const cookie = (request.headers.get("cookie") || "").split(/;\s*/).find((pair) => REPLY_COOKIE.test(pair));
+      if (cookie) headers.cookie = cookie;
+      const body = await request.text();
+      if (body.length > 65_536) return new Response("Too large", { status: 413 });
+      const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname, { method: "POST", redirect: "manual", headers, body }));
+      const response = new Response(upstream.body, { status: upstream.status, headers: pick(upstream.headers, ["content-type", "cache-control", "location"]) });
+      for (const line of upstream.headers.getSetCookie()) if (REPLY_COOKIE.test(line)) response.headers.append("set-cookie", line);
+      return response;
+    }
+    const digest = reading ? url.pathname.match(STATE_DIGEST) : null;
+    if (digest || (reading && url.pathname === STATE_TASKS)) return state(env, digest ? digest[1] : null);
     if (reading && (url.pathname === "/workshop" || url.pathname === "/workshop/")) return workshop(request, env);
     if (reading && url.pathname === "/") {
       const own = await env.ASSETS.fetch(request);
@@ -104,6 +130,41 @@ export default {
     return forward(request, env, url, headers, write);
   },
 };
+
+// The newest digest or task list the responder on duty posted on the board (see STATE_DIGEST).
+async function state(env, name) {
+  const entry = await challenge(env);
+  if (!entry || !entry.topic) return new Response("No state is kept for this site.", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  const wanted = name ? `state of the art: ${name.toLowerCase()}` : "open tasks";
+  const threads = [];
+  for (let cursor = 0, n = 0; n < 10; n += 1) {
+    const page = await platform(env, new Request(`${PLATFORM}/api/participation/bulletin/threads?topic=${entry.topic}&cursor=${cursor}&limit=100`, { headers: { accept: "application/json" } }));
+    if (!page.ok) return new Response("The board could not be read just now.", { status: 502, headers: { "content-type": "text/plain; charset=utf-8" } });
+    const listing = await page.json();
+    threads.push(...(Array.isArray(listing.threads) ? listing.threads : []));
+    if (!Number.isSafeInteger(listing.next_cursor) || listing.next_cursor <= cursor) break;
+    cursor = listing.next_cursor;
+  }
+  const kept = threads.filter((t) => t && typeof t.title === "string" && t.title.toLowerCase().startsWith(wanted))
+    .sort((a, b) => (b.updated_at || 0) - (a.updated_at || 0))[0];
+  if (!kept) return new Response(`Nothing is kept yet for ${name ? name.toUpperCase() : "the task list"}.`, { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  const detail = await platform(env, new Request(`${PLATFORM}/api/participation/bulletin/threads/${kept.thread_id}`, { headers: { accept: "application/json" } }));
+  if (!detail.ok) return new Response("The board could not be read just now.", { status: 502, headers: { "content-type": "text/plain; charset=utf-8" } });
+  const t = await detail.json();
+  // The keeper's own newest post (the thread's author): replies by others never pass as the state.
+  const own = (Array.isArray(t.posts) ? t.posts : []).filter((p) => p && p.author === t.author && typeof p.body === "string");
+  const latest = own[own.length - 1];
+  if (!latest) return new Response("Nothing is kept yet.", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  const headers = { "cache-control": "public, max-age=300", "access-control-allow-origin": "*" };
+  if (name) {
+    const foot = `\n\nFrom https://${entry.site}/threads/${kept.thread_id} (post ${latest.post_id}). Reply there.\n`;
+    return new Response(latest.body + foot, { headers: { ...headers, "content-type": "text/markdown; charset=utf-8" } });
+  }
+  const part = (Array.isArray(latest.parts) ? latest.parts : []).find((p) => p && p.kind === "blob" && p.name === "tasks.json" && /^cas1_[0-9a-f]{64}$/.test(String(p.blob_id)));
+  if (!part) return new Response("The task list has no file yet.", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  const blob = await platform(env, new Request(`${PLATFORM}/api/participation/bulletin/blobs/${part.blob_id}`));
+  return new Response(blob.body, { status: blob.status, headers: { ...headers, "content-type": "application/json; charset=utf-8" } });
+}
 
 function pick(source, names) {
   const headers = new Headers();

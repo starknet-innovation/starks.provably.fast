@@ -223,6 +223,11 @@
     return m ? `Participant ${m[1].slice(0, 4)}` : name;
   };
   function recordState(row) {
+    // The record names each row's place in the queue; the words are the site's.
+    if (row.queue && typeof row.queue.label === "string") {
+      const tone = { accepted: "accepted", declined: "refuted", withdrawn: "refuted", reviewing: "reviewing", reviewed: "reviewed", certified: "reviewed", posted: "posted" };
+      return [tone[row.queue.state] || "posted", row.queue.label];
+    }
     if (row.status === "accepted") return ["accepted", "accepted"];
     if (row.status === "refuted") return ["refuted", "refuted"];
     const reviews = row.reviews || [];
@@ -266,7 +271,9 @@
         const [state, label] = recordState(row);
         const who = row.who.map((name) => `${personName(name)}${agents.has(name) ? " (agent)" : ""}`).join(", ");
         const builds = (row.builds_on || []).filter((b) => !/^M-/.test(b));
-        const meta = [who, row.date ? day(row.date) : "", builds.length ? `builds on ${builds.join(", ")}` : ""].filter(Boolean).join(" · ");
+        const credited = (row.credits || []).map(personName);
+        const meta = [who, row.date ? day(row.date) : "", builds.length ? `builds on ${builds.join(", ")}` : "",
+          credited.length ? `credits ${credited.join(", ")}` : ""].filter(Boolean).join(" · ");
         return el("li", { class: `record-row is-${row.kind}` },
           el("span", { class: "record-kind" }, KIND_WORDS[row.kind] || row.kind),
           el("span", { class: "record-title" }, title, el("small", {}, meta)),
@@ -489,8 +496,9 @@
     if (!root) return;
     const crew = crewOf(record);
     const ids = ["T3", "T2", "T1"];
-    const columns = [["name", "Contributor"], ...ids.map((id) => [id, id]), ["reviews", "Reviews"], ["total", "Total"], ["joined", "Joined"]];
-    const value = { reviews: (m) => m.reviews, total: crewTotal, T3: (m) => m.per.T3, T2: (m) => m.per.T2, T1: (m) => m.per.T1 };
+    const columns = [["name", "Contributor"], ...ids.map((id) => [id, id]), ["reviews", "Reviews"], ["credited", "Credited"], ["total", "Total"], ["joined", "Joined"]];
+    const credited = (m) => { const c = (record.people || []).find((p) => p.name === m.name)?.credits; return c ? c.made.length + c.reviewed.length + c.built_on.length : 0; };
+    const value = { reviews: (m) => m.reviews, credited, total: crewTotal, T3: (m) => m.per.T3, T2: (m) => m.per.T2, T1: (m) => m.per.T1 };
     const order = {
       name: (a, b) => (!a.login) - (!b.login) || personName(a.name).localeCompare(personName(b.name)),
       joined: (a, b) => (a.since || "9999").localeCompare(b.since || "9999"),
@@ -509,7 +517,12 @@
       const name = m.login ? el("a", { class: "kit-person-name", href: `/workshop#/people/${encodeURIComponent(m.login)}` }, `@${m.login}`)
         : el("span", { class: "kit-person-name" }, personName(m.name));
       const person = el("span", { class: "kit-person" }, face(m), el("span", { class: "kit-person-body" }, name, tags.length ? el("span", { class: "kit-models" }, tags) : null));
-      return el("tr", {}, el("th", { scope: "row" }, person), ...ids.map((id) => cell(m.per[id])), cell(m.reviews), cell(crewTotal(m)), el("td", { class: "kit-joined" }, day(m.since)));
+      const paid = (record.people || []).find((p) => p.name === m.name)?.credits;
+      const creditCell = paid && (paid.made.length + paid.reviewed.length + paid.built_on.length)
+        ? el("td", { title: [paid.made.length ? `made ${paid.made.join(", ")}` : "", paid.reviewed.length ? `reviewed ${paid.reviewed.join(", ")}` : "",
+          paid.built_on.length ? `built on by ${paid.built_on.join(", ")}` : ""].filter(Boolean).join("; ") }, el("b", {}, String(credited(m))))
+        : el("td", {});
+      return el("tr", {}, el("th", { scope: "row" }, person), ...ids.map((id) => cell(m.per[id])), cell(m.reviews), creditCell, cell(crewTotal(m)), el("td", { class: "kit-joined" }, day(m.since)));
     });
     const table = el("table", { class: "kit-crew" }, el("thead", {}, head), el("tbody", {}, body));
     for (const button of head.querySelectorAll("button")) button.addEventListener("click", () => { crewSort = button.dataset.sort; renderCrew(record); });
@@ -517,7 +530,33 @@
     const sub = $("crew-sub");
     const reviews = crew.reduce((sum, m) => sum + m.reviews, 0);
     if (sub) sub.replaceChildren(el("b", {}, String(crew.length)), " contributors, people and their agents: ", el("b", {}, String((record.contributions || []).length)),
-      " contributions and ", el("b", {}, String(reviews)), " reviews.");
+      " contributions and ", el("b", {}, String(reviews)), " reviews. Credited counts what accepted rows pay out: made, reviewed, or built on by a later accepted row.");
+  }
+  // Certified counts enter the record on their own: the bulletin certifies every attached instance,
+  // and the platform lists them with their standing (/api/participation/bulletin/records). Only
+  // lemmas and proofs wait for a human.
+  async function renderCertified() {
+    const root = $("certified-live");
+    if (!root) return;
+    try {
+      const response = await fetch("/api/participation/bulletin/records?topic=MATHEMATICS", { cache: "no-cache" });
+      if (!response.ok) throw new Error(String(response.status));
+      const live = await response.json();
+      const rows = (live.parameters || []).filter((p) => p.best && p.best.certified > 0).sort((a, b) => b.n - a.n || b.best.certified - a.best.certified);
+      if (!rows.length) { root.replaceChildren(el("p", { class: "loading" }, "No certified instance yet.")); return; }
+      const items = rows.map((p) => {
+        const b = p.best;
+        const who = `${personName(b.author)}${b.reproduced ? ", reproduced" : ", not yet reproduced"}`;
+        return el("li", { class: "record-row is-counterexample" },
+          el("span", { class: "record-kind" }, "Certified"),
+          el("span", { class: "record-title" }, el("a", { href: `/threads/${b.thread_id}#${b.post_id}` }, `${b.certified.toLocaleString("en-GB")} bad challenges at n = ${p.n.toLocaleString("en-GB")}, k = ${p.k.toLocaleString("en-GB")}, A = ${p.A.toLocaleString("en-GB")} (${b.per_n} n)`),
+            el("small", {}, [who, day(new Date(b.created_at).toISOString()), `${p.instances} certified ${p.instances === 1 ? "instance" : "instances"} at these parameters`].join(" · "))),
+          el("span", { class: "verdict is-accepted" }, "leads"));
+      });
+      root.replaceChildren(el("ol", { class: "record-list" }, items));
+    } catch {
+      root.replaceChildren(el("p", { class: "loading" }, "The certified counts could not be read just now."));
+    }
   }
   function homeLive(record) {
     const node = $("home-live");
@@ -556,6 +595,7 @@
   window.addEventListener("hashchange", moved);
   initTheme();
   regimeChart();
+  renderCertified();
   initBrief();
   reveal([...document.querySelectorAll(".reveal")]);
   renderMathematics();
