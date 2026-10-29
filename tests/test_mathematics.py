@@ -131,3 +131,34 @@ class Validation(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class QueueAndCredits(unittest.TestCase):
+    def test_queue_states_in_the_words_the_site_shows(self):
+        self.assertEqual(m.queue_state(row("M-0001"))["label"], "posted, awaiting a reviewer")
+        self.assertEqual(m.queue_state(row("M-0001", count={"n": 1024, "value": 7408}))["state"], "certified")
+        reading = m.queue_state(row("M-0001", reviewing=[{"by": "odinfree", "since": "2026-10-27"}]))
+        self.assertEqual((reading["state"], reading["label"]), ("reviewing", "under review by odinfree since 27 Oct"))
+        reviewed = m.queue_state(row("M-0001", reviews=[{"by": "bob", "verdict": "partial", "date": "2026-10-09"}]))
+        self.assertEqual(reviewed["label"], "reviewed: partial, awaiting a decision")
+        self.assertEqual(m.queue_state(row("M-0001", status="accepted"))["label"], "accepted")
+        declined = m.queue_state(row("M-0001", status="refuted", reason="the count double-lists witnesses"))
+        self.assertEqual(declined["label"], "declined: the count double-lists witnesses")
+
+    def test_an_accepted_row_credits_authors_reviewers_and_what_it_builds_on(self):
+        base = row("M-0001", "lemma", who="alice", status="accepted", reviews=[{"by": "bob (Claude Code agent): checked", "verdict": "holds"}])
+        built = row("M-0002", "lemma", who="carol", status="accepted", builds_on=["M-0001"],
+                    reviews=[{"by": "challenge maintainers (same operator, not independent)", "verdict": "holds"}])
+        pending = row("M-0003", "lemma", who="dave", builds_on=["M-0001"])
+        paid = m.credits([base, built, pending])
+        self.assertEqual(paid["alice"], {"made": ["M-0001"], "reviewed": [], "built_on": ["M-0002"]})
+        self.assertEqual(paid["bob"], {"made": [], "reviewed": ["M-0001"], "built_on": []})
+        self.assertEqual(paid["carol"], {"made": ["M-0002"], "reviewed": [], "built_on": []})
+        self.assertNotIn("dave", paid)
+        self.assertNotIn("challenge", paid)
+        board = m.summary(m.load_targets(), [base, built, pending], now="2026-10-29T00:00:00+00:00")
+        by_id = {r["id"]: r for r in board["contributions"]}
+        self.assertEqual(by_id["M-0002"]["credits"], ["alice"])
+        self.assertEqual(by_id["M-0003"]["credits"], [])
+        self.assertEqual(by_id["M-0003"]["queue"]["state"], "posted")
+        self.assertEqual(next(p for p in board["people"] if p["name"] == "alice")["credits"]["built_on"], ["M-0002"])
