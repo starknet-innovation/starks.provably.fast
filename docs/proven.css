@@ -27,6 +27,8 @@
   --amber: #f0bf00;
   --violet: #b18cff;
   --pink: #ec8ad6;
+  /* The proven-bounds panel: a tint of the accent over the card. */
+  --panel-up: color-mix(in srgb, var(--accent) 10%, var(--bg-2));
 }
 
 @media (prefers-color-scheme: light) {
@@ -38,6 +40,7 @@
     --record: #08703c; --record-ink: #f3efe4;
     --accent: #3a49c4; --platform: #0b6b74; --muted-node: #a39d8d;
     --coral: #ab3524; --amber: #7a5b00; --violet: #6a3fd0; --pink: #b0307f;
+    --panel-up: color-mix(in srgb, var(--accent) 7%, #fdfbf5);
   }
 }
 :root[data-theme="light"] {
@@ -48,6 +51,7 @@
   --record: #08703c; --record-ink: #f3efe4;
   --accent: #3a49c4; --platform: #0b6b74; --muted-node: #a39d8d;
   --coral: #ab3524; --amber: #7a5b00; --violet: #6a3fd0; --pink: #b0307f;
+  --panel-up: color-mix(in srgb, var(--accent) 7%, #fdfbf5);
 }
 
 * { box-sizing: border-box; }
@@ -156,17 +160,6 @@ path.board-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-l
 .rec-card-links { display: flex; gap: 16px; font-size: 14px; font-weight: 600; }
 .rec-card-links a { color: var(--accent); text-decoration: none; }
 .rec-card-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
-/* How many checks: four figures, borderless; the one T3 would reach in its family colour. */
-.starks-figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 28px; margin: 18px 0 0; }
-.starks-fig { display: grid; gap: 4px; margin: 0; }
-.starks-fig b { color: var(--ink); font: 650 clamp(30px, 3.4vw, 44px)/1 var(--display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-.starks-fig span { color: var(--muted); font-size: 13.5px; }
-.starks-fig.is-now b { color: var(--accent); }
-.starks-fig.is-target b { color: var(--amber); }
-.starks-fig.is-limit b { color: var(--muted); }
-.starks-checks .kit-note { margin: 16px 0 0; }
-@media (max-width: 640px) { .starks-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-
 /* Where each bound holds: agreement thresholds by rate, the bands between them. */
 .regime { margin: 26px 0 0; padding: 22px 22px 16px; border: 1px solid var(--line); border-radius: 16px; }
 @media (max-width: 640px) { .regime { padding: 16px 12px 12px; } }
@@ -527,17 +520,51 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .chapter.page { padding-top: clamp(28px, 4vw, 52px); }
 .bar-nav a[aria-current="page"] { color: var(--ink); background: color-mix(in srgb, var(--ink) 7%, transparent); }
 
-/* The home on the shared kit (kit.css, read from provably.fast): the targets board, the query count
-   beside the newest contributions, Built together and the brief. */
-.starks-board .kit-table { --kit-cols: minmax(230px, 1.7fr) minmax(150px, 1fr) minmax(120px, .8fr) 104px minmax(150px, 1fr) 150px; }
-.target-row.is-t3 { --fam: var(--amber); }
-.target-row.is-t2 { --fam: var(--violet); }
-.target-row.is-t1 { --fam: var(--accent); }
-.target-row .kit-fig b { font-size: 22px; font-weight: 600; }
-.target-row .kit-fig.is-lead b { color: var(--fam); font-size: 24px; }
-.target-status { display: flex; flex-wrap: wrap; gap: 6px; }
-.target-row .kit-name-top { flex-wrap: nowrap; align-items: flex-start; }
-.target-row .kit-dot { margin-top: 8px; }
+/* The home on the shared kit (kit.css, read from provably.fast). The three targets as cards in their
+   family colours: the gap from what is known to what is to prove, who is pushing each, its newest
+   find and a share button; one column with the card split in two on a tablet, stacked on a phone. */
+.tgt-wrap { position: relative; }
+.tgt-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.tgt-card { --fam: var(--accent); display: grid; grid-template-rows: auto auto auto 1fr auto auto; gap: 16px; min-width: 0; padding: 22px 22px 18px; border-radius: 20px; background: radial-gradient(120% 60% at 0% 0%, color-mix(in srgb, var(--fam) 12%, transparent), transparent 65%), var(--card); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fam) 16%, transparent); }
+.tgt-card.is-t3 { --fam: var(--amber); }
+.tgt-card.is-t2 { --fam: var(--violet); }
+.tgt-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; margin: 0; }
+.tgt-id { display: inline-flex; align-items: center; gap: 8px; color: var(--fam); font-size: 12.5px; font-weight: 600; }
+.tgt-id::before { content: ""; width: 8px; height: 8px; flex: none; border-radius: 50%; background: var(--fam); }
+.tgt-name { margin: 0; font: 600 21px/1.25 var(--display); letter-spacing: -.01em; text-wrap: balance; }
+.tgt-name a { color: var(--ink); text-decoration: none; }
+.tgt-name a:hover, .tgt-name a:focus-visible { text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; }
+.tgt-figs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: 10px; margin: 0; }
+.tgt-fig { display: grid; gap: 4px; min-width: 0; }
+.tgt-fig small { color: var(--muted); font-size: 12px; }
+.tgt-fig b { color: var(--ink-2); font: 600 30px/1.05 var(--display); letter-spacing: -.02em; }
+.tgt-fig.is-lead b { color: var(--fam); font-size: 36px; }
+.tgt-fig > span { color: var(--muted); font-size: 12.5px; line-height: 1.35; }
+.tgt-arrow { padding-top: 22px; color: var(--muted); font-size: 20px; }
+.tgt-people { display: grid; gap: 6px; align-content: start; }
+.tgt-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.tgt-names { min-width: 0; color: var(--ink); font-size: 13.5px; font-weight: 600; }
+.tgt-names a { color: inherit; text-decoration: none; }
+.tgt-names a:hover, .tgt-names a:focus-visible { color: var(--accent); }
+.tgt-stats { color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.tgt-people .kit-spark { height: 24px; margin-top: 4px; }
+.tgt-latest { display: grid; gap: 6px; margin: 0; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--ink) 4%, transparent); }
+.tgt-latest:empty { display: none; }
+.tgt-latest-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tgt-latest small { color: var(--muted); font-size: 12px; }
+.tgt-latest .verdict { font-size: 11.5px; padding: 2px 9px; }
+.tgt-latest a, .tgt-latest > span:last-child { display: -webkit-box; overflow: hidden; color: var(--ink); font-size: 14px; font-weight: 600; line-height: 1.4; text-decoration: none; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.tgt-latest a:hover, .tgt-latest a:focus-visible { color: var(--accent); }
+.tgt-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; }
+.tgt-actions [data-share] { margin-left: auto; }
+@media (max-width: 1060px) and (min-width: 701px) {
+  .tgt-list { grid-template-columns: 1fr; }
+  .tgt-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; grid-template-areas: "top top" "name people" "figs people" "figs latest" "figs actions"; gap: 14px 32px; }
+  .tgt-figs { align-self: start; }
+  .tgt-top { grid-area: top; } .tgt-name { grid-area: name; } .tgt-figs { grid-area: figs; }
+  .tgt-people { grid-area: people; } .tgt-latest { grid-area: latest; } .tgt-actions { grid-area: actions; }
+}
+@media (max-width: 700px) { .tgt-list { grid-template-columns: 1fr; } }
 .starks-panel { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); align-items: start; gap: 18px 28px; }
 /* The pet stacks blocks on the record's panel, a block per record; the heading keeps clear of it. */
 .starks-progress { --tower: clamp(132px, 11.5vw, 164px); }
@@ -548,21 +575,45 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
   .starks-progress .kit-band-head { padding-right: calc(var(--tower) * .93 + 18px); }
   .starks-tower { right: 14px; }
 }
-.starks-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
-.starks-latest .starks-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; }
-@media (max-width: 900px) { .starks-latest .starks-list { grid-template-columns: 1fr; } }
-.starks-item { display: grid; gap: 4px; padding: 8px 10px; border-radius: 12px; color: inherit; text-decoration: none; }
-a.starks-item:hover { background: var(--card-hi); }
-.starks-item-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
-.starks-kind { color: var(--muted); font-size: 12px; font-weight: 600; }
-.starks-kind.is-t3 { color: var(--amber); }
-.starks-kind.is-t2 { color: var(--violet); }
-.starks-kind.is-t1 { color: var(--accent); }
-.starks-item-title { display: -webkit-box; overflow: hidden; color: var(--ink); font-size: 13.5px; line-height: 1.4; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.starks-item small { color: var(--muted); font-size: 12.5px; }
-.starks-more { display: inline-block; margin: 8px 10px 0; color: var(--ink-2); font-size: 13px; text-decoration: none; }
-.starks-more:hover { color: var(--ink); }
+/* Latest advances: a card per find, newest first; the title opens the thread, the faces and names
+   credit who made it, and Share drafts a post on X. */
+.adv-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 18px 0 0; padding: 0; list-style: none; }
+.adv-card { --fam: var(--accent); position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: 10px; min-width: 0; padding: 18px 18px 14px; border-radius: 18px; background: var(--card); transition: background .2s var(--ease); }
+.adv-card.is-t3 { --fam: var(--amber); }
+.adv-card.is-t2 { --fam: var(--violet); }
+.adv-card:has(.adv-title:hover), .adv-card:has(.adv-title:focus-visible) { background: var(--card-hi); }
+.adv-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.adv-tag { display: inline-flex; align-items: center; gap: 7px; color: var(--fam); font-size: 12px; font-weight: 600; }
+.adv-tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--fam); }
+.adv-title { display: -webkit-box; overflow: hidden; color: var(--ink); font: 600 16.5px/1.35 var(--display); text-decoration: none; text-wrap: balance; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+a.adv-title::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+a.adv-title:focus-visible { outline: none; }
+.adv-card:has(a.adv-title:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.adv-by { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; padding-top: 8px; }
+.adv-faces { display: inline-flex; flex: none; }
+.adv-faces > * { box-shadow: 0 0 0 2px var(--card); }
+.adv-faces > * + * { margin-left: -9px; }
+.adv-names { display: grid; min-width: 0; color: var(--ink); font-size: 13px; font-weight: 600; }
+.adv-names > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.adv-names a { color: inherit; text-decoration: none; }
+.adv-names a:hover, .adv-names a:focus-visible { color: var(--accent); }
+.adv-names small { color: var(--muted); font-size: 12px; font-weight: 400; }
+.adv-share { display: inline-flex; flex: none; align-items: center; gap: 6px; margin-left: auto; padding: 6px 12px; border-radius: 999px; background: color-mix(in srgb, var(--ink) 9%, transparent); color: var(--ink); font-size: 12.5px; font-weight: 600; text-decoration: none; transition: background .2s, color .2s; }
+.adv-share:hover, .adv-share:focus-visible { background: var(--ink); color: var(--bg); }
+.adv-share svg { width: 12px; height: 12px; fill: currentColor; }
+.verdict.is-reviewing { border-color: color-mix(in srgb, var(--accent) 55%, transparent); color: var(--accent); }
+.starks-more { color: var(--ink-2); text-decoration: none; white-space: nowrap; }
+.starks-more:hover, .starks-more:focus-visible { color: var(--ink); }
+@media (max-width: 1020px) { .adv-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .adv-list { grid-template-columns: 1fr; } .adv-list > :nth-child(n + 5) { display: none; } }
 .kit-model.is-quiet { border-style: dashed; }
+/* Reviewers of the week, above the table: faces, names, and a button to thank them. */
+.crew-week { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 16px 0 0; color: var(--ink-2); font-size: 14px; }
+.crew-week .adv-faces > * { box-shadow: 0 0 0 2px var(--bg); }
+.crew-week-names { min-width: 0; flex: 1 1 18rem; }
+.crew-week-names b { color: var(--ink); font-weight: 600; }
+.crew-week-names a { color: var(--ink); text-decoration: none; }
+.crew-week-names a:hover, .crew-week-names a:focus-visible { color: var(--accent); }
 /* Built together as on postquantum.provably.fast (kit.css draws the table): faces, and nothing in an
    empty cell. */
 .starks-face { width: var(--s, 32px); height: var(--s, 32px); flex: none; border-radius: 50%; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line-2); object-fit: cover; }
@@ -594,22 +645,7 @@ a.starks-item:hover { background: var(--card-hi); }
 .starks-term-dots { display: inline-flex; gap: 6px; }
 .starks-term-dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
 .starks-prompt { margin: 0; padding: 20px 22px; color: var(--ink-2); font: 13.5px/1.65 var(--code); white-space: pre-wrap; overflow-wrap: anywhere; }
-/* Between a phone and a laptop (901 to 1100 px) the six columns kept their desktop minimums and the Read
-   column ran past the board's edge; narrower minimums and gaps keep it inside. */
-@media (max-width: 1100px) and (min-width: 901px) {
-  .starks-board .kit-table { --kit-cols: minmax(176px, 1.7fr) minmax(112px, 1fr) minmax(100px, .9fr) 90px minmax(112px, 1fr) 128px; }
-  .starks-board .kit-row { gap: 12px; padding: 14px 16px; }
-}
-@media (max-width: 900px) {
-  .starks-panel, .starks-agent { grid-template-columns: 1fr; }
-  .target-row { grid-template-areas: "name status" "known prove" "trend trend" "code code"; }
-  .target-row > :nth-child(1) { grid-area: name; }
-  .target-row > :nth-child(2) { grid-area: known; }
-  .target-row > :nth-child(3) { grid-area: prove; justify-items: end; text-align: right; }
-  .target-row > :nth-child(4) { grid-area: status; justify-self: end; }
-  .target-row > :nth-child(5) { grid-area: trend; }
-  .target-row > :nth-child(6) { grid-area: code; }
-}
+@media (max-width: 900px) { .starks-panel, .starks-agent { grid-template-columns: 1fr; } }
 
 /* The three targets in plain terms, under the board, in each target's colour. */
 section.starks-plain > .starks-plain-lead, section.starks-plain > .starks-plain-list { margin-top: 14px; }
@@ -617,32 +653,69 @@ section.starks-plain > .starks-plain-lead, section.starks-plain > .starks-plain-
 .starks-plain-lead a { color: var(--accent); }
 .starks-plain-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 6px 0 0; padding: 0; list-style: none; }
 .starks-plain-list li { --fam: var(--accent); display: grid; align-content: start; gap: 6px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); box-shadow: inset 0 3px 0 var(--fam); }
-.starks-plain-list li.is-t3 { --fam: var(--amber); }
-.starks-plain-list a { color: var(--accent); } .starks-plain-list li.is-t2 { --fam: var(--violet); }
+.starks-plain-list a { color: var(--accent); }
 .starks-plain-list p { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.55; }
 .starks-plain-list .starks-plain-id { color: var(--fam); font-size: 13px; font-weight: 700; }
 .starks-plain-list .starks-plain-ask { color: var(--ink); font-size: 15px; font-weight: 600; }
 @media (max-width: 860px) { .starks-plain-list { grid-template-columns: 1fr; } }
 .starks-plain-list li.is-yes { --fam: var(--record); } .starks-plain-list li.is-no { --fam: var(--coral); } .starks-plain-list li.is-check { --fam: var(--platform); }
-@media (min-width: 861px) and (max-width: 1100px) { .starks-plain-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* Rules v2: the two panels on the home page and the cells on the record page. */
-.bounds-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 36px; align-items: start; }
-.bounds-panel { min-width: 0; display: grid; gap: 10px; }
-.bounds-title { margin: 0; font: 600 17px/1.3 var(--display); color: var(--ink); }
-.bounds-sub, .bounds-read { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
-.bounds-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.bounds-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 6px 14px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; }
-.bounds-cell { color: var(--ink); }
-.bounds-marks { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; color: var(--ink-2); min-width: 0; }
-.bounds-cap { padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line-2); font-variant-numeric: tabular-nums; }
-.bounds-cap.is-cond { border-style: dashed; color: var(--muted); }
-.bounds-none, .bounds-proven, .bounds-state { color: var(--muted); font-size: 12.5px; }
-.bounds-row.is-closed .bounds-state { color: var(--amber); }
-.bounds-row.is-closed .bounds-marks a { color: var(--muted); }
-.bounds-spark { display: inline-flex; align-items: flex-end; gap: 2px; height: 22px; }
-.bounds-spark i { display: block; width: 6px; height: var(--h, 10%); background: var(--accent); border-radius: 1px; opacity: .85; }
-.bounds-row.is-closed .bounds-spark i { background: var(--muted); }
-.bounds-note { margin: 18px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+/* Rules v2's two panels as one table, a row per cell: the proven limit on a tinted panel on the left,
+   the best construction on a plain one on the right, state as tinted chips, no rules between rows. */
+.bounds-wrap { position: relative; margin-top: 18px; }
+.bounds-open { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; color: var(--ink); font-size: 15px; font-weight: 600; }
+.bounds-open-dot { width: 9px; height: 9px; flex: none; border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 4px color-mix(in srgb, var(--coral) 22%, transparent); }
+.bounds-week { max-width: 80ch; margin: -6px 0 14px 19px; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+.bounds-week b { color: var(--ink); }
+.bounds-table { width: calc(100% + 20px); margin: 0 -10px; border-collapse: separate; border-spacing: 10px 0; font-size: 14px; }
+.bounds-table th, .bounds-table td { padding: 11px 20px; text-align: left; vertical-align: top; font-weight: 400; }
+.bounds-table thead th { padding-block: 18px 10px; vertical-align: bottom; }
+.bounds-table .is-upper { background: var(--panel-up); }
+.bounds-table .is-lower { width: 21rem; background: var(--card); }
+.bounds-table thead .is-upper, .bounds-table thead .is-lower { border-radius: 18px 18px 0 0; }
+.bounds-table tbody tr:last-child .is-upper, .bounds-table tbody tr:last-child .is-lower { padding-bottom: 20px; border-radius: 0 0 18px 18px; }
+.bounds-table .bounds-cell { width: 12rem; padding-left: 0; }
+.bounds-table thead .bounds-cell { color: var(--muted); font-size: 13px; font-weight: 600; }
+.bounds-th { display: block; color: var(--ink); font: 600 16px/1.3 var(--display); }
+.bounds-table thead small { display: block; margin-top: 2px; color: var(--muted); font-size: 12.5px; }
+.bounds-cell b { display: block; color: var(--ink); font-weight: 600; }
+.bounds-cell small { display: block; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.bounds-caps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.bounds-cap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 10px; }
+.bounds-val { color: var(--ink-2); }
+.bounds-val b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.bounds-cap small { color: var(--muted); font-size: 12px; }
+.bounds-tag { padding: 1px 8px; border-radius: 999px; background: color-mix(in srgb, var(--muted) 16%, transparent); color: var(--ink-2); font-size: 11.5px; font-weight: 600; }
+.bounds-tag.is-reviewed, .bounds-tag.is-reproduced { background: color-mix(in srgb, var(--record) 16%, transparent); color: var(--record); }
+.bounds-tag.is-conditional { background: color-mix(in srgb, var(--amber) 16%, transparent); color: var(--amber); }
+.bounds-none { color: var(--muted); font-size: 13px; }
+.bounds-low { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; }
+.bounds-count { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; color: var(--ink-2); }
+.bounds-count b { color: var(--ink); font: 600 17px/1.2 var(--display); font-variant-numeric: tabular-nums; }
+.bounds-source { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.bounds-source a { color: inherit; text-decoration: none; }
+.bounds-source a:hover, .bounds-source a:focus-visible { color: var(--ink); }
+tr.is-closed .bounds-count b { color: var(--ink-2); }
+.bounds-state { padding: 2px 10px; border-radius: 999px; background: color-mix(in srgb, var(--muted) 14%, transparent); color: var(--ink-2); font-size: 12px; white-space: nowrap; }
+.bounds-state.is-closed { background: color-mix(in srgb, var(--amber) 16%, transparent); color: var(--amber); }
+.bounds-state.is-refutation-only { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+.bounds-state.is-open { background: color-mix(in srgb, var(--record) 16%, transparent); color: var(--record); }
+.bounds-note { max-width: 72ch; margin: 16px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.55; }
 .bounds-note b { color: var(--ink); }
-@media (max-width: 820px) { .bounds-cols { grid-template-columns: 1fr; } .bounds-row { grid-template-columns: 1fr; gap: 4px; } }
+@media (max-width: 1100px) and (min-width: 901px) {
+  .bounds-table .bounds-cell { width: 10.5rem; }
+  .bounds-table .is-lower { width: 17rem; }
+}
+/* Narrower, each cell is a card of its own: its name, then each panel as a labelled line. */
+@media (max-width: 900px) {
+  .bounds-table, .bounds-table tbody, .bounds-table tr, .bounds-table th, .bounds-table td { display: block; width: auto; }
+  .bounds-table { margin: 0; border-spacing: 0; }
+  .bounds-table thead { display: none; }
+  .bounds-table tbody { display: grid; gap: 10px; }
+  .bounds-table tbody tr { display: grid; gap: 10px; padding: 14px 16px; border-radius: 16px; background: var(--card); }
+  .bounds-table tbody .bounds-cell { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 0; }
+  .bounds-table tbody .is-upper, .bounds-table tbody .is-lower, .bounds-table tbody tr:last-child .is-upper, .bounds-table tbody tr:last-child .is-lower { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: baseline; gap: 4px 12px; padding: 0; border-radius: 0; background: none; }
+  .bounds-table td::before { color: var(--muted); font-size: 12.5px; font-weight: 600; }
+  .bounds-table td.is-upper::before { content: "Proven above"; }
+  .bounds-table td.is-lower::before { content: "Built below"; }
+}
