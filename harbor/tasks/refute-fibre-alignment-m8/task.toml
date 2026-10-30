@@ -3,7 +3,7 @@ schema_version = "1.4"
 [task]
 name = "proven-mca/refute-fibre-alignment-m8"
 version = "0.2.0"
-description = "Refute fibre alignment on the subgroup of order 256: submit a pair and one exceptional challenge at k = 128, A = 160 whose agreement set holds no fibre-aligned anchor; the verifier certifies the challenge from the definition and classifies its agreement set. Reward 1 for one such challenge."
+description = "Beat the known nonaligned residual on the subgroup of order 256: submit a pair with more than n/8 certified exceptional challenges at k = 128, A = 160 whose agreement sets hold no fibre-aligned anchor; the verifier certifies each from the definition, classifies its agreement set and measures the joint core. Reward 1 past n/8."
 keywords = ["mathematics", "reed-solomon", "correlated-agreement", "proven-provably-fast", "T3", "upper-bound", "counterexample"]
 
 [metadata]

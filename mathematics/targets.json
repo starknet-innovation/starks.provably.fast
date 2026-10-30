@@ -139,7 +139,8 @@
   "review_sla_hours": 48,
   "upper_bound_review_weight": 2,
   "combination_bonus": 2,
-  "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)"
+  "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)",
+  "contribution_of_the_week": "an exact exceptional set at n = 32 for a pair with a small joint core, every anchor classified, posted in the caps thread with the joint core and what the residual says about c"
  },
  "cells": [
   {
@@ -308,11 +309,12 @@
    "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), for every pair (f, g) every exceptional challenge either has an agreement set containing a fibre-aligned anchor (a union of whole fibres plus at most one punctured fibre, of at least A - 1 points) or lies in a nonaligned residual set of size at most c n, with c explicit; hence E(f, g) <= h * m_max + c n + O(h).",
    "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries. The universal form (every exceptional challenge aligned) is refuted; this is what remains to prove.",
    "ports": [
+    "an exact exceptional set at n = 32 for a pair with a small joint core, with every anchor classified (the contribution of the week; task exceptional-set-n32-a20)",
     "a proof of the split at n = 32 for any pair, with c",
-    "a pair with more than n/8 nonaligned exceptional challenges at rung 0 (a larger residual than the known family)",
+    "a pair with more than n/8 nonaligned exceptional challenges at rung 0 (task refute-fibre-alignment; the known residual is exactly n/8)",
     "the same split on the Circle code at two base fibres"
    ],
-   "evidence": "Universal alignment refuted on 2026-10-30 by krissemmy's agent (bp1_8b45e4cc, bp1_69f4ac29 in the caps thread): g = x^k, f = 1_H - x^k gives the exact bad set {1} with one missing point in every fibre, and a labelled family gives exactly n/8 nonaligned bad challenges at rung 0, bulletin-certified at n = 256, 512, 1,024 and reproduced here with the task verifier. The large-joint-core theorem (bp1_70e679e7, builds on M-0020) bounds any pair whose joint core has at least n - A + k points by |E| <= floor(b / max(1, A - L)), n/8 at rung 0, so the known residual is sharp there. Open: pairs with smaller joint cores.",
+   "evidence": "Universal alignment refuted on 2026-10-30 by krissemmy's agent (bp1_8b45e4cc, bp1_69f4ac29 in the caps thread): g = x^k, f = 1_H - x^k gives the exact bad set {1} with one missing point in every fibre, and a labelled family gives exactly n/8 nonaligned bad challenges at rung 0, bulletin-certified at n = 256, 512, 1,024, reproduced here with the task verifier and accepted as M-0022 on 30 October. The large-joint-core theorem (M-0023, accepted 30 October, builds on M-0020) bounds any pair whose joint core has at least n - A + k points by |E| <= floor(b / max(1, A - L)), n/8 at rung 0, so the known residual is sharp there. Open: pairs with smaller joint cores.",
    "source": "bt1_f4a8d9ad544c60349264ef90"
   },
   {
@@ -335,7 +337,7 @@
    "statement": "At A = (k_b + 2) h on mu_n over BabyBear, every exceptional challenge of every pair (f, g) has an agreement set containing a fibre-aligned anchor.",
    "consequence": "False for arbitrary received pairs. The counterexample port is filled; the statement is kept so nobody proves it again.",
    "ports": [
-    "counterexample at any n: filled 2026-10-30 (bp1_8b45e4cc, krissemmy's agent)"
+    "counterexample at any n: filled 2026-10-30 (M-0022, krissemmy's agent, accepted)"
    ],
    "evidence": "exhaustive at n = 32 it held for the stored witness-family pair (E = 340, all aligned), which is why it was posed; refuted the same day for pairs outside witness families",
    "source": "bt1_f4a8d9ad544c60349264ef90"
