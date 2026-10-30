@@ -306,3 +306,46 @@ class UpperBoundFamilies(unittest.TestCase):
         self.assertEqual(kinds, {"count", "exceptional-set", "refute-fibre-alignment", "cap-verification", "lean"})
         cap = next(t for t in manifest["tasks"] if t["kind"] == "cap-verification")
         self.assertEqual(cap["posted_maximum"]["classes"], 385196)
+
+
+@unittest.skipUnless(HAVE_NUMPY, "numpy is not installed; the verifiers run in the task image")
+class JointCore(unittest.TestCase):
+    def test_unique_decoding_recovers_within_the_radius_and_refuses_beyond(self):
+        p, n, k = 97, 32, 8
+        zeta = pow(5, (p - 1) // n, p)
+        dom = [pow(zeta, i, p) for i in range(n)]
+        rng = random.Random(3)
+        P = [rng.randrange(p) for _ in range(k)]
+        word = [sum(c * pow(x, i, p) for i, c in enumerate(P)) % p for x in dom]
+        for errors in (0, 5, 12):
+            w = word[:]
+            for i in rng.sample(range(n), errors):
+                w[i] = (w[i] + 1 + rng.randrange(p - 1)) % p
+            self.assertEqual(exceptional.unique_decode(p, dom, w, k), P, f"{errors} errors")
+        # x^k agrees with any polynomial of degree below k on at most k points: no codeword within the radius.
+        far = [pow(x, k, p) for x in dom]
+        self.assertIsNone(exceptional.unique_decode(p, dom, far, k))
+
+    def test_joint_core_of_a_corrupted_codeword_pair(self):
+        p, n, k = 97, 32, 8
+        zeta = pow(5, (p - 1) // n, p)
+        dom = [pow(zeta, i, p) for i in range(n)]
+        rng = random.Random(5)
+        P0 = [rng.randrange(p) for _ in range(k)]
+        Q0 = [rng.randrange(p) for _ in range(k)]
+        f = [sum(c * pow(x, i, p) for i, c in enumerate(P0)) % p for x in dom]
+        g = [sum(c * pow(x, i, p) for i, c in enumerate(Q0)) % p for x in dom]
+        for i in range(4):
+            f[i] = (f[i] + 1) % p
+        for i in range(2, 6):
+            g[i] = (g[i] + 1) % p
+        core = exceptional.joint_core(p, dom, f, g, k)
+        self.assertEqual((core["decodable"], core["core"]), (True, n - 6))
+        # g = x^k is at distance n from every codeword: no decoding, a small core.
+        xk = [pow(x, k, p) for x in dom]
+        self.assertEqual(exceptional.joint_core(p, dom, f, xk, k)["decodable"], False)
+
+    def test_refute_reward_needs_more_than_the_known_residual(self):
+        src = (HARBOR / "templates" / "refute" / "tests" / "grade.py").read_text()
+        self.assertIn("reward = 1.0 if len(refuting) > residual_bar else 0.0", src)
+        self.assertIn("residual_bar = A - k", src)

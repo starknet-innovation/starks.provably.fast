@@ -173,3 +173,124 @@ def ray_classes(p: int, zeta: int, base: tuple[int, ...], s: int, size: int = 15
         if log and total % (batch * 40) == 0:
             log(f"{total:,} subsets, {members:,} members, {time.time() - started:.0f} s")
     return {y: len(v) for y, v in seen.items()}
+
+
+# ---- Unique decoding and the joint core -------------------------------------------------------
+#
+# The large-joint-core theorem (record M-0023): if a pair (P0, Q0) of degree below k matches (f, g)
+# jointly on L >= n - A + k points, every qualifying polynomial of every challenge is P0 + z Q0 and
+# |E(f, g)| <= floor(b / max(1, A - L)), b the points where g differs from Q0. A nonaligned
+# challenge from such a pair is therefore known territory (the n/8 family of M-0022 is sharp
+# there); the open case of the aligned-or-small-residual theorem is a pair whose joint core is
+# smaller. The refutation tasks pay only there. Berlekamp-Welch unique decoding finds the codeword
+# within (n - k) / 2 of a word when one exists, by solving N(x_i) = y_i E(x_i) for a monic error
+# locator E of degree e and N of degree below k + e; P = N / E.
+
+
+def solve_mod_p(M: np.ndarray, rhs: np.ndarray, p: int) -> np.ndarray | None:
+    """One solution x of M x = rhs over F_p (free variables 0), or None when inconsistent."""
+    M = M.copy() % p
+    rhs = rhs.copy() % p
+    rows, cols = M.shape
+    pivots = []
+    r = 0
+    for c in range(cols):
+        if r >= rows:
+            break
+        nz = np.nonzero(M[r:, c])[0]
+        if len(nz) == 0:
+            continue
+        piv = r + int(nz[0])
+        if piv != r:
+            M[[r, piv]] = M[[piv, r]]
+            rhs[[r, piv]] = rhs[[piv, r]]
+        inv = pow(int(M[r, c]), p - 2, p)
+        M[r] = M[r] * inv % p
+        rhs[r] = rhs[r] * inv % p
+        others = np.nonzero(M[:, c])[0]
+        others = others[others != r]
+        if len(others):
+            factors = M[others, c].copy()
+            M[others] = (M[others] - (factors[:, None] * M[r][None, :]) % p) % p
+            rhs[others] = (rhs[others] - factors * rhs[r] % p) % p
+        pivots.append((r, c))
+        r += 1
+    # Inconsistent rows: all-zero coefficients with a nonzero right-hand side.
+    for i in range(r, rows):
+        if rhs[i] % p != 0:
+            return None
+    x = np.zeros(cols, dtype=np.int64)
+    for row, col in pivots:
+        x[col] = rhs[row]
+    return x
+
+
+def poly_divmod(num: list[int], den: list[int], p: int) -> tuple[list[int], list[int]]:
+    """Quotient and remainder of num / den over F_p, coefficients low to high."""
+    num = [c % p for c in num]
+    den = [c % p for c in den]
+    while den and den[-1] == 0:
+        den.pop()
+    if not den:
+        raise ZeroDivisionError("division by the zero polynomial")
+    inv_lead = pow(den[-1], p - 2, p)
+    q = [0] * max(0, len(num) - len(den) + 1)
+    rem = num[:]
+    for i in range(len(num) - len(den), -1, -1):
+        coeff = rem[i + len(den) - 1] * inv_lead % p
+        q[i] = coeff
+        if coeff:
+            for j, d in enumerate(den):
+                rem[i + j] = (rem[i + j] - coeff * d) % p
+    while rem and rem[-1] == 0:
+        rem.pop()
+    return q, rem
+
+
+def unique_decode(p: int, dom: list[int], word: list[int], k: int, errors: int | None = None) -> list[int] | None:
+    """Coefficients (low to high, length k) of the unique polynomial of degree below k that agrees
+    with the word on at least n - errors points, or None when no such polynomial exists. errors
+    defaults to the unique-decoding radius floor((n - k) / 2)."""
+    n = len(dom)
+    e = (n - k) // 2 if errors is None else errors
+    if e < 0 or k + 2 * e > n:
+        raise ValueError("errors must satisfy k + 2 errors <= n")
+    xs = np.array(dom, dtype=np.int64) % p
+    ys = np.array(word, dtype=np.int64) % p
+    # Columns: E coefficients e_0 .. e_{e-1} (E monic of degree e), then N coefficients n_0 .. n_{k+e-1}.
+    # Row i: sum_j n_j x_i^j - y_i sum_j e_j x_i^j = y_i x_i^e.
+    powers = np.ones((n, k + e + 1), dtype=np.int64)
+    for j in range(1, k + e + 1):
+        powers[:, j] = powers[:, j - 1] * xs % p
+    M = np.zeros((n, k + 2 * e), dtype=np.int64)
+    if e:
+        M[:, :e] = (-(ys[:, None] * powers[:, :e] % p)) % p
+    M[:, e:] = powers[:, :k + e]
+    rhs = ys * powers[:, e] % p
+    sol = solve_mod_p(M, rhs, p)
+    if sol is None:
+        return None
+    E = [int(c) for c in sol[:e]] + [1]
+    N = [int(c) for c in sol[e:]]
+    q, rem = poly_divmod(N, E, p)
+    if rem:
+        return None
+    P = (q + [0] * k)[:k]
+    # The decoded codeword must really be within the radius, else there was none.
+    agree = sum(1 for x, y in zip(dom, word) if sum(c * pow(x, i, p) for i, c in enumerate(P)) % p == y % p)
+    return P if agree >= n - e else None
+
+
+def joint_core(p: int, dom: list[int], f: list[int], g: list[int], k: int) -> dict:
+    """The joint core of (f, g): the points where both agree with their unique closest codewords
+    within the unique-decoding radius. Each word has at most one codeword within that radius, so
+    when both decode the core is well defined; when either does not, every pair of codewords is
+    farther than the radius from it and the joint core is below n - (n - k) / 2."""
+    n = len(dom)
+    P0 = unique_decode(p, dom, f, k)
+    Q0 = unique_decode(p, dom, g, k)
+    if P0 is None or Q0 is None:
+        return {"decodable": False, "core": None, "bound": n - (n - k) // 2 - 1}
+    ev = lambda P, x: sum(c * pow(x, i, p) for i, c in enumerate(P)) % p  # noqa: E731
+    core = sum(1 for i, x in enumerate(dom) if ev(P0, x) == f[i] % p and ev(Q0, x) == g[i] % p)
+    return {"decodable": True, "core": core, "bound": core}

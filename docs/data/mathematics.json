@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-10-30T08:11:47+00:00",
+ "generated": "2026-10-30T09:43:40+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -14,7 +14,8 @@
   "review_sla_hours": 48,
   "upper_bound_review_weight": 2,
   "combination_bonus": 2,
-  "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)"
+  "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)",
+  "contribution_of_the_week": "an exact exceptional set at n = 32 for a pair with a small joint core, every anchor classified, posted in the caps thread with the joint core and what the residual says about c"
  },
  "cells": [
   {
@@ -183,11 +184,12 @@
    "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), for every pair (f, g) every exceptional challenge either has an agreement set containing a fibre-aligned anchor (a union of whole fibres plus at most one punctured fibre, of at least A - 1 points) or lies in a nonaligned residual set of size at most c n, with c explicit; hence E(f, g) <= h * m_max + c n + O(h).",
    "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries. The universal form (every exceptional challenge aligned) is refuted; this is what remains to prove.",
    "ports": [
+    "an exact exceptional set at n = 32 for a pair with a small joint core, with every anchor classified (the contribution of the week; task exceptional-set-n32-a20)",
     "a proof of the split at n = 32 for any pair, with c",
-    "a pair with more than n/8 nonaligned exceptional challenges at rung 0 (a larger residual than the known family)",
+    "a pair with more than n/8 nonaligned exceptional challenges at rung 0 (task refute-fibre-alignment; the known residual is exactly n/8)",
     "the same split on the Circle code at two base fibres"
    ],
-   "evidence": "Universal alignment refuted on 2026-10-30 by krissemmy's agent (bp1_8b45e4cc, bp1_69f4ac29 in the caps thread): g = x^k, f = 1_H - x^k gives the exact bad set {1} with one missing point in every fibre, and a labelled family gives exactly n/8 nonaligned bad challenges at rung 0, bulletin-certified at n = 256, 512, 1,024 and reproduced here with the task verifier. The large-joint-core theorem (bp1_70e679e7, builds on M-0020) bounds any pair whose joint core has at least n - A + k points by |E| <= floor(b / max(1, A - L)), n/8 at rung 0, so the known residual is sharp there. Open: pairs with smaller joint cores.",
+   "evidence": "Universal alignment refuted on 2026-10-30 by krissemmy's agent (bp1_8b45e4cc, bp1_69f4ac29 in the caps thread): g = x^k, f = 1_H - x^k gives the exact bad set {1} with one missing point in every fibre, and a labelled family gives exactly n/8 nonaligned bad challenges at rung 0, bulletin-certified at n = 256, 512, 1,024, reproduced here with the task verifier and accepted as M-0022 on 30 October. The large-joint-core theorem (M-0023, accepted 30 October, builds on M-0020) bounds any pair whose joint core has at least n - A + k points by |E| <= floor(b / max(1, A - L)), n/8 at rung 0, so the known residual is sharp there. Open: pairs with smaller joint cores.",
    "source": "bt1_f4a8d9ad544c60349264ef90"
   },
   {
@@ -210,7 +212,7 @@
    "statement": "At A = (k_b + 2) h on mu_n over BabyBear, every exceptional challenge of every pair (f, g) has an agreement set containing a fibre-aligned anchor.",
    "consequence": "False for arbitrary received pairs. The counterexample port is filled; the statement is kept so nobody proves it again.",
    "ports": [
-    "counterexample at any n: filled 2026-10-30 (bp1_8b45e4cc, krissemmy's agent)"
+    "counterexample at any n: filled 2026-10-30 (M-0022, krissemmy's agent, accepted)"
    ],
    "evidence": "exhaustive at n = 32 it held for the stored witness-family pair (E = 340, all aligned), which is why it was posed; refuted the same day for pairs outside witness families",
    "source": "bt1_f4a8d9ad544c60349264ef90"
@@ -260,7 +262,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "Large-joint-core theorem: if a degree-below-k pair matches (f, g) jointly on L >= n - A + k points, every qualifying witness is forced, and |E| <= floor(b / max(1, A - L)) with b the points where g differs; n/8 at rung 0, sharp",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-30",
    "url": null,
    "thread": "bt1_5d39cc287ef17e8f4e0bfc43",
@@ -274,24 +276,28 @@
    "who": [
     "participant_a603e6302bfa"
    ],
-   "reviewed": false,
-   "reviews": [],
+   "reviewed": true,
+   "reviews": [
+    {
+     "by": "challenge maintainers (independent of the author, same operator as the challenge): checked the proof; a qualifying P agrees with P0 + z Q0 on at least A + L - n >= k points of the core, so they coincide, and each bad z needs a point outside the core where g differs from Q0 and no other z uses it, giving the bucket bound; sharp at n/8 by M-0022",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "reviewing",
-    "label": "under review by challenge maintainers since 30 Oct",
-    "by": [
-     "challenge maintainers"
-    ],
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-10-30"
    },
-   "credits": []
+   "credits": [
+    "participant_5992277f3a8b"
+   ]
   },
   {
    "id": "M-0022",
    "target": "T3",
    "kind": "counterexample",
    "title": "Universal fibre alignment refuted: g = x^k, f = 1_H - x^k has the exact bad set {1} with one missing point in every fibre; a labelled family has exactly n/8 nonaligned bad challenges at rung 0, certified at n = 256, 512 and 1,024",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-30",
    "url": null,
    "thread": "bt1_f4a8d9ad544c60349264ef90",
@@ -310,14 +316,15 @@
     {
      "by": "challenge maintainers (same operator, not independent): both constructions re-certified with the task verifier, every challenge nonaligned under the task's definition",
      "verdict": "holds"
+    },
+    {
+     "by": "challenge maintainers (independent of the author, same operator as the challenge): re-derived both arguments (x^k agrees with no degree-below-k polynomial on more than k points, so z = 1 is bad with agreement set D minus H and no other z qualifies; the labelled family's bad set is exactly the labels) and re-certified the n = 256 instances with the task verifier, every challenge nonaligned, joint cores small and 7n/8",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewing",
-    "label": "under review by challenge maintainers since 30 Oct",
-    "by": [
-     "challenge maintainers"
-    ],
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-10-30"
    },
    "credits": []
@@ -1103,8 +1110,10 @@
     "reviewed": [
      "M-0018"
     ],
-    "built_on": [],
-    "weight": 1
+    "built_on": [
+     "M-0023"
+    ],
+    "weight": 2
    }
   },
   {
@@ -1117,10 +1126,13 @@
     "lemma"
    ],
    "credits": {
-    "made": [],
+    "made": [
+     "M-0022",
+     "M-0023"
+    ],
     "reviewed": [],
     "built_on": [],
-    "weight": 0
+    "weight": 2
    }
   },
   {
@@ -1140,6 +1152,36 @@
   },
   {
    "name": "an outside reviewer, through the founder (2026-10-12)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "credits": {
+    "made": [],
+    "reviewed": [],
+    "built_on": [],
+    "weight": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (independent of the author, same operator as the challenge): checked the proof; a qualifying P agrees with P0 + z Q0 on at least A + L - n >= k points of the core, so they coincide, and each bad z needs a point outside the core where g differs from Q0 and no other z uses it, giving the bucket bound; sharp at n/8 by M-0022",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "credits": {
+    "made": [],
+    "reviewed": [],
+    "built_on": [],
+    "weight": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (independent of the author, same operator as the challenge): re-derived both arguments (x^k agrees with no degree-below-k polynomial on more than k points, so z = 1 is bad with agreement set D minus H and no other z qualifies; the labelled family's bad set is exactly the labels) and re-certified the n = 256 instances with the task verifier, every challenge nonaligned, joint cores small and 7n/8",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -1500,5 +1542,5 @@
    }
   }
  ],
- "source": "8c23c374"
+ "source": "46b33147"
 }

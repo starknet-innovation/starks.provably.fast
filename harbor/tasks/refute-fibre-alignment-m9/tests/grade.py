@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Grade one refutation task: certify each listed challenge from the definition (the kit's code)
-and classify its agreement set. reward = 1 iff some certified exceptional challenge's agreement set
-holds no fibre-aligned anchor. Runs in a separate verifier sandbox that never ran agent code."""
+"""Grade one refutation task: certify each listed challenge from the definition (the kit's code),
+classify each agreement set, and measure the pair's joint core. reward = 1 iff the certified
+nonaligned challenges outnumber the known residual, A - k (n/8 at rung 0): the n/8 family of
+M-0022 is sharp for pairs with a joint core of at least n - A + k (M-0023), and a lone nonaligned
+challenge from a smaller core is known too (g = x^k). Runs in a separate verifier sandbox that
+never ran agent code."""
 from __future__ import annotations
 
 import importlib.util
@@ -98,7 +101,7 @@ def main() -> int:
     details: dict = {"started_at": time.time()}
     reward = None
     metrics: dict = {}
-    zero = {"reward": 0.0, "certified": 0, "not_aligned": 0}
+    zero = {"reward": 0.0, "certified": 0, "not_aligned": 0, "residual_bar": 0, "joint_core": None, "joint_core_decodable": False}
     try:
         task = json.loads((TESTS / "task.json").read_text())
         kit = load("kit_certify", TESTS / "certify.py")
@@ -118,13 +121,16 @@ def main() -> int:
             verdict = exc.fibre_aligned(p, dom, T, h, A)
             if not verdict["aligned"]:
                 refuting.append({"z": z, **verdict})
-        reward = 1.0 if refuting else 0.0
-        metrics = {"reward": reward, "certified": len(bad), "not_aligned": len(refuting)}
+        residual_bar = A - k
+        core = exc.joint_core(p, dom, f, g, k)
+        reward = 1.0 if len(refuting) > residual_bar else 0.0
+        metrics = {"reward": reward, "certified": len(bad), "not_aligned": len(refuting), "residual_bar": residual_bar,
+                   "joint_core": core["core"], "joint_core_decodable": core["decodable"]}
         if refuting:
             metrics.update({key: refuting[0][key] for key in ("agreement", "full_fibres", "largest_partial")})
         details.update(metrics, failed=len(failures), failures=failures[:10], refuting=refuting[:10],
-                       reason="a certified exceptional challenge with no fibre-aligned anchor" if refuting
-                       else "every certified challenge is fibre-aligned")
+                       reason=f"{len(refuting)} certified nonaligned challenges, past the known residual {residual_bar}" if reward
+                       else f"{len(refuting)} certified nonaligned challenges; the known residual is {residual_bar} (M-0022), a reward needs more")
     except Rejected as e:
         reward, metrics = 0.0, dict(zero)
         details["reason"] = f"rejected: {e}"
