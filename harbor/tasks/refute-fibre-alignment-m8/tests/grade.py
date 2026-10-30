@@ -62,6 +62,19 @@ def validate(inst, task, kit):
             raise Rejected(f"{name} must be {n} integers in [0, p)")
     try:
         expanded = kit.expand(inst)
+        # @2 and @3 name a witness by its index in witness_sets; resolve it so every form is judged alike.
+        sets = expanded.get("witness_sets")
+        resolved = []
+        for ch in expanded.get("challenges") or []:
+            w = ch.get("witness") if isinstance(ch, dict) else None
+            if isinstance(w, int) and not isinstance(w, bool):
+                if not isinstance(sets, list) or not 0 <= w < len(sets):
+                    raise Rejected("a witness index points outside witness_sets")
+                ch = {**ch, "witness": list(sets[w])}
+            resolved.append(ch)
+        expanded = {**expanded, "challenges": resolved}
+    except Rejected:
+        raise
     except Exception as exc:
         raise Rejected(f"malformed challenges: {exc}")
     chal = expanded.get("challenges")
