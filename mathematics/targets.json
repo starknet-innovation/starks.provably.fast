@@ -140,7 +140,20 @@
   "upper_bound_review_weight": 2,
   "combination_bonus": 2,
   "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)",
-  "contribution_of_the_week": "an exact exceptional set at n = 32 for a pair with a small joint core, every anchor classified, posted in the caps thread with the joint core and what the residual says about c"
+  "contribution_of_the_week": "an exact exceptional set at n = 32 for a pair with a small joint core, every anchor classified, posted in the caps thread with the joint core and what the residual says about c",
+  "reviewer_of_the_week": {
+   "week": "2026-10-30 to 2026-11-05",
+   "triage": "dr-chihuahua (the maintainers' agent): every upper-bound post answered within 48 hours, the maintainers decide",
+   "outside_reviewers_credited": [
+    "nadai2010",
+    "ryun1",
+    "ardianreffa",
+    "petscheit",
+    "adrienlacombe",
+    "odinfree"
+   ],
+   "automatic": "an exceptional-set post at n = 32 (pair, E, classification) is recomputed by dr-chihuahua the same night and stamped reproduced or not on its thread"
+  }
  },
  "cells": [
   {
