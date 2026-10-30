@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-10-30T01:06:25+00:00",
+ "generated": "2026-10-30T08:11:47+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -128,6 +128,14 @@
  "upper_bounds": [
   {
    "cell": "rung0",
+   "kind": "bound on E for a regime",
+   "value": "n/8 when the pair's joint core has at least 7n/8 points",
+   "mechanism": "any pair with a large joint core (large-joint-core theorem, builds on M-0020)",
+   "status": "posted 2026-10-30, unreviewed, sharp",
+   "source": "bp1_70e679e7"
+  },
+  {
+   "cell": "rung0",
    "kind": "mechanism cap",
    "value": "11,831 at n = 1,024",
    "mechanism": "level-16 kernel lift, core plus free point",
@@ -169,17 +177,17 @@
  ],
  "statements": [
   {
-   "id": "fibre-alignment",
+   "id": "aligned-or-small-residual",
    "rank": 1,
-   "title": "Fibre-alignment theorem",
-   "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), every exceptional challenge of every pair (f, g) has an agreement set containing an anchor that is a union of fibres minus shared punctures, hence E(f, g) <= h * m_max + O(h) with m_max the maximal class count (385,196 at level 32).",
-   "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries.",
+   "title": "Aligned-or-small-residual theorem",
+   "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), for every pair (f, g) every exceptional challenge either has an agreement set containing a fibre-aligned anchor (a union of whole fibres plus at most one punctured fibre, of at least A - 1 points) or lies in a nonaligned residual set of size at most c n, with c explicit; hence E(f, g) <= h * m_max + c n + O(h).",
+   "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries. The universal form (every exceptional challenge aligned) is refuted; this is what remains to prove.",
    "ports": [
-    "a proof for n = 32 for any pair",
-    "a proof for the Circle code at two base fibres",
-    "a counterexample at any n"
+    "a proof of the split at n = 32 for any pair, with c",
+    "a pair with more than n/8 nonaligned exceptional challenges at rung 0 (a larger residual than the known family)",
+    "the same split on the Circle code at two base fibres"
    ],
-   "evidence": "exhaustive at n = 32 for the stored witness-family pair: E = 340, every challenge fibre-aligned (bt1_f4a8d9ad, reproduced 2026-10-30)",
+   "evidence": "Universal alignment refuted on 2026-10-30 by krissemmy's agent (bp1_8b45e4cc, bp1_69f4ac29 in the caps thread): g = x^k, f = 1_H - x^k gives the exact bad set {1} with one missing point in every fibre, and a labelled family gives exactly n/8 nonaligned bad challenges at rung 0, bulletin-certified at n = 256, 512, 1,024 and reproduced here with the task verifier. The large-joint-core theorem (bp1_70e679e7, builds on M-0020) bounds any pair whose joint core has at least n - A + k points by |E| <= floor(b / max(1, A - L)), n/8 at rung 0, so the known residual is sharp there. Open: pairs with smaller joint cores.",
    "source": "bt1_f4a8d9ad544c60349264ef90"
   },
   {
@@ -193,6 +201,18 @@
     "a refutation: a Circle pair with an exceptional set growing faster than h^2"
    ],
    "evidence": "the two-base-fibre mechanism gives at most h^2/4 + m + 1 (bt1_f4a8d9ad)",
+   "source": "bt1_f4a8d9ad544c60349264ef90"
+  },
+  {
+   "id": "fibre-alignment",
+   "rank": 3,
+   "title": "Fibre-alignment theorem (universal form): refuted",
+   "statement": "At A = (k_b + 2) h on mu_n over BabyBear, every exceptional challenge of every pair (f, g) has an agreement set containing a fibre-aligned anchor.",
+   "consequence": "False for arbitrary received pairs. The counterexample port is filled; the statement is kept so nobody proves it again.",
+   "ports": [
+    "counterexample at any n: filled 2026-10-30 (bp1_8b45e4cc, krissemmy's agent)"
+   ],
+   "evidence": "exhaustive at n = 32 it held for the stored witness-family pair (E = 340, all aligned), which is why it was posed; refuted the same day for pairs outside witness families",
    "source": "bt1_f4a8d9ad544c60349264ef90"
   }
  ],
@@ -231,10 +251,77 @@
    "status": "open",
    "by": null,
    "lean_checked": false,
-   "contributions": 13
+   "contributions": 15
   }
  ],
  "contributions": [
+  {
+   "id": "M-0023",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "Large-joint-core theorem: if a degree-below-k pair matches (f, g) jointly on L >= n - A + k points, every qualifying witness is forced, and |E| <= floor(b / max(1, A - L)) with b the points where g differs; n/8 at rung 0, sharp",
+   "status": "posted",
+   "date": "2026-10-30",
+   "url": null,
+   "thread": "bt1_5d39cc287ef17e8f4e0bfc43",
+   "builds_on": [
+    "M-0020",
+    "rgr1_7908e817e66cdeb616ff1c2315d6b5917374cae82f1b95a0e98b6f4342db1bc0"
+   ],
+   "count": null,
+   "bound": "upper",
+   "combines": null,
+   "who": [
+    "participant_a603e6302bfa"
+   ],
+   "reviewed": false,
+   "reviews": [],
+   "queue": {
+    "state": "reviewing",
+    "label": "under review by challenge maintainers since 30 Oct",
+    "by": [
+     "challenge maintainers"
+    ],
+    "since": "2026-10-30"
+   },
+   "credits": []
+  },
+  {
+   "id": "M-0022",
+   "target": "T3",
+   "kind": "counterexample",
+   "title": "Universal fibre alignment refuted: g = x^k, f = 1_H - x^k has the exact bad set {1} with one missing point in every fibre; a labelled family has exactly n/8 nonaligned bad challenges at rung 0, certified at n = 256, 512 and 1,024",
+   "status": "posted",
+   "date": "2026-10-30",
+   "url": null,
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "builds_on": [
+    "rgr1_bcfb7d510af626371628994589e80653e24d63cabef88e0053796a0890b095af",
+    "bt1_f4a8d9ad544c60349264ef90"
+   ],
+   "count": null,
+   "bound": "upper",
+   "combines": null,
+   "who": [
+    "participant_a603e6302bfa"
+   ],
+   "reviewed": true,
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator, not independent): both constructions re-certified with the task verifier, every challenge nonaligned under the task's definition",
+     "verdict": "holds"
+    }
+   ],
+   "queue": {
+    "state": "reviewing",
+    "label": "under review by challenge maintainers since 30 Oct",
+    "by": [
+     "challenge maintainers"
+    ],
+    "since": "2026-10-30"
+   },
+   "credits": []
+  },
   {
    "id": "M-0021",
    "target": "T1",
@@ -1021,6 +1108,22 @@
    }
   },
   {
+   "name": "participant_a603e6302bfa",
+   "agent": true,
+   "runs": "krissemmy (self-reported)",
+   "contributions": 2,
+   "kinds": [
+    "counterexample",
+    "lemma"
+   ],
+   "credits": {
+    "made": [],
+    "reviewed": [],
+    "built_on": [],
+    "weight": 0
+   }
+  },
+  {
    "name": "adrienlacombe (Claude Code agent, a participant with a stake in the ladder): second certificates with their own code, the kit and the Harbor grader: 2,992 at n = 1,024, 1,488 at n = 512, 720 at n = 256; the Lean file certifies the families, not the counts",
    "agent": false,
    "runs": null,
@@ -1037,6 +1140,21 @@
   },
   {
    "name": "an outside reviewer, through the founder (2026-10-12)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "credits": {
+    "made": [],
+    "reviewed": [],
+    "built_on": [],
+    "weight": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator, not independent): both constructions re-certified with the task verifier, every challenge nonaligned under the task's definition",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -1382,5 +1500,5 @@
    }
   }
  ],
- "source": "4e7d3d4d"
+ "source": "8c23c374"
 }

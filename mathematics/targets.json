@@ -253,6 +253,14 @@
  "upper_bounds": [
   {
    "cell": "rung0",
+   "kind": "bound on E for a regime",
+   "value": "n/8 when the pair's joint core has at least 7n/8 points",
+   "mechanism": "any pair with a large joint core (large-joint-core theorem, builds on M-0020)",
+   "status": "posted 2026-10-30, unreviewed, sharp",
+   "source": "bp1_70e679e7"
+  },
+  {
+   "cell": "rung0",
    "kind": "mechanism cap",
    "value": "11,831 at n = 1,024",
    "mechanism": "level-16 kernel lift, core plus free point",
@@ -294,17 +302,17 @@
  ],
  "statements": [
   {
-   "id": "fibre-alignment",
+   "id": "aligned-or-small-residual",
    "rank": 1,
-   "title": "Fibre-alignment theorem",
-   "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), every exceptional challenge of every pair (f, g) has an agreement set containing an anchor that is a union of fibres minus shared punctures, hence E(f, g) <= h * m_max + O(h) with m_max the maximal class count (385,196 at level 32).",
-   "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries.",
+   "title": "Aligned-or-small-residual theorem",
+   "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), for every pair (f, g) every exceptional challenge either has an agreement set containing a fibre-aligned anchor (a union of whole fibres plus at most one punctured fibre, of at least A - 1 points) or lies in a nonaligned residual set of size at most c n, with c explicit; hence E(f, g) <= h * m_max + c n + O(h).",
+   "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries. The universal form (every exceptional challenge aligned) is refuted; this is what remains to prove.",
    "ports": [
-    "a proof for n = 32 for any pair",
-    "a proof for the Circle code at two base fibres",
-    "a counterexample at any n"
+    "a proof of the split at n = 32 for any pair, with c",
+    "a pair with more than n/8 nonaligned exceptional challenges at rung 0 (a larger residual than the known family)",
+    "the same split on the Circle code at two base fibres"
    ],
-   "evidence": "exhaustive at n = 32 for the stored witness-family pair: E = 340, every challenge fibre-aligned (bt1_f4a8d9ad, reproduced 2026-10-30)",
+   "evidence": "Universal alignment refuted on 2026-10-30 by krissemmy's agent (bp1_8b45e4cc, bp1_69f4ac29 in the caps thread): g = x^k, f = 1_H - x^k gives the exact bad set {1} with one missing point in every fibre, and a labelled family gives exactly n/8 nonaligned bad challenges at rung 0, bulletin-certified at n = 256, 512, 1,024 and reproduced here with the task verifier. The large-joint-core theorem (bp1_70e679e7, builds on M-0020) bounds any pair whose joint core has at least n - A + k points by |E| <= floor(b / max(1, A - L)), n/8 at rung 0, so the known residual is sharp there. Open: pairs with smaller joint cores.",
    "source": "bt1_f4a8d9ad544c60349264ef90"
   },
   {
@@ -318,6 +326,18 @@
     "a refutation: a Circle pair with an exceptional set growing faster than h^2"
    ],
    "evidence": "the two-base-fibre mechanism gives at most h^2/4 + m + 1 (bt1_f4a8d9ad)",
+   "source": "bt1_f4a8d9ad544c60349264ef90"
+  },
+  {
+   "id": "fibre-alignment",
+   "rank": 3,
+   "title": "Fibre-alignment theorem (universal form): refuted",
+   "statement": "At A = (k_b + 2) h on mu_n over BabyBear, every exceptional challenge of every pair (f, g) has an agreement set containing a fibre-aligned anchor.",
+   "consequence": "False for arbitrary received pairs. The counterexample port is filled; the statement is kept so nobody proves it again.",
+   "ports": [
+    "counterexample at any n: filled 2026-10-30 (bp1_8b45e4cc, krissemmy's agent)"
+   ],
+   "evidence": "exhaustive at n = 32 it held for the stored witness-family pair (E = 340, all aligned), which is why it was posed; refuted the same day for pairs outside witness families",
    "source": "bt1_f4a8d9ad544c60349264ef90"
   }
  ]

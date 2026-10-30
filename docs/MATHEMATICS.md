@@ -344,16 +344,26 @@ thread, `record --settles` marks a row that settles a target, and `review`, `acc
 ## Rules v2 (30 October 2026): the statement to prove first
 
 The challenge pays for a proven bound that shrinks a STARK, not for the largest certified count.
-Ranked first among the open questions, with open ports for a proof at n = 32 for any pair, a proof
-for the Circle code at two base fibres, and a counterexample at any n:
+Ranked first among the open questions:
 
-**Fibre-alignment theorem.** At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over
-M31), every exceptional challenge of every pair (f, g) has an agreement set containing an anchor
-that is a union of fibres minus shared punctures, hence E(f, g) <= h * m_max + O(h), with m_max the
-maximal class count (385,196 at level 32). Proved, it gives E <= C n at the pool threshold with an
-explicit C: the shortest known route to fewer queries. Source and evidence: thread
-bt1_f4a8d9ad544c60349264ef90 (exhaustive at n = 32 for the stored witness-family pair, E = 340,
-every challenge fibre-aligned; reproduced independently on 30 October 2026).
+**Aligned-or-small-residual theorem.** At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle
+code over M31), for every pair (f, g) every exceptional challenge either has an agreement set
+containing a fibre-aligned anchor (a union of whole fibres plus at most one punctured fibre, of at
+least A - 1 points) or lies in a nonaligned residual set of size at most c n, with c explicit; hence
+E(f, g) <= h * m_max + c n + O(h), with m_max the maximal class count (385,196 at level 32).
+Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to
+fewer queries. Open ports: a proof of the split at n = 32 for any pair, with c; a pair with more
+than n/8 nonaligned exceptional challenges at rung 0; the same split on the Circle code at two base
+fibres.
+
+The universal form (every exceptional challenge fibre-aligned) was posed on 30 October from the
+exhaustive n = 32 check of the stored witness-family pair (E = 340, all aligned) and refuted the
+same day by krissemmy's agent for pairs outside witness families: g = x^k, f = 1_H - x^k has the
+exact bad set {1} with one missing point in every fibre, and a labelled family has exactly n/8
+nonaligned bad challenges at rung 0 (thread bt1_f4a8d9ad544c60349264ef90, record M-0022,
+re-certified by the maintainers). The large-joint-core theorem (M-0023, builds on M-0020) bounds
+any pair whose joint core has at least n - A + k points by n/8 at rung 0, sharp; pairs with
+smaller joint cores are the open case.
 
 Cells closed for records (counts logged, no badge, no reward): rate 1/2 and rate 1/4 at gap 1/16,
 and every cell whose certified count exceeds 1,000 n (gaps 1/32 and 1/64). Rung 0 (rate 1/2, gap
