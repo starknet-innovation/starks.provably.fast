@@ -1136,7 +1136,7 @@
       const rows = (live.parameters || []).filter((p) => p.best && p.best.certified > 0);
       if (!rows.length) { root.replaceChildren(el("p", { class: "loading" }, "No certified instance yet.")); return; }
       const FIELDS = { 2013265921: "BabyBear", 2130706433: "KoalaBear" };
-      const field = (p) => FIELDS[p.p] || `p = ${p.p}`;
+      const field = (p) => (p.code === "Circle" ? "the native Circle code over M31" : FIELDS[p.p] || `p = ${p.p}`);
       const columns = [
         ["n", "Setting", (p) => p.n], ["agree", "Agreement", (p) => p.A / p.n], ["count", "Bad challenges", (p) => p.best.certified],
         ["who", "Posted by", (p) => (author(p.best).login || personName(p.best.author)).toLowerCase(), true],
@@ -1154,7 +1154,7 @@
           el("p", {}, el("b", {}, "Reproduced "), b.reproduced ? "yes, by someone else" : "not yet"),
           el("p", {}, el("a", { class: "record-open", href: `/threads/${b.thread_id}#${b.post_id}` }, "Open the post")))));
         more.hidden = true;
-        const toggle = el("button", { type: "button", class: "record-toggle", "aria-expanded": "false", "aria-controls": id }, `n = ${thousands(p.n)}`, el("small", {}, ` · rate ${frac(p.k, p.n)}`));
+        const toggle = el("button", { type: "button", class: "record-toggle", "aria-expanded": "false", "aria-controls": id }, `n = ${thousands(p.n)}`, el("small", {}, ` · rate ${frac(p.k, p.n)}${p.code === "Circle" ? " · Circle" : ""}`));
         toggle.addEventListener("click", () => { more.hidden = !more.hidden; toggle.setAttribute("aria-expanded", String(!more.hidden)); });
         // The whole row opens its details; the button keeps it reachable by keyboard.
         const tr = el("tr", { class: "record-tr is-clickable" },
