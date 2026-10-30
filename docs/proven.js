@@ -782,7 +782,7 @@
   const independent = (name) => !/same operator/i.test(name);
   // The targets board: each row's status, and its contributions over time on one scale for all three.
   // The three targets as cards: the status; who is pushing each (faces and names, how many people
-  // made how much and how much is accepted, the count climbing over time); its newest find; and a
+  // made how much and how much is accepted, each find on a chart over time); its newest find; and a
   // button that drafts a post on X crediting the people behind it. T3's "examples reach" is the best
   // known count of its first case (rate 1/2, agreement 5n/8).
   const andList = (items) => items.flatMap((item, i) => (i === 0 ? [item] : [i === items.length - 1 ? " and " : ", ", item]));
@@ -791,7 +791,6 @@
     const times = rows.map((r) => Date.parse(r.date)).filter(Number.isFinite);
     const start = times.length ? Math.min(...times) : Date.now();
     const crew = crewOf(record);
-    const most = Math.max(1, ...(record.targets || []).map((t) => rows.filter((r) => r.target === t.id).length));
     const first = (record.cells || []).find((c) => c.target === "T3" && c.rate === "1/2" && c.A === "5n/8");
     for (const target of record.targets || []) {
       const card = document.querySelector(`.tgt-card[data-target="${target.id}"]`);
@@ -813,7 +812,7 @@
         el("span", { class: "tgt-who" }, el("span", { class: "adv-faces" }, people.slice(0, 5).map((m) => face(m, 30))),
           el("span", { class: "tgt-names" }, people.length ? andList(named) : "Nobody yet: be the first")),
         el("small", { class: "tgt-stats" }, `${nOf(people.length, "person", "people")} · ${nOf(mine.length, "contribution")} · ${accepted} accepted`),
-        countSpark(mine, start, most));
+        advanceChart(mine, start, crew));
       const latest = mine[0];
       if (latest) {
         const href = THREAD.test(latest.thread || "") ? `/threads/${latest.thread}` : safeHref(latest.url);
@@ -831,16 +830,61 @@
         href: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://starks.provably.fast/#targets")}` }, svgIcon("#x-mark"), "Share"));
     }
   }
-  // A target's contributions as a count climbing over time.
-  function countSpark(rows, start, most) {
-    const svg = svgEl("svg", { class: "kit-spark", viewBox: "0 0 120 28", preserveAspectRatio: "none", "aria-hidden": "true", focusable: "false" });
-    const times = rows.map((r) => Date.parse(r.date)).filter(Number.isFinite).sort((a, b) => a - b);
+  // A target's advances over time, on one time axis from the first contribution to today: the count
+  // climbing as a step line, a dot for each find (filled once accepted, ringed when newest), and on
+  // hover or focus a card with its date, state, headline and who made it. A dot opens its thread; on
+  // a touch screen the first tap shows the card and the second opens the thread.
+  let tipFor = null;
+  document.addEventListener("pointerdown", (event) => {
+    if (tipFor && !event.target.closest?.(".adv-dot")) tipFor.hide();
+  });
+  function advanceChart(rows, start, crew) {
+    const items = rows.map((r) => ({ r, t: Date.parse(r.date) })).filter((p) => Number.isFinite(p.t)).sort((a, b) => a.t - b.t);
     const end = Math.max(Date.now(), start + 1);
-    const x = (t) => ((t - start) / (end - start)) * 120, y = (k) => 26 - (k / most) * 24;
-    let d = `M0 ${y(0)}`;
-    times.forEach((t, i) => { d += ` L${x(t).toFixed(1)} ${y(i).toFixed(1)} L${x(t).toFixed(1)} ${y(i + 1).toFixed(1)}`; });
-    svg.append(svgEl("path", { class: "kit-line", d: `${d} L120 ${y(times.length).toFixed(1)}` }));
-    return svg;
+    const X = (t) => 1.5 + ((t - start) / (end - start)) * 97, Y = (k) => 94 - (k / Math.max(1, items.length)) * 82;
+    let d = `M${X(start)} ${Y(0)}`;
+    items.forEach((p, i) => { d += ` L${X(p.t)} ${Y(i)} L${X(p.t)} ${Y(i + 1)}`; });
+    d += ` L${X(end)} ${Y(items.length)}`;
+    const svg = svgEl("svg", { class: "adv-line", viewBox: "0 0 100 100", preserveAspectRatio: "none", "aria-hidden": "true", focusable: "false" });
+    svg.append(svgEl("path", { class: "adv-area", d: `${d} L${X(end)} ${Y(0)} Z` }), svgEl("path", { class: "kit-line", d }));
+    const tip = el("span", { class: "adv-tip", role: "tooltip" });
+    tip.hidden = true;
+    const box = el("div", { class: "adv-chart" }, svg);
+    const hide = () => { tip.hidden = true; tip.dataset.for = ""; if (tipFor?.tip === tip) tipFor = null; };
+    items.forEach((p, i) => {
+      const r = p.r;
+      const href = THREAD.test(r.thread || "") ? `/threads/${r.thread}` : safeHref(r.url) || "/record";
+      const [tone] = recordState(r);
+      const state = SHORT_STATE[r.queue?.state === "reviewing" ? "reviewing" : tone] || "posted";
+      const [head] = headline(r.title);
+      const who = [...new Set(r.who.map((name) => crew.byName.get(name) || { name, login: null }))]
+        .map((m) => (m.maintainers ? "The maintainers' agents" : m.login ? `@${m.login}` : personName(m.name)));
+      const dot = el("a", { class: `adv-dot is-${tone}${i === items.length - 1 ? " is-newest" : ""}`, href,
+        style: `left:${X(p.t)}%;top:${Y(i + 1)}%`, "aria-label": `${day(r.date)}, ${state}: ${head}, by ${who.join(", ")}` });
+      const show = () => {
+        tip.replaceChildren(el("span", { class: "adv-tip-top" }, el("span", {}, day(r.date)), el("span", { class: `verdict is-${tone}` }, state)),
+          el("b", {}, head), el("small", {}, `by ${andList(who).join("")}`));
+        tip.hidden = false;
+        tip.dataset.for = String(i);
+        const width = box.clientWidth, x = (X(p.t) / 100) * width, y = (Y(i + 1) / 100) * box.clientHeight;
+        tip.style.left = `${Math.max(0, Math.min(width - tip.offsetWidth, x - tip.offsetWidth / 2))}px`;
+        tip.style.top = `${y - tip.offsetHeight - 12}px`;
+        if (tipFor && tipFor.tip !== tip) tipFor.hide();
+        tipFor = { tip, hide };
+      };
+      let touch = false;
+      dot.addEventListener("pointerdown", (event) => { touch = event.pointerType !== "mouse"; });
+      dot.addEventListener("click", (event) => { if (touch && tip.dataset.for !== String(i)) { event.preventDefault(); show(); } });
+      dot.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") show(); });
+      dot.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse") hide(); });
+      dot.addEventListener("focus", show);
+      dot.addEventListener("blur", hide);
+      box.append(dot);
+    });
+    box.append(tip);
+    return el("div", { class: "adv-chart-wrap" }, box,
+      el("span", { class: "adv-axis" }, el("span", {}, day(new Date(start).toISOString())),
+        el("span", { class: "adv-legend" }, el("i", { class: "is-accepted" }), "accepted", el("i", {}), "posted"), el("span", {}, "today")));
   }
   // Latest advances: a card per contribution, newest first, with its headline (the full statement is
   // one click away), the faces and names of who made it and a button that drafts a post on X crediting
