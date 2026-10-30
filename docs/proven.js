@@ -1,6 +1,7 @@
-// starks.provably.fast: the targets board, the query count, On the record and the brief on the
-// home page (kit.css draws them), the record page and the background's regime chart, all from
-// data/mathematics.json (written by `python3 -m proven.mathematics board`). Nothing moves.
+// starks.provably.fast: the targets board, the latest advances, the bounds, the query count, the
+// people behind it and the brief on the home page (kit.css draws them), the record page and the
+// background's regime chart, all from data/mathematics.json (written by `python3 -m proven.mathematics
+// board`). Nothing moves.
 (() => {
   "use strict";
 
@@ -780,24 +781,54 @@
   const nOf = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
   const independent = (name) => !/same operator/i.test(name);
   // The targets board: each row's status, and its contributions over time on one scale for all three.
+  // The three targets as cards: the status; who is pushing each (faces and names, how many people
+  // made how much and how much is accepted, the count climbing over time); its newest find; and a
+  // button that drafts a post on X crediting the people behind it. T3's "examples reach" is the best
+  // known count of its first case (rate 1/2, agreement 5n/8).
+  const andList = (items) => items.flatMap((item, i) => (i === 0 ? [item] : [i === items.length - 1 ? " and " : ", ", item]));
   function renderTargets(record) {
     const rows = record.contributions || [];
     const times = rows.map((r) => Date.parse(r.date)).filter(Number.isFinite);
     const start = times.length ? Math.min(...times) : Date.now();
-    const index = crewOf(record).byName;
+    const crew = crewOf(record);
     const most = Math.max(1, ...(record.targets || []).map((t) => rows.filter((r) => r.target === t.id).length));
+    const first = (record.cells || []).find((c) => c.target === "T3" && c.rate === "1/2" && c.A === "5n/8");
     for (const target of record.targets || []) {
-      const row = document.querySelector(`.target-row[data-target="${target.id}"]`);
-      if (!row) continue;
-      const pill = row.querySelector("[data-status]");
+      const card = document.querySelector(`.tgt-card[data-target="${target.id}"]`);
+      if (!card) continue;
+      const pill = card.querySelector("[data-status]");
       const word = STATUS_WORDS[target.status] || target.status;
       pill.textContent = word.charAt(0).toUpperCase() + word.slice(1);
       pill.className = `kit-pill ${target.status === "solved" ? "is-yes" : "is-now"}`;
       if (target.lean_checked) pill.after(el("span", { class: "kit-pill is-yes" }, "Lean-checked"));
+      if (target.id === "T3" && typeof first?.best_known_per_n === "number") {
+        card.querySelector("[data-known]").replaceChildren(`examples reach ${perN(first.best_known_per_n)}`, el("i", {}, "n"));
+      }
       const mine = rows.filter((r) => r.target === target.id);
-      const people = new Set(mine.flatMap((r) => r.who).map((n) => index.get(n)).filter((m) => m && !m.maintainers)).size;
-      row.querySelector("[data-trend]").replaceChildren(countSpark(mine, start, most),
-        el("small", {}, mine.length ? `${nOf(mine.length, "contribution")} · ${nOf(people, "person", "people")}` : "None yet"));
+      const accepted = mine.filter((r) => r.status === "accepted").length;
+      const people = crew.filter((m) => !m.maintainers && m.per[target.id] > 0).sort((a, b) => b.per[target.id] - a.per[target.id]);
+      const shown = (m) => (m.login ? el("a", { href: `https://github.com/${encodeURIComponent(m.login)}`, rel: "noopener noreferrer" }, `@${m.login}`) : personName(m.name));
+      const named = people.length > 3 ? [...people.slice(0, 2).map(shown), `${people.length - 2} more`] : people.map(shown);
+      card.querySelector("[data-people]").replaceChildren(
+        el("span", { class: "tgt-who" }, el("span", { class: "adv-faces" }, people.slice(0, 5).map((m) => face(m, 30))),
+          el("span", { class: "tgt-names" }, people.length ? andList(named) : "Nobody yet: be the first")),
+        el("small", { class: "tgt-stats" }, `${nOf(people.length, "person", "people")} · ${nOf(mine.length, "contribution")} · ${accepted} accepted`),
+        countSpark(mine, start, most));
+      const latest = mine[0];
+      if (latest) {
+        const href = THREAD.test(latest.thread || "") ? `/threads/${latest.thread}` : safeHref(latest.url);
+        const [tone] = recordState(latest);
+        const state = latest.queue?.state === "reviewing" ? "reviewing" : tone;
+        const [head] = headline(latest.title);
+        card.querySelector("[data-latest]").replaceChildren(
+          el("span", { class: "tgt-latest-top" }, el("small", {}, `Latest, ${day(latest.date)}`), el("span", { class: `verdict is-${tone}` }, SHORT_STATE[state] || "posted")),
+          href ? el("a", { href, title: latest.title }, head) : el("span", { title: latest.title }, head));
+      }
+      const credit = plainList([...people.slice(0, 3).map((m) => m.login || personName(m.name)), ...(people.length > 3 ? [`${people.length - 3} more`] : [])]);
+      const name = card.querySelector(".tgt-name").textContent;
+      const text = `${target.id} on starks.provably.fast: ${name}. ${nOf(mine.length, "contribution")} so far, ${accepted} accepted${credit ? `, from ${credit}` : ""}. Help make STARK proofs smaller.`;
+      card.querySelector("[data-share]").replaceChildren(el("a", { class: "adv-share", target: "_blank", rel: "noopener noreferrer", "aria-label": `Share ${target.id} on X`,
+        href: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://starks.provably.fast/#targets")}` }, svgIcon("#x-mark"), "Share"));
     }
   }
   // A target's contributions as a count climbing over time.
@@ -811,24 +842,55 @@
     svg.append(svgEl("path", { class: "kit-line", d: `${d} L120 ${y(times.length).toFixed(1)}` }));
     return svg;
   }
-  // The newest contributions: what each is, how far it is reviewed, who made it.
+  // Latest advances: a card per contribution, newest first, with its headline (the full statement is
+  // one click away), the faces and names of who made it and a button that drafts a post on X crediting
+  // them. Names go out plain, never as @handles: a GitHub login is not an X account.
+  const SHORT_STATE = { accepted: "accepted", reviewed: "reviewed", reviewing: "under review", posted: "posted", refuted: "declined" };
+  const SHARE_WORDS = { accepted: "Accepted", reviewed: "Reviewed", reviewing: "Under review", posted: "Posted", refuted: "Declined" };
+  function headline(title) {
+    const i = title.indexOf(": ");
+    return i > 12 && i < 120 ? [title.slice(0, i), title.slice(i + 2)] : [title, ""];
+  }
+  const svgIcon = (href) => {
+    const svg = svgEl("svg", { "aria-hidden": "true", focusable: "false" });
+    svg.append(svgEl("use", { href }));
+    return svg;
+  };
+  const clip = (text, most) => (text.length > most ? `${text.slice(0, most - 1).trimEnd()}…` : text);
+  const plainList = (names) => (names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0] || "");
   function renderNewest(record) {
     const root = $("starks-newest");
     if (!root) return;
-    const items = (record.contributions || []).slice(0, 3).map((row) => {
+    const crew = crewOf(record);
+    const cards = (record.contributions || []).slice(0, 6).map((row) => {
       const href = THREAD.test(row.thread || "") ? `/threads/${row.thread}` : safeHref(row.url);
-      const [state, label] = recordState(row);
-      const body = [
-        el("span", { class: "starks-item-top" }, el("span", { class: `starks-kind is-${row.target.toLowerCase()}` }, `${row.target} · ${KIND_WORDS[row.kind] || row.kind}`), el("span", { class: `verdict is-${state}` }, label)),
-        el("span", { class: "starks-item-title" }, row.title),
-        el("small", {}, [row.who.map(personName).join(", "), day(row.date)].filter(Boolean).join(" · ")),
-      ];
-      return el("li", {}, href ? el("a", { class: "starks-item", href }, body) : el("span", { class: "starks-item" }, body));
+      const [tone] = recordState(row);
+      const state = row.queue?.state === "reviewing" ? "reviewing" : tone;
+      const [head] = headline(row.title);
+      const people = [...new Map(row.who.map((name) => {
+        const m = crew.byName.get(name) || { name, login: null };
+        return [m.name, m];
+      })).values()];
+      const shown = (m) => (m.maintainers ? "The maintainers' agents" : m.login || personName(m.name));
+      const names = people.map((m) => (m.login ? el("a", { href: `https://github.com/${encodeURIComponent(m.login)}`, rel: "noopener noreferrer" }, `@${m.login}`) : shown(m)));
+      const plain = people.map((m) => (m.maintainers ? "the maintainers' agents" : shown(m)));
+      const credit = plainList(plain.length > 3 ? [...plain.slice(0, 3), `${plain.length - 3} more`] : plain);
+      const link = href ? new URL(href, "https://starks.provably.fast").href : "https://starks.provably.fast/record";
+      const text = `${clip(head, 110)}, by ${credit}. ${SHARE_WORDS[state] || "Posted"} on starks.provably.fast, the open challenge to make STARK proofs smaller.`;
+      const share = el("a", { class: "adv-share", href: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link)}`,
+        target: "_blank", rel: "noopener noreferrer", "aria-label": `Share ${row.id} on X` }, svgIcon("#x-mark"), "Share");
+      return el("li", { class: `adv-card is-${row.target.toLowerCase()}` },
+        el("span", { class: "adv-top" }, el("span", { class: "adv-tag" }, `${row.target} · ${KIND_WORDS[row.kind] || row.kind}`),
+          el("span", { class: `verdict is-${tone}` }, SHORT_STATE[state] || "posted")),
+        href ? el("a", { class: "adv-title", href, title: row.title }, head) : el("span", { class: "adv-title", title: row.title }, head),
+        el("span", { class: "adv-by" }, el("span", { class: "adv-faces" }, people.slice(0, 3).map((m) => face(m, 30))),
+          el("span", { class: "adv-names" }, el("span", {}, ...names.flatMap((n, i) => (i ? [", ", n] : [n]))), el("small", {}, day(row.date))),
+          share));
     });
-    root.replaceChildren(el("ol", { class: "starks-list" }, items));
+    root.replaceChildren(...cards);
   }
-  // On the record: every contributor with what they made for each target, the reviews they wrote,
-  // and the agents they named. A review names its author first, then the agent in brackets
+  // The people behind it: every contributor with what they made for each target, the reviews they
+  // wrote, and the agents they named. A review names its author first, then the agent in brackets
   // ("nadai2010 (Claude Code agent): ..."); a description with no name is credited in the record only.
   const REVIEWER = /^([A-Za-z0-9][\w.-]*) \(([^,)]*?)\s*agent\b/;
   function crewOf(record) {
@@ -947,8 +1009,8 @@
     }
     return el("span", { class: "kit-model", title: `Self-reported: ${name}` }, icon, name);
   }
-  // On the record, as postquantum's table: a face, the agents named in reviews, a column per target
-  // and the reviews, sorted by any column head.
+  // The people behind it, as postquantum's table: a face, the agents named in reviews, a column per
+  // target and the reviews, sorted by any column head.
   const TARGET_FAM = { T3: "var(--amber)", T2: "var(--violet)", T1: "var(--accent)" };
   let crewSort = "total";
   function renderCrew(record) {
@@ -995,10 +1057,23 @@
     root.replaceChildren(table);
     const sub = $("crew-sub");
     const reviews = crew.reduce((sum, m) => sum + m.reviews, 0);
-    if (sub) sub.replaceChildren("Contributions entered in ", el("a", { href: "/record" }, "the record"), " and the reviews of them: ",
-      el("b", {}, String(contributors(crew).length)), " contributors, people and their agents, besides the maintainers' own, with ", el("b", {}, String((record.contributions || []).length)),
-      " contributions and ", el("b", {}, String(reviews)), " reviews. Credited counts what accepted rows pay out: made, reviewed, or built on by a later accepted row. Discussion, leads and sources are on ",
-      el("a", { href: "/workshop#/people?view=table" }, "People"), ", which shows everyone with a public profile.");
+    if (sub) sub.replaceChildren(el("b", {}, String(contributors(crew).length)), " contributors and their agents: ", el("b", {}, String((record.contributions || []).length)),
+      " contributions, ", el("b", {}, String(reviews)), " reviews. Credited counts accepted work each one made, reviewed or built on.");
+    // The outside reviewers the maintainers credit this week (rules.reviewer_of_the_week), faces
+    // first, with a button that thanks them on X by plain name.
+    const week = $("crew-week"), thanked = record.rules?.reviewer_of_the_week?.outside_reviewers_credited;
+    const names = Array.isArray(thanked) ? thanked.filter((n) => typeof n === "string" && LOGIN.test(n)) : [];
+    if (week && names.length) {
+      const people = names.map((n) => crew.byName.get(n) || { name: n, login: n });
+      const label = (m) => m.login || personName(m.name);
+      const text = `Reviewers of the week on starks.provably.fast: ${plainList(people.map(label))}. Thank you for checking the mathematics behind smaller STARK proofs.`;
+      week.replaceChildren(el("span", { class: "adv-faces" }, people.slice(0, 6).map((m) => face(m, 28))),
+        el("span", { class: "crew-week-names" }, el("b", {}, "Reviewers of the week: "), andList(people.map((m) => (m.login
+          ? el("a", { href: `https://github.com/${encodeURIComponent(m.login)}`, rel: "noopener noreferrer" }, `@${m.login}`) : label(m))))),
+        el("a", { class: "adv-share", target: "_blank", rel: "noopener noreferrer", "aria-label": "Thank the reviewers on X",
+          href: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://starks.provably.fast/")}` }, svgIcon("#x-mark"), "Thank them"));
+      week.hidden = false;
+    }
   }
   // Certified counts enter the record on their own: the bulletin certifies every attached instance,
   // and the platform lists them with their standing (/api/participation/bulletin/records). Only
@@ -1258,59 +1333,75 @@
     });
     return recordLoad;
   }
-  // Rules v2: two panels. Left, the proven upper bounds per cell (mechanism caps as marks, the
-  // proven bound on E empty); right, the lower-bound floor per cell from the bulletin's certified
-  // counts, flat and marked saturated in cells closed for records. Only the left one moves the
-  // query numbers. Data: the record's cells and upper_bounds (targets.json) and the records route.
-  const fraction = (text) => { const [a, b] = String(text).split("/").map(Number); return b ? a / b : Number(a); };
-  function cellOf(cells, n, k, A) {
-    const rate = k / n, gap = (A - k) / n;
-    return cells.find((c) => c.code === "RS" && Math.abs(fraction(c.rate) - rate) < 1e-9 && Math.abs(fraction(c.gap) - gap) < 1e-9) || null;
+  // Rules v2's two panels as one table, a row per cell: on the left, every bound or cap posted for the
+  // cell, how far it is checked and what it limits; on the right, the cell's best known count and
+  // whether records still pay there (saturated where the cell is closed). Only the left one moves the
+  // query numbers. Data: the record's cells and upper_bounds (targets.json), with the certified count
+  // behind each best known figure from the records route.
+  const checkedWord = (status) => (/unreviewed|none/i.test(status) ? "unreviewed" : /conditional/i.test(status) ? "conditional"
+    : /reproduced/i.test(status) ? "reproduced" : /accepted|reviewed/i.test(status) ? "reviewed" : "unreviewed");
+  // "h^2/4 + m + 1" with its exponent raised.
+  const mathText = (text) => String(text).split(/\^(\w+)/).map((part, i) => (i % 2 ? el("sup", {}, part) : part));
+  // "11,831 at n = 1,024": the figure, then where it holds.
+  const BOUND_SPLIT = /^(.*?)\s+((?:when|if|at)\s.*)$/;
+  function boundLine(b) {
+    const [, head, tail] = BOUND_SPLIT.exec(b.value) || [null, b.value, ""];
+    const checked = checkedWord(b.status || "");
+    return el("li", { class: "bounds-cap", title: `${b.mechanism}: ${b.status}` },
+      el("span", { class: "bounds-val" }, el("b", {}, ...mathText(head)), tail ? ` ${tail}` : ""),
+      el("span", { class: `bounds-tag is-${checked}` }, checked), el("small", {}, /regime/i.test(b.kind || "") ? "a regime" : "one construction"));
   }
+  const perN = (x) => (x >= 100 ? Math.round(x).toLocaleString("en-GB") : String(Math.round(x * 100) / 100));
+  const STATE_WORDS = { closed: "saturated", "refutation-only": "pays above 16 n", open: "open" };
+  const STATE_TITLES = { closed: "saturated, closed for records", "refutation-only": "only a count above 16 n earns a record", open: "open for records" };
   async function renderBounds(record) {
-    const upper = $("bounds-upper-plot"), lower = $("bounds-lower-plot");
-    if (!upper || !lower) return;
-    const cells = record.cells || [];
-    const caps = record.upper_bounds || [];
-    const rows = cells.map((c) => {
-      const mine = caps.filter((b) => b.cell === c.id && b.value);
-      return el("li", { class: `bounds-row is-${c.state}` },
-        el("span", { class: "bounds-cell" }, `${c.code} ${c.field}, rate ${c.rate}, gap ${c.gap}`),
-        el("span", { class: "bounds-marks" }, mine.length ? mine.map((b) => el("span", { class: `bounds-cap${/conditional/.test(b.status) ? " is-cond" : ""}`, title: `${b.mechanism}: ${b.status}` }, `cap ${b.value}`)) : [el("span", { class: "bounds-none" }, "no cap posted")]),
-        el("span", { class: "bounds-proven" }, "proven bound on E: none"));
+    const root = $("bounds-board");
+    if (!root) return;
+    const bounds = (record.upper_bounds || []).filter((b) => b.value);
+    const every = (record.upper_bounds || []).find((b) => /proven bound on E/i.test(b.kind || "") && b.value);
+    const open = $("bounds-open");
+    if (open && every) open.textContent = `A proven bound on E: ${every.value}.`;
+    // The one task the maintainers most want done this week, when the rules name one, with the thread
+    // of the statement ranked first.
+    const week = $("bounds-week"), ask = record.rules?.contribution_of_the_week;
+    if (week && typeof ask === "string" && ask) {
+      const first = [...(record.statements || [])].sort((a, b) => a.rank - b.rank).find((st) => THREAD.test(st.source || ""));
+      week.replaceChildren(el("b", {}, "Contribution of the week: "), `${ask}.`, ...(first ? [" ", el("a", { href: `/threads/${first.source}` }, "The thread")] : []));
+      week.hidden = false;
+    }
+    const sources = new Map();
+    const rows = (record.cells || []).map((c) => {
+      const mine = bounds.filter((b) => b.cell === c.id);
+      const source = el("small", { class: "bounds-source" });
+      sources.set(c, source);
+      return el("tr", { class: `is-${c.state}` },
+        el("th", { scope: "row", class: "bounds-cell" }, el("b", {}, c.code === "RS" ? c.field : `${c.code} ${c.field}`), el("small", {}, `rate ${c.rate} · gap ${c.gap}`)),
+        el("td", { class: "is-upper" }, mine.length ? el("ul", { class: "bounds-caps" }, mine.map(boundLine)) : el("span", { class: "bounds-none" }, "nothing posted yet")),
+        el("td", { class: "is-lower" }, el("span", { class: "bounds-low" },
+          el("span", { class: "bounds-count" }, typeof c.best_known_per_n === "number" ? el("span", {}, el("b", {}, perN(c.best_known_per_n)), " n") : el("span", { class: "bounds-none" }, "no count yet"), source),
+          el("span", { class: `bounds-state is-${c.state}`, title: STATE_TITLES[c.state] || "" }, STATE_WORDS[c.state] || c.state))));
     });
-    upper.replaceChildren(el("ol", { class: "bounds-list" }, rows));
-    const read = $("bounds-upper-read");
-    if (read) read.textContent = `${caps.filter((b) => b.value).length} mechanism caps posted, 0 proven bounds on E. A cap limits one construction; a bound on E limits every pair.`;
+    const head = el("tr", {}, el("th", { scope: "col", class: "bounds-cell" }, "Cell"),
+      el("th", { scope: "col", class: "is-upper" }, el("span", { class: "bounds-th" }, "Proven above"), el("small", {}, "Upper bounds")),
+      el("th", { scope: "col", class: "is-lower" }, el("span", { class: "bounds-th" }, "Built below"), el("small", {}, "Best known count")));
+    root.replaceChildren(el("table", { class: "bounds-table" }, el("thead", {}, head), el("tbody", {}, rows)));
+    // The certified count behind each best known figure, linked to its post: a bulletin post named by
+    // its id's prefix, or a contribution on the record by its own thread.
     try {
       const response = await fetch("/api/participation/bulletin/records?topic=MATHEMATICS", { cache: "no-cache" });
-      if (!response.ok) throw new Error(String(response.status));
-      const live = await response.json();
-      const byCell = new Map();
-      for (const pset of live.parameters || []) {
-        if (!pset || !pset.best || !Number.isSafeInteger(pset.n)) continue;
-        const c = cellOf(cells, pset.n, pset.k, pset.A);
-        const key = c ? c.id : `rate ${pset.k}/${pset.n}, gap ${pset.A - pset.k}/${pset.n}`;
-        const entry = byCell.get(key) || { cell: c, key, points: [], state: c ? c.state : (pset.cell || "open") };
-        entry.points.push({ n: pset.n, per_n: pset.best.per_n, certified: pset.best.certified, post_id: pset.best.post_id, thread_id: pset.best.thread_id });
-        byCell.set(key, entry);
+      const live = response.ok ? await response.json() : {};
+      const posts = (live.parameters || []).filter((q) => q && q.best && typeof q.best.post_id === "string");
+      for (const [c, slot] of sources) {
+        const id = c.best_known_source || "";
+        const post = /^bp1_[0-9a-f]+$/.test(id) && posts.find((q) => q.best.post_id.startsWith(id));
+        const row = (record.contributions || []).find((r) => r.id === id);
+        if (post && THREAD.test(post.best.thread_id)) {
+          slot.replaceChildren(el("a", { href: `/threads/${post.best.thread_id}#${post.best.post_id}` }, `${thousands(post.best.certified)} at n = ${thousands(post.n)}`));
+        } else if (row && THREAD.test(row.thread || "")) {
+          slot.replaceChildren(el("a", { href: `/threads/${row.thread}` }, row.id));
+        }
       }
-      const items = [...byCell.values()].sort((a, b) => (a.cell ? 0 : 1) - (b.cell ? 0 : 1)).map((entry) => {
-        const pts = entry.points.sort((a, b) => a.n - b.n);
-        const best = pts.reduce((m, q) => (q.per_n > m.per_n ? q : m), pts[0]);
-        const label = entry.cell ? `${entry.cell.code} ${entry.cell.field}, rate ${entry.cell.rate}, gap ${entry.cell.gap}` : entry.key;
-        const spark = el("span", { class: "bounds-spark", "aria-hidden": "true" }, pts.map((q) => el("i", { style: `--h:${Math.max(6, Math.min(100, Math.log10(1 + q.per_n) * 25))}%`, title: `n = ${q.n}: ${thousands(q.certified)} (${q.per_n} n)` })));
-        return el("li", { class: `bounds-row is-${entry.state}` },
-          el("span", { class: "bounds-cell" }, label),
-          el("span", { class: "bounds-marks" }, spark, el("a", { href: `/threads/${best.thread_id}#${best.post_id}` }, `${best.per_n} n at n = ${thousands(best.n)}`)),
-          el("span", { class: "bounds-state" }, entry.state === "closed" ? "saturated, closed for records" : entry.state === "refutation-only" ? "pays only above 16 n" : "open"));
-      });
-      lower.replaceChildren(el("ol", { class: "bounds-list" }, items));
-      const read2 = $("bounds-lower-read");
-      if (read2) read2.textContent = `${byCell.size} cells with certified counts, ${[...byCell.values()].filter((e) => e.state === "closed").length} closed for records. A floor that stops rising is a floor; only a proof above it changes a STARK.`;
-    } catch {
-      lower.replaceChildren(el("p", { class: "loading" }, "The certified counts could not be read just now."));
-    }
+    } catch { /* the figures stand without their links */ }
   }
   function renderCells(record) {
     const root = $("cells-list");

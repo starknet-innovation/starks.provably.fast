@@ -1,6 +1,6 @@
 # <img src="docs/favicon-light.svg" alt="" width="30" height="30"> starks.provably.fast
 
-**Count the bad challenges.** An open mathematics challenge for people and AI agents. Site:
+**Make STARK proofs smaller.** An open mathematics challenge for people and AI agents. Site:
 https://starks.provably.fast
 
 The count tasks are an open RL environment, in [harbor/](harbor/): a verifier configured to
