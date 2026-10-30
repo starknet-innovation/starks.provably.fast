@@ -1,6 +1,6 @@
 {
  "dataset": "proven-mca",
- "version": "0.1",
+ "version": "0.2",
  "tasks": [
   {
    "task": "count-babybear-m8",
@@ -11,8 +11,8 @@
    "A": 160,
    "floor": 720,
    "goal_per_n": 16,
-   "oracle": "four-pair construction, 4(n - A + 1), below the public floor",
-   "oracle_reward": 0.0947
+   "oracle": "four-pair construction, 4(n - A + 1), below 16 n",
+   "oracle_reward": 0
   },
   {
    "task": "count-babybear-m9",
@@ -23,8 +23,8 @@
    "A": 320,
    "floor": 1488,
    "goal_per_n": 16,
-   "oracle": "four-pair construction, 4(n - A + 1), below the public floor",
-   "oracle_reward": 0.0942
+   "oracle": "four-pair construction, 4(n - A + 1), below 16 n",
+   "oracle_reward": 0
   },
   {
    "task": "count-babybear-m10",
@@ -35,8 +35,75 @@
    "A": 640,
    "floor": 2992,
    "goal_per_n": 16,
-   "oracle": "four-pair construction, 4(n - A + 1), below the public floor",
-   "oracle_reward": 0.094
+   "oracle": "four-pair construction, 4(n - A + 1), below 16 n",
+   "oracle_reward": 0
+  },
+  {
+   "task": "exceptional-set-n32-a20",
+   "kind": "exceptional-set",
+   "target": "T3",
+   "n": 32,
+   "k": 16,
+   "A": 20,
+   "h": 2,
+   "level": 16,
+   "subsets": 225792840,
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "exceptional-set-n32-a18",
+   "kind": "exceptional-set",
+   "target": "T3",
+   "n": 32,
+   "k": 16,
+   "A": 18,
+   "h": 1,
+   "level": 32,
+   "subsets": 471435600,
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "refute-fibre-alignment-m8",
+   "kind": "refute-fibre-alignment",
+   "target": "T3",
+   "n": 256,
+   "k": 128,
+   "A": 160,
+   "h": 16,
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "refute-fibre-alignment-m9",
+   "kind": "refute-fibre-alignment",
+   "target": "T3",
+   "n": 512,
+   "k": 256,
+   "A": 320,
+   "h": 32,
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "refute-fibre-alignment-m10",
+   "kind": "refute-fibre-alignment",
+   "target": "T3",
+   "n": 1024,
+   "k": 512,
+   "A": 640,
+   "h": 64,
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "cap-classes-level32",
+   "kind": "cap-verification",
+   "target": "T3",
+   "level": 32,
+   "member_size": 15,
+   "posted_maximum": {
+    "family": "F_32({0, 8}; 8)",
+    "fibre": 8,
+    "classes": 385196
+   },
+   "oracle": "none (negative control, must score 0)"
   },
   {
    "task": "lean-t3-goal",

@@ -1,4 +1,4 @@
-# Raise the floor: bad challenges at rate 1/2 and gap 1/8 on the subgroup of order 1024
+# Refute 16 n: bad challenges at rate 1/2 and gap 1/8 on the subgroup of order 1024
 
 This is task 2 of the mathematics challenge on https://starks.provably.fast/ (statement:
 https://starks.provably.fast/MATHEMATICS.md), in a sandbox. Find a line with as many bad
@@ -57,11 +57,14 @@ Write `/workspace/instance.json`, the instance format of the starter kit (`/opt/
 The file is copied to a fresh machine whose code and trusted inputs are isolated from you, and
 graded from the definition.
 
-- `reward` = certified distinct bad challenges / (16 n), capped at 1: a graded terminal reward. The
-  floor scores about 0.18; the baseline script's four-pair line about 0.095.
+- `reward` = 1 only when the certified distinct bad challenges exceed 16 n = 16384, the one count
+  that would refute the pinned statement at this n; every smaller count scores 0 (rules v2: this
+  cell pays for refutations, not for one more challenge; the state of the art already holds
+  7.235 n here). The floor and the baseline both score 0.
 - `reward.json` also carries the uncapped `certified_bad` (the authoritative number), `bad_per_n`,
-  `over_floor`, `beats_floor` (1 above 2992) and `above_goal` (1 above 16 n). A reward of 1 is not
-  a refutation: only `above_goal` = 1 is evidence against the goal, and only at this n.
+  `over_floor`, `beats_floor` (1 above 2992) and `above_goal` (1 above 16 n), so progress below
+  the bar is still visible. A count above 16 n at one n is strong evidence against the goal, not a
+  refutation of the pinned statement, which allows a threshold in n.
 - Invalid submissions score 0 with a reason; a broken verifier writes no reward and the run is
   reported as an error, never as a score.
 - An instance with the wrong field, k, A or domain, or a malformed challenge, scores 0.

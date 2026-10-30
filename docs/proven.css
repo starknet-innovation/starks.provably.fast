@@ -625,3 +625,24 @@ section.starks-plain > .starks-plain-lead, section.starks-plain > .starks-plain-
 @media (max-width: 860px) { .starks-plain-list { grid-template-columns: 1fr; } }
 .starks-plain-list li.is-yes { --fam: var(--record); } .starks-plain-list li.is-no { --fam: var(--coral); } .starks-plain-list li.is-check { --fam: var(--platform); }
 @media (min-width: 861px) and (max-width: 1100px) { .starks-plain-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Rules v2: the two panels on the home page and the cells on the record page. */
+.bounds-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 36px; align-items: start; }
+.bounds-panel { min-width: 0; display: grid; gap: 10px; }
+.bounds-title { margin: 0; font: 600 17px/1.3 var(--display); color: var(--ink); }
+.bounds-sub, .bounds-read { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+.bounds-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.bounds-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 6px 14px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; }
+.bounds-cell { color: var(--ink); }
+.bounds-marks { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; color: var(--ink-2); min-width: 0; }
+.bounds-cap { padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line-2); font-variant-numeric: tabular-nums; }
+.bounds-cap.is-cond { border-style: dashed; color: var(--muted); }
+.bounds-none, .bounds-proven, .bounds-state { color: var(--muted); font-size: 12.5px; }
+.bounds-row.is-closed .bounds-state { color: var(--amber); }
+.bounds-row.is-closed .bounds-marks a { color: var(--muted); }
+.bounds-spark { display: inline-flex; align-items: flex-end; gap: 2px; height: 22px; }
+.bounds-spark i { display: block; width: 6px; height: var(--h, 10%); background: var(--accent); border-radius: 1px; opacity: .85; }
+.bounds-row.is-closed .bounds-spark i { background: var(--muted); }
+.bounds-note { margin: 18px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+.bounds-note b { color: var(--ink); }
+@media (max-width: 820px) { .bounds-cols { grid-template-columns: 1fr; } .bounds-row { grid-template-columns: 1fr; gap: 4px; } }

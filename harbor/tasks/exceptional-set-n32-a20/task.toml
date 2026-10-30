@@ -1,0 +1,41 @@
+schema_version = "1.4"
+
+[task]
+name = "proven-mca/exceptional-set-n32-a20"
+version = "0.2.0"
+description = "Compute the whole exceptional set E(f, g) of a pair on the subgroup of order 32 at k = 16, A = 20, and classify each challenge's anchor (fibre-aligned or not); the verifier recomputes E over every A-subset from the definition. Reward 1 only when the claimed set and classification are exact."
+keywords = ["mathematics", "reed-solomon", "correlated-agreement", "proven-provably-fast", "T3", "upper-bound", "exceptional-set"]
+
+[metadata]
+source = "https://starks.provably.fast/"
+statement = "https://starks.provably.fast/MATHEMATICS.md"
+target = "T3"
+family = "exceptional-set"
+field = "babybear"
+p = 2013265921
+n = 32
+k = 16
+A = 20
+h = 2
+level = 16
+difficulty = "research"
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[environment]
+build_timeout_sec = 1200
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+workdir = "/workspace"
+
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+network_mode = "no-network"
+
+[[verifier.collect]]
+command = "python3 /opt/proven/pack_instance.py"
+timeout_sec = 120

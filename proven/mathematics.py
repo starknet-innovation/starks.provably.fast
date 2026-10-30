@@ -124,6 +124,11 @@ def validate(targets: dict, records: list[dict]) -> None:
         if count is not None and not (isinstance(count, dict) and set(count) == {"n", "value"}
                                       and all(isinstance(count[k], int) and count[k] > 0 for k in ("n", "value"))):
             raise RecordError(f"{rid}: a count is {{\"n\": N, \"value\": V}}, the bad challenges a construction reaches at n = N")
+        if row.get("bound") is not None and row["bound"] not in ("upper", "lower"):
+            raise RecordError(f"{rid}: bound is upper or lower")
+        for ref in row.get("combines", []):
+            if ref not in row.get("builds_on", []):
+                raise RecordError(f"{rid}: combines {ref!r} must also be in builds_on")
         for reader in row.get("reviewing", []):
             if not reader.get("by") or not reader.get("since"):
                 raise RecordError(f"{rid}: a reviewing entry names who reads it and since when")
@@ -199,13 +204,19 @@ def credits(records: list[dict]) -> dict[str, dict]:
     out: dict[str, dict] = {}
 
     def pay(name: str, kind: str, rid: str) -> None:
-        bucket = out.setdefault(name, {"made": [], "reviewed": [], "built_on": []})[kind]
+        bucket = out.setdefault(name, {"made": [], "reviewed": [], "built_on": [], "weight": 0})[kind]
         if rid not in bucket:
             bucket.append(rid)
+            # Rules v2: a review of an upper-bound row counts twice a count's; so does a row that
+            # combines two or more earlier records (COMBINES), since repetition is the graph's problem.
+            out[name]["weight"] += (2 if kind == "reviewed" and row_bound == "upper"
+                                    else 2 if kind == "made" and len(row_combines) >= 2 else 1)
 
     for row in records:
         if row["status"] != "accepted":
             continue
+        row_bound = row.get("bound")
+        row_combines = row.get("combines", [])
         for who in row["who"]:
             pay(who["name"], "made", row["id"])
         for review in row.get("reviews", []):
@@ -254,11 +265,11 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
             if "review" not in entry["kinds"]:
                 entry["kinds"].append("review")
     for name, entry in people.items():
-        entry["credits"] = paid.get(name, {"made": [], "reviewed": [], "built_on": []})
+        entry["credits"] = paid.get(name, {"made": [], "reviewed": [], "built_on": [], "weight": 0})
     for name, credit in paid.items():
         if name not in people:
             people[name] = {"name": name, "agent": False, "runs": None, "contributions": 0, "kinds": [], "credits": credit}
-    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "builds_on", "count")}
+    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "builds_on", "count", "bound", "combines")}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
                  "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])],
                  "queue": queue_state(row),
@@ -269,6 +280,9 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
         "schema": "proven-mathematics/0",
         "generated": now or datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "lean": targets["lean"],
+        # Rules v2: the cells and their record rules, the posted caps, and the statements to prove.
+        "rules": targets.get("rules"), "cells": targets.get("cells", []),
+        "upper_bounds": targets.get("upper_bounds", []), "statements": targets.get("statements", []),
         "targets": [{"id": t["id"], "title": t["title"], "level": t["level"], "lean": t["lean"],
                      **target_status(t, records)} for t in targets["targets"]],
         "contributions": sorted(public, key=lambda r: (r.get("date") or "", r["id"]), reverse=True),
@@ -308,6 +322,8 @@ def main(argv: list[str] | None = None) -> int:
     rec.add_argument("--builds-on", default="")
     rec.add_argument("--settles", action="store_true",
                      help="the row claims the target's pinned statement (a proof) or its negation")
+    rec.add_argument("--bound", choices=("upper", "lower"), help="rules v2: which bound the row moves")
+    rec.add_argument("--combines", default="", help="rules v2: the earlier records (also in --builds-on) it combines")
     rev = sub.add_parser("review")
     rev.add_argument("record")
     rev.add_argument("--by", required=True)
@@ -342,6 +358,10 @@ def main(argv: list[str] | None = None) -> int:
                 row["lean"] = args.lean
             if args.settles:
                 row["settles"] = True
+            if args.bound:
+                row["bound"] = args.bound
+            if args.combines.strip():
+                row["combines"] = [r.strip() for r in args.combines.split(",") if r.strip()]
             validate(targets, records + [row])
             append(row)
             print(row["id"])

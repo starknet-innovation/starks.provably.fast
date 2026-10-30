@@ -1258,6 +1258,80 @@
     });
     return recordLoad;
   }
+  // Rules v2: two panels. Left, the proven upper bounds per cell (mechanism caps as marks, the
+  // proven bound on E empty); right, the lower-bound floor per cell from the bulletin's certified
+  // counts, flat and marked saturated in cells closed for records. Only the left one moves the
+  // query numbers. Data: the record's cells and upper_bounds (targets.json) and the records route.
+  const fraction = (text) => { const [a, b] = String(text).split("/").map(Number); return b ? a / b : Number(a); };
+  function cellOf(cells, n, k, A) {
+    const rate = k / n, gap = (A - k) / n;
+    return cells.find((c) => c.code === "RS" && Math.abs(fraction(c.rate) - rate) < 1e-9 && Math.abs(fraction(c.gap) - gap) < 1e-9) || null;
+  }
+  async function renderBounds(record) {
+    const upper = $("bounds-upper-plot"), lower = $("bounds-lower-plot");
+    if (!upper || !lower) return;
+    const cells = record.cells || [];
+    const caps = record.upper_bounds || [];
+    const rows = cells.map((c) => {
+      const mine = caps.filter((b) => b.cell === c.id && b.value);
+      return el("li", { class: `bounds-row is-${c.state}` },
+        el("span", { class: "bounds-cell" }, `${c.code} ${c.field}, rate ${c.rate}, gap ${c.gap}`),
+        el("span", { class: "bounds-marks" }, mine.length ? mine.map((b) => el("span", { class: `bounds-cap${/conditional/.test(b.status) ? " is-cond" : ""}`, title: `${b.mechanism}: ${b.status}` }, `cap ${b.value}`)) : [el("span", { class: "bounds-none" }, "no cap posted")]),
+        el("span", { class: "bounds-proven" }, "proven bound on E: none"));
+    });
+    upper.replaceChildren(el("ol", { class: "bounds-list" }, rows));
+    const read = $("bounds-upper-read");
+    if (read) read.textContent = `${caps.filter((b) => b.value).length} mechanism caps posted, 0 proven bounds on E. A cap limits one construction; a bound on E limits every pair.`;
+    try {
+      const response = await fetch("/api/participation/bulletin/records?topic=MATHEMATICS", { cache: "no-cache" });
+      if (!response.ok) throw new Error(String(response.status));
+      const live = await response.json();
+      const byCell = new Map();
+      for (const pset of live.parameters || []) {
+        if (!pset || !pset.best || !Number.isSafeInteger(pset.n)) continue;
+        const c = cellOf(cells, pset.n, pset.k, pset.A);
+        const key = c ? c.id : `rate ${pset.k}/${pset.n}, gap ${pset.A - pset.k}/${pset.n}`;
+        const entry = byCell.get(key) || { cell: c, key, points: [], state: c ? c.state : (pset.cell || "open") };
+        entry.points.push({ n: pset.n, per_n: pset.best.per_n, certified: pset.best.certified, post_id: pset.best.post_id, thread_id: pset.best.thread_id });
+        byCell.set(key, entry);
+      }
+      const items = [...byCell.values()].sort((a, b) => (a.cell ? 0 : 1) - (b.cell ? 0 : 1)).map((entry) => {
+        const pts = entry.points.sort((a, b) => a.n - b.n);
+        const best = pts.reduce((m, q) => (q.per_n > m.per_n ? q : m), pts[0]);
+        const label = entry.cell ? `${entry.cell.code} ${entry.cell.field}, rate ${entry.cell.rate}, gap ${entry.cell.gap}` : entry.key;
+        const spark = el("span", { class: "bounds-spark", "aria-hidden": "true" }, pts.map((q) => el("i", { style: `--h:${Math.max(6, Math.min(100, Math.log10(1 + q.per_n) * 25))}%`, title: `n = ${q.n}: ${thousands(q.certified)} (${q.per_n} n)` })));
+        return el("li", { class: `bounds-row is-${entry.state}` },
+          el("span", { class: "bounds-cell" }, label),
+          el("span", { class: "bounds-marks" }, spark, el("a", { href: `/threads/${best.thread_id}#${best.post_id}` }, `${best.per_n} n at n = ${thousands(best.n)}`)),
+          el("span", { class: "bounds-state" }, entry.state === "closed" ? "saturated, closed for records" : entry.state === "refutation-only" ? "pays only above 16 n" : "open"));
+      });
+      lower.replaceChildren(el("ol", { class: "bounds-list" }, items));
+      const read2 = $("bounds-lower-read");
+      if (read2) read2.textContent = `${byCell.size} cells with certified counts, ${[...byCell.values()].filter((e) => e.state === "closed").length} closed for records. A floor that stops rising is a floor; only a proof above it changes a STARK.`;
+    } catch {
+      lower.replaceChildren(el("p", { class: "loading" }, "The certified counts could not be read just now."));
+    }
+  }
+  function renderCells(record) {
+    const root = $("cells-list");
+    if (!root) return;
+    const cells = record.cells || [];
+    const statements = record.statements || [];
+    const rows = cells.map((c) => el("li", { class: `record-row is-cell is-${c.state}` },
+      el("span", { class: "record-kind" }, c.code),
+      el("span", { class: "record-title" }, `${c.field}, rate ${c.rate}, gap ${c.gap}${c.A ? `, A = ${c.A}` : ""}`,
+        el("small", {}, [c.best_known_per_n ? `best known ${typeof c.best_known_per_n === "number" ? c.best_known_per_n.toLocaleString("en-GB") : c.best_known_per_n} n` : "no count yet", c.why].filter(Boolean).join(" · "))),
+      el("span", { class: `verdict is-${c.state === "open" ? "accepted" : "refuted"}` }, c.state === "closed" ? "closed for records" : c.state === "refutation-only" ? "records only above 16 n" : "open")));
+    const asks = statements.map((st) => el("li", { class: "record-row is-proof" },
+      el("span", { class: "record-kind" }, `#${st.rank}`),
+      el("span", { class: "record-title" }, el("a", { href: THREAD.test(st.source || "") ? `/threads/${st.source}` : "/state/tasks.json" }, st.title),
+        el("small", {}, st.statement), el("small", {}, `${st.consequence} Open ports: ${st.ports.join("; ")}.`), el("small", {}, `Evidence: ${st.evidence}`)),
+      el("span", { class: "verdict is-posted" }, "to prove")));
+    root.replaceChildren(el("h3", { class: "record-group-title" }, el("span", { class: "record-target" }, "cells"), "Where a count still earns a record"),
+      el("ol", { class: "record-list" }, rows),
+      el("h3", { class: "record-group-title", id: "statements" }, el("span", { class: "record-target" }, "prove"), "Statements ranked first"),
+      el("ol", { class: "record-list" }, asks));
+  }
   async function renderMathematics() {
     try {
       const [record, profiles] = await Promise.all([loadRecord(), loadProfiles()]);
@@ -1266,6 +1340,8 @@
       renderTargets(record);
       renderNewest(record);
       renderProgress(record);
+      renderBounds(record);
+      renderCells(record);
       renderCrew(record);
       homeLive(record);
       const version = $("foot-version");

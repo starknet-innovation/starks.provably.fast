@@ -1,0 +1,44 @@
+schema_version = "1.4"
+
+[task]
+name = "proven-mca/refute-fibre-alignment-m$m"
+version = "0.2.0"
+description = "Refute fibre alignment on the subgroup of order $n: submit a pair and one exceptional challenge at k = $k, A = $A whose agreement set holds no fibre-aligned anchor; the verifier certifies the challenge from the definition and classifies its agreement set. Reward 1 for one such challenge."
+keywords = ["mathematics", "reed-solomon", "correlated-agreement", "proven-provably-fast", "T3", "upper-bound", "counterexample"]
+
+[metadata]
+source = "https://starks.provably.fast/"
+statement = "https://starks.provably.fast/MATHEMATICS.md"
+target = "T3"
+family = "refute-fibre-alignment"
+field = "babybear"
+p = $p
+m = $m
+n = $n
+k = $k
+A = $A
+h = $h
+level = 16
+max_listed = $max_listed
+difficulty = "research"
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[environment]
+build_timeout_sec = 1200
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+workdir = "/workspace"
+env = { m = "$m" }
+
+[verifier]
+timeout_sec = $verifier_timeout
+environment_mode = "separate"
+network_mode = "no-network"
+
+[[verifier.collect]]
+command = "python3 /opt/proven/pack_instance.py"
+timeout_sec = 120

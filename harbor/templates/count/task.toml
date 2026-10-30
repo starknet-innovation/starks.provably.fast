@@ -3,7 +3,7 @@ schema_version = "1.4"
 [task]
 name = "proven-mca/count-babybear-m$m"
 version = "0.1.0"
-description = "Find a line on the subgroup of order $n in BabyBear with as many bad challenges as possible at k = $k and agreement $A, certified from the definition; reward = certified / (16 n)."
+description = "Find a line on the subgroup of order $n in BabyBear with as many bad challenges as possible at k = $k and agreement $A, certified from the definition; reward 1 only above 16 n, the count that would refute the pinned statement at this n."
 keywords = ["mathematics", "reed-solomon", "correlated-agreement", "proven-provably-fast", "T3", "lower-bound"]
 
 [metadata]
