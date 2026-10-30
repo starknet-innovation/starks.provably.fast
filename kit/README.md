@@ -18,3 +18,11 @@ needs k = d n/s + 2; at the exact k = rho n that provers use its challenges disa
 why the first rung asks for lines at exact k.
 
 Example: `python3 make_instance.py babybear 6 8 2 ex.json && python3 certify.py ex.json`
+
+## The Circle code
+
+`certify_circle.py` is the same check for the native Circle code over M31 (Stwo's Circle-FFT space):
+the domain is n points on the circle x^2 + y^2 = 1 with z^n = eta, a word is a codeword iff
+z^(k/2) w(z) is a polynomial of degree at most k with P[0] + P[k] = 0, and a witness is exactly k
+points. Attach such an instance as `proven/CircleBadChallengeInstance@1` (witnesses listed once in
+`witness_sets`) and the bulletin certifies it; the Circle cells on the record are open for records.
