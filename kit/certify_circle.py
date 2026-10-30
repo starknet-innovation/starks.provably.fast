@@ -138,18 +138,20 @@ def codeword_values(Pp, domain, k):
 
 
 def is_codeword(domain, values, k, indices):
-    """Whether the word restricted to `indices` lies in the Circle code: interpolate on its first
-    k points and compare on the rest. Fewer than k points are always explained."""
+    """Whether the word restricted to `indices` lies in the Circle code: interpolate on k of its
+    points and compare on the rest. Fewer than k points are always explained. A k-subset may fail
+    to determine a codeword (L_v(0) = 0); then the next window of k points is tried, and None is
+    returned when every window tried is degenerate, so the caller never certifies on a guess."""
     if len(indices) <= k:
         return True
-    head = indices[:k]
-    Pp = circle_interpolant([domain[i] for i in head], [values[i] for i in head], k)
-    if Pp is None:
-        return False
-    for i in indices[k:]:
-        if mul(evaluate(Pp, domain[i]), power(conj(domain[i]), k // 2)) != values[i]:
-            return False
-    return True
+    for start in range(0, min(len(indices) - k, 8) + 1):
+        head = indices[start:start + k]
+        Pp = circle_interpolant([domain[i] for i in head], [values[i] for i in head], k)
+        if Pp is None:
+            continue
+        rest = indices[:start] + indices[start + k:]
+        return all(mul(evaluate(Pp, domain[i]), power(conj(domain[i]), k // 2)) == values[i] for i in rest)
+    return None
 
 
 def load_domain(inst):
@@ -211,7 +213,12 @@ def check(inst):
             continue
         skey = tuple(S)
         if skey not in explained:
-            explained[skey] = is_codeword(domain, f, k, S) and is_codeword(domain, g, k, S)
+            fc = is_codeword(domain, f, k, S)
+            gc = is_codeword(domain, g, k, S) if fc is not False else False
+            explained[skey] = None if fc is None or gc is None else (fc and gc)
+        if explained[skey] is None:
+            failures.append((z, "undecided: no k points of S determine a codeword"))
+            continue
         if explained[skey]:
             failures.append((z, "explained: f and g are both Circle codewords on S"))
             continue
