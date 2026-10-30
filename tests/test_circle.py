@@ -93,3 +93,39 @@ class CircleCode(unittest.TestCase):
             cc.check({"field": cc.P, "k": k, "A": A, "eta": 1, "domain_xy": off, "f": [0] * 16, "g": [0] * 16, "challenges": []})
         with self.assertRaises(ValueError):
             cc.check({"field": cc.P, "k": k, "A": A, "eta": -1, "domain_xy": [list(z) for z in dom], "f": [0] * 16, "g": [0] * 16, "challenges": []})
+
+
+class Degeneracy(unittest.TestCase):
+    def test_a_degenerate_window_is_skipped_and_the_next_one_decides(self):
+        rng = random.Random(9)
+        dom, k = domain(16, -1), 8
+        # On the Stwo coset of size 16 the eight consecutive points from index 1 do not determine a
+        # codeword (L_v(0) = 0): the first window of these indices is exactly that.
+        idx = list(range(1, 16))
+        pts = [dom[i] for i in idx[:k]]
+        self.assertIsNone(cc.circle_interpolant(pts, [cc.ZERO] * k, k))
+        values = [cc.base(v) for v in real_codeword(rng, dom, k)]
+        self.assertTrue(cc.is_codeword(dom, values, k, idx))
+        noise = [cc.base(rng.randrange(cc.P)) for _ in range(16)]
+        self.assertFalse(cc.is_codeword(dom, noise, k, idx))
+
+    def test_an_undecidable_agreement_set_fails_the_challenge_instead_of_certifying_it(self):
+        rng = random.Random(10)
+        dom, n, k, A = domain(16, 1), 16, 8, 10
+        C = real_codeword(rng, dom, k); Gw = real_codeword(rng, dom, k)
+        z0 = 4242
+        S = sorted(rng.sample(range(n), A))
+        g = Gw[:]; g[S[0]] = (g[S[0]] + 1) % cc.P
+        f = [rng.randrange(cc.P) for _ in range(n)]
+        for i in S:
+            f[i] = (C[i] - z0 * g[i]) % cc.P
+        inst = {"field": cc.P, "k": k, "A": A, "eta": 1, "domain_xy": [list(z) for z in dom], "f": f, "g": g,
+                "challenges": [{"z": z0, "witness": S[:k]}]}
+        original = cc.is_codeword
+        try:
+            cc.is_codeword = lambda *args: None
+            bad, failures = cc.check(inst)
+        finally:
+            cc.is_codeword = original
+        self.assertEqual(bad, set())
+        self.assertTrue(failures[0][1].startswith("undecided"))
