@@ -839,7 +839,9 @@
     if (tipFor && !event.target.closest?.(".adv-dot")) tipFor.hide();
   });
   function advanceChart(rows, start, crew) {
-    const items = rows.map((r) => ({ r, t: Date.parse(r.date) })).filter((p) => Number.isFinite(p.t)).sort((a, b) => a.t - b.t);
+    // Same-day finds in record order (M-0022 before M-0023), so the ringed dot is the Latest one.
+    const items = rows.map((r) => ({ r, t: Date.parse(r.date) })).filter((p) => Number.isFinite(p.t))
+      .sort((a, b) => a.t - b.t || String(a.r.id).localeCompare(String(b.r.id), "en", { numeric: true }));
     const end = Math.max(Date.now(), start + 1);
     const X = (t) => 1.5 + ((t - start) / (end - start)) * 97, Y = (k) => 94 - (k / Math.max(1, items.length)) * 82;
     let d = `M${X(start)} ${Y(0)}`;
