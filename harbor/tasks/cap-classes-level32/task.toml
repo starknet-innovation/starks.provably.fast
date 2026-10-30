@@ -1,0 +1,38 @@
+schema_version = "1.4"
+
+[task]
+name = "proven-mca/cap-classes-level32"
+version = "0.2.0"
+description = "Recompute the ray classes of a level-32 witness family F_32(b; s) at each base fibre, the constant behind the posted cap 385,196 (h + 1) + 1; the verifier enumerates the family itself and pays 1 for a matching count."
+keywords = ["mathematics", "reed-solomon", "correlated-agreement", "proven-provably-fast", "T3", "upper-bound", "cap"]
+
+[metadata]
+source = "https://starks.provably.fast/"
+statement = "https://starks.provably.fast/MATHEMATICS.md"
+target = "T3"
+family = "cap-verification"
+field = "babybear"
+p = 2013265921
+level = 32
+member_size = 15
+difficulty = "verification"
+
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+
+[environment]
+build_timeout_sec = 1200
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+workdir = "/workspace"
+
+[verifier]
+timeout_sec = 3600
+environment_mode = "separate"
+network_mode = "no-network"
+
+[[verifier.collect]]
+command = "python3 /opt/proven/pack_instance.py"
+timeout_sec = 120

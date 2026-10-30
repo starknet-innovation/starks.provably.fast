@@ -20,14 +20,26 @@ experiment has been run; the results here came from agent-assisted research.
 
 | Task | Kind | What the agent does | Reward |
 |---|---|---|---|
-| `count-babybear-m8`, `-m9`, `-m10` | count | finds a line on the subgroup of order 2^m in BabyBear with many bad challenges at k = n/2, A = 5n/8, and lists witnesses | certified distinct bad challenges / (16 n), capped at 1; plus the uncapped `certified_bad`, `bad_per_n`, `over_floor`, `beats_floor`, `above_goal` |
+| `exceptional-set-n32-a20`, `-a18` | exceptional-set | picks a pair on the subgroup of order 32, computes its whole exceptional set E(f, g) at k = 16 and classifies each challenge's anchor (fibre-aligned or not) | 1 iff the claimed set equals E recomputed over every A-subset from the definition and every classification matches; `e_size`, `missing`, `extra`, `misclassified`, `aligned` reported |
+| `refute-fibre-alignment-m8`, `-m9`, `-m10` | refute-fibre-alignment | submits a pair and challenges at rung 0 (k = n/2, A = 5n/8) whose agreement set holds no fibre-aligned anchor | 1 iff some listed challenge is certified exceptional and its agreement set is not fibre-aligned |
+| `cap-classes-level32` | cap-verification | recomputes the ray classes of a level-32 witness family F_32(b; s) at each base fibre, the constant behind the posted cap 385,196 (h + 1) + 1 | 1 iff the verifier's own enumeration gives the same counts |
+| `count-babybear-m8`, `-m9`, `-m10` | count | finds a line on the subgroup of order 2^m in BabyBear with many bad challenges at k = n/2, A = 5n/8, and lists witnesses | 1 iff the certified distinct bad challenges exceed 16 n (the count that would refute the pinned statement at this n), else 0; the uncapped `certified_bad`, `bad_per_n`, `over_floor`, `beats_floor`, `above_goal` are reported |
 | `lean-t3-goal` | Lean | proves `MCAChallenge.T3Goal N`, the first goal (rate 1/2, gap 1/8, constant 16, smooth domains) | 1 if Comparator accepts the proof and `N` is a closed form |
 | `lean-t3`, `lean-t3-exponent` | Lean | T3 and its exponent milestone, holes `N C` and `c N C` | same |
 | `lean-t1-uniform`, `lean-t1`, `lean-t2` | Lean | the long-run targets, holes `C`, `C B`, `a₂ C B` | same |
 
-The count tasks' oracle is the four-pair line (3n/2 + 4 bad challenges,
-`templates/count/environment/baseline.py`): it scores about 0.095 and `beats_floor = 0`, which
-validates the pipeline, not the task. The public floor is the best count certified at each size, from
+Rules v2 (30 October 2026) re-aimed the environment at upper bounds: the three new families pay 1
+for an exact answer to a question a proof needs (the whole exceptional set of a pair, a challenge
+outside every fibre-aligned anchor, a cap's constant recomputed), and the count tasks pay only for
+a count above 16 n, since below it one more challenge no longer informs a proof (the state of the
+art holds 7.235 n at rung 0). The shared library `templates/shared/exceptional.py` scans every
+A-subset by syndromes of the dual code (C(32, 20) = 225,792,840 subsets in about nine minutes on
+one core) and certifies each candidate with the kit; on the stored witness-family pair at n = 32 it
+returns exactly the 340 listed challenges, all fibre-aligned, and it recounts the F_32({0, 8}; 8)
+classes as 384,242 at fibre 0 and 385,196 at fibre 8, the posted maximum. The count tasks' oracle
+is the four-pair line (3n/2 + 4 bad challenges, `templates/count/environment/baseline.py`): it
+scores 0 under rules v2 (`certified_bad` 52 at n = 32) and `beats_floor = 0`, which validates the
+pipeline, not the task. The public floor is the best count certified at each size, from
 participants' towers of codeword pairs (14 October 2026): 720, 1,488 and 2,992 at n = 256, 512 and
 1,024 (reward about 0.18), certified independently. A line with more than 16 n certified bad challenges would score 1; at a fixed n that is
 strong evidence against the first goal, not a refutation; a reward of 1 at exactly 16 n is not even
@@ -40,7 +52,8 @@ and `above_goal` carry that distinction. The Lean tasks have no oracle, the targ
 ```bash
 pip install "harbor[docker]>=0.24"
 cd research/proven/harbor
-harbor run -p tasks/count-babybear-m8 -a oracle -e docker        # the four-pair line: reward 0.0947
+harbor run -p tasks/count-babybear-m8 -a oracle -e docker        # the four-pair line: reward 0 (52 certified, below 16 n)
+harbor run -p tasks -i exceptional-set-n32-a20 -a claude-code -m anthropic/claude-sonnet-5-5
 harbor run -p tasks -i count-babybear-m8 -a claude-code -m anthropic/claude-sonnet-5-5
 harbor run -p tasks -i lean-t3-goal -a oracle -e docker          # negative control: reward 0
 ```

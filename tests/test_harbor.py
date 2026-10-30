@@ -172,7 +172,7 @@ class Grader(unittest.TestCase):
             with self.assertRaises(grade.Rejected, msg=name):
                 grade.validate({**inst, **change}, task)
 
-    def test_main_writes_the_dense_reward(self):
+    def test_main_writes_the_reward_only_above_sixteen_n(self):
         inst = baseline.build(5)
         with tempfile.TemporaryDirectory() as tmp:
             tmp = Path(tmp)
@@ -184,7 +184,7 @@ class Grader(unittest.TestCase):
             reward = json.loads((tmp / "verifier" / "reward.json").read_text())
             self.assertEqual(reward["certified_bad"], 52)
             self.assertEqual((reward["over_floor"], reward["beats_floor"], reward["above_goal"]), (52 - 72, 0, 0))
-            self.assertEqual(reward["reward"], round(52 / (16 * 32), 6))
+            self.assertEqual(reward["reward"], 0.0)
             # a second bad challenge per point would beat the floor
             inst["challenges"] += [{"z": (c["z"] + 1) % inst["p"], "witness": c["witness"]} for c in inst["challenges"]]
             (tmp / "artifacts" / "instance.json").write_text(json.dumps(inst))
@@ -203,3 +203,106 @@ class Grader(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+SHARED = HARBOR / "templates" / "shared"
+exceptional = load("exceptional_lib", SHARED / "exceptional.py") if HAVE_NUMPY else None
+
+
+@unittest.skipUnless(HAVE_NUMPY, "numpy is not installed; the verifiers run in the task image")
+class UpperBoundFamilies(unittest.TestCase):
+    """Rules v2: the exceptional set from the definition, anchors, and the ray classes."""
+
+    def small_pair(self, seed: int):
+        # F_97 has the 8th roots of unity (8 divides 96); k = 4, A = 5: C(8, 5) = 56 subsets.
+        p, n, k, A = 97, 8, 4, 5
+        zeta = pow(5, (p - 1) // n, p)
+        self.assertEqual(pow(zeta, n, p), 1)
+        self.assertNotEqual(pow(zeta, n // 2, p), 1)
+        dom = [pow(zeta, i, p) for i in range(n)]
+        rng = random.Random(seed)
+        f = [rng.randrange(p) for _ in range(n)]
+        g = [rng.randrange(p) for _ in range(n)]
+        return {"p": p, "k": k, "A": A, "domain": dom, "f": f, "g": g}
+
+    def brute_force(self, inst):
+        """E(f, g) by trying every z of the field with every k-subset as a witness: the definition alone."""
+        import itertools
+        p, k, n = inst["p"], inst["k"], len(inst["domain"])
+        chal = [{"z": z, "witness": list(w)} for z in range(p) for w in itertools.combinations(range(n), k)]
+        bad, _ = kit.check({**inst, "challenges": chal})
+        return set(bad)
+
+    def test_exceptional_set_matches_the_definition_on_small_fields(self):
+        for seed in range(4):
+            inst = self.small_pair(seed)
+            E, how, witness = exceptional.exceptional_set(kit, inst)
+            self.assertEqual(E, self.brute_force(inst), f"seed {seed}")
+            self.assertEqual(how["subsets"], 56)
+            self.assertEqual(set(witness), E)
+            for z, w in witness.items():
+                T = exceptional.agreement_set(kit, inst["p"], inst["k"], inst["domain"], inst["f"], inst["g"], z, w)
+                self.assertGreaterEqual(len(T), inst["A"])
+
+    def test_a_planted_pair_has_a_known_exceptional_challenge(self):
+        inst = self.small_pair(11)
+        p, k, A, dom = inst["p"], inst["k"], inst["A"], inst["domain"]
+        # Make f + 7 g agree with a cubic on five points: f = P - 7 g there.
+        P = [3, 1, 4, 1]
+        on = [0, 1, 2, 3, 4]
+        for i in on:
+            inst["f"][i] = (kit.evaluate(P, dom[i], p) - 7 * inst["g"][i]) % p
+        E, _, witness = exceptional.exceptional_set(kit, inst)
+        self.assertIn(7, E)
+        self.assertEqual(E, self.brute_force(inst))
+
+    def test_fibre_alignment_counts_whole_fibres_plus_one_punctured(self):
+        p, n, h = 97, 8, 2
+        zeta = pow(5, (p - 1) // n, p)
+        dom = [pow(zeta, i, p) for i in range(n)]
+        # Fibres of x -> x^2: {i, i + 4}. T = two whole fibres plus one point: anchor 5 >= A - 1 = 5.
+        verdict = exceptional.fibre_aligned(p, dom, [0, 4, 1, 5, 2], h, 6)
+        self.assertEqual((verdict["aligned"], verdict["full_fibres"], verdict["largest_partial"], verdict["anchor"]), (True, 2, 1, 5))
+        # Five points from five different fibres: no anchor beyond one fibre point each.
+        self.assertFalse(exceptional.fibre_aligned(p, dom, [0, 1, 2, 3, 6], h, 6)["aligned"])
+        # h = 1: every set is a union of fibres.
+        self.assertTrue(exceptional.fibre_aligned(p, dom, [0, 1, 2, 3, 6], 1, 6)["aligned"])
+
+    def test_ray_classes_of_a_tiny_family_match_a_direct_count(self):
+        p = 97
+        modulus, size = 8, 4
+        zeta = pow(5, (p - 1) // modulus, p)
+        base, s = (0, 3), 5
+        counted = exceptional.ray_classes(p, zeta, base, s, size=size, modulus=modulus)
+        import itertools
+        direct = {y: set() for y in base}
+        free = [j for j in range(modulus) if j not in base]
+        for T in itertools.combinations(free, size - len(base)):
+            if (sum(base) + sum(T)) % modulus != s:
+                continue
+            for y in base:
+                prod = 1
+                for j in T:
+                    prod = prod * (pow(zeta, y, p) - pow(zeta, j, p)) % p
+                direct[y].add(prod)
+        self.assertEqual(counted, {y: len(v) for y, v in direct.items()})
+        self.assertGreater(sum(counted.values()), 0)
+
+    def test_count_reward_pays_only_above_sixteen_n(self):
+        src = (COUNT / "tests" / "grade.py").read_text()
+        self.assertIn("reward = 1.0 if certified > goal else 0.0", src)
+        self.assertNotIn("min(1.0, certified / goal)", src)
+
+    def test_every_family_is_generated_with_the_shared_library(self):
+        for name in ("exceptional-set-n32-a20", "exceptional-set-n32-a18", "refute-fibre-alignment-m8",
+                     "refute-fibre-alignment-m9", "refute-fibre-alignment-m10", "cap-classes-level32"):
+            task = HARBOR / "tasks" / name
+            for where in ("environment", "tests"):
+                self.assertEqual((task / where / "exceptional.py").read_text(), (SHARED / "exceptional.py").read_text(), name)
+                self.assertEqual((task / where / "certify.py").read_text(), (ROOT / "kit" / "certify.py").read_text(), name)
+            self.assertTrue((task / "tests" / "grade.py").exists())
+        manifest = json.loads((HARBOR / "manifest.json").read_text())
+        kinds = {t["kind"] for t in manifest["tasks"]}
+        self.assertEqual(kinds, {"count", "exceptional-set", "refute-fibre-alignment", "cap-verification", "lean"})
+        cap = next(t for t in manifest["tasks"] if t["kind"] == "cap-verification")
+        self.assertEqual(cap["posted_maximum"]["classes"], 385196)

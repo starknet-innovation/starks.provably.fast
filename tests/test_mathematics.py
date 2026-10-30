@@ -158,9 +158,9 @@ class QueueAndCredits(unittest.TestCase):
                     reviews=[{"by": "challenge maintainers (same operator, not independent)", "verdict": "holds"}])
         pending = row("M-0003", "lemma", who="dave", builds_on=["M-0001"])
         paid = m.credits([base, built, pending])
-        self.assertEqual(paid["alice"], {"made": ["M-0001"], "reviewed": [], "built_on": ["M-0002"]})
-        self.assertEqual(paid["bob"], {"made": [], "reviewed": ["M-0001"], "built_on": []})
-        self.assertEqual(paid["carol"], {"made": ["M-0002"], "reviewed": [], "built_on": []})
+        self.assertEqual(paid["alice"], {"made": ["M-0001"], "reviewed": [], "built_on": ["M-0002"], "weight": 2})
+        self.assertEqual(paid["bob"], {"made": [], "reviewed": ["M-0001"], "built_on": [], "weight": 1})
+        self.assertEqual(paid["carol"], {"made": ["M-0002"], "reviewed": [], "built_on": [], "weight": 1})
         self.assertNotIn("dave", paid)
         self.assertNotIn("challenge", paid)
         board = m.summary(m.load_targets(), [base, built, pending], now="2026-10-29T00:00:00+00:00")
@@ -169,3 +169,33 @@ class QueueAndCredits(unittest.TestCase):
         self.assertEqual(by_id["M-0003"]["credits"], [])
         self.assertEqual(by_id["M-0003"]["queue"]["state"], "posted")
         self.assertEqual(next(p for p in board["people"] if p["name"] == "alice")["credits"]["built_on"], ["M-0002"])
+
+
+class RulesV2(unittest.TestCase):
+    def test_targets_carry_the_cells_caps_and_statements(self):
+        t = m.load_targets()
+        self.assertEqual(t["rules"]["version"], 2)
+        states = {c["id"]: c["state"] for c in t["cells"]}
+        self.assertEqual(states["rung0"], "refutation-only")
+        self.assertEqual(states["pool32"], "closed")
+        self.assertEqual(states["circle-pool"], "open")
+        self.assertEqual(t["statements"][0]["id"], "fibre-alignment")
+        board = m.summary(t, [], now="2026-10-30T00:00:00+00:00")
+        self.assertEqual([c["id"] for c in board["cells"]][:2], ["rung0", "pool32"])
+        self.assertIsNone(next(b for b in board["upper_bounds"] if b["kind"] == "proven bound on E")["value"])
+
+    def test_upper_bound_reviews_and_combinations_weigh_double(self):
+        base1 = row("M-0001", "lemma", who="alice", status="accepted")
+        base2 = row("M-0002", "lemma", who="bob", status="accepted")
+        cap = row("M-0003", "lemma", who="carol", status="accepted", bound="upper",
+                  reviews=[{"by": "dave (Claude Code agent): reran the class count", "verdict": "holds"}])
+        combo = row("M-0004", "lemma", who="erin", status="accepted", builds_on=["M-0001", "M-0002"], combines=["M-0001", "M-0002"])
+        paid = m.credits([base1, base2, cap, combo])
+        self.assertEqual(paid["dave"]["weight"], 2)
+        self.assertEqual(paid["erin"]["weight"], 2)
+        self.assertEqual(paid["carol"]["weight"], 1)
+        self.assertEqual(paid["alice"]["weight"], 2)   # made M-0001, built on by M-0004
+        with self.assertRaises(m.RecordError):
+            m.validate(m.load_targets(), [row("M-0005", "lemma", combines=["M-0001"])])
+        with self.assertRaises(m.RecordError):
+            m.validate(m.load_targets(), [row("M-0005", "lemma", bound="sideways")])

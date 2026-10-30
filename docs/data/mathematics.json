@@ -1,11 +1,201 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-10-29T16:44:32+00:00",
+ "generated": "2026-10-30T01:06:25+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
   "commit": "35ddcaa83f683011f944f58904be779495a5709a"
  },
+ "rules": {
+  "version": 2,
+  "since": "2026-10-30",
+  "thread": null,
+  "aim": "a proven bound that shrinks a STARK, not the largest certified count",
+  "review_sla_hours": 48,
+  "upper_bound_review_weight": 2,
+  "combination_bonus": 2,
+  "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)"
+ },
+ "cells": [
+  {
+   "id": "rung0",
+   "target": "T3",
+   "code": "RS",
+   "field": "BabyBear",
+   "domain": "mu_n",
+   "rate": "1/2",
+   "gap": "1/8",
+   "k": "n/2",
+   "A": "5n/8",
+   "level": 16,
+   "state": "refutation-only",
+   "record_above_per_n": 16,
+   "best_known_per_n": 7.235,
+   "best_known_source": "bp1_38cf7def",
+   "why": "only a count above 16 n refutes the pinned statement at its n; the state of the art holds 7.235 n and the level-16 lift family is capped at 11,831 (reviewed) and conditionally 7,425"
+  },
+  {
+   "id": "pool32",
+   "target": "T3",
+   "code": "RS",
+   "field": "BabyBear",
+   "domain": "mu_n",
+   "rate": "1/2",
+   "gap": "1/16",
+   "k": "n/2",
+   "A": "9n/16",
+   "level": 32,
+   "state": "closed",
+   "best_known_per_n": 16368.9,
+   "best_known_source": "bp1_60b7d6c2",
+   "why": "the 523,806 h law and the member counts already pass the field size; new counts are logged without a record badge"
+  },
+  {
+   "id": "gap16-r4",
+   "target": "T3",
+   "code": "RS",
+   "field": "BabyBear",
+   "domain": "mu_n",
+   "rate": "1/4",
+   "gap": "1/16",
+   "k": "n/4",
+   "A": "5n/16",
+   "level": 32,
+   "state": "closed",
+   "best_known_per_n": 7652.9,
+   "best_known_source": "rgr1_543a1933",
+   "why": "244,894 (n/32) law; closed with the gap-1/16 cells"
+  },
+  {
+   "id": "gap32",
+   "target": "T3",
+   "code": "RS",
+   "field": "BabyBear and extensions",
+   "domain": "mu_n",
+   "rate": "1/4 and 1/2",
+   "gap": "1/32",
+   "level": 64,
+   "state": "closed",
+   "best_known_per_n": 301948810,
+   "best_known_source": "M-0019",
+   "why": "an exact census gives a constant fraction of the field per pair (Theorem D-prime); nothing a proof needs is left to count here"
+  },
+  {
+   "id": "gap64",
+   "target": "T3",
+   "code": "RS",
+   "field": "BabyBear",
+   "domain": "mu_n",
+   "rate": "1/4",
+   "gap": "1/64",
+   "level": 128,
+   "state": "closed",
+   "best_known_per_n": 978640259,
+   "best_known_source": "bp1_9c63cfe5",
+   "why": "sampled 978,640,259 n; saturated above 1,000 n"
+  },
+  {
+   "id": "circle-pool",
+   "target": "T3",
+   "code": "Circle",
+   "field": "M31",
+   "domain": "circle",
+   "rate": "1/2",
+   "gap": "1/16",
+   "A": "9n/16",
+   "level": 32,
+   "state": "open",
+   "best_known_per_n": null,
+   "best_known_source": "bt1_b556b712",
+   "why": "the two-base-fibre mechanism is capped at h^2/4 + m + 1 here against 385,196 h on mu_n (bt1_f4a8d9ad); the first proof or refutation of every Circle exceptional set at the pool threshold being O(h^2) is a milestone"
+  },
+  {
+   "id": "circle-rung0",
+   "target": "T3",
+   "code": "Circle",
+   "field": "M31",
+   "domain": "circle",
+   "rate": "1/2",
+   "gap": "1/8",
+   "A": "5n/8",
+   "level": 16,
+   "state": "open",
+   "best_known_per_n": 2.936,
+   "best_known_source": "bt1_b556b712",
+   "why": "native Circle-FFT towers reach 3,006 at n = 1,024 (bt1_b556b712); open for records"
+  }
+ ],
+ "upper_bounds": [
+  {
+   "cell": "rung0",
+   "kind": "mechanism cap",
+   "value": "11,831 at n = 1,024",
+   "mechanism": "level-16 kernel lift, core plus free point",
+   "status": "reviewed outside",
+   "source": "bp1_09ba872d"
+  },
+  {
+   "cell": "rung0",
+   "kind": "mechanism cap",
+   "value": "7,425 at n = 1,024",
+   "mechanism": "level-16 kernel lift",
+   "status": "conditional",
+   "source": "bp1_aee23f37"
+  },
+  {
+   "cell": "pool32",
+   "kind": "mechanism cap",
+   "value": "385,196 (h + 1) + 1",
+   "mechanism": "RS two-base-fibre pool family at level 32",
+   "status": "posted, class count reproduced independently 2026-10-30",
+   "source": "bt1_f4a8d9ad"
+  },
+  {
+   "cell": "circle-pool",
+   "kind": "mechanism cap",
+   "value": "h^2/4 + m + 1",
+   "mechanism": "Circle two-base-fibre co-punctured recipe",
+   "status": "posted, unreviewed",
+   "source": "bt1_f4a8d9ad"
+  },
+  {
+   "cell": "rung0",
+   "kind": "proven bound on E",
+   "value": null,
+   "mechanism": "any pair",
+   "status": "none proven",
+   "source": null
+  }
+ ],
+ "statements": [
+  {
+   "id": "fibre-alignment",
+   "rank": 1,
+   "title": "Fibre-alignment theorem",
+   "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), every exceptional challenge of every pair (f, g) has an agreement set containing an anchor that is a union of fibres minus shared punctures, hence E(f, g) <= h * m_max + O(h) with m_max the maximal class count (385,196 at level 32).",
+   "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries.",
+   "ports": [
+    "a proof for n = 32 for any pair",
+    "a proof for the Circle code at two base fibres",
+    "a counterexample at any n"
+   ],
+   "evidence": "exhaustive at n = 32 for the stored witness-family pair: E = 340, every challenge fibre-aligned (bt1_f4a8d9ad, reproduced 2026-10-30)",
+   "source": "bt1_f4a8d9ad544c60349264ef90"
+  },
+  {
+   "id": "circle-quadratic",
+   "rank": 2,
+   "title": "Circle exceptional sets are quadratic",
+   "statement": "Every exceptional set at the pool threshold on the native Circle code over M31 is O(h^2).",
+   "consequence": "Justifies fewer queries for Circle STARKs than for BabyBear STARKs at equal rate.",
+   "ports": [
+    "a proof",
+    "a refutation: a Circle pair with an exceptional set growing faster than h^2"
+   ],
+   "evidence": "the two-base-fibre mechanism gives at most h^2/4 + m + 1 (bt1_f4a8d9ad)",
+   "source": "bt1_f4a8d9ad544c60349264ef90"
+  }
+ ],
  "targets": [
   {
    "id": "T1",
@@ -56,6 +246,8 @@
    "thread": "bt1_18bc5409e37c2ad42e65f55d",
    "builds_on": [],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_5992277f3a8b"
    ],
@@ -79,6 +271,8 @@
    "thread": "bt1_5d39cc287ef17e8f4e0bfc43",
    "builds_on": [],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_5992277f3a8b"
    ],
@@ -104,6 +298,8 @@
     "M-0017"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_1d925b5543ae"
    ],
@@ -137,6 +333,8 @@
     "n": 1024,
     "value": 7408
    },
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_dbbfaeddbe89"
    ],
@@ -170,6 +368,8 @@
     "n": 1024,
     "value": 7296
    },
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_1d925b5543ae"
    ],
@@ -201,6 +401,8 @@
     "M-0014"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "nadai2010"
    ],
@@ -226,6 +428,8 @@
     "M-0014"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "adrienlacombe"
    ],
@@ -262,6 +466,8 @@
     "n": 1024,
     "value": 2992
    },
+   "bound": null,
+   "combines": null,
    "who": [
     "omarespejel"
    ],
@@ -301,6 +507,8 @@
     "n": 1024,
     "value": 2800
    },
+   "bound": null,
+   "combines": null,
    "who": [
     "adrienlacombe"
    ],
@@ -339,6 +547,8 @@
     "n": 1024,
     "value": 2304
    },
+   "bound": null,
+   "combines": null,
    "who": [
     "adrienlacombe"
    ],
@@ -380,6 +590,8 @@
     "M-0007"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -414,6 +626,8 @@
     "M-0007"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_a549d771d932"
    ],
@@ -440,6 +654,8 @@
     "M-0007"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_76f90b5bdad9"
    ],
@@ -465,6 +681,8 @@
     "DKT26"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_d36c13dad8f8"
    ],
@@ -490,6 +708,8 @@
     "M-0001"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "lane-random"
    ],
@@ -515,6 +735,8 @@
     "M-0003"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_59b459ae3e96"
    ],
@@ -541,6 +763,8 @@
     "DKTZ26"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -574,6 +798,8 @@
     "M-0003"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_d709f2e0e773"
    ],
@@ -600,6 +826,8 @@
     "M-0001"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -625,6 +853,8 @@
     "M-0001"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "participant_4370a4f467f7"
    ],
@@ -657,6 +887,8 @@
     "DKT26"
    ],
    "count": null,
+   "bound": null,
+   "combines": null,
    "who": [
     "lane-random"
    ],
@@ -695,7 +927,8 @@
     ],
     "built_on": [
      "M-0014"
-    ]
+    ],
+    "weight": 5
    }
   },
   {
@@ -709,7 +942,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -725,7 +959,8 @@
     "reviewed": [],
     "built_on": [
      "M-0012"
-    ]
+    ],
+    "weight": 1
    }
   },
   {
@@ -744,7 +979,8 @@
     "built_on": [
      "M-0002",
      "M-0012"
-    ]
+    ],
+    "weight": 3
    }
   },
   {
@@ -763,7 +999,8 @@
     "reviewed": [],
     "built_on": [
      "M-0018"
-    ]
+    ],
+    "weight": 3
    }
   },
   {
@@ -779,7 +1016,8 @@
     "reviewed": [
      "M-0018"
     ],
-    "built_on": []
+    "built_on": [],
+    "weight": 1
    }
   },
   {
@@ -793,7 +1031,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -807,7 +1046,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -821,7 +1061,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -838,7 +1079,8 @@
      "M-0014",
      "M-0015"
     ],
-    "built_on": []
+    "built_on": [],
+    "weight": 2
    }
   },
   {
@@ -852,7 +1094,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -866,7 +1109,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -880,7 +1124,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -894,7 +1139,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -914,7 +1160,8 @@
     ],
     "built_on": [
      "M-0015"
-    ]
+    ],
+    "weight": 3
    }
   },
   {
@@ -928,7 +1175,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -944,7 +1192,8 @@
      "M-0002"
     ],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 1
    }
   },
   {
@@ -958,7 +1207,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -972,7 +1222,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -986,7 +1237,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -1000,7 +1252,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -1014,7 +1267,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -1028,7 +1282,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -1046,7 +1301,8 @@
     "reviewed": [
      "M-0017"
     ],
-    "built_on": []
+    "built_on": [],
+    "weight": 2
    }
   },
   {
@@ -1060,7 +1316,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -1074,7 +1331,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -1088,7 +1346,8 @@
    "credits": {
     "made": [],
     "reviewed": [],
-    "built_on": []
+    "built_on": [],
+    "weight": 0
    }
   },
   {
@@ -1103,7 +1362,8 @@
      "M-0012",
      "M-0013"
     ],
-    "built_on": []
+    "built_on": [],
+    "weight": 2
    }
   },
   {
@@ -1117,9 +1377,10 @@
     "reviewed": [
      "M-0012"
     ],
-    "built_on": []
+    "built_on": [],
+    "weight": 1
    }
   }
  ],
- "source": "13ccdc08"
+ "source": "4e7d3d4d"
 }

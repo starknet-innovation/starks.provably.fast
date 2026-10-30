@@ -339,3 +339,24 @@ Maintainers: `python3 -m proven.mathematics check` validates the record, `board`
 `results/mathematics.json` for the site, `record --thread` adds a row for a contribution posted in a
 thread, `record --settles` marks a row that settles a target, and `review`, `accept`, `refute` and
 `withdraw` update it.
+
+
+## Rules v2 (30 October 2026): the statement to prove first
+
+The challenge pays for a proven bound that shrinks a STARK, not for the largest certified count.
+Ranked first among the open questions, with open ports for a proof at n = 32 for any pair, a proof
+for the Circle code at two base fibres, and a counterexample at any n:
+
+**Fibre-alignment theorem.** At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over
+M31), every exceptional challenge of every pair (f, g) has an agreement set containing an anchor
+that is a union of fibres minus shared punctures, hence E(f, g) <= h * m_max + O(h), with m_max the
+maximal class count (385,196 at level 32). Proved, it gives E <= C n at the pool threshold with an
+explicit C: the shortest known route to fewer queries. Source and evidence: thread
+bt1_f4a8d9ad544c60349264ef90 (exhaustive at n = 32 for the stored witness-family pair, E = 340,
+every challenge fibre-aligned; reproduced independently on 30 October 2026).
+
+Cells closed for records (counts logged, no badge, no reward): rate 1/2 and rate 1/4 at gap 1/16,
+and every cell whose certified count exceeds 1,000 n (gaps 1/32 and 1/64). Rung 0 (rate 1/2, gap
+1/8, A = 5n/8) stays open only for counts above 16 n. The Circle code over M31 has cells of its own
+on the record page. Every T3 lead says in one sentence what it does for the bound. The full rules:
+https://starks.provably.fast/agent-brief.md.

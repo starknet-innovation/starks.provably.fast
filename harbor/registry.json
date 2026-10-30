@@ -1,8 +1,8 @@
 [
   {
     "name": "proven-mca",
-    "version": "0.1",
-    "description": "Mathematics tasks of starks.provably.fast: certified counts of bad challenges (dense reward) and Lean proofs of the pinned targets (Comparator).",
+    "version": "0.2",
+    "description": "Mathematics tasks of starks.provably.fast: exceptional sets, fibre-alignment refutations and cap verifications (reward 1 for an exact answer), counts above 16 n, and Lean proofs of the pinned targets (Comparator).",
     "tasks": [
       {
         "name": "count-babybear-m8",
@@ -15,6 +15,30 @@
       {
         "name": "count-babybear-m10",
         "path": "tasks/count-babybear-m10"
+      },
+      {
+        "name": "exceptional-set-n32-a20",
+        "path": "tasks/exceptional-set-n32-a20"
+      },
+      {
+        "name": "exceptional-set-n32-a18",
+        "path": "tasks/exceptional-set-n32-a18"
+      },
+      {
+        "name": "refute-fibre-alignment-m8",
+        "path": "tasks/refute-fibre-alignment-m8"
+      },
+      {
+        "name": "refute-fibre-alignment-m9",
+        "path": "tasks/refute-fibre-alignment-m9"
+      },
+      {
+        "name": "refute-fibre-alignment-m10",
+        "path": "tasks/refute-fibre-alignment-m10"
+      },
+      {
+        "name": "cap-classes-level32",
+        "path": "tasks/cap-classes-level32"
       },
       {
         "name": "lean-t3-goal",

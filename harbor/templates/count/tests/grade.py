@@ -8,12 +8,13 @@ A challenge z with witness W (k domain indices) is certified when the polynomial
 below k through f + z g at W agrees with f + z g on at least A points S, and f and g are not both
 interpolable by polynomials of degree below k on S. Certified challenges are counted once each.
 
-reward = min(1, certified / (goal_per_n * n)), a graded terminal reward. reward.json also reports the
-uncapped count certified_bad (the authoritative number), bad_per_n, over_floor (certified minus the
-public baseline), beats_floor and above_goal (certified > goal_per_n * n). A reward of 1 is not a
-refutation of anything: only above_goal = 1 is evidence against the goal at this n. A malformed instance (wrong field, k, A or
-domain, a bad witness) scores 0. A broken grading setup writes no reward, so Harbor reports an
-error rather than a score.
+reward = 1 if certified > goal_per_n * n, else 0 (rules v2, 30 October 2026: this cell is open for
+records only above 16 n, the one count that would refute the pinned statement at this n; the graded
+reward min(1, certified / 16 n) paid for one more challenge and was retired). reward.json also
+reports the uncapped count certified_bad (the authoritative number), bad_per_n, over_floor
+(certified minus the public baseline), beats_floor and above_goal. A malformed instance (wrong
+field, k, A or domain, a bad witness) scores 0. A broken grading setup writes no reward, so Harbor
+reports an error rather than a score.
 
 The arithmetic is numpy on int64: p < 2^31, so every product stays below 2^62. The same
 definition, in pure Python, is the kit's certify.py; the two agree on every instance tested.
@@ -208,7 +209,7 @@ def main() -> int:
         dom, f, g, chal = validate(inst, task)
         bad, failures = certify(dom, f, g, chal, task["k"], task["A"], task["p"])
         certified = len(bad)
-        reward = min(1.0, certified / goal)
+        reward = 1.0 if certified > goal else 0.0
         metrics = {
             "reward": round(reward, 6),
             "certified_bad": certified,
@@ -218,7 +219,7 @@ def main() -> int:
             "above_goal": int(certified > goal),
         }
         details.update(metrics, floor=floor, goal=goal, listed=len(chal), failed=len(failures),
-                       failures=failures[:10], reason="graded from the definition")
+                       failures=failures[:10], reason="certified from the definition; reward 1 only above 16 n")
     except Rejected as exc:
         reward = 0.0
         metrics = {"reward": 0.0, "certified_bad": 0, "bad_per_n": 0.0, "over_floor": 0, "beats_floor": 0, "above_goal": 0}
