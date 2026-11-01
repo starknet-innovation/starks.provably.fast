@@ -375,15 +375,17 @@
     root.replaceChildren(svg);
   }
 
-  // The prompt: the lines shown, which send the agent to the brief on provably.fast.
+  // The prompt: four lines that send the agent to the state, the brief and the task list. Copy takes
+  // all of it, and one click on the text selects it whole.
   function initBrief() {
     const button = $("prompt-copy"), status = $("prompt-status"), text = $("prompt-text");
     if (!button || !text) return;
+    const words = button.textContent;
     button.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(text.textContent);
         button.textContent = "Copied"; button.classList.add("is-done"); status.textContent = "";
-        setTimeout(() => { button.textContent = "Copy"; button.classList.remove("is-done"); }, 2200);
+        setTimeout(() => { button.textContent = words; button.classList.remove("is-done"); }, 2200);
       } catch {
         status.textContent = "Copy failed. Select the lines and paste them into your agent.";
       }
@@ -797,8 +799,8 @@
   const nOf = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
   const independent = (name) => !/same operator/i.test(name);
   // The targets board: each row's status, and its contributions over time on one scale for all three.
-  // The three targets as cards: the status; who is pushing each (faces and names, how many people
-  // made how much and how much is accepted, each find on a chart over time); its newest find; and a
+  // The three targets as cards: the status once it is not open; who is pushing each (faces and
+  // names, how much they made and how much is accepted, each find on a chart over time); and a
   // button that drafts a post on X crediting the people behind it. T3's "examples reach" is the best
   // known count of its first case (rate 1/2, agreement 5n/8).
   const andList = (items) => items.flatMap((item, i) => (i === 0 ? [item] : [i === items.length - 1 ? " and " : ", ", item]));
@@ -811,11 +813,15 @@
     for (const target of record.targets || []) {
       const card = document.querySelector(`.tgt-card[data-target="${target.id}"]`);
       if (!card) continue;
+      // A status shows once it is news: every target is open until someone claims it.
       const pill = card.querySelector("[data-status]");
       const word = STATUS_WORDS[target.status] || target.status;
       pill.textContent = word.charAt(0).toUpperCase() + word.slice(1);
       pill.className = `kit-pill ${target.status === "solved" ? "is-yes" : "is-now"}`;
+      pill.hidden = target.status === "open";
       if (target.lean_checked) pill.after(el("span", { class: "kit-pill is-yes" }, "Lean-checked"));
+      const lead = card.querySelector(".tgt-fig.is-lead");
+      if (lead && record.points && !lead.querySelector(".tgt-points")) lead.append(el("span", { class: "tgt-points" }, `${pts(record.points.advances.statement)} points`));
       if (target.id === "T3" && typeof first?.best_known_per_n === "number") {
         card.querySelector("[data-known]").replaceChildren(`examples reach ${perN(first.best_known_per_n)}`, el("i", {}, "n"));
       }
@@ -826,19 +832,8 @@
       const named = people.length > 3 ? [...people.slice(0, 2).map(shown), `${people.length - 2} more`] : people.map(shown);
       card.querySelector("[data-people]").replaceChildren(
         el("span", { class: "tgt-who" }, el("span", { class: "adv-faces" }, people.slice(0, 5).map((m) => face(m, 30))),
-          el("span", { class: "tgt-names" }, people.length ? andList(named) : "Nobody yet: be the first")),
-        el("small", { class: "tgt-stats" }, `${nOf(people.length, "person", "people")} · ${nOf(mine.length, "contribution")} · ${accepted} accepted`),
+          el("span", { class: "tgt-names" }, people.length ? andList(named) : "Nobody yet")),
         advanceChart(mine, start, crew));
-      const latest = mine[0];
-      if (latest) {
-        const href = THREAD.test(latest.thread || "") ? `/threads/${latest.thread}` : safeHref(latest.url);
-        const [tone] = recordState(latest);
-        const state = latest.queue?.state === "reviewing" ? "reviewing" : tone;
-        const [head] = headline(latest.title);
-        card.querySelector("[data-latest]").replaceChildren(
-          el("span", { class: "tgt-latest-top" }, el("small", {}, `Latest, ${day(latest.date)}`), el("span", { class: `verdict is-${tone}` }, SHORT_STATE[state] || "posted")),
-          href ? el("a", { href, title: latest.title }, head) : el("span", { title: latest.title }, head));
-      }
       const credit = plainList([...people.slice(0, 3).map((m) => m.login || personName(m.name)), ...(people.length > 3 ? [`${people.length - 3} more`] : [])]);
       const name = card.querySelector(".tgt-name").textContent;
       const text = `${target.id} on starks.provably.fast: ${name}. ${nOf(mine.length, "contribution")} so far, ${accepted} accepted${credit ? `, from ${credit}` : ""}. Help make STARK proofs smaller.`;
@@ -904,11 +899,8 @@
       el("span", { class: "adv-axis" }, el("span", {}, day(new Date(start).toISOString())),
         el("span", { class: "adv-legend" }, el("i", { class: "is-accepted" }), "accepted", el("i", {}), "posted"), el("span", {}, "today")));
   }
-  // Latest advances: a card per contribution, newest first, with its headline (the full statement is
-  // one click away), the faces and names of who made it and a button that drafts a post on X crediting
-  // them. Names go out plain, never as @handles: a GitHub login is not an X account.
+  // A row's state in the words the charts show.
   const SHORT_STATE = { accepted: "accepted", reviewed: "reviewed", reviewing: "under review", posted: "posted", refuted: "declined" };
-  const SHARE_WORDS = { accepted: "Accepted", reviewed: "Reviewed", reviewing: "Under review", posted: "Posted", refuted: "Declined" };
   function headline(title) {
     const i = title.indexOf(": ");
     return i > 12 && i < 120 ? [title.slice(0, i), title.slice(i + 2)] : [title, ""];
@@ -920,37 +912,6 @@
   };
   const clip = (text, most) => (text.length > most ? `${text.slice(0, most - 1).trimEnd()}…` : text);
   const plainList = (names) => (names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0] || "");
-  function renderNewest(record) {
-    const root = $("starks-newest");
-    if (!root) return;
-    const crew = crewOf(record);
-    const cards = (record.contributions || []).slice(0, 6).map((row) => {
-      const href = THREAD.test(row.thread || "") ? `/threads/${row.thread}` : safeHref(row.url);
-      const [tone] = recordState(row);
-      const state = row.queue?.state === "reviewing" ? "reviewing" : tone;
-      const [head] = headline(row.title);
-      const people = [...new Map(row.who.map((name) => {
-        const m = crew.byName.get(name) || { name, login: null };
-        return [m.name, m];
-      })).values()];
-      const shown = (m) => (m.maintainers ? "The maintainers' agents" : m.login || personName(m.name));
-      const names = people.map((m) => (m.login ? el("a", { href: `https://github.com/${encodeURIComponent(m.login)}`, rel: "noopener noreferrer" }, `@${m.login}`) : shown(m)));
-      const plain = people.map((m) => (m.maintainers ? "the maintainers' agents" : shown(m)));
-      const credit = plainList(plain.length > 3 ? [...plain.slice(0, 3), `${plain.length - 3} more`] : plain);
-      const link = href ? new URL(href, "https://starks.provably.fast").href : "https://starks.provably.fast/record";
-      const text = `${clip(head, 110)}, by ${credit}. ${SHARE_WORDS[state] || "Posted"} on starks.provably.fast, the open challenge to make STARK proofs smaller.`;
-      const share = el("a", { class: "adv-share", href: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link)}`,
-        target: "_blank", rel: "noopener noreferrer", "aria-label": `Share ${row.id} on X` }, svgIcon("#x-mark"), "Share");
-      return el("li", { class: `adv-card is-${row.target.toLowerCase()}` },
-        el("span", { class: "adv-top" }, el("span", { class: "adv-tag" }, `${row.target} · ${KIND_WORDS[row.kind] || row.kind}`),
-          el("span", { class: `verdict is-${tone}` }, SHORT_STATE[state] || "posted")),
-        href ? el("a", { class: "adv-title", href, title: row.title }, head) : el("span", { class: "adv-title", title: row.title }, head),
-        el("span", { class: "adv-by" }, el("span", { class: "adv-faces" }, people.slice(0, 3).map((m) => face(m, 30))),
-          el("span", { class: "adv-names" }, el("span", {}, ...names.flatMap((n, i) => (i ? [", ", n] : [n]))), el("small", {}, day(row.date))),
-          share));
-    });
-    root.replaceChildren(...cards);
-  }
   // The people behind it: every contributor with what they made for each target, the reviews they
   // wrote, and the agents they named. A review names its author first, then the agent in brackets
   // ("nadai2010 (Claude Code agent): ..."); a description with no name is credited in the record only.
@@ -1028,7 +989,11 @@
         const rows = (payload?.identities || []).filter((row) => row && typeof row.bulletin_actor === "string");
         const actors = rows.map((row) => row.bulletin_actor);
         if (new Set(actors).size !== actors.length) return new Map();
-        return new Map(rows.filter((row) => PSEUDONYM.test(row.bulletin_actor) && LOGIN.test(row.login || "")).map((row) => [row.bulletin_actor, row.login]));
+        const named = rows.filter((row) => PSEUDONYM.test(row.bulletin_actor) && LOGIN.test(row.login || ""));
+        // A person's graph actors (github-..., hosted-agent-...) name them too, for their graph leads.
+        const graphActors = (payload?.identities || []).filter((row) => row && LOGIN.test(row.login || "")).flatMap((row) =>
+          (Array.isArray(row.actor_ids) ? row.actor_ids : []).filter((id) => /^(github-\d{1,12}|hosted-agent-[0-9a-f]{8,40})$/.test(id)).map((id) => [id, row.login]));
+        return new Map([...graphActors, ...named.map((row) => [row.bulletin_actor, row.login])]);
       })
       .catch(() => new Map());
     // ponytail: a profiles API slower than 2.5 s leaves pseudonyms as they are for this view; redraw
@@ -1071,70 +1036,332 @@
     }
     return el("span", { class: "kit-model", title: `Self-reported: ${name}` }, icon, name);
   }
-  // The people behind it, as postquantum's table: a face, the agents named in reviews, a column per
-  // target and the reviews, sorted by any column head.
-  const TARGET_FAM = { T3: "var(--amber)", T2: "var(--violet)", T1: "var(--accent)" };
-  let crewSort = "total";
-  function renderCrew(record) {
+  // The people behind it, in points. The record pays results, reviews and work others build on
+  // (data/mathematics.json points: the rules and every line, pending until a row is accepted); the
+  // counts the bulletin certifies are added here, live: raising a listed cell's best known count at
+  // n >= points.count_min_n pays points.count_raise, once per cell, person and day (rung 0 only
+  // before rules v2), and a count above 16 n at rung 0 shows a statement's points, pending until it
+  // is recorded. Copies and repeats pay nothing. Rows follow points and carry no rank numbers.
+  const DAY = 86_400_000;
+  const dayOf = (t) => Math.floor(t / DAY);
+  const MILESTONES = [50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000];
+  // A rule's points as a chip, and as words in a share post.
+  const RULE_CHIP = { lead: "lead", statement: "ranked statement", refutes: "refutation", port: "port", upper: "upper bound", breaks: "broken bound",
+    result: "results", review: "reviews", built_on: "built on", error: "error found", count: "best count", rung0: "rung-0 refutation" };
+  const RULE_POST = { lead: "leads posted", statement: "proved a ranked statement", refutes: "refuted a ranked statement", port: "filled a port",
+    upper: "proved an upper bound", breaks: "broke a posted bound", result: "accepted results", review: "reviews",
+    built_on: "work others built on", error: "found an error", count: "raised a cell's best count", rung0: "a count above 16 n at rung 0" };
+  const RULE_TONE = { lead: "amber", statement: "record", refutes: "pink", port: "amber", upper: "amber", breaks: "pink", result: "amber",
+    review: "accent", built_on: "pink", error: "accent", count: "teal", rung0: "record" };
+  const pts = (n) => Math.round(n).toLocaleString("en-US");
+  let bulletinLoad = null;
+  const loadBulletinRecords = () => (bulletinLoad ||= fetch("/api/participation/bulletin/records?topic=MATHEMATICS", { cache: "no-cache" })
+    .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status))))));
+  // The graph's leads that the record does not hold yet: each is a result's points, pending until the
+  // maintainers record and accept it (ten a person a day at most, so a flood of leads stays small).
+  // The digest comes from the registry, like the research page's.
+  async function loadLeads(record) {
+    const registry = await fetch("/data/campaigns.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const campaign = (registry?.campaigns || []).find((c) => c.topic === "MATHEMATICS" && /^[0-9a-f]{64}$/.test(c.graph_digest || ""));
+    const digest = campaign?.graph_digest;
+    if (!digest) return [];
+    const recorded = new Set((record.contributions || []).flatMap((r) => r.builds_on || []));
+    const leads = [];
+    for (let cursor = 0, n = 0; n < 20; n += 1) {
+      const page = await fetch(`/api/participation/graph?campaign_digest=${digest}&cursor=${cursor}&limit=100`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+      if (!page) break;
+      leads.push(...(page.records || []).filter((r) => r && r.record_type === "LEAD" && !recorded.has(r.record_id)).map((r) => ({ ...r, campaign: campaign.campaign_id })));
+      if (!Number.isSafeInteger(page.next_cursor) || page.next_cursor <= cursor) break;
+      cursor = page.next_cursor;
+    }
+    return leads;
+  }
+  // Every point, with the crew member it pays and when.
+  function boardPeople(record, records, leads = []) {
+    const crew = crewOf(record);
+    const profiles = record.profiles || new Map();
+    const P = record.points || { ledger: [] };
+    const rows = new Map();
+    // A name on the record or the bulletin, or a login a graph actor resolves to (known): one person
+    // under every name their profile links.
+    const byLogin = new Map(crew.filter((o) => o.login).map((o) => [o.login, o]));
+    const member = (name, known = null) => {
+      let m = crew.byName.get(name);
+      if (!m) {
+        const login = known || profiles.get(name) || null;
+        m = (login && byLogin.get(login)) || { name, names: [name], login, agents: new Set(), maintainers: false };
+        crew.byName.set(name, m);
+        if (login) byLogin.set(login, m);
+      }
+      return m;
+    };
+    const entry = (name, known = null) => {
+      const m = member(name, known);
+      if (!rows.has(m)) rows.set(m, { m, lines: [], active: [] });
+      return rows.get(m);
+    };
+    const byId = new Map((record.contributions || []).map((r) => [r.id, r]));
+    const at = (iso) => Date.parse(String(iso || "").length === 10 ? `${iso}T12:00:00Z` : iso);
+    for (const line of P.ledger || []) {
+      const row = byId.get(line.row);
+      const t = at(line.date);
+      if (!row || !Number.isFinite(t) || /challenge maintainers/i.test(line.who) || member(line.who).maintainers) continue;
+      const [head] = headline(row.title);
+      const words = line.rule === "review" ? `review of ${head}` : line.rule === "built_on" ? `${line.row} built on ${line.of}` : line.rule === "error" ? `found the error in ${head}` : head;
+      entry(line.who).lines.push({ points: line.points, pending: line.pending, rule: line.rule, t, words, id: line.row,
+        href: THREAD.test(row.thread || "") ? `/threads/${row.thread}` : "/record" });
+    }
+    // Certified counts: what raised a listed cell's best known count, and anything above 16 n at rung 0.
+    const since = Date.parse(`${record.rules?.since || "2026-10-30"}T00:00:00Z`);
+    const cells = (record.cells || []).filter((c) => FIELD_P[c.field] && c.state !== "closed");
+    const cellOf = (i) => cells.find((c) => inCell(c, i));
+    const best = new Map(), paid = new Set();
+    const instances = [...(records.instances || [])].sort((a, b) => a.created_at - b.created_at);
+    for (const i of instances) {
+      if (!i.author || /challenge maintainers/i.test(i.author) || member(i.author).maintainers) continue;
+      entry(i.author).active.push(i.created_at);
+      const c = cellOf(i);
+      if (!c) continue;
+      const link = `/threads/${i.thread_id}#${i.post_id}`;
+      if (c.state === "refutation-only" && i.per_n > (c.record_above_per_n || 16)) {
+        entry(i.author).lines.push({ points: P.advances?.statement || 1000, pending: true, rule: "rung0", t: i.created_at, id: i.post_id.slice(0, 12),
+          words: `${thousands(i.certified)} at n = ${thousands(i.n)}, above 16 n`, href: link });
+      }
+      const pays = i.n >= (P.count_min_n || 256) && (c.state === "open" || i.created_at < since);
+      if (pays && i.per_n > (best.get(c.id) || 0)) {
+        const key = `${member(i.author).name}:${c.id}:${dayOf(i.created_at)}`;
+        if (!paid.has(key)) {
+          paid.add(key);
+          entry(i.author).lines.push({ points: P.count_raise || 25, pending: false, rule: "count", t: i.created_at, id: i.post_id.slice(0, 12),
+            words: `${c.code === "RS" ? c.field : `${c.code} ${c.field}`} rate ${c.rate}, gap ${c.gap}: ${perN(i.per_n)} n at n = ${thousands(i.n)}`, href: link });
+        }
+      }
+      if (i.n >= (P.count_min_n || 256)) best.set(c.id, Math.max(best.get(c.id) || 0, i.per_n));
+    }
+    for (const i of instances) for (const r of i.reproduced_by || []) if (r.author && r.author !== i.author) entry(r.author).active.push(i.created_at);
+    const perDay = new Map();
+    for (const lead of [...leads].sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)))) {
+      const login = profiles.get(lead.author?.contributor) || null;
+      const who = login || lead.author?.contributor;
+      const t = Date.parse(lead.created_at);
+      if (!who || !Number.isFinite(t) || member(who, login).maintainers) continue;
+      const key = `${member(who, login).name}:${dayOf(t)}`;
+      perDay.set(key, (perDay.get(key) || 0) + 1);
+      if (perDay.get(key) > 10) continue;
+      entry(who, login).lines.push({ points: P.advances?.result || 50, pending: true, rule: "lead", t, id: lead.record_id.slice(0, 12),
+        words: clip(String(lead.title || lead.record_id), 110), href: `/workshop#/c/${encodeURIComponent(lead.campaign)}/workshop?node=${lead.record_id}` });
+    }
+    return [...rows.values()];
+  }
+  function boardStats(row, from, now) {
+    const shown = row.lines.filter((l) => l.t >= from);
+    const vested = shown.filter((l) => !l.pending);
+    const all = row.lines.filter((l) => !l.pending).reduce((total, l) => total + l.points, 0);
+    const days = new Set([...row.lines.map((l) => dayOf(l.t)), ...row.active.map(dayOf)]);
+    const byRule = new Map();
+    for (const l of vested) byRule.set(l.rule, (byRule.get(l.rule) || 0) + l.points);
+    const last = Math.max(0, ...row.lines.map((l) => l.t), ...row.active);
+    return { shown, points: vested.reduce((total, l) => total + l.points, 0), pending: shown.filter((l) => l.pending).reduce((total, l) => total + l.points, 0),
+      all, byRule, days, last, recent: dayOf(now) - 13,
+      activeHere: row.active.some((t) => t >= from) };
+  }
+  // A figure that rolls up when the motion runtime is there.
+  function rollingFigure(value) {
+    const motion = !still && window.PvfastMotion && customElements.get("number-flow");
+    if (!motion) return value.toLocaleString("en-US");
+    const flow = document.createElement("number-flow");
+    flow.setAttribute("aria-hidden", "true");
+    flow.locales = "en-US";
+    flow.spinTiming = { duration: 1400, easing: "cubic-bezier(.16, 1, .3, 1)" };
+    flow.update(0);
+    requestAnimationFrame(() => requestAnimationFrame(() => flow.update(value)));
+    return el("span", {}, flow, el("span", { class: "sr-only" }, value.toLocaleString("en-US")));
+  }
+  // Confetti from the theme's own colours, for the signed-in visitor's new points.
+  function confetti(from) {
+    if (still) return;
+    const canvas = el("canvas", { class: "board-confetti", "aria-hidden": "true" });
+    document.body.append(canvas);
+    const ctx = canvas.getContext("2d"), ratio = devicePixelRatio || 1;
+    canvas.width = innerWidth * ratio; canvas.height = innerHeight * ratio;
+    ctx.scale(ratio, ratio);
+    const css = getComputedStyle(document.documentElement);
+    const colors = ["--record", "--amber", "--accent", "--pink", "--platform"].map((v) => css.getPropertyValue(v).trim() || "#7c86ff");
+    const box = from?.getBoundingClientRect?.() || { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
+    const bits = Array.from({ length: 140 }, (_, i) => ({ x: box.left + box.width / 2, y: box.top + box.height / 2,
+      vx: (Math.random() - 0.5) * 13, vy: -Math.random() * 13 - 4, r: 3 + Math.random() * 4, a: Math.random() * Math.PI, va: (Math.random() - 0.5) * 0.4, c: colors[i % colors.length] }));
+    const start = performance.now();
+    const frame = (now) => {
+      const k = (now - start) / 1900;
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      for (const b of bits) {
+        b.vy += 0.38; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.a += b.va;
+        ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k); ctx.translate(b.x, b.y); ctx.rotate(b.a); ctx.fillStyle = b.c;
+        ctx.fillRect(-b.r, -b.r / 2, b.r * 2, b.r); ctx.restore();
+      }
+      if (k < 1) requestAnimationFrame(frame); else canvas.remove();
+    };
+    requestAnimationFrame(frame);
+  }
+  function toast(words) {
+    const note = el("p", { class: "board-toast", role: "status" }, ...words);
+    document.body.append(note);
+    requestAnimationFrame(() => note.classList.add("is-in"));
+    setTimeout(() => { note.classList.remove("is-in"); setTimeout(() => note.remove(), 600); }, 6000);
+    return note;
+  }
+  let boardWindow = "week";
+  // The signed-in GitHub login, from auth-nav.js: that row comes first, marked "You".
+  let boardYou = "";
+  let boardRedraw = null;
+  window.addEventListener("pvfast-auth-changed", (event) => {
+    boardYou = event.detail?.login || "";
+    boardRedraw?.();
+  });
+  // A model as its mark, named on hover; a model without a mark keeps its name.
+  function modelMark(name) {
+    const tag = modelTag(name);
+    const icon = tag.querySelector(".kit-model-mark");
+    return icon ? el("span", { class: "board-model", title: `Self-reported: ${name}`, role: "img", "aria-label": name }, icon) : tag;
+  }
+  // What the points are for, from the record's own table, in the Points column's infotip.
+  function renderPointsRules(record) {
+    const root = $("points-help"), P = record.points;
+    if (!root || !P) return;
+    const a = P.advances, share = `${Math.round(P.share * 100)}%`;
+    const items = [[pts(a.statement), "Prove a ranked statement or solve a target"], [pts(a.refutes), "Refute a ranked statement"],
+      [pts(a.port), "Fill a port of one"], [pts(a.upper), "Prove an upper bound"], [pts(a.result), "Any other accepted result"],
+      [share, "Review a result we accept"], [share, "A later result builds on yours"], [pts(P.count_raise), `Raise a cell's best count at n ≥ ${thousands(P.count_min_n)}`],
+      [`×${P.bonuses.week}`, "The contribution of the week"], [`×${P.bonuses.lean}`, "A Lean-checked proof"]];
+    root.replaceChildren(el("h3", {}, "How points work"),
+      el("ul", {}, items.map(([n, words]) => el("li", {}, el("b", {}, n), el("span", {}, words)))),
+      el("p", {}, "Points count once a result is accepted. Copies of certified counts earn none. Weeks start Monday, 00:00 UTC."));
+  }
+  async function renderBoard(record) {
     const root = $("crew");
     if (!root) return;
-    const crew = crewOf(record);
-    const ids = ["T3", "T2", "T1"];
-    const columns = [["name", "Contributor"], ...ids.map((id) => [id, id]), ["reviews", "Reviews"], ["credited", "Credited"], ["total", "Total"], ["joined", "Joined"]];
-    const paidOf = (m) => {
-      const all = (record.people || []).filter((p) => m.names.includes(p.name) && p.credits).map((p) => p.credits);
-      return { made: all.flatMap((c) => c.made), reviewed: all.flatMap((c) => c.reviewed), built_on: all.flatMap((c) => c.built_on) };
+    renderPointsRules(record);
+    let records = { instances: [] };
+    try { records = await loadBulletinRecords(); } catch { /* the record's points alone */ }
+    let rows = boardPeople(record, records);
+    let all = rows.flatMap((row) => row.lines);
+    const now = Date.now();
+    const weekStart = (dayOf(now) - ((new Date(now).getUTCDay() + 6) % 7)) * DAY;
+    let seen = 0;
+    try { seen = Number(localStorage.getItem("starks-board-seen")) || 0; } catch { /* storage off */ }
+    const label = (m) => (m.login ? `@${m.login}` : personName(m.name));
+    const isYou = (m) => Boolean(boardYou && m.login === boardYou);
+    const sum = (lines) => lines.reduce((total, l) => total + l.points, 0);
+    const open = new Set();
+    const draw = () => {
+      const from = boardWindow === "week" ? weekStart : 0;
+      const stats = rows.map((row) => ({ row, s: boardStats(row, from, now) })).filter(({ s }) => s.points || s.pending);
+      stats.sort((a, b) => b.s.points - a.s.points || b.s.pending - a.s.pending || b.s.last - a.s.last);
+      // What happened since the last visit, with the visitor's own points when signed in.
+      if (seen) {
+        const fresh = all.filter((l) => !l.pending && l.t > seen);
+        const yours = sum(rows.filter((row) => isYou(row.m)).flatMap((row) => row.lines).filter((l) => !l.pending && l.t > seen));
+        const accepted = new Set(fresh.filter((l) => !["review", "built_on", "count", "error"].includes(l.rule)).map((l) => l.id)).size;
+        $("board-since").replaceChildren(el("b", {}, `Since your visit on ${day(new Date(seen).toISOString())}: `), `+${pts(sum(fresh))} points`,
+          accepted ? `, ${nOf(accepted, "result")} accepted` : "", ".", yours ? el("span", { class: "board-yours" }, ` You: +${pts(yours)}.`) : "");
+        $("board-since").hidden = !fresh.length;
+      }
+      // Places by points; a tie shares its place. The move is against the same window a week ago.
+      const place = (list) => {
+        const out = new Map();
+        let at = 0, last = null;
+        list.forEach(({ row, points }, i) => { if (points > 0) { if (points !== last) at = i + 1; last = points; out.set(row, at); } });
+        return out;
+      };
+      const ranks = place(stats.map(({ row, s }) => ({ row, points: s.points })));
+      const [prevFrom, prevTo] = from ? [from - 7 * DAY, from] : [0, now - 7 * DAY];
+      const before = place(rows.map((row) => ({ row, points: sum(row.lines.filter((l) => !l.pending && l.t >= prevFrom && l.t < prevTo)) }))
+        .sort((x, y) => y.points - x.points));
+      const head = el("tr", {}, el("th", { scope: "col", class: "board-rank" }, el("span", { class: "sr-only" }, "Place")),
+        el("th", { scope: "col" }, nOf(stats.length, "contributor")), el("th", { scope: "col", class: "is-days" }, "Last 14 days"),
+        el("th", { scope: "col" }, "Points", el("button", { type: "button", class: "info-tip", popovertarget: "points-help", "aria-label": "How points work" }, "i")),
+        el("th", { scope: "col" }, el("span", { class: "sr-only" }, "Earned for")), el("th", { scope: "col" }, el("span", { class: "sr-only" }, "Share")));
+      const when = boardWindow === "week" ? "this week" : "so far";
+      const body = stats.flatMap(({ row, s }) => {
+        const m = row.m, you = isYou(m), key = m.login || m.name;
+        const name = m.login ? el("a", { class: "kit-person-name", href: `/workshop#/people/${encodeURIComponent(m.login)}` }, label(m))
+          : el("span", { class: "kit-person-name" }, label(m));
+        const person = el("span", { class: "kit-person" }, face(m, 28), name, you ? el("span", { class: "board-you" }, "You") : "", [...(m.agents || [])].map(modelMark));
+        const dots = el("span", { class: "board-dots", title: nOf(s.days.size, "active day") },
+          Array.from({ length: 14 }, (_, i) => el("i", { class: s.days.has(s.recent + i) ? "is-on" : "" })));
+        const points = el("td", { class: "board-points" }, el("b", { class: s.points ? "" : "is-zero" }, rollingFigure(s.points)),
+          s.pending ? el("span", { class: "board-pending", title: "Counts once the result is accepted" }, `+${pts(s.pending)} pending`) : "");
+        const chips = [...s.byRule].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([rule, n]) =>
+          el("span", { class: `board-chip is-${RULE_TONE[rule]}` }, el("b", {}, `+${pts(n)}`), ` ${RULE_CHIP[rule]}`));
+        const toggle = el("button", { type: "button", class: "board-open", "aria-expanded": String(open.has(key)), "data-open": key },
+          chips.length ? chips : el("span", { class: "board-chip" }, "pending only"), el("span", { class: "board-caret", "aria-hidden": "true" }));
+        const words = [...s.byRule].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([rule]) => RULE_POST[rule]).join(", ");
+        const text = you ? `I earned ${pts(s.points)} points on starks.provably.fast ${when}${words ? `: ${words}` : ""}. Help make STARK proofs smaller.`
+          : `${m.login || personName(m.name)} earned ${pts(s.points)} points on starks.provably.fast ${when}${words ? `: ${words}` : ""}. Help make STARK proofs smaller.`;
+        const share = el("td", { class: "board-share" }, el("a", { class: "adv-share is-icon", target: "_blank", rel: "noopener noreferrer", title: "Share on X",
+          "aria-label": you ? `Share your points on X` : `Share ${label(m)}'s points on X`,
+          href: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://starks.provably.fast/#people")}` }, svgIcon("#x-mark")));
+        const at = ranks.get(row), was = before.get(row);
+        const move = !at ? "" : !was ? el("small", { class: "board-move is-new" }, "new") : was > at ? el("small", { class: "board-move is-up", title: `Up ${was - at} since a week ago` }, `▲${was - at}`)
+          : was < at ? el("small", { class: "board-move is-down", title: `Down ${at - was} since a week ago` }, `▼${at - was}`) : "";
+        const rank = el("td", { class: `board-rank${at && at <= 3 ? ` is-top is-${at}` : ""}` }, at ? el("b", {}, String(at)) : el("span", { "aria-label": "no place yet" }, "–"), move);
+        const tr = el("tr", { class: `board-row${you ? " is-you" : ""}`, "data-key": key }, rank, el("th", { scope: "row" }, person), el("td", { class: "is-days" }, dots),
+          points, el("td", { class: "board-earned" }, toggle), share);
+        // The receipts: every line behind the figure, newest first.
+        const receipts = el("tr", { class: "board-receipts" }, el("td", { colspan: 6 }, el("ul", {}, [...s.shown].sort((a, b) => b.t - a.t).map((l) =>
+          el("li", { class: l.pending ? "is-pending" : "" }, el("b", { class: `is-${RULE_TONE[l.rule]}` }, `+${pts(l.points)}`),
+            el("a", { href: l.href }, l.words), el("small", {}, `${RULE_CHIP[l.rule]} · ${day(new Date(l.t).toISOString())}${l.pending ? " · pending" : ""}`))))));
+        receipts.hidden = !open.has(key);
+        return [tr, receipts];
+      });
+      root.replaceChildren(el("table", { class: "kit-crew board-table" }, el("thead", {}, head), el("tbody", {}, body)));
+      // Everyone active in the window whose work earned nothing yet, by name, with what does.
+      const quiet = rows.filter((row) => !stats.some((x) => x.row === row) && row.active.some((t) => t >= from) && !row.m.maintainers);
+      $("board-quiet").replaceChildren(...(quiet.length ? [el("b", {}, "Also active, no points yet: "),
+        ...andList([...quiet.slice(0, 4).map((row) => label(row.m)), ...(quiet.length > 4 ? [`${quiet.length - 4} more`] : [])]), "."] : []));
+      return stats;
     };
-    const credited = (m) => { const c = paidOf(m); return c.made.length + c.reviewed.length + c.built_on.length; };
-    const value = { reviews: (m) => m.reviews, credited, total: crewTotal, T3: (m) => m.per.T3, T2: (m) => m.per.T2, T1: (m) => m.per.T1 };
-    const order = {
-      name: (a, b) => (!a.login) - (!b.login) || personName(a.name).localeCompare(personName(b.name)),
-      joined: (a, b) => (a.since || "9999").localeCompare(b.since || "9999"),
+    boardRedraw = () => celebrate(draw());
+    // The signed-in visitor's own new points since the last visit: a toast, and confetti from their row.
+    const celebrate = (stats) => {
+      const mine = stats.find(({ row }) => isYou(row.m));
+      if (!mine) return;
+      let before = null;
+      try { before = localStorage.getItem(`starks-points-${boardYou}`); localStorage.setItem(`starks-points-${boardYou}`, String(mine.s.all)); } catch { /* storage off */ }
+      if (before === null || Number(before) >= mine.s.all) return;
+      const gained = mine.s.all - Number(before), crossed = MILESTONES.filter((m) => m > Number(before) && m <= mine.s.all).pop();
+      const note = toast([el("b", {}, `+${pts(gained)} points`), crossed ? ` since your last visit. You passed ${pts(crossed)}.` : " since your last visit."]);
+      confetti(note);
     };
-    const sort0 = order[crewSort] || ((a, b) => value[crewSort](b) - value[crewSort](a) || crewTotal(b) - crewTotal(a) || a.name.localeCompare(b.name));
-    const sort = (a, b) => Boolean(a.maintainers) - Boolean(b.maintainers) || sort0(a, b);
-    const head = el("tr", {}, ...columns.map(([key, label]) => {
-      const th = el("th", { scope: "col", "aria-sort": key === crewSort ? (key === "name" || key === "joined" ? "ascending" : "descending") : "none" },
-        el("button", { type: "button", "data-sort": key }, label));
-      if (TARGET_FAM[key]) th.style.setProperty("--fam", TARGET_FAM[key]);
-      return th;
-    }));
-    const cell = (n) => el("td", {}, n ? el("b", {}, String(n)) : null);
-    const body = [...crew].sort(sort).map((m) => {
-      const tags = [...m.agents].map(modelTag);
-      if (m.maintainers) tags.push(el("span", { class: "kit-model is-quiet", title: m.names.map(personName).join(", ") }, `${nOf(m.names.length, "agent")}, not counted as contributors`));
-      else if (m.names.length > 1) tags.push(el("span", { class: "kit-model is-quiet", title: "Linked by their public profile" }, `also ${m.names.slice(1).map(personName).join(", ")}`));
-      const name = m.login ? el("a", { class: "kit-person-name", href: `/workshop#/people/${encodeURIComponent(m.login)}` }, `@${m.login}`)
-        : el("span", { class: "kit-person-name" }, personName(m.name));
-      const person = el("span", { class: "kit-person" }, face(m), el("span", { class: "kit-person-body" }, name, tags.length ? el("span", { class: "kit-models" }, tags) : null));
-      const paid = paidOf(m);
-      const creditCell = paid && (paid.made.length + paid.reviewed.length + paid.built_on.length)
-        ? el("td", { title: [paid.made.length ? `made ${paid.made.join(", ")}` : "", paid.reviewed.length ? `reviewed ${paid.reviewed.join(", ")}` : "",
-          paid.built_on.length ? `built on by ${paid.built_on.join(", ")}` : ""].filter(Boolean).join("; ") }, el("b", {}, String(credited(m))))
-        : el("td", {});
-      return el("tr", {}, el("th", { scope: "row" }, person), ...ids.map((id) => cell(m.per[id])), cell(m.reviews), creditCell, cell(crewTotal(m)), el("td", { class: "kit-joined" }, day(m.since)));
-    });
-    const table = el("table", { class: "kit-crew" }, el("thead", {}, head), el("tbody", {}, body));
-    for (const button of head.querySelectorAll("button")) button.addEventListener("click", () => { crewSort = button.dataset.sort; renderCrew(record); });
-    root.replaceChildren(table);
-    const sub = $("crew-sub");
-    const reviews = crew.reduce((sum, m) => sum + m.reviews, 0);
-    if (sub) sub.replaceChildren(el("b", {}, String(contributors(crew).length)), " contributors and their agents: ", el("b", {}, String((record.contributions || []).length)),
-      " contributions, ", el("b", {}, String(reviews)), " reviews. Credited counts accepted work each one made, reviewed or built on.");
-    // The outside reviewers the maintainers credit this week (rules.reviewer_of_the_week), faces
-    // first, with a button that thanks them on X by plain name.
-    const week = $("crew-week"), thanked = record.rules?.reviewer_of_the_week?.outside_reviewers_credited;
-    const names = Array.isArray(thanked) ? thanked.filter((n) => typeof n === "string" && LOGIN.test(n)) : [];
-    if (week && names.length) {
-      const people = names.map((n) => crew.byName.get(n) || { name: n, login: n });
-      const label = (m) => m.login || personName(m.name);
-      const text = `Reviewers of the week on starks.provably.fast: ${plainList(people.map(label))}. Thank you for checking the mathematics behind smaller STARK proofs.`;
-      week.replaceChildren(el("span", { class: "adv-faces" }, people.slice(0, 6).map((m) => face(m, 28))),
-        el("span", { class: "crew-week-names" }, el("b", {}, "Reviewers of the week: "), andList(people.map((m) => (m.login
-          ? el("a", { href: `https://github.com/${encodeURIComponent(m.login)}`, rel: "noopener noreferrer" }, `@${m.login}`) : label(m))))),
-        el("a", { class: "adv-share", target: "_blank", rel: "noopener noreferrer", "aria-label": "Thank the reviewers on X",
-          href: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent("https://starks.provably.fast/")}` }, svgIcon("#x-mark"), "Thank them"));
-      week.hidden = false;
+    boardRedraw();
+    // The graph's leads arrive after the first draw: each adds its pending points.
+    loadLeads(record).then((leads) => {
+      if (!leads.length) return;
+      rows = boardPeople(record, records, leads);
+      all = rows.flatMap((row) => row.lines);
+      draw();
+    }).catch(() => { /* the board stands without them */ });
+    if (!still && window.PvfastMotion) window.PvfastMotion.animate("#crew tbody tr.board-row", { opacity: [0.35, 1], y: [6, 0], delay: window.PvfastMotion.stagger(25), duration: 500, ease: "out(3)" });
+    if (!root.dataset.bound) {
+      root.dataset.bound = "1";
+      root.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-open]");
+        if (!button) return;
+        const key = button.dataset.open, shown = !open.has(key);
+        if (shown) open.add(key); else open.delete(key);
+        button.setAttribute("aria-expanded", String(shown));
+        const tr = button.closest("tr").nextElementSibling;
+        if (tr?.classList.contains("board-receipts")) tr.hidden = !shown;
+      });
+      for (const button of document.querySelectorAll("#board-switch button")) {
+        button.addEventListener("click", () => {
+          boardWindow = button.dataset.window;
+          for (const other of document.querySelectorAll("#board-switch button")) other.setAttribute("aria-selected", String(other === button));
+          draw();
+        });
+      }
+      // The visit counts as seen once the page has been open a little while.
+      setTimeout(() => { try { localStorage.setItem("starks-board-seen", String(now)); } catch { /* storage off */ } }, 4000);
     }
   }
   // Certified counts enter the record on their own: the bulletin certifies every attached instance,
@@ -1381,12 +1608,6 @@
     if ("ResizeObserver" in window) new ResizeObserver(() => draw()).observe(plot);
     return root;
   }
-  function homeLive(record) {
-    const node = $("home-live");
-    if (!node) return;
-    const rows = record.contributions || [];
-    node.textContent = `Live · ${nOf((record.targets || []).length, "target")} · ${nOf(rows.length, "contribution")} · ${nOf(contributors(crewOf(record)).length, "contributor")}`;
-  }
   let recordLoad = null;
   function loadRecord() {
     recordLoad ||= fetch("data/mathematics.json", { cache: "no-cache" }).then((response) => {
@@ -1395,75 +1616,128 @@
     });
     return recordLoad;
   }
-  // Rules v2's two panels as one table, a row per cell: on the left, every bound or cap posted for the
-  // cell, how far it is checked and what it limits; on the right, the cell's best known count and
-  // whether records still pay there (saturated where the cell is closed). Only the left one moves the
-  // query numbers. Data: the record's cells and upper_bounds (targets.json), with the certified count
-  // behind each best known figure from the records route.
+  // Where the bounds stand. A headline: a bound on E for every pair, or none yet. Rung 0 at n = 1,024
+  // as one ruler: the most bad challenges anyone has built, the caps on one construction family, the
+  // bound for pairs with a large joint core, and 16 n, the pinned statement; reaching past it refutes
+  // the statement. Then every other cell in a compact table: its best count, any cap, and whether a
+  // count there still earns a record. Data: the record's cells and upper_bounds, with the certified
+  // count behind each best figure from the records route (or, where the record has none, the best
+  // certified at n >= 256).
   const checkedWord = (status) => (/unreviewed|none/i.test(status) ? "unreviewed" : /conditional/i.test(status) ? "conditional"
     : /reproduced/i.test(status) ? "reproduced" : /accepted|reviewed/i.test(status) ? "reviewed" : "unreviewed");
   // "h^2/4 + m + 1" with its exponent raised.
   const mathText = (text) => String(text).split(/\^(\w+)/).map((part, i) => (i % 2 ? el("sup", {}, part) : part));
-  // "11,831 at n = 1,024": the figure, then where it holds.
-  const BOUND_SPLIT = /^(.*?)\s+((?:when|if|at)\s.*)$/;
-  function boundLine(b) {
-    const [, head, tail] = BOUND_SPLIT.exec(b.value) || [null, b.value, ""];
-    const checked = checkedWord(b.status || "");
-    return el("li", { class: "bounds-cap", title: `${b.mechanism}: ${b.status}` },
-      el("span", { class: "bounds-val" }, el("b", {}, ...mathText(head)), tail ? ` ${tail}` : ""),
-      el("span", { class: `bounds-tag is-${checked}` }, checked), el("small", {}, /regime/i.test(b.kind || "") ? "a regime" : "one construction"));
-  }
   const perN = (x) => (x >= 100 ? Math.round(x).toLocaleString("en-GB") : String(Math.round(x * 100) / 100));
-  const STATE_WORDS = { closed: "saturated", "refutation-only": "pays above 16 n", open: "open" };
-  const STATE_TITLES = { closed: "saturated, closed for records", "refutation-only": "only a count above 16 n earns a record", open: "open for records" };
+  const STATE_WORDS = { closed: "closed", "refutation-only": "above 16 n", open: "open" };
+  const STATE_TITLES = { closed: "closed for records", "refutation-only": "only a count above 16 n earns a record", open: "a new best count earns points" };
+  const ratioOf = (s) => { const [a, b] = String(s).split("/").map(Number); return a / b; };
+  const FIELD_P = { BabyBear: 2013265921, M31: 2147483647 };
+  const inCell = (c, i) => FIELD_P[c.field] === i.p && (c.code === "RS" ? i.code === "RS" : i.code === "Circle")
+    && Math.abs(i.k / i.n - ratioOf(c.rate)) < 1e-9 && Math.abs((i.A - i.k) / i.n - ratioOf(c.gap)) < 1e-9;
+  const cellName = (c) => (c.code === "RS" ? c.field : `${c.code} ${c.field}`);
+  function boundsRuler(record, cell, best, start) {
+    const N = 1024, top = (cell.record_above_per_n || 16) * N;
+    const marks = [];
+    if (start && start.count < (best?.count || 0)) marks.push({ v: start.count, side: "up", tone: "dim", n: thousands(start.count), words: "first count", note: day(new Date(start.t).toISOString()), href: start.href });
+    if (best?.n === N) marks.push({ v: best.count, side: "up", tone: "amber", n: thousands(best.count), words: "most built", note: `${perN(best.count / N)} n`, href: best.href });
+    for (const b of (record.upper_bounds || []).filter((x) => x.cell === cell.id && x.value)) {
+      const at = /^([\d,]+) at n = ([\d,]+)$/.exec(b.value), per = /^n\/(\d+)\b/.exec(b.value);
+      const checked = checkedWord(b.status || "");
+      if (at && Number(at[2].replace(/,/g, "")) === N) {
+        marks.push({ v: Number(at[1].replace(/,/g, "")), side: "down", tone: checked === "reviewed" ? "record" : "violet", n: at[1], words: "lift cap", note: checked });
+      } else if (per) {
+        marks.push({ v: N / Number(per[1]), side: "down", tone: "accent", n: thousands(N / Number(per[1])), words: "large-core pairs", note: checked });
+      }
+    }
+    const span = top * 1.1, at = (v) => `${Math.min(100, (v / span) * 100).toFixed(2)}%`;
+    const reached = best?.n === N ? best.count : 0, began = start && start.count < reached ? start.count : 0;
+    const mark = (m) => el("li", { class: `ruler-mark is-${m.side} is-${m.tone}`, style: `--x:${at(m.v)}` },
+      el("i", { "aria-hidden": "true" }), el("span", {}, el("b", {}, m.n), m.href ? el("a", { href: m.href }, m.words) : m.words, el("small", {}, m.note)));
+    return el("figure", { class: "bounds-ruler" },
+      el("figcaption", {}, el("b", {}, `Rung 0 at n = ${thousands(N)}`), ` · ${cell.field}, rate ${cell.rate}, gap ${cell.gap}`),
+      el("div", { class: "ruler", role: "img", "aria-label": `Rung 0 at n = ${thousands(N)}: built up to ${thousands(reached)}, to prove at most ${thousands(top)}` },
+        el("span", { class: "ruler-before", style: `width:${at(began)}` }),
+        el("span", { class: "ruler-built", style: `left:${at(began)};width:calc(${at(reached)} - ${at(began)})` }),
+        el("span", { class: "ruler-open", style: `left:${at(reached)};width:calc(${at(top)} - ${at(reached)})` }),
+        el("span", { class: "ruler-past", style: `left:${at(top)}` }),
+        el("span", { class: "ruler-goal", style: `--x:${at(top)}` }, el("b", {}, thousands(top)), el("span", {}, `${cell.record_above_per_n || 16} n to prove`), el("small", {}, "past it refutes the statement")),
+        el("ol", {}, marks.sort((a, b) => a.v - b.v).map(mark))),
+      // On a phone the marks' words move under the track, in order.
+      el("ul", { class: "ruler-legend" }, [...marks, { v: top, tone: "pink", n: thousands(top), words: `${cell.record_above_per_n || 16} n to prove`, note: "past it refutes the statement" }]
+        .sort((a, b) => a.v - b.v).map((m) => el("li", { class: `is-${m.tone}` }, el("b", {}, m.n), el("span", {}, m.words, el("small", {}, ` ${m.note}`))))));
+  }
+  // What the challenge has moved since its first result, then and now, a line each: rung 0's most
+  // built at n = 1,024, the caps on a construction, the bound for pairs with a large joint core, the
+  // statements settled and the results accepted.
+  function boundsProgress(record, cell, now, start) {
+    const opened = (record.contributions || []).map((r) => r.date).filter(Boolean).sort()[0];
+    const caps = (record.upper_bounds || []).filter((b) => b.cell === cell.id && b.value && /cap/i.test(b.kind || ""));
+    const regime = (record.upper_bounds || []).find((b) => b.cell === cell.id && b.value && /regime/i.test(b.kind || ""));
+    const refuted = (record.statements || []).filter((st) => /refuted/i.test(st.title || ""));
+    const accepted = (record.contributions || []).filter((r) => r.queue?.state === "accepted").length;
+    const line = (what, then, now, extra = "") => el("li", {}, el("span", { class: "bp-what" }, what), el("span", { class: "bp-then" }, then),
+      el("span", { class: "bp-arrow", "aria-hidden": "true" }, "→"), el("span", { class: "bp-now" }, now, extra));
+    const times = start && now?.count ? now.count / start.count : 0;
+    return [el("p", { class: "bp-head" }, `Since the first result, ${opened ? day(opened) : "in October"}`), el("ul", { class: "bp-list" },
+      start && now?.count ? line(`Most built at n = ${thousands(now.n || 1024)}`, `${thousands(start.count)}, ${day(new Date(start.t).toISOString())}`,
+        el("b", {}, thousands(now.count)), el("small", { class: "bp-gain" }, `×${times.toFixed(1)}`)) : "",
+      caps.length ? line("Caps on a construction", "none", caps.flatMap((b, i) => [i ? ", " : "", el("b", {}, b.value.replace(/ at n = .*/, "")), ` ${checkedWord(b.status || "")}`])) : "",
+      regime ? line("Pairs with a large joint core", "no bound", ["at most ", el("b", {}, regime.value.split(" when ")[0])]) : "",
+      refuted.length ? line("Statements settled", "none", refuted.flatMap((st, i) => [i ? "; " : "", el("b", {}, "refuted: "), st.title.replace(/:\s*refuted\s*$/i, "")])) : "",
+      line("Results accepted", "0", el("b", {}, String(accepted))))];
+  }
   async function renderBounds(record) {
     const root = $("bounds-board");
     if (!root) return;
-    const bounds = (record.upper_bounds || []).filter((b) => b.value);
     const every = (record.upper_bounds || []).find((b) => /proven bound on E/i.test(b.kind || "") && b.value);
-    const open = $("bounds-open");
-    if (open && every) open.textContent = `A proven bound on E: ${every.value}.`;
+    if ($("bounds-open") && every) $("bounds-open").textContent = `Proven for every pair: E ≤ ${every.value}.`;
     // The one task the maintainers most want done this week, when the rules name one, with the thread
     // of the statement ranked first.
     const week = $("bounds-week"), ask = record.rules?.contribution_of_the_week;
     if (week && typeof ask === "string" && ask) {
       const first = [...(record.statements || [])].sort((a, b) => a.rank - b.rank).find((st) => THREAD.test(st.source || ""));
-      week.replaceChildren(el("b", {}, "Contribution of the week: "), `${ask}.`, ...(first ? [" ", el("a", { href: `/threads/${first.source}` }, "The thread")] : []));
+      week.replaceChildren(el("b", {}, "This week: "), `${ask}.`, ...(first ? [" ", el("a", { href: `/threads/${first.source}` }, "The thread")] : []));
       week.hidden = false;
     }
-    const sources = new Map();
-    const rows = (record.cells || []).map((c) => {
-      const mine = bounds.filter((b) => b.cell === c.id);
-      const source = el("small", { class: "bounds-source" });
-      sources.set(c, source);
-      return el("tr", { class: `is-${c.state}` },
-        el("th", { scope: "row", class: "bounds-cell" }, el("b", {}, c.code === "RS" ? c.field : `${c.code} ${c.field}`), el("small", {}, `rate ${c.rate} · gap ${c.gap}`)),
-        el("td", { class: "is-upper" }, mine.length ? el("ul", { class: "bounds-caps" }, mine.map(boundLine)) : el("span", { class: "bounds-none" }, "nothing posted yet")),
-        el("td", { class: "is-lower" }, el("span", { class: "bounds-low" },
-          el("span", { class: "bounds-count" }, typeof c.best_known_per_n === "number" ? el("span", {}, el("b", {}, perN(c.best_known_per_n)), " n") : el("span", { class: "bounds-none" }, "no count yet"), source),
-          el("span", { class: `bounds-state is-${c.state}`, title: STATE_TITLES[c.state] || "" }, STATE_WORDS[c.state] || c.state))));
-    });
-    const head = el("tr", {}, el("th", { scope: "col", class: "bounds-cell" }, "Cell"),
-      el("th", { scope: "col", class: "is-upper" }, el("span", { class: "bounds-th" }, "Proven above"), el("small", {}, "Upper bounds")),
-      el("th", { scope: "col", class: "is-lower" }, el("span", { class: "bounds-th" }, "Built below"), el("small", {}, "Best known count")));
-    root.replaceChildren(el("table", { class: "bounds-table" }, el("thead", {}, head), el("tbody", {}, rows)));
-    // The certified count behind each best known figure, linked to its post: a bulletin post named by
-    // its id's prefix, or a contribution on the record by its own thread.
-    try {
-      const response = await fetch("/api/participation/bulletin/records?topic=MATHEMATICS", { cache: "no-cache" });
-      const live = response.ok ? await response.json() : {};
-      const posts = (live.parameters || []).filter((q) => q && q.best && typeof q.best.post_id === "string");
-      for (const [c, slot] of sources) {
-        const id = c.best_known_source || "";
-        const post = /^bp1_[0-9a-f]+$/.test(id) && posts.find((q) => q.best.post_id.startsWith(id));
+    const live = await loadBulletinRecords().catch(() => ({}));
+    const posts = (live.parameters || []).filter((q) => q && q.best && typeof q.best.post_id === "string");
+    // The certified count behind a cell's best figure, or the best certified at n >= 256.
+    const best = (c) => {
+      const id = c.best_known_source || "";
+      const post = /^bp1_[0-9a-f]+$/.test(id) && posts.find((q) => q.best.post_id.startsWith(id));
+      if (post && THREAD.test(post.best.thread_id)) return { count: post.best.certified, n: post.n, per: post.best.certified / post.n, href: `/threads/${post.best.thread_id}#${post.best.post_id}` };
+      if (typeof c.best_known_per_n === "number") {
         const row = (record.contributions || []).find((r) => r.id === id);
-        if (post && THREAD.test(post.best.thread_id)) {
-          slot.replaceChildren(el("a", { href: `/threads/${post.best.thread_id}#${post.best.post_id}` }, `${thousands(post.best.certified)} at n = ${thousands(post.n)}`));
-        } else if (row && THREAD.test(row.thread || "")) {
-          slot.replaceChildren(el("a", { href: `/threads/${row.thread}` }, row.id));
-        }
+        return { per: c.best_known_per_n, href: THREAD.test(row?.thread || "") ? `/threads/${row.thread}` : THREAD.test(id) ? `/threads/${id}` : null };
       }
-    } catch { /* the figures stand without their links */ }
+      const seen = (live.instances || []).filter((i) => i.n >= 256 && inCell(c, i)).sort((a, b) => b.per_n - a.per_n)[0];
+      return seen ? { count: seen.certified, n: seen.n, per: seen.per_n, href: `/threads/${seen.thread_id}#${seen.post_id}`, live: true } : null;
+    };
+    const cells = record.cells || [];
+    const rung0 = cells.find((c) => c.id === "rung0");
+    if (rung0) {
+      // Where the challenge started on rung 0 at n = 1,024: its first certified count there.
+      const first = (live.instances || []).filter((i) => i.n === 1024 && inCell(rung0, i)).sort((a, b) => a.created_at - b.created_at)[0];
+      const start = first ? { count: first.certified, t: first.created_at, href: `/threads/${first.thread_id}#${first.post_id}` } : null;
+      const now = best(rung0);
+      $("bounds-ruler")?.replaceChildren(boundsRuler(record, rung0, now, start));
+      $("bounds-progress")?.replaceChildren(...boundsProgress(record, rung0, now, start));
+    }
+    const order = { open: 0, "refutation-only": 1, closed: 2 };
+    const rows = cells.filter((c) => c !== rung0).sort((a, b) => order[a.state] - order[b.state]).map((c) => {
+      const b = best(c), caps = (record.upper_bounds || []).filter((x) => x.cell === c.id && x.value);
+      const count = b ? [el("b", {}, perN(b.per)), " n", b.count ? el(b.href ? "a" : "span", b.href ? { href: b.href } : {}, el("small", {}, ` ${thousands(b.count)} at n = ${thousands(b.n)}`)) : ""]
+        : el("span", { class: "bounds-none", "aria-label": "none yet" }, "–");
+      const cap = caps.length ? caps.map((x) => el("span", { class: "bounds-cap", title: `${x.mechanism}: ${x.status}` }, ...mathText(x.value), el("small", {}, ` ${checkedWord(x.status || "")}`)))
+        : el("span", { class: "bounds-none", "aria-label": "none yet" }, "–");
+      return el("tr", { class: `is-${c.state}` }, el("th", { scope: "row" }, el("b", {}, cellName(c)), el("small", {}, ` rate ${c.rate}, gap ${c.gap}`)),
+        el("td", { class: "bounds-best" }, count), el("td", {}, cap),
+        el("td", { class: "bounds-state-cell" }, el("span", { class: `bounds-state is-${c.state}`, title: STATE_TITLES[c.state] || "" }, STATE_WORDS[c.state] || c.state)));
+    });
+    root.replaceChildren(el("table", { class: "bounds-table" }, el("thead", {}, el("tr", {},
+      el("th", { scope: "col" }, "Other cells"), el("th", { scope: "col" }, "Best count"),
+      el("th", { scope: "col" }, "Cap", el("button", { type: "button", class: "info-tip", popovertarget: "caps-help", "aria-label": "What a cap is" }, "i")),
+      el("th", { scope: "col" }, el("span", { class: "sr-only" }, "Records")))), el("tbody", {}, rows)));
   }
   function renderCells(record) {
     const root = $("cells-list");
@@ -1491,16 +1765,14 @@
       record.profiles = profiles;
       renderRecord(record);
       renderTargets(record);
-      renderNewest(record);
       renderProgress(record);
       renderBounds(record);
       renderCells(record);
-      renderCrew(record);
-      homeLive(record);
+      renderBoard(record);
       const version = $("foot-version");
       if (version && record.source) version.textContent = `Built from provably.fast ${record.source} · ArkLib ${record.lean.commit.slice(0, 8)}`;
     } catch {
-      for (const id of ["record-list", "starks-newest", "crew"]) {
+      for (const id of ["record-list", "crew"]) {
         const root = $(id);
         if (root) root.replaceChildren(el("p", { class: "loading" }, "The record could not be read. ", el("a", { href: "/record" }, "The record")));
       }

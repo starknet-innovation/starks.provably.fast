@@ -1,0 +1,97 @@
+/* The people behind it, ranked by points: the window switch, and the shared people table (kit.css)
+   with one line per person: place and its move since a week ago, face, name and models, the last
+   14 days as dots, points with what is pending (how points work in an infotip), what earned them (a
+   button that opens the receipts) and a share button; then everyone active without points yet. Tones carry meaning: green points and proofs, amber results, periwinkle
+   reviews, teal counts, pink work others built on and refutations. */
+.starks-crew .is-record { --tone: var(--record); }
+.starks-crew .is-amber { --tone: var(--amber); }
+.starks-crew .is-accent { --tone: var(--accent); }
+.starks-crew .is-teal { --tone: var(--platform); }
+.starks-crew .is-pink { --tone: var(--pink); }
+
+.board-switch { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--card); }
+.board-switch button { padding: 6px 14px; border: 0; border-radius: 999px; background: none; color: var(--muted); font: 600 13px var(--sans); cursor: pointer; }
+.board-switch button[aria-selected="true"] { background: var(--card-hi); color: var(--ink); }
+.board-switch button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.board-since { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; margin: 14px 0 0; color: var(--ink-2); font-size: 14.5px; }
+.board-since[hidden] { display: none; }
+.board-since::before { content: ""; width: 8px; height: 8px; align-self: center; border-radius: 50%; background: var(--record); box-shadow: 0 0 0 4px color-mix(in srgb, var(--record) 22%, transparent); }
+.board-since b { color: var(--ink); font-weight: 600; }
+.board-yours { color: var(--record); font-weight: 600; }
+
+
+.board-table th, .board-table td { padding: 8px 12px; }
+.board-table thead th { color: var(--muted); font: 500 12.5px var(--sans); }
+.board-table .kit-person { gap: 8px; }
+.board-model { display: inline-flex; }
+.board-model .kit-model-mark { width: 14px; height: 14px; }
+.board-you { padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent); font-size: 11.5px; font-weight: 600; }
+.board-dots { display: inline-grid; grid-template-columns: repeat(14, 6px); gap: 2px; vertical-align: middle; }
+.board-dots i { height: 14px; border-radius: 2px; background: color-mix(in srgb, var(--ink) 9%, transparent); }
+.board-dots i.is-on { background: var(--record); }
+.board-dots i:last-child { box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 25%, transparent); }
+.board-points { white-space: nowrap; }
+.board-points b { color: var(--ink); font: 650 19px/1 var(--display); font-variant-numeric: tabular-nums; }
+.board-points b.is-zero { color: var(--muted); }
+.board-pending { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; color: var(--pink); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.board-pending::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: board-breathe 2.4s ease-in-out infinite; }
+@keyframes board-breathe { 50% { opacity: .35; transform: scale(.7); } }
+.board-earned { width: 100%; }
+.board-open { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.board-open:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+.board-chip { padding: 2px 9px; border-radius: 999px; background: color-mix(in srgb, var(--tone, var(--ink)) 13%, transparent); color: var(--ink-2); font-size: 12.5px; white-space: nowrap; }
+.board-chip b { color: var(--tone, var(--ink)); font-weight: 650; font-variant-numeric: tabular-nums; }
+.board-caret { width: 7px; height: 7px; margin-left: 2px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(45deg) translate(-2px, -2px); transition: transform .2s; }
+.board-open[aria-expanded="true"] .board-caret { transform: rotate(225deg) translate(-2px, -2px); }
+.board-table tr.board-row:hover .board-chip { background: color-mix(in srgb, var(--tone, var(--ink)) 20%, transparent); }
+.board-receipts td { padding: 2px 12px 14px 48px; white-space: normal; }
+.board-receipts ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.board-receipts li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr) auto; align-items: baseline; gap: 12px; font-size: 13px; }
+.board-receipts li b { color: var(--tone); font-weight: 650; font-variant-numeric: tabular-nums; text-align: right; }
+.board-receipts li a { overflow: hidden; color: var(--ink); text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.board-receipts li a:hover, .board-receipts li a:focus-visible { color: var(--accent); }
+.board-receipts li small { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.board-receipts li.is-pending b, .board-receipts li.is-pending a { opacity: .6; }
+.board-table tr.board-receipts[hidden] { display: none; }
+.board-share { text-align: right; }
+.board-table tr.is-you th, .board-table tr.is-you td { background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
+.board-quiet { margin: 12px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.board-quiet:empty { display: none; }
+.board-quiet b { color: var(--ink-2); font-weight: 600; }
+.board-rank { width: 3.2rem; padding-right: 0; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.board-rank b { color: var(--ink-2); font: 650 15px/1 var(--display); }
+.board-rank.is-top b { font-size: 19px; }
+.board-rank.is-1 b { color: var(--amber); }
+.board-rank.is-2 b { color: color-mix(in srgb, var(--ink) 70%, var(--accent)); }
+.board-rank.is-3 b { color: var(--coral); }
+.board-rank > span { color: var(--muted); }
+.board-move { display: block; margin-top: 2px; font-size: 10.5px; font-weight: 650; }
+.board-move.is-up { color: var(--record); }
+.board-move.is-down { color: var(--muted); }
+.board-move.is-new { color: var(--accent); }
+.info-tip { display: inline-grid; place-items: center; width: 17px; height: 17px; margin-left: 6px; padding: 0; border: 1px solid var(--line-2); border-radius: 50%;
+  background: none; color: var(--muted); font: italic 600 11px/1 Georgia, "Times New Roman", serif; vertical-align: 1px; cursor: pointer; }
+.info-tip:hover, .info-tip:focus-visible { border-color: var(--ink-2); color: var(--ink); }
+.info-pop { width: min(92vw, 34rem); max-height: 80vh; overflow: auto; margin: auto; padding: 20px 22px; border: 1px solid var(--line-2); border-radius: 18px;
+  background: var(--bg-2); color: var(--ink-2); box-shadow: 0 28px 70px -30px rgb(0 0 0 / .65); font-size: 14px; line-height: 1.55; }
+.info-pop::backdrop { background: rgb(0 0 0 / .28); }
+.info-pop h3 { margin: 0 0 12px; color: var(--ink); font: 600 16px var(--display); }
+.info-pop ul { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.info-pop li { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); align-items: baseline; gap: 12px; }
+.info-pop li b { color: var(--record); font: 650 15px var(--display); font-variant-numeric: tabular-nums; text-align: right; }
+.info-pop p { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
+.info-pop p:first-child { margin: 0; color: var(--ink-2); font-size: 14px; }
+.board-toast { position: fixed; z-index: 60; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); max-width: min(92vw, 30rem); margin: 0; padding: 12px 18px;
+  border-radius: 14px; background: var(--ink); color: var(--bg); font-size: 14.5px; box-shadow: 0 18px 40px -18px rgb(0 0 0 / .6);
+  opacity: 0; transform: translate(-50%, 16px) scale(.96); transition: opacity .35s, transform .5s var(--spring, cubic-bezier(.2, 1.4, .4, 1)); }
+.board-toast.is-in { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.board-toast b { color: var(--record); }
+.board-confetti { position: fixed; z-index: 59; inset: 0; width: 100vw; height: 100vh; pointer-events: none; }
+
+@media (max-width: 560px) {
+  .board-table .is-days { display: none; }
+  .board-receipts td { padding-left: 12px; }
+  .board-receipts li { grid-template-columns: 3.4rem minmax(0, 1fr); }
+  .board-receipts li small { grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce) { .board-pending::before { animation: none; } .board-toast { transition: none; } }

@@ -24,8 +24,12 @@ thread they were posted in. A target's status follows from the rows:
     python3 -m proven.mathematics accept M-0003         # or: refute / withdraw, with --reason "..."
 
 Every row carries a queue state the site and the thread pages show: posted (waiting for a reader),
-under review by whom since when, accepted, or declined with its reason. An accepted row credits
-its authors, its reviewers, and the authors of every record it builds on.
+under review by whom since when, accepted, or declined with its reason.
+
+Points: an accepted row pays its authors by what it advances (ADVANCES), its reviewers a fifth of
+that and the authors of the records it builds on another fifth; a posted row shows the same points
+as pending. `record` and `accept` take --advances and --bonus. The board writes every line to
+results/mathematics.json (points.ledger); certified counts are added live on the site.
 
 Standard library only; no network.
 """
@@ -53,6 +57,20 @@ GRAPH_RECORD = re.compile(r"^rgr1_[0-9a-f]{64}$")
 # From this row on, a contribution builds on at least one graph record, so every result on the board
 # is on the graph too. Earlier rows predate the rule; a source or a review has no lead of its own.
 GRAPH_REQUIRED_FROM = 22
+# Points, from 3 November 2026: what an accepted row pays its authors, by what it advances. A row that
+# settles a target or proves a ranked statement 1,000; one that refutes a ranked statement 500; a
+# port of a ranked statement 150; an upper bound, or a count above a posted one, 100; any other
+# result 50. Its outside reviewers (three at most) share a fifth of it, and so do the authors of the
+# accepted records it builds on. A review that finds the error in a declined row pays 50. The week's
+# contribution counts double and a Lean-checked proof one and a half times; so does nothing else.
+ADVANCES = {"statement": 1000, "refutes": 500, "port": 150, "upper": 100, "breaks": 100, "result": 50}
+BONUSES = {"week": 2.0, "lean": 1.5}
+SHARE = 0.2
+ERROR_FOUND = 50
+# Counts are certified on the bulletin, not recorded here, so the site adds them live: raising a
+# listed cell's best known count at n >= 256 pays 25, once per cell, person and day; any other count
+# (a repeat, a copy, a closed cell, rung 0 below 16 n) pays nothing.
+COUNT_RAISE, COUNT_MIN_N = 25, 256
 
 
 class RecordError(ValueError):
@@ -134,6 +152,10 @@ def validate(targets: dict, records: list[dict]) -> None:
                 raise RecordError(f"{rid}: a reviewing entry names who reads it and since when")
         if row.get("reason") is not None and not isinstance(row["reason"], str):
             raise RecordError(f"{rid}: a reason is a sentence")
+        if row.get("advances") is not None and row["advances"] not in ADVANCES:
+            raise RecordError(f"{rid}: advances is one of {', '.join(ADVANCES)}")
+        if not set(row.get("bonus", [])) <= set(BONUSES):
+            raise RecordError(f"{rid}: a bonus is one of {', '.join(BONUSES)}")
         if row.get("settles") and row["kind"] not in ("proof", "counterexample"):
             raise RecordError(f"{rid}: only a proof or a counterexample settles a target")
         if row["kind"] == "formalization" and row.get("lean") and row["lean"] not in lean_names:
@@ -197,40 +219,54 @@ def queue_state(row: dict) -> dict:
     return {"state": "posted", "label": "posted, awaiting a reviewer", "since": row.get("date")}
 
 
-def credits(records: list[dict]) -> dict[str, dict]:
-    """What each accepted row pays out: its authors (made), its reviewers (reviewed) and the authors
-    of the records it builds on (built on). By name."""
-    by_id = {row["id"]: row for row in records}
-    out: dict[str, dict] = {}
+def row_points(row: dict, rules: dict | None = None) -> tuple[int, str]:
+    """What a row pays its authors when accepted, and the rule that says so."""
+    rule = "statement" if row.get("settles") else row.get("advances") or ("upper" if row.get("bound") == "upper" else "result")
+    value = float(ADVANCES[rule])
+    for bonus in row.get("bonus", []):
+        value *= BONUSES[bonus]
+    # Rules v2: a row that combines two or more earlier records counts double.
+    if len(row.get("combines", [])) >= 2:
+        value *= (rules or {}).get("combination_bonus", 2)
+    return round(value), rule
 
-    def pay(name: str, kind: str, rid: str) -> None:
-        bucket = out.setdefault(name, {"made": [], "reviewed": [], "built_on": [], "weight": 0})[kind]
-        if rid not in bucket:
-            bucket.append(rid)
-            # Rules v2: a review of an upper-bound row counts twice a count's; so does a row that
-            # combines two or more earlier records (COMBINES), since repetition is the graph's problem.
-            out[name]["weight"] += (2 if kind == "reviewed" and row_bound == "upper"
-                                    else 2 if kind == "made" and len(row_combines) >= 2 else 1)
+
+def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
+    """Every point the record pays, a line each: who, how many, by which rule, for which row, when,
+    and whether it is still pending (the row is posted and not yet accepted)."""
+    by_id = {row["id"]: row for row in records}
+    lines: list[dict] = []
+
+    def pay(name: str, points: float, rule: str, row: dict, when: str | None, pending: bool, of: str | None = None) -> None:
+        if points >= 1:
+            lines.append({"who": name, "points": round(points), "rule": rule, "row": row["id"],
+                          **({"of": of} if of else {}), "date": when, "pending": pending})
 
     for row in records:
-        if row["status"] != "accepted":
+        if row["status"] == "withdrawn" or row["kind"] == "source":
             continue
-        row_bound = row.get("bound")
-        row_combines = row.get("combines", [])
-        for who in row["who"]:
-            pay(who["name"], "made", row["id"])
-        for review in row.get("reviews", []):
-            name = reviewer_name(review.get("by", ""))
-            if name and name.lower() not in authors(row):
-                pay(name, "reviewed", row["id"])
-        for ref in row.get("builds_on", []):
-            base = by_id.get(ref)
-            if base is None or base["status"] == "withdrawn":
-                continue
-            for who in base["who"]:
-                if who["name"].lower() not in authors(row):
-                    pay(who["name"], "built_on", row["id"])
-    return out
+        if row["status"] == "refuted":
+            for review in row.get("reviews", []):
+                name = reviewer_name(review.get("by", ""))
+                if review.get("verdict") == "fails" and name and name.lower() not in authors(row):
+                    pay(name, ERROR_FOUND, "error", row, review.get("date") or row.get("date"), False)
+            continue
+        value, rule = row_points(row, rules)
+        pending = row["status"] != "accepted"
+        when = row.get("accepted_on") or row.get("date") if not pending else row.get("date")
+        names = [w["name"] for w in row["who"]]
+        for name in names:
+            pay(name, value / len(names), rule, row, when, pending)
+        reviewers = [name for name in dict.fromkeys(reviewer_name(r.get("by", "")) for r in row.get("reviews", []) if r.get("verdict") == "holds")
+                     if name and name.lower() not in authors(row)][:3]
+        for name in reviewers:
+            pay(name, SHARE * value / len(reviewers), "review", row, when, pending)
+        cited = [by_id[ref] for ref in row.get("builds_on", []) if ref in by_id and by_id[ref]["status"] == "accepted"]
+        for base in cited:
+            heirs = [w["name"] for w in base["who"] if w["name"].lower() not in authors(row)]
+            for name in heirs:
+                pay(name, SHARE * value / len(cited) / len(heirs), "built_on", row, when, pending, of=base["id"])
+    return lines
 
 
 REVIEWER = re.compile(r"^([A-Za-z0-9][\w.-]*)")
@@ -248,7 +284,7 @@ def reviewer_name(by: str) -> str:
 def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
     validate(targets, records)
     people: dict[str, dict] = {}
-    paid = credits(records)
+    lines = ledger(records, targets.get("rules"))
     for row in records:
         if row["status"] == "withdrawn":
             continue
@@ -264,13 +300,15 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
             entry["contributions"] += 1
             if "review" not in entry["kinds"]:
                 entry["kinds"].append("review")
-    for name, entry in people.items():
-        entry["credits"] = paid.get(name, {"made": [], "reviewed": [], "built_on": [], "weight": 0})
-    for name, credit in paid.items():
-        if name not in people:
-            people[name] = {"name": name, "agent": False, "runs": None, "contributions": 0, "kinds": [], "credits": credit}
+    for line in lines:
+        entry = people.setdefault(line["who"], {"name": line["who"], "agent": False, "runs": None, "contributions": 0, "kinds": []})
+        points = entry.setdefault("points", {"total": 0, "pending": 0})
+        points["pending" if line["pending"] else "total"] += line["points"]
+    for entry in people.values():
+        entry.setdefault("points", {"total": 0, "pending": 0})
     public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "builds_on", "count", "bound", "combines")}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
+                 "points": row_points(row, targets.get("rules"))[0], "advances": row_points(row, targets.get("rules"))[1],
                  "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])],
                  "queue": queue_state(row),
                  "credits": sorted({w["name"] for ref in row.get("builds_on", []) for w in next((r for r in records if r["id"] == ref), {"who": []})["who"]}
@@ -287,6 +325,8 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
                      **target_status(t, records)} for t in targets["targets"]],
         "contributions": sorted(public, key=lambda r: (r.get("date") or "", r["id"]), reverse=True),
         "people": sorted(people.values(), key=lambda p: (-p["contributions"], p["name"].lower())),
+        "points": {"advances": ADVANCES, "bonuses": BONUSES, "share": SHARE, "error_found": ERROR_FOUND,
+                   "count_raise": COUNT_RAISE, "count_min_n": COUNT_MIN_N, "ledger": lines},
     }
 
 
@@ -302,6 +342,15 @@ def append(row: dict, path: Path = RECORDS) -> None:
 
 def rewrite(records: list[dict], path: Path = RECORDS) -> None:
     path.write_text("".join(json.dumps(r, sort_keys=True, ensure_ascii=False) + "\n" for r in records))
+
+
+def classify(row: dict, args: argparse.Namespace) -> None:
+    """--advances and --bonus, when given, say what a row is worth."""
+    if getattr(args, "advances", None):
+        row["advances"] = args.advances
+    bonus = [b.strip() for b in (getattr(args, "bonus", "") or "").split(",") if b.strip()]
+    if bonus:
+        row["bonus"] = bonus
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -324,6 +373,9 @@ def main(argv: list[str] | None = None) -> int:
                      help="the row claims the target's pinned statement (a proof) or its negation")
     rec.add_argument("--bound", choices=("upper", "lower"), help="rules v2: which bound the row moves")
     rec.add_argument("--combines", default="", help="rules v2: the earlier records (also in --builds-on) it combines")
+    for command in (rec,):
+        command.add_argument("--advances", choices=tuple(ADVANCES), help="what it advances, for its points")
+        command.add_argument("--bonus", default="", help=f"comma-separated: {', '.join(BONUSES)}")
     rev = sub.add_parser("review")
     rev.add_argument("record")
     rev.add_argument("--by", required=True)
@@ -337,6 +389,9 @@ def main(argv: list[str] | None = None) -> int:
         decision = sub.add_parser(name)
         decision.add_argument("record")
         decision.add_argument("--reason", help="one sentence the queue shows (declined: ...)")
+        if name == "accept":
+            decision.add_argument("--advances", choices=tuple(ADVANCES), help="what it advances, for its points")
+            decision.add_argument("--bonus", default="", help=f"comma-separated: {', '.join(BONUSES)}")
     args = parser.parse_args(argv)
     targets, records = load_targets(), load_records()
     today = datetime.now(timezone.utc).date().isoformat()
@@ -362,6 +417,7 @@ def main(argv: list[str] | None = None) -> int:
                 row["bound"] = args.bound
             if args.combines.strip():
                 row["combines"] = [r.strip() for r in args.combines.split(",") if r.strip()]
+            classify(row, args)
             validate(targets, records + [row])
             append(row)
             print(row["id"])
@@ -392,6 +448,7 @@ def main(argv: list[str] | None = None) -> int:
             row.pop("reviewing", None)
             if args.command == "accept":
                 row["accepted_on"] = today
+                classify(row, args)
             if args.reason:
                 row["reason"] = args.reason
             validate(targets, records)
