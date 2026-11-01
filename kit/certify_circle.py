@@ -23,7 +23,10 @@ Instance: {"field": 2147483647, "k": K, "A": A, "eta": 1 or -1, "domain_xy": [[x
 "witness_sets" and an index per challenge as certify.py's @2 form. A witness is k points on which
 the code is interpolated: P is found as a_0 (1 - z^k) + S(z) with S of degree below k and S(0) = 0,
 through two ordinary interpolations (a_0 = L_c(0) / L_v(0), L_v the interpolant of 1 - z^k); a
-witness with L_v(0) = 0 does not determine the codeword and fails.
+witness with L_v(0) = 0 does not determine the codeword and fails. A witness that does determine
+it (L_v(0) = 1 + M(0) != 0 for M the product of z - z_i, so no nonzero codeword vanishes on its k
+points) lies in S, so f and g are codewords on S exactly when the witness's own codewords agree
+with them on all of S: the explained check costs |S| comparisons, not an interpolation per S.
 """
 import json
 import sys
@@ -187,7 +190,6 @@ def check(inst):
     sets = inst.get("witness_sets")
     bad, failures = set(), []
     cache = {}
-    explained = {}
     for ch in inst["challenges"]:
         z = ch["z"] % P
         witness = ch["witness"]
@@ -211,15 +213,7 @@ def check(inst):
         if len(S) < A:
             failures.append((z, f"agreement {len(S)} < {A}"))
             continue
-        skey = tuple(S)
-        if skey not in explained:
-            fc = is_codeword(domain, f, k, S)
-            gc = is_codeword(domain, g, k, S) if fc is not False else False
-            explained[skey] = None if fc is None or gc is None else (fc and gc)
-        if explained[skey] is None:
-            failures.append((z, "undecided: no k points of S determine a codeword"))
-            continue
-        if explained[skey]:
+        if all(wf[i] == f[i] and wg[i] == g[i] for i in S):
             failures.append((z, "explained: f and g are both Circle codewords on S"))
             continue
         bad.add(z)

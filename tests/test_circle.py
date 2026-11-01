@@ -109,23 +109,36 @@ class Degeneracy(unittest.TestCase):
         noise = [cc.base(rng.randrange(cc.P)) for _ in range(16)]
         self.assertFalse(cc.is_codeword(dom, noise, k, idx))
 
-    def test_an_undecidable_agreement_set_fails_the_challenge_instead_of_certifying_it(self):
+    def test_the_witness_check_agrees_with_interpolating_each_agreement_set(self):
+        # The certifier decides "explained" from the witness's codewords; interpolating on S itself
+        # (is_codeword) must give the same answer, for jointly interpolable words and for words that
+        # are not, on the subgroup and on the Stwo coset.
         rng = random.Random(10)
-        dom, n, k, A = domain(16, 1), 16, 8, 10
-        C = real_codeword(rng, dom, k); Gw = real_codeword(rng, dom, k)
-        z0 = 4242
-        S = sorted(rng.sample(range(n), A))
-        g = Gw[:]; g[S[0]] = (g[S[0]] + 1) % cc.P
-        f = [rng.randrange(cc.P) for _ in range(n)]
-        for i in S:
-            f[i] = (C[i] - z0 * g[i]) % cc.P
-        inst = {"field": cc.P, "k": k, "A": A, "eta": 1, "domain_xy": [list(z) for z in dom], "f": f, "g": g,
-                "challenges": [{"z": z0, "witness": S[:k]}]}
-        original = cc.is_codeword
-        try:
-            cc.is_codeword = lambda *args: None
-            bad, failures = cc.check(inst)
-        finally:
-            cc.is_codeword = original
-        self.assertEqual(bad, set())
-        self.assertTrue(failures[0][1].startswith("undecided"))
+        for eta in (1, -1):
+            dom, n, k, A = domain(16, eta), 16, 8, 10
+            for trial in range(6):
+                C = real_codeword(rng, dom, k); Gw = real_codeword(rng, dom, k)
+                z0 = rng.randrange(1, cc.P)
+                S = sorted(rng.sample(range(n), A + trial % 3))
+                g = Gw[:]
+                if trial % 2:
+                    g[S[-1]] = (g[S[-1]] + 1) % cc.P               # g is no codeword on S
+                f = [rng.randrange(cc.P) for _ in range(n)]
+                for i in S:
+                    f[i] = (C[i] - z0 * g[i]) % cc.P
+                witness = next((S[s:s + k] for s in range(len(S) - k + 1)
+                                if cc.circle_interpolant([dom[i] for i in S[s:s + k]], [cc.ZERO] * k, k) is not None), None)
+                if witness is None:
+                    continue
+                inst = {"field": cc.P, "k": k, "A": A, "eta": eta, "domain_xy": [list(z) for z in dom], "f": f, "g": g,
+                        "challenges": [{"z": z0, "witness": witness}]}
+                bad, failures = cc.check(inst)
+                on_s = [i for i in range(n) if (f[i] + z0 * g[i]) % cc.P == C[i]]
+                fc = cc.is_codeword(dom, [cc.base(v) for v in f], k, on_s)
+                gc = cc.is_codeword(dom, [cc.base(v) for v in g], k, on_s)
+                if fc is None or gc is None:
+                    continue
+                reference = fc and gc
+                self.assertEqual(bad == set(), reference, (eta, trial))
+                if reference:
+                    self.assertIn("explained", failures[0][1])
