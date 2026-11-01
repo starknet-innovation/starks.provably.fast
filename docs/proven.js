@@ -1057,20 +1057,22 @@
   let bulletinLoad = null;
   const loadBulletinRecords = () => (bulletinLoad ||= fetch("/api/participation/bulletin/records?topic=MATHEMATICS", { cache: "no-cache" })
     .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status))))));
-  // The graph's leads that the record does not hold yet: each is a result's points, pending until the
-  // maintainers record and accept it (ten a person a day at most, so a flood of leads stays small).
-  // The digest comes from the registry, like the research page's.
+  // The graph's leads since rules v2 that the record does not hold yet (neither as a row's own lead
+  // nor in its builds_on): each is a result's points, pending until the maintainers record and
+  // accept it (ten a person a day at most, so a flood of leads stays small). Older leads were
+  // decided when the record was curated. The digest comes from the registry, like the research page's.
   async function loadLeads(record) {
     const registry = await fetch("/data/campaigns.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
     const campaign = (registry?.campaigns || []).find((c) => c.topic === "MATHEMATICS" && /^[0-9a-f]{64}$/.test(c.graph_digest || ""));
     const digest = campaign?.graph_digest;
     if (!digest) return [];
-    const recorded = new Set((record.contributions || []).flatMap((r) => r.builds_on || []));
+    const recorded = new Set((record.contributions || []).flatMap((r) => [...(r.builds_on || []), ...(r.lead ? [r.lead] : [])]));
+    const since = `${record.rules?.since || "2026-10-30"}T00:00:00Z`;
     const leads = [];
     for (let cursor = 0, n = 0; n < 20; n += 1) {
       const page = await fetch(`/api/participation/graph?campaign_digest=${digest}&cursor=${cursor}&limit=100`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
       if (!page) break;
-      leads.push(...(page.records || []).filter((r) => r && r.record_type === "LEAD" && !recorded.has(r.record_id)).map((r) => ({ ...r, campaign: campaign.campaign_id })));
+      leads.push(...(page.records || []).filter((r) => r && r.record_type === "LEAD" && !recorded.has(r.record_id) && String(r.created_at) >= since).map((r) => ({ ...r, campaign: campaign.campaign_id })));
       if (!Number.isSafeInteger(page.next_cursor) || page.next_cursor <= cursor) break;
       cursor = page.next_cursor;
     }
