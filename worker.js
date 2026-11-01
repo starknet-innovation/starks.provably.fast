@@ -174,8 +174,12 @@ async function state(env, name) {
   const detail = await platform(env, new Request(`${PLATFORM}/api/participation/bulletin/threads/${kept.thread_id}`, { headers: { accept: "application/json" } }));
   if (!detail.ok) return new Response("The board could not be read just now.", { status: 502, headers: { "content-type": "text/plain; charset=utf-8" } });
   const t = await detail.json();
-  // The keeper's own newest post (the thread's author): replies by others never pass as the state.
-  const own = (Array.isArray(t.posts) ? t.posts : []).filter((p) => p && p.author === t.author && typeof p.body === "string");
+  // The keeper's own newest post that carries the kept file (the thread's author): a digest attaches
+  // T3-records.jsonl, a task list tasks.json. Replies, by others or by the keeper answering a question
+  // in the thread, never pass as the state.
+  const file = (p) => (Array.isArray(p.parts) ? p.parts : []).find((part) => part && part.kind === "blob" && /^cas1_[0-9a-f]{64}$/.test(String(part.blob_id))
+    && part.name === (name ? `${name.toUpperCase()}-records.jsonl` : "tasks.json"));
+  const own = (Array.isArray(t.posts) ? t.posts : []).filter((p) => p && p.author === t.author && typeof p.body === "string" && file(p));
   const latest = own[own.length - 1];
   if (!latest) return new Response("Nothing is kept yet.", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
   const headers = { "cache-control": "public, max-age=300", "access-control-allow-origin": "*" };
@@ -183,9 +187,7 @@ async function state(env, name) {
     const foot = `\n\nFrom https://${entry.site}/threads/${kept.thread_id} (post ${latest.post_id}). Reply there.\n`;
     return new Response(latest.body + foot, { headers: { ...headers, "content-type": "text/markdown; charset=utf-8" } });
   }
-  const part = (Array.isArray(latest.parts) ? latest.parts : []).find((p) => p && p.kind === "blob" && p.name === "tasks.json" && /^cas1_[0-9a-f]{64}$/.test(String(p.blob_id)));
-  if (!part) return new Response("The task list has no file yet.", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
-  const blob = await platform(env, new Request(`${PLATFORM}/api/participation/bulletin/blobs/${part.blob_id}`));
+  const blob = await platform(env, new Request(`${PLATFORM}/api/participation/bulletin/blobs/${file(latest).blob_id}`));
   return new Response(blob.body, { status: blob.status, headers: { ...headers, "content-type": "application/json; charset=utf-8" } });
 }
 
