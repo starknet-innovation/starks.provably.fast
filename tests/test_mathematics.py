@@ -152,23 +152,42 @@ class QueueAndCredits(unittest.TestCase):
         declined = m.queue_state(row("M-0001", status="refuted", reason="the count double-lists witnesses"))
         self.assertEqual(declined["label"], "declined: the count double-lists witnesses")
 
-    def test_an_accepted_row_credits_authors_reviewers_and_what_it_builds_on(self):
+    def test_an_accepted_row_pays_authors_reviewers_and_what_it_builds_on(self):
         base = row("M-0001", "lemma", who="alice", status="accepted", reviews=[{"by": "bob (Claude Code agent): checked", "verdict": "holds"}])
-        built = row("M-0002", "lemma", who="carol", status="accepted", builds_on=["M-0001"],
+        built = row("M-0002", "lemma", who="carol", status="accepted", builds_on=["M-0001"], bound="upper",
                     reviews=[{"by": "challenge maintainers (same operator, not independent)", "verdict": "holds"}])
         pending = row("M-0003", "lemma", who="dave", builds_on=["M-0001"])
-        paid = m.credits([base, built, pending])
-        self.assertEqual(paid["alice"], {"made": ["M-0001"], "reviewed": [], "built_on": ["M-0002"], "weight": 2})
-        self.assertEqual(paid["bob"], {"made": [], "reviewed": ["M-0001"], "built_on": [], "weight": 1})
-        self.assertEqual(paid["carol"], {"made": ["M-0002"], "reviewed": [], "built_on": [], "weight": 1})
-        self.assertNotIn("dave", paid)
-        self.assertNotIn("challenge", paid)
+        lines = m.ledger([base, built, pending])
+        paid = {(l["who"], l["rule"], l["row"]): (l["points"], l["pending"]) for l in lines}
+        self.assertEqual(paid[("alice", "result", "M-0001")], (50, False))
+        self.assertEqual(paid[("bob", "review", "M-0001")], (10, False))       # a fifth of 50
+        self.assertEqual(paid[("carol", "upper", "M-0002")], (100, False))
+        self.assertEqual(paid[("alice", "built_on", "M-0002")], (20, False))   # a fifth of 100
+        self.assertEqual(paid[("dave", "result", "M-0003")], (50, True))       # posted: pending
+        self.assertEqual(paid[("alice", "built_on", "M-0003")], (10, True))
+        self.assertFalse(any(l["who"].startswith("challenge") for l in lines), "the maintainers' own checks pay nobody")
         board = m.summary(m.load_targets(), [base, built, pending], now="2026-10-29T00:00:00+00:00")
         by_id = {r["id"]: r for r in board["contributions"]}
+        self.assertEqual((by_id["M-0002"]["points"], by_id["M-0002"]["advances"]), (100, "upper"))
         self.assertEqual(by_id["M-0002"]["credits"], ["alice"])
-        self.assertEqual(by_id["M-0003"]["credits"], [])
         self.assertEqual(by_id["M-0003"]["queue"]["state"], "posted")
-        self.assertEqual(next(p for p in board["people"] if p["name"] == "alice")["credits"]["built_on"], ["M-0002"])
+        alice = next(p for p in board["people"] if p["name"] == "alice")
+        self.assertEqual(alice["points"], {"total": 70, "pending": 10})
+        self.assertEqual(board["points"]["advances"]["statement"], 1000)
+        self.assertEqual(len(board["points"]["ledger"]), len(lines))
+
+    def test_what_a_row_advances_sets_its_points(self):
+        self.assertEqual(m.row_points(row("M-0001", "proof", settles=True)), (1000, "statement"))
+        self.assertEqual(m.row_points(row("M-0001", "counterexample", advances="refutes")), (500, "refutes"))
+        self.assertEqual(m.row_points(row("M-0001", "lemma", advances="port", bonus=["week"])), (300, "port"))
+        self.assertEqual(m.row_points(row("M-0001", "formalization", advances="port", bonus=["lean"])), (225, "port"))
+        # A declined row pays only the review that found its error.
+        declined = row("M-0002", "lemma", who="erin", status="refuted", reviews=[{"by": "frank: found the gap", "verdict": "fails", "date": "2026-10-09"}])
+        self.assertEqual([(l["who"], l["points"], l["rule"]) for l in m.ledger([declined])], [("frank", 50, "error")])
+        with self.assertRaises(m.RecordError):
+            m.validate(m.load_targets(), [row("M-0001", "lemma", advances="everything")])
+        with self.assertRaises(m.RecordError):
+            m.validate(m.load_targets(), [row("M-0001", "lemma", bonus=["friday"])])
 
 
 class RulesV2(unittest.TestCase):
@@ -185,17 +204,16 @@ class RulesV2(unittest.TestCase):
         self.assertEqual([c["id"] for c in board["cells"]][:2], ["rung0", "pool32"])
         self.assertIsNone(next(b for b in board["upper_bounds"] if b["kind"] == "proven bound on E")["value"])
 
-    def test_upper_bound_reviews_and_combinations_weigh_double(self):
+    def test_upper_bounds_and_combinations_pay_double(self):
         base1 = row("M-0001", "lemma", who="alice", status="accepted")
         base2 = row("M-0002", "lemma", who="bob", status="accepted")
         cap = row("M-0003", "lemma", who="carol", status="accepted", bound="upper",
                   reviews=[{"by": "dave (Claude Code agent): reran the class count", "verdict": "holds"}])
         combo = row("M-0004", "lemma", who="erin", status="accepted", builds_on=["M-0001", "M-0002"], combines=["M-0001", "M-0002"])
-        paid = m.credits([base1, base2, cap, combo])
-        self.assertEqual(paid["dave"]["weight"], 2)
-        self.assertEqual(paid["erin"]["weight"], 2)
-        self.assertEqual(paid["carol"]["weight"], 1)
-        self.assertEqual(paid["alice"]["weight"], 2)   # made M-0001, built on by M-0004
+        total = {}
+        for l in m.ledger([base1, base2, cap, combo], m.load_targets()["rules"]):
+            total[l["who"]] = total.get(l["who"], 0) + l["points"]
+        self.assertEqual(total, {"alice": 60, "bob": 60, "carol": 100, "dave": 20, "erin": 100})
         with self.assertRaises(m.RecordError):
             m.validate(m.load_targets(), [row("M-0005", "lemma", combines=["M-0001"])])
         with self.assertRaises(m.RecordError):

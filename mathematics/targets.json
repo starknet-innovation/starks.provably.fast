@@ -137,7 +137,6 @@
   "thread": null,
   "aim": "a proven bound that shrinks a STARK, not the largest certified count",
   "review_sla_hours": 48,
-  "upper_bound_review_weight": 2,
   "combination_bonus": 2,
   "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)",
   "contribution_of_the_week": "an exact exceptional set at n = 32 for a pair with a small joint core, every anchor classified, posted in the caps thread with the joint core and what the residual says about c",
