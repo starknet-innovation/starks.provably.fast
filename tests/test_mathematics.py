@@ -104,6 +104,14 @@ class Validation(unittest.TestCase):
             with self.subTest(ref=ref), self.assertRaises(m.RecordError):
                 m.validate(self.targets, [row("M-0001", builds_on=[ref])])
 
+    def test_a_row_may_name_its_own_lead(self):
+        lead = "rgr1_" + "a" * 64
+        m.validate(m.load_targets(), [row("M-0030", "lemma", lead=lead)])
+        board = m.summary(m.load_targets(), [row("M-0030", "lemma", lead=lead)], now="2026-11-02T00:00:00+00:00")
+        self.assertEqual(board["contributions"][0]["lead"], lead)
+        with self.assertRaises(m.RecordError):
+            m.validate(m.load_targets(), [row("M-0030", "lemma", lead="bt1_000000000000000000000001")])
+
     def test_new_rows_build_on_a_graph_record(self):
         record = "rgr1_" + "ab" * 32
         m.validate(self.targets, [row("M-0021"), row("M-0022", builds_on=[record]),

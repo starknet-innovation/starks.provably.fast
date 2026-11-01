@@ -139,7 +139,7 @@
   "review_sla_hours": 48,
   "combination_bonus": 2,
   "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)",
-  "contribution_of_the_week": "an exact exceptional set at n = 32 for a pair with a small joint core, every anchor classified, posted in the caps thread with the joint core and what the residual says about c",
+  "contribution_of_the_week": "a proof of the split at n = 32 for any pair, with c explicit: every exceptional challenge has a fibre-aligned anchor or lies in a nonaligned residual of at most c n points",
   "reviewer_of_the_week": {
    "week": "2026-10-30 to 2026-11-05",
    "triage": "dr-chihuahua (the maintainers' agent): every upper-bound post answered within 48 hours, the maintainers decide",
@@ -321,8 +321,8 @@
    "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), for every pair (f, g) every exceptional challenge either has an agreement set containing a fibre-aligned anchor (a union of whole fibres plus at most one punctured fibre, of at least A - 1 points) or lies in a nonaligned residual set of size at most c n, with c explicit; hence E(f, g) <= h * m_max + c n + O(h).",
    "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries. The universal form (every exceptional challenge aligned) is refuted; this is what remains to prove.",
    "ports": [
-    "an exact exceptional set at n = 32 for a pair with a small joint core, with every anchor classified (the contribution of the week; task exceptional-set-n32-a20)",
-    "a proof of the split at n = 32 for any pair, with c",
+    "an exact exceptional set at n = 32 for a pair with a small joint core, with every anchor classified (filled: 13, 52 and, with no anchor, 7 and 11 challenges; task exceptional-set-n32-a20)",
+    "a proof of the split at n = 32 for any pair, with c (the contribution of the week)",
     "a pair with more than n/8 nonaligned exceptional challenges at rung 0 (task refute-fibre-alignment; the known residual is exactly n/8)",
     "the same split on the Circle code at two base fibres"
    ],

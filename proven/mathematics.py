@@ -3,7 +3,7 @@
 mathematics/targets.json pins T1 to T3 (statements, Lean declarations, baselines, sources).
 mathematics/records.jsonl is append-only: one row per contribution (an idea, a lemma, a
 counterexample, a proof sketch, a proof, a formalization, a review of another row, or a source),
-with who made it, what it builds on, and its reviews. Contributions are posted on provably.fast
+with who made it, its own graph lead (`lead`), what it builds on, and its reviews. Contributions are posted on provably.fast
 (MATHEMATICS threads and the mathematics research graph); maintainers record them here, with the
 thread they were posted in. A target's status follows from the rows:
 
@@ -132,9 +132,11 @@ def validate(targets: dict, records: list[dict]) -> None:
         for ref in row.get("builds_on", []):
             if not (ref in sources or ref in seen or THREAD_ID.match(ref) or GRAPH_RECORD.match(ref)):
                 raise RecordError(f"{rid}: builds_on {ref!r} is not a source, an earlier record, a thread or a graph record")
+        if row.get("lead") is not None and not GRAPH_RECORD.match(str(row["lead"])):
+            raise RecordError(f"{rid}: lead {row['lead']!r} is not a graph record (rgr1_...)")
         if int(rid[2:]) >= GRAPH_REQUIRED_FROM and row["kind"] not in ("source", "review") \
-                and not any(GRAPH_RECORD.match(ref) for ref in row.get("builds_on", [])):
-            raise RecordError(f"{rid}: builds_on names no graph record (rgr1_...); propose its lead first")
+                and not row.get("lead") and not any(GRAPH_RECORD.match(ref) for ref in row.get("builds_on", [])):
+            raise RecordError(f"{rid}: no lead and builds_on names no graph record (rgr1_...); propose its lead first")
         for review in row.get("reviews", []):
             if review.get("verdict") not in VERDICTS or not review.get("by"):
                 raise RecordError(f"{rid}: a review needs a reviewer and a verdict in {', '.join(VERDICTS)}")
@@ -306,7 +308,7 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
         points["pending" if line["pending"] else "total"] += line["points"]
     for entry in people.values():
         entry.setdefault("points", {"total": 0, "pending": 0})
-    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "builds_on", "count", "bound", "combines")}
+    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "lead", "builds_on", "count", "bound", "combines")}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
                  "points": row_points(row, targets.get("rules"))[0], "advances": row_points(row, targets.get("rules"))[1],
                  "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])],
@@ -368,6 +370,7 @@ def main(argv: list[str] | None = None) -> int:
     rec.add_argument("--thread", help="the provably.fast thread it was posted in (bt1_...)")
     rec.add_argument("--url")
     rec.add_argument("--lean", help="the pinned declaration a formalization proves")
+    rec.add_argument("--lead", help="the row's own graph record (rgr1_...)")
     rec.add_argument("--builds-on", default="")
     rec.add_argument("--settles", action="store_true",
                      help="the row claims the target's pinned statement (a proof) or its negation")
@@ -411,6 +414,8 @@ def main(argv: list[str] | None = None) -> int:
                    "thread": args.thread, "url": args.url, "date": today, "status": "posted", "reviews": []}
             if args.lean:
                 row["lean"] = args.lean
+            if args.lead:
+                row["lead"] = args.lead
             if args.settles:
                 row["settles"] = True
             if args.bound:
