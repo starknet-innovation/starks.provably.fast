@@ -469,7 +469,9 @@
   const STAGE_RANK = { accepted: 0, reviewed: 1, posted: 2, refuted: 3 };
   // A table sorted by any column head: columns are [key, label, value, ascending first]; a row
   // function may return one row or several. The sort state is the caller's, so it survives a redraw.
-  function sortableTable(wrap, { columns, rows, sort, row, tie, note }) {
+  // With a limit, only the first rows of the current sort show until the reader asks for the rest.
+  function sortableTable(wrap, { columns, rows, sort, row, tie, note, limit = Infinity }) {
+    let all = false;
     const draw = () => {
       const [, , value] = columns.find(([k]) => k === sort.key);
       const sorted = rows.slice().sort((a, b) => {
@@ -479,7 +481,8 @@
       const head = el("tr", {}, columns.map(([key, label]) => el("th", { scope: "col", class: `is-${key}`,
         "aria-sort": key === sort.key ? (sort.dir > 0 ? "ascending" : "descending") : "none" },
         el("button", { type: "button", "data-sort": key }, label))));
-      const table = el("table", { class: "record-table" }, el("thead", {}, head), el("tbody", {}, sorted.flatMap(row)));
+      const shown = all ? sorted : sorted.slice(0, limit);
+      const table = el("table", { class: "record-table" }, el("thead", {}, head), el("tbody", {}, shown.flatMap(row)));
       for (const button of head.querySelectorAll("button")) {
         button.addEventListener("click", () => {
           const key = button.dataset.sort;
@@ -489,7 +492,12 @@
           wrap.querySelector(`button[data-sort="${key}"]`).focus();
         });
       }
-      wrap.replaceChildren(el("p", { class: "record-table-note" }, note), el("div", { class: "record-table-scroll" }, table));
+      let more = null;
+      if (rows.length > limit) {
+        more = el("button", { type: "button", class: "record-table-more", "aria-expanded": String(all) }, all ? "Show fewer" : `Show all ${rows.length}`);
+        more.addEventListener("click", () => { all = !all; draw(); wrap.querySelector(".record-table-more").focus(); });
+      }
+      wrap.replaceChildren(el("p", { class: "record-table-note" }, note), el("div", { class: "record-table-scroll" }, table), more || "");
     };
     draw();
     return wrap;
@@ -549,10 +557,18 @@
         el("td", { class: "is-reviews" }, (r.reviews || []).length ? String(r.reviews.length) : ""),
         el("td", { class: "is-state" }, el("span", { class: `verdict is-${state}` }, label))), more];
     };
-    sortableTable(wrap, { columns, rows, sort: recordSort, row, tie: (a, b) => b.id.localeCompare(a.id),
+    sortableTable(wrap, { columns, rows, sort: recordSort, row, limit: 10, tie: (a, b) => b.id.localeCompare(a.id),
       note: `${nOf(rows.length, "contribution")}. Sort by any column; open a row for its reviews, what it builds on and who it credits.` });
+    // A row the address names past the first 10 shows the whole table first.
+    const reveal = (id) => {
+      if (wrap.querySelector(`[id="${id}"]`) || !rows.some((r) => r.id === id)) return;
+      wrap.querySelector(".record-table-more")?.click();
+      document.getElementById(id)?.scrollIntoView();
+    };
+    openRows.forEach(reveal);
     // A timeline dot or a card link opens its row, even when the address already names it.
     const openRow = (id) => {
+      reveal(id);
       const toggle = document.getElementById(id)?.querySelector(".record-toggle");
       if (toggle && toggle.getAttribute("aria-expanded") !== "true") toggle.click();
     };
@@ -1124,7 +1140,7 @@
   // Certified counts enter the record on their own: the bulletin certifies every attached instance,
   // and the platform lists them with their standing (/api/participation/bulletin/records). Only
   // lemmas and proofs wait for a human.
-  let certifiedSort = { key: "n", dir: -1 };
+  let certifiedSort = { key: "posted", dir: -1 };
   async function renderCertified() {
     const root = $("certified-live");
     if (!root) return;
@@ -1168,7 +1184,7 @@
         return [tr, more];
       };
       root.replaceChildren(...[certifiedMap(live.instances || [], (a) => (profiles.get(a) ? `@${profiles.get(a)}` : personName(a)))].filter(Boolean),
-        sortableTable(el("div", { class: "record-table-wrap is-certified" }), { columns, rows, sort: certifiedSort, row,
+        sortableTable(el("div", { class: "record-table-wrap is-certified" }), { columns, rows, sort: certifiedSort, row, limit: 20,
         tie: (a, b) => b.best.certified - a.best.certified,
         note: `Each row is the most bad challenges anyone has built at one size, rate and agreement: a higher count is a stronger lower bound. "Posted by" names who posted the certified instance; the post says whose construction it is. ${nOf(rows.length, "row")}; click one for its parameters, field and post.` }));
     } catch {
