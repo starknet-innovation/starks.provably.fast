@@ -85,9 +85,42 @@ def statement_check(target: str, source: str) -> tuple[bool, str, list[str]]:
     return True, "the statement and the holes match the template", holes
 
 
+MODULE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
+
+
+def read_job() -> tuple[str, list[dict]]:
+    """stdin is the file itself, or a JSON job {"source", "siblings": [{"name", "source"}]} when the
+    file imports other files posted in its thread."""
+    raw = sys.stdin.read()
+    if raw.lstrip().startswith("{"):
+        try:
+            job = json.loads(raw)
+        except ValueError:
+            return raw, []
+        if isinstance(job, dict) and isinstance(job.get("source"), str):
+            return job["source"], [s for s in job.get("siblings") or [] if isinstance(s, dict)]
+    return raw, []
+
+
+def place_siblings(siblings: list[dict]) -> list[str]:
+    """Each sibling becomes a module next to Solution.lean with a lean_lib entry of its own, so lake
+    finds it when Solution imports it; returns the module names placed."""
+    placed: list[str] = []
+    with (PKG / "lakefile.toml").open("a") as lakefile:
+        for sibling in siblings:
+            name = str(sibling.get("name") or "")
+            module = name[:-5] if name.endswith(".lean") else ""
+            if not MODULE.fullmatch(module) or module in ("Solution", "Axioms", "MCAChallenge") or module in placed:
+                continue
+            (PKG / f"{module}.lean").write_text(str(sibling.get("source") or ""))
+            lakefile.write(f'\n[[lean_lib]]\nname = "{module}"\n')
+            placed.append(module)
+    return placed
+
+
 def main() -> int:
     target = sys.argv[1] if len(sys.argv) > 1 else ""
-    source = sys.stdin.read()
+    source, siblings = read_job()
     receipt = {"schema": "proven/LeanReceipt@1", "target": target, "file_sha256": hashlib.sha256(source.encode()).hexdigest(),
                "toolchain": (PKG / "lean-toolchain").read_text().strip(), "checker": "leanchecker from the toolchain",
                "method": "statement by text against the template; lake build; leanchecker replay of the module; #print axioms",
@@ -101,6 +134,8 @@ def main() -> int:
         print("\n" + json.dumps(receipt, sort_keys=True))
         return 0
     (PKG / "Solution.lean").write_text(source)
+    if siblings:
+        receipt["bundle"] = place_siblings(siblings)
     started = time.time()
     code, out = run(["lake", "build", "Solution"], BUILD_SECONDS)
     sorries = len(re.findall(r"declaration uses 'sorry'", out))
