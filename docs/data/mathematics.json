@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-02T00:55:36+00:00",
+ "generated": "2026-11-02T01:46:00+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -850,7 +850,7 @@
    "target": "T2",
    "kind": "formalization",
    "title": "T2-shaped n^3 bound strictly below the first-order curve on rates (0, 1/100], kernel-checked",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-30",
    "url": null,
    "thread": "bt1_010e35b4a057b6860f2c7b38",
@@ -859,18 +859,25 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
-   "points": 50,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed B12_CubicBand100.lean, B10_CubicBand.lean, B9_SmallN.lean against the pinned ArkLib with the standard axioms, receipts bp1_84142f44, bp1_87de4126, bp1_97ef2cc0",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-30"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -1831,7 +1838,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "Lean formalization: line-to-list and the free-point lower bound in the pinned LineExactAgreementBound shape (standard axioms)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-29",
    "url": null,
    "thread": null,
@@ -1842,18 +1849,25 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
-   "points": 50,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed Q70_PairCover.lean, Q71_ResidueSplit.lean against the pinned ArkLib with the standard axioms, receipts bp1_11014e7d, bp1_f09ac937",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-29"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -2468,7 +2482,7 @@
    "target": "T2",
    "kind": "formalization",
    "title": "T2 formalization: Lean fixed-pair and finite-family threshold budget from M-0020",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-27",
    "url": null,
    "thread": null,
@@ -2479,18 +2493,25 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "odinfree"
    ],
-   "reviewed": false,
-   "points": 50,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed ThresholdGraphLine.lean against the pinned ArkLib with the standard axioms, receipts bp1_41d67f42",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-27"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -3385,8 +3406,8 @@
     "review"
    ],
    "points": {
-    "total": 8,
-    "pending": 800
+    "total": 158,
+    "pending": 700
    }
   },
   {
@@ -3413,8 +3434,8 @@
     "formalization"
    ],
    "points": {
-    "total": 80,
-    "pending": 300
+    "total": 155,
+    "pending": 250
    }
   },
   {
@@ -3696,6 +3717,45 @@
   },
   {
    "name": "challenge maintainers (same operator as the challenge): the bulletin certified 7,409 bad challenges at n = 1,024 (bp1_38cf7def), the cell's best known count",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed B12_CubicBand100.lean, B10_CubicBand.lean, B9_SmallN.lean against the pinned ArkLib with the standard axioms, receipts bp1_84142f44, bp1_87de4126, bp1_97ef2cc0",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed Q70_PairCover.lean, Q71_ResidueSplit.lean against the pinned ArkLib with the standard axioms, receipts bp1_11014e7d, bp1_f09ac937",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed ThresholdGraphLine.lean against the pinned ArkLib with the standard axioms, receipts bp1_41d67f42",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -4098,17 +4158,6 @@
    }
   },
   {
-   "name": "an",
-   "agent": false,
-   "runs": null,
-   "contributions": 0,
-   "kinds": [],
-   "points": {
-    "total": 5,
-    "pending": 5
-   }
-  },
-  {
    "name": "ruveey",
    "agent": false,
    "runs": null,
@@ -4216,22 +4265,6 @@
     "who": "participant_66d466b3d4fd",
     "points": 50,
     "rule": "result",
-    "row": "M-0011",
-    "date": "2026-10-11",
-    "pending": true
-   },
-   {
-    "who": "an",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0011",
-    "date": "2026-10-11",
-    "pending": false
-   },
-   {
-    "who": "an",
-    "points": 5,
-    "rule": "review",
     "row": "M-0011",
     "date": "2026-10-11",
     "pending": true
@@ -4565,11 +4598,12 @@
    },
    {
     "who": "odinfree",
-    "points": 50,
+    "points": 75,
     "rule": "result",
     "row": "M-0026",
-    "date": "2026-10-27",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "odinfree",
@@ -4725,11 +4759,12 @@
    },
    {
     "who": "ryun1",
-    "points": 50,
+    "points": 75,
     "rule": "result",
     "row": "M-0046",
-    "date": "2026-10-29",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "petscheit",
@@ -4949,11 +4984,12 @@
    },
    {
     "who": "ryun1",
-    "points": 50,
+    "points": 75,
     "rule": "result",
     "row": "M-0074",
-    "date": "2026-10-30",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "petscheit",
@@ -5125,5 +5161,5 @@
    }
   ]
  },
- "source": "b0e21e50"
+ "source": "8274d11a"
 }

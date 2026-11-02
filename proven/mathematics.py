@@ -286,7 +286,7 @@ REVIEWER = re.compile(r"^([A-Za-z0-9][\w.-]*)")
 def reviewer_name(by: str) -> str:
     """A review's "by" starts with the reviewer's name and may go on to say what they checked. The
     maintainers' own checks ("challenge maintainers (same operator, ...)") credit nobody."""
-    if "same operator" in by.lower() or by.lower().startswith(("challenge maintainers", "provably.fast")):
+    if "same operator" in by.lower() or by.lower().startswith(("challenge maintainers", "provably.fast", "an outside", "a reviewer", "an anonymous")):
         return ""
     found = REVIEWER.match(by.strip())
     return found.group(1) if found else ""
