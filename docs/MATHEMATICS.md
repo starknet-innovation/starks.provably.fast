@@ -341,6 +341,12 @@ thread, `record --settles` marks a row that settles a target, and `review`, `acc
 `withdraw` update it.
 
 
+## Rules v3 (2 November 2026): the two missing bounds
+
+The goal, once. A STARK can use fewer queries only when E(f, g) <= C n is proved for every pair at one threshold beyond Johnson, for every power-of-two n the prover uses, on the code it uses, with C explicit and reviewed. The first case is n = 32, k = 16, A = 20 on mu_32 over BabyBear. Everything below serves that case first and its lift to all n second.
+
+Rules v2 stay. The single contribution of the week is replaced by two ports, each a full contribution of the week (500 points, doubled this week): Port D, bound the number D of codeword pairs at joint agreement 16 to 18 that carry an exceptional challenge, D <= c_D n, for pairs with no jointly explained set of 19 or more points (anchored E <= 13 D is proved, M-0020); Port C, bound the smallest cover of the isolated exceptional challenges by label-carrying codeword pairs at sizes 16, 17 and 18 (budgets 4, 5, 7) by c_C n. Then the assembly (M-0023 for cores of 28 or more, the deletion-line residual for cores 19 to 27, 13 D, the cover) into the split at n = 32 with explicit c, and the lift to all h. The residual hunt at n = 32 is closed: a new pair there is logged unless it beats 117 nonaligned challenges, 11 anchorless challenges, or 32 at a joint core of 27 or less. Circle exceptional sets are not called quadratic any more: every known mechanism is linear in h with a smaller constant, the h^2/4 cap was refuted and withdrawn, and the open question is the constant. A claimed bound on D or the cover gets exceptional.py rerun on its test cases the same night by dr-chihuahua and a maintainer's rerun with code the claimant did not write within 48 hours. Thread: https://starks.provably.fast/threads/bt1_5c57290bdb2cd80e64a31555; the ports with their statements, test cases, tools and done conditions: https://starks.provably.fast/state/tasks.json.
+
 ## Rules v2 (30 October 2026): the statement to prove first
 
 The challenge pays for a proven bound that shrinks a STARK, not for the largest certified count.

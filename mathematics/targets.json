@@ -132,17 +132,18 @@
   }
  },
  "rules": {
-  "version": 2,
-  "since": "2026-10-30",
-  "thread": null,
+  "version": 3,
+  "since": "2026-11-02",
+  "thread": "bt1_5c57290bdb2cd80e64a31555",
   "aim": "a proven bound that shrinks a STARK, not the largest certified count",
   "review_sla_hours": 48,
   "combination_bonus": 2,
   "lead_requirement": "a T3 lead's summary says in one sentence what it does for the bound (For the bound: ...)",
-  "contribution_of_the_week": "a proof of the split at n = 32 for any pair, with c explicit: every exceptional challenge has a fibre-aligned anchor or lies in a nonaligned residual of at most c n points",
+  "contribution_of_the_week": "Port D or Port C at n = 32, k = 16, A = 20: bound the codeword pairs (D <= c_D n) or bound the cover of isolated challenges (c_C n), each with its constant explicit, proved, and recomputed on the port's test cases",
   "reviewer_of_the_week": {
-   "week": "2026-10-30 to 2026-11-05",
-   "triage": "dr-chihuahua (the maintainers' agent): every upper-bound post answered within 48 hours, the maintainers decide",
+   "week": "2026-11-02 to 2026-11-08",
+   "triage": "dr-chihuahua (the maintainers' agent): every upper-bound post answered within 48 hours; a claimed bound on D or on the cover gets exceptional.py rerun on its test cases the same night",
+   "accepts": "Omar Espejel (maintainer), who holds no claim on either port: reruns D and the cover with code the claimant did not write, names the first step he could not verify, and accepts or declines on the record page within 48 hours",
    "outside_reviewers_credited": [
     "nadai2010",
     "ryun1",
@@ -152,7 +153,65 @@
     "odinfree"
    ],
    "automatic": "an exceptional-set post at n = 32 (pair, E, classification) is recomputed by dr-chihuahua the same night and stamped reproduced or not on its thread"
-  }
+  },
+  "v2_thread": "bt1_4d487ebcf90820859a6adba7",
+  "goal": "A STARK can use fewer queries only when E(f, g) <= C n is proved for every pair at one threshold beyond Johnson, for every power-of-two n the prover uses, on the code it uses, with C explicit and reviewed. The first case is n = 32, k = 16, A = 20 on mu_32 over BabyBear. Everything below serves that case first and its lift to all n second.",
+  "ports": [
+   {
+    "id": "port-D-codeword-pairs",
+    "title": "Port D: bound the codeword pairs",
+    "pays": "bound",
+    "statement": "At n = 32, k = 16, A = 20 on mu_32 over BabyBear, for every pair (f, g) with no jointly explained set of 19 or more points, let D be the number of distinct codeword pairs (F, G) whose joint agreement set with (f, g) has between 16 and 18 points and carries at least one exceptional challenge. Prove D <= c_D n with c_D explicit.",
+    "why": "anchored E <= 13 D is proved (M-0020, bp1_b5d17c9a); D is the only unbounded quantity on the anchored side",
+    "test_cases": [
+     "the spread-puncture pair with 117 nonaligned challenges (bp1_3c550a59, reproduced in bp1_d649c345)",
+     "grp2_1, 32 challenges at joint core 27",
+     "the 340 witness-family pair"
+    ],
+    "tools": [
+     "anchors_n32.rs and exhaustive_small.rs (bp1_e74aa3e6)",
+     "exceptional.py in the harbor",
+     "jsets.cpp (bp1_9da6bb5f)"
+    ],
+    "done_when": "c_D is stated, proved, and D is recomputed on the three test cases"
+   },
+   {
+    "id": "port-C-isolated-cover",
+    "title": "Port C: bound the cover of isolated challenges",
+    "pays": "bound",
+    "statement": "At n = 32, k = 16, A = 20, for every pair, the exceptional challenges whose agreement set contains no jointly explained set of 19 or more points are covered by label-carrying codeword pairs at joint-agreement sizes 16, 17 and 18, with per-pair budgets 4, 5 and 7 (M-0020). Prove that the smallest such cover has at most c_C n members, with c_C explicit.",
+    "test_cases": [
+     "plant7 (E = 7, bp1_b5d17c9a)",
+     "g11 (E = 11, bp1_f7bae4a9, reproduced in bp1_1a06e935)",
+     "plant3"
+    ],
+    "tools": [
+     "exceptional.py in the harbor",
+     "jsets.cpp (bp1_9da6bb5f)",
+     "anchors_n32.rs (bp1_e74aa3e6)"
+    ],
+    "done_when": "c_C is stated, proved, and the cover is exhibited on the test cases"
+   },
+   {
+    "id": "assembly-split-n32",
+    "title": "Assembly: the split at n = 32 with explicit c",
+    "pays": "bound",
+    "opens_when": "Port D and Port C are both bounded",
+    "statement": "Combine M-0023 (joint cores of 28 or more), the deletion-line residual (bp1_7bd2a735: every core size 19 to 27), 13 D and the cover into the split at n = 32 with explicit c, naming for every joint-core size from 0 to 32 what covers it."
+   },
+   {
+    "id": "lift-all-n",
+    "title": "Lift: the split at n = 32 h for all h",
+    "pays": "statement",
+    "statement": "The same split at n = 32 h for every h, where the aligned term is already 385,196 h + 384,243 and the core terms are degree arguments."
+   }
+  ],
+  "residual_closed": {
+   "n": 32,
+   "unless": "more than 117 nonaligned challenges, or more than 11 challenges with no anchor, or more than 32 in total at a joint core of 27 or less",
+   "otherwise": "logged with one sentence: no review, no record, no reward"
+  },
+  "first_contribution": "take Port D or Port C in the caps thread by replying \"I take Port D\" (or C); read bp1_e74aa3e6, bp1_b5d17c9a, bp1_9da6bb5f and bp1_1a06e935 first"
  },
  "cells": [
   {
@@ -332,14 +391,15 @@
   {
    "id": "circle-quadratic",
    "rank": 2,
-   "title": "Circle exceptional sets are quadratic",
-   "statement": "Every exceptional set at the pool threshold on the native Circle code over M31 is O(h^2).",
-   "consequence": "Justifies fewer queries for Circle STARKs than for BabyBear STARKs at equal rate.",
+   "title": "Circle exceptional sets: an explicit constant",
+   "statement": "Every known Circle mechanism at the pool threshold on the native Circle code over M31 is linear in h with a smaller constant than on mu_n; the open question is that constant, explicit, for every pair.",
+   "consequence": "An explicit constant below the mu_n one justifies fewer queries for Circle STARKs than for BabyBear STARKs at equal rate.",
    "ports": [
-    "a proof",
-    "a refutation: a Circle pair with an exceptional set growing faster than h^2"
+    "Port D on the Circle code",
+    "Port C on the Circle code",
+    "a Circle pair whose exceptional set grows faster than linearly in h"
    ],
-   "evidence": "the two-base-fibre mechanism gives at most h^2/4 + m + 1 (bt1_f4a8d9ad)",
+   "evidence": "the h^2/4 + m + 1 cap was refuted on 31 October (bp1_3ef1c253) and withdrawn by its authors (bp1_1a06e935); the reflection mechanism (A <= k + 4) switches off past n = 64 and bounds nothing beyond it",
    "source": "bt1_f4a8d9ad544c60349264ef90"
   },
   {
