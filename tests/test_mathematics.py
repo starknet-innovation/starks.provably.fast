@@ -184,6 +184,23 @@ class QueueAndCredits(unittest.TestCase):
         self.assertEqual(board["points"]["advances"]["statement"], 1000)
         self.assertEqual(len(board["points"]["ledger"]), len(lines))
 
+    def test_a_review_of_a_waiting_row_pays_half_at_once(self):
+        waiting = row("M-0004", "lemma", who="erin", bound="upper", reviews=[{"by": "frank (outside operator): replayed the census", "verdict": "partial", "date": "2026-11-01"}])
+        lines = [(l["who"], l["points"], l["pending"], l["date"]) for l in m.ledger([waiting]) if l["rule"] == "review"]
+        self.assertEqual(lines, [("frank", 10, False, "2026-11-01"), ("frank", 10, True, "2026-10-08")])
+
+    def test_graph_leads_become_posted_rows(self):
+        lead = lambda n, title, who="github-1", parents=(), at="2026-11-02T10:00:00Z": {"record_id": "rgr1_" + str(n) * 64, "record_type": "LEAD", "title": title,
+            "author": {"contributor": who}, "parents": [{"record_id": p} for p in parents], "created_at": at}
+        records = [row("M-0001", "lemma", lead="rgr1_" + "1" * 64)]
+        rows = m.lead_rows(records, [lead(1, "already recorded"), lead(2, "T3 upper bound: a cap on the lift", parents=["rgr1_" + "1" * 64]),
+                                     lead(3, "T1/T3 review: replayed four files", who="github-2"), lead(4, "old", at="2026-10-01T00:00:00Z"),
+                                     lead(5, "T2 negative: a search finds nothing")], "2026-11-01", {"github-1": "alice"})
+        self.assertEqual([(r["id"], r["target"], r["kind"], r.get("bound"), r["who"][0]["name"], r["builds_on"]) for r in rows],
+                         [("M-0002", "T3", "lemma", "upper", "alice", ["rgr1_" + "1" * 64]), ("M-0003", "T3", "review", None, "github-2", []),
+                          ("M-0004", "T2", "idea", None, "alice", [])])
+        m.validate(m.load_targets(), records + rows)
+
     def test_what_a_row_advances_sets_its_points(self):
         self.assertEqual(m.row_points(row("M-0001", "proof", settles=True)), (1000, "statement"))
         self.assertEqual(m.row_points(row("M-0001", "counterexample", advances="refutes")), (500, "refutes"))

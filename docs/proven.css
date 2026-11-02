@@ -713,3 +713,20 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .ruler-legend small { color: var(--muted); font-size: 12px; }
 .ruler-legend b { min-width: 4.2rem; color: var(--tone); font: 650 15px var(--display); font-variant-numeric: tabular-nums; text-align: right; }
 .ruler-legend li.is-dim { --tone: color-mix(in srgb, var(--amber) 50%, var(--muted)); } .ruler-legend li.is-pink { --tone: var(--pink); } .ruler-legend li.is-amber { --tone: var(--amber); } .ruler-legend li.is-record { --tone: var(--record); } .ruler-legend li.is-violet { --tone: var(--violet); } .ruler-legend li.is-accent { --tone: var(--accent); }
+
+/* The review queue on the record page: what a review of each waiting result earns. */
+.record-queue:empty { display: none; }
+.record-queue { margin: 0 0 26px; }
+.record-queue .chapter-sub { margin: 0 0 4px; font: 600 18px var(--display); color: var(--ink); }
+.queue-list { display: grid; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+.queue-list li { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); align-items: baseline; gap: 12px; font-size: 14px; }
+.queue-earn { color: var(--record); font: 650 16px var(--display); font-variant-numeric: tabular-nums; text-align: right; }
+.queue-what { display: grid; min-width: 0; }
+.queue-what a { overflow: hidden; color: var(--ink); text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.queue-what a:hover, .queue-what a:focus-visible { color: var(--accent); }
+.queue-what small { color: var(--muted); font-size: 12px; }
+.record-tr .is-points { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+.record-tr .is-points.is-pending { color: var(--muted); font-weight: 400; }
+.record-lean { margin-left: 6px; }
+.starks-crew .kit-band-head { align-items: flex-start; flex-wrap: wrap; }
+.starks-crew .kit-band-sub { flex: 1 1 24rem; max-width: 60ch; }

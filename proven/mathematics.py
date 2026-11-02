@@ -22,6 +22,7 @@ thread they were posted in. A target's status follows from the rows:
     python3 -m proven.mathematics review M-0003 --by NAME --verdict holds|fails|partial --url URL
     python3 -m proven.mathematics reviewing M-0003 --by NAME     # who is reading it now (the queue shows it)
     python3 -m proven.mathematics accept M-0003         # or: refute / withdraw, with --reason "..."
+    python3 -m proven.mathematics leads --graph graph.json --since 2026-11-02 [--profiles profiles.json]
 
 Every row carries a queue state the site and the thread pages show: posted (waiting for a reader),
 under review by whom since when, accepted, or declined with its reason.
@@ -242,7 +243,7 @@ def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
     def pay(name: str, points: float, rule: str, row: dict, when: str | None, pending: bool, of: str | None = None) -> None:
         if points >= 1:
             lines.append({"who": name, "points": round(points), "rule": rule, "row": row["id"],
-                          **({"of": of} if of else {}), "date": when, "pending": pending})
+                          **({"of": of} if of else {}), **({"lean": True} if "lean" in row.get("bonus", []) else {}), "date": when, "pending": pending})
 
     for row in records:
         if row["status"] == "withdrawn" or row["kind"] == "source":
@@ -259,10 +260,18 @@ def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
         names = [w["name"] for w in row["who"]]
         for name in names:
             pay(name, value / len(names), rule, row, when, pending)
-        reviewers = [name for name in dict.fromkeys(reviewer_name(r.get("by", "")) for r in row.get("reviews", []) if r.get("verdict") == "holds")
-                     if name and name.lower() not in authors(row)][:3]
+        # Outside reviews (holds or partial, three at most) share a fifth: half of it at once while the
+        # row waits, since reviewing is the bottleneck, and all of it once the row is accepted.
+        reviews = [r for r in row.get("reviews", []) if r.get("verdict") in ("holds", "partial")]
+        reviewers = [name for name in dict.fromkeys(reviewer_name(r.get("by", "")) for r in reviews) if name and name.lower() not in authors(row)][:3]
         for name in reviewers:
-            pay(name, SHARE * value / len(reviewers), "review", row, when, pending)
+            amount = SHARE * value / len(reviewers)
+            if pending:
+                posted = next((r.get("date") for r in reviews if reviewer_name(r.get("by", "")) == name), None) or when
+                pay(name, amount / 2, "review", row, posted, False)
+                pay(name, amount / 2, "review", row, when, True)
+            else:
+                pay(name, amount, "review", row, when, False)
         cited = [by_id[ref] for ref in row.get("builds_on", []) if ref in by_id and by_id[ref]["status"] == "accepted"]
         for base in cited:
             heirs = [w["name"] for w in base["who"] if w["name"].lower() not in authors(row)]
@@ -308,7 +317,7 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
         points["pending" if line["pending"] else "total"] += line["points"]
     for entry in people.values():
         entry.setdefault("points", {"total": 0, "pending": 0})
-    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "lead", "builds_on", "count", "bound", "combines")}
+    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "lead", "builds_on", "count", "bound", "combines", "bonus")}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
                  "points": row_points(row, targets.get("rules"))[0], "advances": row_points(row, targets.get("rules"))[1],
                  "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])],
@@ -344,6 +353,65 @@ def append(row: dict, path: Path = RECORDS) -> None:
 
 def rewrite(records: list[dict], path: Path = RECORDS) -> None:
     path.write_text("".join(json.dumps(r, sort_keys=True, ensure_ascii=False) + "\n" for r in records))
+
+
+def lead_rows(records: list[dict], leads: list[dict], since: str, logins: dict[str, str] | None = None) -> list[dict]:
+    """A posted row for every graph LEAD since `since` that no row names (as its lead or in builds_on),
+    its target, kind and bound read from its title. `leads` are the graph route's records; `logins`
+    maps a graph contributor (github-..., hosted-agent-...) to a login."""
+    known = {ref for row in records for ref in row.get("builds_on", [])} | {row["lead"] for row in records if row.get("lead")}
+    number = max((int(row["id"][2:]) for row in records), default=0)
+    out: list[dict] = []
+    for lead in sorted(leads, key=lambda r: r.get("created_at", "")):
+        if lead.get("record_type") != "LEAD" or lead["record_id"] in known or str(lead.get("created_at", ""))[:10] < since:
+            continue
+        title = str(lead.get("title", "")).strip()
+        who = (lead.get("author") or {}).get("contributor", "")
+        if not title or not who:
+            continue
+        number += 1
+        row = {"id": f"M-{number:04d}", "target": lead_target(title), "kind": lead_kind(title), "title": title,
+               "who": [{"name": (logins or {}).get(who, who)}], "lead": lead["record_id"],
+               "builds_on": [p["record_id"] for p in lead.get("parents", []) if GRAPH_RECORD.match(str(p.get("record_id", "")))],
+               "thread": None, "url": None, "date": str(lead["created_at"])[:10], "status": "posted", "reviews": []}
+        bound = lead_bound(title)
+        if bound:
+            row["bound"] = bound
+        out.append(row)
+    return out
+
+
+def lead_target(title: str) -> str:
+    found = re.match(r"^(T[123])(/T[123])?\b", title)
+    if found:
+        return "T3" if found.group(2) else found.group(1)
+    for target, words in (("T3", r"\bT3\b|Circle|rung|level-16|nonaligned"), ("T2", r"\bT2\b"), ("T1", r"\bT1\b")):
+        if re.search(words, title):
+            return target
+    return "other"
+
+
+def lead_kind(title: str) -> str:
+    low = title.lower()
+    if "review" in low or "reproduction" in low:
+        return "review"
+    if "formalization" in low or "kernel-checked" in low or low.startswith("lean"):
+        return "formalization"
+    if "counterexample" in low or "refute" in low:
+        return "counterexample"
+    if re.search(r"negative|experiment|data point|data for|note:|model:|application|screen|reading|census", low) \
+            and not re.search(r"lemma|theorem|bound", low):
+        return "idea"
+    return "lemma"
+
+
+def lead_bound(title: str) -> str | None:
+    low = title.lower()
+    if "upper bound" in low or " cap" in low or "capped" in low or "ceiling" in low:
+        return "upper"
+    if "lower bound" in low or "counts" in low or "construction" in low or "nonaligned" in low or "bad challenges" in low:
+        return "lower"
+    return None
 
 
 def classify(row: dict, args: argparse.Namespace) -> None:
@@ -388,6 +456,10 @@ def main(argv: list[str] | None = None) -> int:
     reading.add_argument("record")
     reading.add_argument("--by", required=True)
     reading.add_argument("--done", action="store_true", help="remove the reader instead")
+    leads = sub.add_parser("leads", help="append a posted row for every graph lead since a date that no row names")
+    leads.add_argument("--graph", required=True, help="the graph route's records, a JSON array or one record per line")
+    leads.add_argument("--since", required=True, help="YYYY-MM-DD")
+    leads.add_argument("--profiles", help="the profiles route's JSON, to name people by login")
     for name in ("accept", "refute", "withdraw"):
         decision = sub.add_parser(name)
         decision.add_argument("record")
@@ -426,6 +498,20 @@ def main(argv: list[str] | None = None) -> int:
             validate(targets, records + [row])
             append(row)
             print(row["id"])
+        elif args.command == "leads":
+            text = Path(args.graph).read_text()
+            graph = json.loads(text) if text.lstrip().startswith("[") else [json.loads(line) for line in text.splitlines() if line.strip()]
+            logins: dict[str, str] = {}
+            if args.profiles:
+                for identity in json.loads(Path(args.profiles).read_text()).get("identities", []):
+                    for actor in identity.get("actor_ids", []) + [identity.get("bulletin_actor")]:
+                        if actor and identity.get("login"):
+                            logins[actor] = identity["login"]
+            rows = lead_rows(records, graph, args.since, logins)
+            validate(targets, records + rows)
+            for row in rows:
+                append(row)
+            print(f"{len(rows)} rows appended" + (": " + ", ".join(r["id"] for r in rows) if rows else ""))
         elif args.command == "review":
             row = next((r for r in records if r["id"] == args.record), None)
             if row is None:
