@@ -64,7 +64,7 @@ GRAPH_REQUIRED_FROM = 22
 # result 50. Its outside reviewers (three at most) share a fifth of it, and so do the authors of the
 # accepted records it builds on. A review that finds the error in a declined row pays 50. The week's
 # contribution counts double and a Lean-checked proof one and a half times; so does nothing else.
-ADVANCES = {"statement": 1000, "refutes": 500, "port": 150, "upper": 100, "breaks": 100, "result": 50}
+ADVANCES = {"statement": 1000, "refutes": 500, "bound": 500, "port": 150, "upper": 100, "breaks": 100, "result": 50}
 BONUSES = {"week": 2.0, "lean": 1.5}
 SHARE = 0.2
 ERROR_FOUND = 50

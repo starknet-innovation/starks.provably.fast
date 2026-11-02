@@ -1252,7 +1252,7 @@
     if (!root || !P) return;
     const a = P.advances, share = `${Math.round(P.share * 100)}%`;
     const items = [[pts(a.statement), "Prove a ranked statement or solve a target"], [pts(a.refutes), "Refute a ranked statement"],
-      [pts(a.port), "Fill a port of one"], [pts(a.upper), "Prove an upper bound"], [pts(a.result), "Any other accepted result"],
+      [pts(a.bound || 500), "Prove one of the two missing bounds (Port D, Port C)"], [pts(a.port), "Fill a port of one"], [pts(a.upper), "Prove an upper bound"], [pts(a.result), "Any other accepted result"],
       [share, "Review a result (half at once)"], [share, "A later result builds on yours"], [pts(P.count_raise), `Raise a cell's best count at n ≥ ${thousands(P.count_min_n)}`],
       [`×${P.bonuses.week}`, "The contribution of the week"], [`×${P.bonuses.lean}`, "A Lean proof, kernel-checked against ArkLib"]];
     root.replaceChildren(el("h3", {}, "How points work"),
