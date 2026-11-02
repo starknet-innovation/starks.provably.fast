@@ -967,7 +967,7 @@
     // A GitHub login is a person's own name: one who runs their own agent, or a reviewer named first.
     // An agent another operator runs (lane-random, participant_...) keeps a quiet mark.
     for (const m of crew.values()) {
-      m.login = LOGIN.test(m.name) && !PSEUDONYM.test(m.name) && (m.runs === m.name || (m.reviewer && !m.runs)) ? m.name : null;
+      m.login = LOGIN.test(m.name) && !PSEUDONYM.test(m.name) && !/^lane-/.test(m.name) && m.runs !== MAINTAINERS && (!m.runs || m.runs === m.name) ? m.name : null;
     }
     // One row per contributor: a pseudonym whose owner chose a public profile takes that login, and
     // folds into the login's own row when it is on the record too; the maintainers' own agents fold
@@ -1110,7 +1110,8 @@
     const member = (name, known = null) => {
       let m = crew.byName.get(name);
       if (!m) {
-        const login = known || profiles.get(name) || null;
+        // A record row may name a person by login; the bulletin and the graph by pseudonym or actor.
+        const login = known || profiles.get(name) || (LOGIN.test(name) && !PSEUDONYM.test(name) ? name : null);
         m = (login && byLogin.get(login)) || { name, names: [name], login, agents: new Set(), maintainers: false };
         crew.byName.set(name, m);
         if (login) byLogin.set(login, m);
@@ -1232,7 +1233,6 @@
     setTimeout(() => { note.classList.remove("is-in"); setTimeout(() => note.remove(), 600); }, 6000);
     return note;
   }
-  let boardWindow = "week";
   // The signed-in GitHub login, from auth-nav.js: that row comes first, marked "You".
   let boardYou = "";
   let boardRedraw = null;
@@ -1268,20 +1268,14 @@
     let rows = boardPeople(record, records);
     let all = rows.flatMap((row) => row.lines);
     const now = Date.now();
-    const weekStart = (dayOf(now) - ((new Date(now).getUTCDay() + 6) % 7)) * DAY;
     let seen = 0;
     try { seen = Number(localStorage.getItem("starks-board-seen")) || 0; } catch { /* storage off */ }
     const label = (m) => (m.login ? `@${m.login}` : personName(m.name));
     const isYou = (m) => Boolean(boardYou && m.login === boardYou);
     const sum = (lines) => lines.reduce((total, l) => total + l.points, 0);
     const open = new Set();
-    // Early in a week, all time is the better first view.
-    if (!root.dataset.bound && rows.filter((row) => boardStats(row, weekStart, now).points > 0).length < 3) {
-      boardWindow = "all";
-      for (const b of document.querySelectorAll("#board-switch button")) b.setAttribute("aria-selected", String(b.dataset.window === "all"));
-    }
     const draw = () => {
-      const from = boardWindow === "week" ? weekStart : 0;
+      const from = 0;
       const stats = rows.map((row) => ({ row, s: boardStats(row, from, now) })).filter(({ s }) => s.points || s.pending);
       stats.sort((a, b) => b.s.points - a.s.points || b.s.pending - a.s.pending || b.s.last - a.s.last);
       // What happened since the last visit, with the visitor's own points when signed in.
@@ -1301,14 +1295,14 @@
         return out;
       };
       const ranks = place(stats.map(({ row, s }) => ({ row, points: s.points })));
-      const [prevFrom, prevTo] = from ? [from - 7 * DAY, from] : [0, now - 7 * DAY];
+      const [prevFrom, prevTo] = [0, now - 7 * DAY];
       const before = place(rows.map((row) => ({ row, points: sum(row.lines.filter((l) => !l.pending && l.t >= prevFrom && l.t < prevTo)) }))
         .sort((x, y) => y.points - x.points));
       const head = el("tr", {}, el("th", { scope: "col", class: "board-rank" }, el("span", { class: "sr-only" }, "Place")),
         el("th", { scope: "col" }, nOf(stats.length, "contributor")), el("th", { scope: "col", class: "is-days" }, "Last 14 days"),
         el("th", { scope: "col" }, "Points", el("button", { type: "button", class: "info-tip", popovertarget: "points-help", "aria-label": "How points work" }, "i")),
         el("th", { scope: "col" }, el("span", { class: "sr-only" }, "Earned for")), el("th", { scope: "col" }, el("span", { class: "sr-only" }, "Share")));
-      const when = boardWindow === "week" ? "this week" : "so far";
+      const when = "so far";
       const body = stats.flatMap(({ row, s }) => {
         const m = row.m, you = isYou(m), key = m.login || m.name;
         const name = m.login ? el("a", { class: "kit-person-name", href: `/workshop#/people/${encodeURIComponent(m.login)}` }, label(m))
@@ -1380,13 +1374,6 @@
         const tr = button.closest("tr").nextElementSibling;
         if (tr?.classList.contains("board-receipts")) tr.hidden = !shown;
       });
-      for (const button of document.querySelectorAll("#board-switch button")) {
-        button.addEventListener("click", () => {
-          boardWindow = button.dataset.window;
-          for (const other of document.querySelectorAll("#board-switch button")) other.setAttribute("aria-selected", String(other === button));
-          draw();
-        });
-      }
       // The visit counts as seen once the page has been open a little while.
       setTimeout(() => { try { localStorage.setItem("starks-board-seen", String(now)); } catch { /* storage off */ } }, 4000);
     }
