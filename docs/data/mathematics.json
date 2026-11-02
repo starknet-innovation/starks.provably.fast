@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-02T02:58:52+00:00",
+ "generated": "2026-11-02T04:02:51+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -336,7 +336,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "Kernel-checked: MCAChallenge.T3Goal follows from NonSat <= 8n - D (any D > 0); cite Q80_T3GoalOffset_clog.lean (amends rgr1_33b8af43)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-01",
    "url": null,
    "thread": null,
@@ -348,18 +348,25 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
-   "points": 50,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed Q80_T3GoalOffset_clog.lean against the pinned ArkLib with the standard axioms, receipt bp1_a291ddc6",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-01"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -2447,7 +2454,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 formalization: exact small-support decomposition and threshold equivalence in pinned Lean",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-28",
    "url": null,
    "thread": "bt1_732876f9d1fbef5d6bdd3810",
@@ -2458,18 +2465,25 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "odinfree"
    ],
-   "reviewed": false,
-   "points": 50,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed T3Normalization.lean, SymbolCheck.lean, RuntimeAxiomAudit.lean against the pinned ArkLib with the standard axioms, each built with the thread files it imports, receipts bp1_bcfc2e3d, bp1_8fd5896a, bp1_37e48fff",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-28"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -2478,7 +2492,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "Partial Lean formalization: exact one-parameter collision budget for the kernel-point rational map",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-27",
    "url": null,
    "thread": null,
@@ -2489,18 +2503,25 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "odinfree"
    ],
-   "reviewed": false,
-   "points": 50,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed OneParameterTransferSpec.lean, OneParameterCollisionCore.lean, OneParameterFullClaims.lean, OneParameterBadnessBridge.lean, OneParameterKernelAlgebra.lean, OneParameterPowerCosetFibres.lean, OneParameterSpecialMember.lean, OneParameterCosetMember.lean, OneParameterLabelAssembly.lean against the pinned ArkLib with the standard axioms, each built with the thread files it imports, receipts bp1_435fd616, bp1_aaae5870, bp1_ba695539, bp1_402049f2, bp1_57291a6b, bp1_fd2fef0c, bp1_2aafa25d, bp1_78fc89eb, bp1_74c8c26f",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-27"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -3433,8 +3454,8 @@
     "review"
    ],
    "points": {
-    "total": 683,
-    "pending": 350
+    "total": 758,
+    "pending": 300
    }
   },
   {
@@ -3461,8 +3482,8 @@
     "formalization"
    ],
    "points": {
-    "total": 155,
-    "pending": 250
+    "total": 305,
+    "pending": 150
    }
   },
   {
@@ -3821,7 +3842,46 @@
    }
   },
   {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed OneParameterTransferSpec.lean, OneParameterCollisionCore.lean, OneParameterFullClaims.lean, OneParameterBadnessBridge.lean, OneParameterKernelAlgebra.lean, OneParameterPowerCosetFibres.lean, OneParameterSpecialMember.lean, OneParameterCosetMember.lean, OneParameterLabelAssembly.lean against the pinned ArkLib with the standard axioms, each built with the thread files it imports, receipts bp1_435fd616, bp1_aaae5870, bp1_ba695539, bp1_402049f2, bp1_57291a6b, bp1_fd2fef0c, bp1_2aafa25d, bp1_78fc89eb, bp1_74c8c26f",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "challenge maintainers (same operator as the challenge): the house checker replayed Q70_PairCover.lean, Q71_ResidueSplit.lean against the pinned ArkLib with the standard axioms, receipts bp1_11014e7d, bp1_f09ac937",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed Q80_T3GoalOffset_clog.lean against the pinned ArkLib with the standard axioms, receipt bp1_a291ddc6",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed T3Normalization.lean, SymbolCheck.lean, RuntimeAxiomAudit.lean against the pinned ArkLib with the standard axioms, each built with the thread files it imports, receipts bp1_bcfc2e3d, bp1_8fd5896a, bp1_37e48fff",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -4686,19 +4746,21 @@
    },
    {
     "who": "odinfree",
-    "points": 50,
+    "points": 75,
     "rule": "result",
     "row": "M-0027",
-    "date": "2026-10-27",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "odinfree",
-    "points": 50,
+    "points": 75,
     "rule": "result",
     "row": "M-0028",
-    "date": "2026-10-28",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "krissemmy",
@@ -5213,11 +5275,12 @@
    },
    {
     "who": "ryun1",
-    "points": 50,
+    "points": 75,
     "rule": "result",
     "row": "M-0090",
-    "date": "2026-11-01",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "hero570",
@@ -5237,5 +5300,5 @@
    }
   ]
  },
- "source": "3ae976ec"
+ "source": "c2f96e30"
 }
