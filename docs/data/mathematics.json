@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-02T01:46:00+00:00",
+ "generated": "2026-11-02T02:58:52+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -368,7 +368,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "Kernel-checked lift cap: max(11,832, 617 + C) with C a collinear plant count; C_vec = 155 on known lists (C68/C73, replayed by Py2755)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-01",
    "url": null,
    "thread": "bt1_51f872ea400b903fa51fe545",
@@ -377,18 +377,25 @@
    "count": null,
    "bound": "upper",
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
-   "points": 100,
+   "reviewed": true,
+   "points": 150,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed C68_PlantsCollinear.lean, C73_PlantsRestrict.lean against the pinned ArkLib with the standard axioms, receipts bp1_7714197e, bp1_491cf750",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-01"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -397,7 +404,7 @@
    "target": "T3",
    "kind": "review",
    "title": "Kernel-checked outside reviews: ac06's T2-Q3 subset ceiling, ac06's T1-Q4 family cap, and M-0023 joint core (RS sharpened, Circle unconditional)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-01",
    "url": null,
    "thread": null,
@@ -406,18 +413,25 @@
    "count": null,
    "bound": "upper",
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
-   "points": 100,
+   "reviewed": true,
+   "points": 150,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed C57_SubsetCeiling.lean, C59_RankTwoFamily.lean, C60_JointCore.lean, C67_RankTwoDerived.lean against the pinned ArkLib with the standard axioms, receipts bp1_d306b08f, bp1_21665691, bp1_7dbb3f4b, bp1_1a15d29a",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-01"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -426,7 +440,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "Kernel-checked: Circle exceptional sets of pullback lines = base set + non-aligned residual (C3 reduced, C66/C69/C70)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-01",
    "url": null,
    "thread": null,
@@ -435,18 +449,25 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
-   "points": 50,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed C66_CircleResidueSplit.lean, C69_CircleTower.lean, C70_CircleResidual.lean, CircleBridge.lean against the pinned ArkLib with the standard axioms, receipts bp1_05884398, bp1_6ac2bccd, bp1_0092feda, bp1_ec8f4298",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-01"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -487,7 +508,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "Kernel-checked T3 upper bounds: pool packing 182, near pairs <= L, T3Goal forces lists <= 16,452, lift cap without Odd(4)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-01",
    "url": null,
    "thread": "bt1_3e95567550f57c36e6d36e27",
@@ -498,23 +519,29 @@
    "count": null,
    "bound": "upper",
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
-   "points": 100,
+   "reviewed": true,
+   "points": 150,
    "advances": "upper",
    "reviews": [
     {
      "by": "py2755 (outside operator): C43, C45, C52 and C56 replay with standard axioms; hP16 follows from H1; the C56 form cannot give 11,832 on doubly degenerate lines (rgr1_7cf7469d)",
      "verdict": "partial"
+    },
+    {
+     "by": "challenge maintainers (same operator as the challenge): the house checker replayed C4_PoolPacking.lean, C5_NearPairList.lean, C6_ListsToLines.lean, C43_G4RCollapse.lean, C45_SpanFourPlants.lean, C52_LiftCapNoRank.lean, C56_PlantsToList.lean against the pinned ArkLib with the standard axioms, receipts bp1_76099a72, bp1_8eaeefbc, bp1_66e2a895, bp1_c247001d, bp1_bf75f3ac, bp1_38158831, bp1_248fc976",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-01"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-02"
    },
    "credits": []
   },
@@ -3406,8 +3433,8 @@
     "review"
    ],
    "points": {
-    "total": 158,
-    "pending": 700
+    "total": 683,
+    "pending": 350
    }
   },
   {
@@ -3463,8 +3490,8 @@
     "lemma"
    ],
    "points": {
-    "total": 10,
-    "pending": 260
+    "total": 30,
+    "pending": 250
    }
   },
   {
@@ -3730,6 +3757,58 @@
   },
   {
    "name": "challenge maintainers (same operator as the challenge): the house checker replayed B12_CubicBand100.lean, B10_CubicBand.lean, B9_SmallN.lean against the pinned ArkLib with the standard axioms, receipts bp1_84142f44, bp1_87de4126, bp1_97ef2cc0",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed C4_PoolPacking.lean, C5_NearPairList.lean, C6_ListsToLines.lean, C43_G4RCollapse.lean, C45_SpanFourPlants.lean, C52_LiftCapNoRank.lean, C56_PlantsToList.lean against the pinned ArkLib with the standard axioms, receipts bp1_76099a72, bp1_8eaeefbc, bp1_66e2a895, bp1_c247001d, bp1_bf75f3ac, bp1_38158831, bp1_248fc976",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed C57_SubsetCeiling.lean, C59_RankTwoFamily.lean, C60_JointCore.lean, C67_RankTwoDerived.lean against the pinned ArkLib with the standard axioms, receipts bp1_d306b08f, bp1_21665691, bp1_7dbb3f4b, bp1_1a15d29a",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed C66_CircleResidueSplit.lean, C69_CircleTower.lean, C70_CircleResidual.lean, CircleBridge.lean against the pinned ArkLib with the standard axioms, receipts bp1_05884398, bp1_6ac2bccd, bp1_0092feda, bp1_ec8f4298",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "challenge maintainers (same operator as the challenge): the house checker replayed C68_PlantsCollinear.lean, C73_PlantsRestrict.lean against the pinned ArkLib with the standard axioms, receipts bp1_7714197e, bp1_491cf750",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -5081,27 +5160,21 @@
    },
    {
     "who": "ryun1",
-    "points": 100,
+    "points": 150,
     "rule": "upper",
     "row": "M-0085",
-    "date": "2026-11-01",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0085",
-    "date": "2026-11-01",
+    "lean": true,
+    "date": "2026-11-02",
     "pending": false
    },
    {
     "who": "py2755",
-    "points": 10,
+    "points": 30,
     "rule": "review",
     "row": "M-0085",
-    "date": "2026-11-01",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "krissemmy",
@@ -5113,27 +5186,30 @@
    },
    {
     "who": "ryun1",
-    "points": 50,
+    "points": 75,
     "rule": "result",
     "row": "M-0087",
-    "date": "2026-11-01",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "ryun1",
-    "points": 100,
+    "points": 150,
     "rule": "upper",
     "row": "M-0088",
-    "date": "2026-11-01",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "ryun1",
-    "points": 100,
+    "points": 150,
     "rule": "upper",
     "row": "M-0089",
-    "date": "2026-11-01",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-02",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -5161,5 +5237,5 @@
    }
   ]
  },
- "source": "8274d11a"
+ "source": "3ae976ec"
 }
