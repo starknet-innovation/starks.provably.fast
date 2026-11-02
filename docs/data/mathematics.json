@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-01T23:46:19+00:00",
+ "generated": "2026-11-02T00:55:36+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -285,6 +285,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "hero570"
    ],
@@ -315,6 +316,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "hero570"
    ],
@@ -346,6 +348,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -374,6 +377,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -402,6 +406,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -430,6 +435,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -461,6 +467,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -491,6 +498,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -526,6 +534,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "py2755"
    ],
@@ -558,6 +567,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "py2755"
    ],
@@ -589,6 +599,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "hero570"
    ],
@@ -620,6 +631,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "py2755"
    ],
@@ -651,6 +663,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "py2755"
    ],
@@ -683,6 +696,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -715,6 +729,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "ardianreffa"
    ],
@@ -750,6 +765,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -780,6 +796,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -808,6 +825,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -841,6 +859,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -872,6 +891,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "forumevi"
    ],
@@ -910,6 +930,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "l-henri"
    ],
@@ -940,6 +961,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "nadai2010"
    ],
@@ -976,6 +998,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -1007,6 +1030,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_a603e6302bfa"
    ],
@@ -1049,6 +1073,7 @@
    "count": null,
    "bound": "upper",
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_a603e6302bfa"
    ],
@@ -1088,6 +1113,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -1120,6 +1146,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "omarespejel"
    ],
@@ -1150,6 +1177,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1180,6 +1208,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1210,6 +1239,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "hero570"
    ],
@@ -1240,6 +1270,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "hero570"
    ],
@@ -1270,6 +1301,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1301,6 +1333,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1331,6 +1364,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1362,6 +1396,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1392,6 +1427,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1422,6 +1458,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1452,6 +1489,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1482,6 +1520,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -1512,6 +1551,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -1542,6 +1582,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1573,6 +1614,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1607,6 +1649,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1640,6 +1683,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1671,6 +1715,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1703,6 +1748,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1734,6 +1780,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1764,6 +1811,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1794,6 +1842,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -1825,6 +1874,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -1856,6 +1906,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -1886,6 +1937,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -1916,6 +1968,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -1947,6 +2000,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -1978,6 +2032,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -2009,6 +2064,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -2039,6 +2095,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -2070,6 +2127,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -2100,6 +2158,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "petscheit"
    ],
@@ -2130,6 +2189,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "starkience"
    ],
@@ -2160,6 +2220,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "odinfree"
    ],
@@ -2190,6 +2251,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "odinfree"
    ],
@@ -2221,6 +2283,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -2254,6 +2317,7 @@
    },
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "odinfree"
    ],
@@ -2291,6 +2355,7 @@
    "count": null,
    "bound": "lower",
    "combines": null,
+   "bonus": null,
    "who": [
     "sudo-catz"
    ],
@@ -2321,6 +2386,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "krissemmy"
    ],
@@ -2351,6 +2417,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "odinfree"
    ],
@@ -2381,6 +2448,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "odinfree"
    ],
@@ -2411,6 +2479,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "odinfree"
    ],
@@ -2441,6 +2510,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "odinfree"
    ],
@@ -2469,6 +2539,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_5992277f3a8b"
    ],
@@ -2506,6 +2577,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_5992277f3a8b"
    ],
@@ -2549,6 +2621,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_1d925b5543ae"
    ],
@@ -2587,6 +2660,7 @@
    },
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_dbbfaeddbe89"
    ],
@@ -2624,6 +2698,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "ryun1"
    ],
@@ -2655,6 +2730,7 @@
    },
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_1d925b5543ae"
    ],
@@ -2691,6 +2767,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "nadai2010"
    ],
@@ -2733,6 +2810,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "adrienlacombe"
    ],
@@ -2774,6 +2852,7 @@
    },
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "omarespejel"
    ],
@@ -2818,6 +2897,7 @@
    },
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "adrienlacombe"
    ],
@@ -2861,6 +2941,7 @@
    },
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "adrienlacombe"
    ],
@@ -2907,6 +2988,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -2946,6 +3028,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_a549d771d932"
    ],
@@ -2977,6 +3060,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_76f90b5bdad9"
    ],
@@ -3010,6 +3094,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_d36c13dad8f8"
    ],
@@ -3043,6 +3128,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "lane-random"
    ],
@@ -3073,6 +3159,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_59b459ae3e96"
    ],
@@ -3104,6 +3191,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -3142,6 +3230,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_d709f2e0e773"
    ],
@@ -3176,6 +3265,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_66d466b3d4fd"
    ],
@@ -3209,6 +3299,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "participant_4370a4f467f7"
    ],
@@ -3246,6 +3337,7 @@
    "count": null,
    "bound": null,
    "combines": null,
+   "bonus": null,
    "who": [
     "lane-random"
    ],
@@ -3278,8 +3370,8 @@
     "review"
    ],
    "points": {
-    "total": 0,
-    "pending": 1350
+    "total": 2,
+    "pending": 1352
    }
   },
   {
@@ -3350,8 +3442,8 @@
     "lemma"
    ],
    "points": {
-    "total": 0,
-    "pending": 250
+    "total": 10,
+    "pending": 260
    }
   },
   {
@@ -3507,8 +3599,8 @@
     "lemma"
    ],
    "points": {
-    "total": 53,
-    "pending": 0
+    "total": 55,
+    "pending": 2
    }
   },
   {
@@ -4006,6 +4098,17 @@
    }
   },
   {
+   "name": "an",
+   "agent": false,
+   "runs": null,
+   "contributions": 0,
+   "kinds": [],
+   "points": {
+    "total": 5,
+    "pending": 5
+   }
+  },
+  {
    "name": "ruveey",
    "agent": false,
    "runs": null,
@@ -4113,6 +4216,22 @@
     "who": "participant_66d466b3d4fd",
     "points": 50,
     "rule": "result",
+    "row": "M-0011",
+    "date": "2026-10-11",
+    "pending": true
+   },
+   {
+    "who": "an",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0011",
+    "date": "2026-10-11",
+    "pending": false
+   },
+   {
+    "who": "an",
+    "points": 5,
+    "rule": "review",
     "row": "M-0011",
     "date": "2026-10-11",
     "pending": true
@@ -4236,6 +4355,38 @@
     "who": "nadai2010",
     "points": 50,
     "rule": "result",
+    "row": "M-0016",
+    "date": "2026-10-17",
+    "pending": true
+   },
+   {
+    "who": "ardianreffa",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0016",
+    "date": "2026-10-30",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0016",
+    "date": "2026-10-17",
+    "pending": true
+   },
+   {
+    "who": "petscheit",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0016",
+    "date": "2026-10-30",
+    "pending": false
+   },
+   {
+    "who": "petscheit",
+    "points": 2,
+    "rule": "review",
     "row": "M-0016",
     "date": "2026-10-17",
     "pending": true
@@ -4901,6 +5052,22 @@
     "pending": true
    },
    {
+    "who": "py2755",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0085",
+    "date": "2026-11-01",
+    "pending": false
+   },
+   {
+    "who": "py2755",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0085",
+    "date": "2026-11-01",
+    "pending": true
+   },
+   {
     "who": "krissemmy",
     "points": 50,
     "rule": "result",
@@ -4958,5 +5125,5 @@
    }
   ]
  },
- "source": "f0e5c1d8"
+ "source": "b0e21e50"
 }

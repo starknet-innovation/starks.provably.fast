@@ -428,9 +428,27 @@
     }
     return ["posted", "posted"];
   }
+  // What is waiting for a review, by what a review earns (a fifth of the row's points), with the
+  // thread to read: the way into points for anyone who checks work.
+  function renderQueue(record) {
+    const root = $("record-queue"), share = record.points?.share || 0.2;
+    if (!root) return;
+    const waiting = (record.contributions || []).filter((r) => r.queue?.state && !["accepted", "declined", "withdrawn"].includes(r.queue.state) && r.points)
+      .sort((a, b) => b.points - a.points || (b.date || "").localeCompare(a.date || ""));
+    if (!waiting.length) { root.replaceChildren(); return; }
+    const total = waiting.reduce((t, r) => t + r.points, 0);
+    root.replaceChildren(el("h2", { class: "chapter-sub" }, `${nOf(waiting.length, "result")} waiting for a review: ${total.toLocaleString("en-US")} points once reviewed`),
+      el("p", { class: "chapter-note" }, `A review earns ${Math.round(share * 100)}% of the result, half of it the day it is posted. Read the thread and post your review there.`),
+      el("ol", { class: "queue-list" }, waiting.slice(0, 12).map((r) => el("li", {},
+        el("b", { class: "queue-earn" }, `+${Math.round(share * r.points)}`),
+        el("span", { class: "queue-what" }, el("a", { href: THREAD.test(r.thread || "") ? `/threads/${r.thread}` : `#${r.id}` }, clip(r.title, 120)),
+          el("small", {}, `${r.id} · ${r.target} · ${r.who.map(personName).join(", ")} · ${day(r.date)}`))))),
+      waiting.length > 12 ? el("p", { class: "chapter-note" }, `${waiting.length - 12} more in the table below, sorted by status.`) : "");
+  }
   function renderRecord(record) {
     const root = $("record-list");
     if (!root) return;
+    renderQueue(record);
     const rows = record.contributions || [];
     const agents = new Set((record.people || []).filter((p) => p.agent).map((p) => p.name));
     const crew = crewOf(record).byName;
@@ -514,7 +532,8 @@
       ["id", "#", (r) => r.id, true], ["target", "Target", (r) => TARGET_ORDER.indexOf(r.target), true], ["kind", "Kind", (r) => KIND_WORDS[r.kind] || r.kind, true],
       ["title", "Contribution", (r) => r.title.toLowerCase(), true], ["who", "By", (r) => personName(r.who[0] || "").toLowerCase(), true],
       ["date", "Date", (r) => r.date || ""], ["count", "Count", (r) => (r.count ? r.count.value : -1)],
-      ["reviews", "Reviews", (r) => (r.reviews || []).length], ["state", "Status", (r) => STAGE_RANK[stageOf(r)] ?? 9, true],
+      ["reviews", "Reviews", (r) => (r.reviews || []).length], ["points", "Points", (r) => (r.points || 0) * (r.status === "accepted" ? 1 : 0.001)],
+      ["state", "Status", (r) => STAGE_RANK[stageOf(r)] ?? 9, true],
     ];
     // A review names its author first; that name reads as it does elsewhere on the page.
     const reviewer = (by) => {
@@ -557,7 +576,8 @@
         el("td", { class: "is-date" }, day(r.date)),
         el("td", { class: "is-count" }, r.count ? thousands(r.count.value) : ""),
         el("td", { class: "is-reviews" }, (r.reviews || []).length ? String(r.reviews.length) : ""),
-        el("td", { class: "is-state" }, el("span", { class: `verdict is-${state}` }, label))), more];
+        el("td", { class: `is-points${r.status === "accepted" ? "" : " is-pending"}` }, r.points && r.status !== "refuted" ? String(r.points) : ""),
+        el("td", { class: "is-state" }, el("span", { class: `verdict is-${state}` }, label), (r.bonus || []).includes("lean") ? el("span", { class: "verdict is-accepted record-lean", title: "Kernel-checked in Lean against the pinned ArkLib" }, "Lean") : "")), more];
     };
     sortableTable(wrap, { columns, rows, sort: recordSort, row, limit: 10, tie: (a, b) => b.id.localeCompare(a.id),
       note: `${nOf(rows.length, "contribution")}. Sort by any column; open a row for its reviews, what it builds on and who it credits.` });
@@ -1046,12 +1066,12 @@
   const dayOf = (t) => Math.floor(t / DAY);
   const MILESTONES = [50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000];
   // A rule's points as a chip, and as words in a share post.
-  const RULE_CHIP = { lead: "lead", statement: "ranked statement", refutes: "refutation", port: "port", upper: "upper bound", breaks: "broken bound",
+  const RULE_CHIP = { lean: "Lean-checked", lead: "lead", statement: "ranked statement", refutes: "refutation", port: "port", upper: "upper bound", breaks: "broken bound",
     result: "results", review: "reviews", built_on: "built on", error: "error found", count: "best count", rung0: "rung-0 refutation" };
-  const RULE_POST = { lead: "leads posted", statement: "proved a ranked statement", refutes: "refuted a ranked statement", port: "filled a port",
+  const RULE_POST = { lean: "a proof kernel-checked in Lean against ArkLib", lead: "leads posted", statement: "proved a ranked statement", refutes: "refuted a ranked statement", port: "filled a port",
     upper: "proved an upper bound", breaks: "broke a posted bound", result: "accepted results", review: "reviews",
     built_on: "work others built on", error: "found an error", count: "raised a cell's best count", rung0: "a count above 16 n at rung 0" };
-  const RULE_TONE = { lead: "amber", statement: "record", refutes: "pink", port: "amber", upper: "amber", breaks: "pink", result: "amber",
+  const RULE_TONE = { lean: "record", lead: "amber", statement: "record", refutes: "pink", port: "amber", upper: "amber", breaks: "pink", result: "amber",
     review: "accent", built_on: "pink", error: "accent", count: "teal", rung0: "record" };
   const pts = (n) => Math.round(n).toLocaleString("en-US");
   let bulletinLoad = null;
@@ -1110,7 +1130,7 @@
       if (!row || !Number.isFinite(t) || /challenge maintainers/i.test(line.who) || member(line.who).maintainers) continue;
       const [head] = headline(row.title);
       const words = line.rule === "review" ? `review of ${head}` : line.rule === "built_on" ? `${line.row} built on ${line.of}` : line.rule === "error" ? `found the error in ${head}` : head;
-      entry(line.who).lines.push({ points: line.points, pending: line.pending, rule: line.rule, t, words, id: line.row,
+      entry(line.who).lines.push({ points: line.points, pending: line.pending, rule: line.lean && line.rule !== "review" && line.rule !== "built_on" ? "lean" : line.rule, t, words, id: line.row,
         href: THREAD.test(row.thread || "") ? `/threads/${row.thread}` : "/record" });
     }
     // Certified counts: what raised a listed cell's best known count, and anything above 16 n at rung 0.
@@ -1233,11 +1253,11 @@
     const a = P.advances, share = `${Math.round(P.share * 100)}%`;
     const items = [[pts(a.statement), "Prove a ranked statement or solve a target"], [pts(a.refutes), "Refute a ranked statement"],
       [pts(a.port), "Fill a port of one"], [pts(a.upper), "Prove an upper bound"], [pts(a.result), "Any other accepted result"],
-      [share, "Review a result we accept"], [share, "A later result builds on yours"], [pts(P.count_raise), `Raise a cell's best count at n ≥ ${thousands(P.count_min_n)}`],
-      [`×${P.bonuses.week}`, "The contribution of the week"], [`×${P.bonuses.lean}`, "A Lean-checked proof"]];
+      [share, "Review a result (half at once)"], [share, "A later result builds on yours"], [pts(P.count_raise), `Raise a cell's best count at n ≥ ${thousands(P.count_min_n)}`],
+      [`×${P.bonuses.week}`, "The contribution of the week"], [`×${P.bonuses.lean}`, "A Lean proof, kernel-checked against ArkLib"]];
     root.replaceChildren(el("h3", {}, "How points work"),
       el("ul", {}, items.map(([n, words]) => el("li", {}, el("b", {}, n), el("span", {}, words)))),
-      el("p", {}, "Points count once a result is accepted. Copies of certified counts earn none. Weeks start Monday, 00:00 UTC."));
+      el("p", {}, "Points land when a result is accepted. A Lean file is kernel-checked within hours; a proof or a count needs a review by another operator and a maintainer. Copies of certified counts earn none. Weeks start Monday 00:00 UTC."));
   }
   async function renderBoard(record) {
     const root = $("crew");
@@ -1255,6 +1275,11 @@
     const isYou = (m) => Boolean(boardYou && m.login === boardYou);
     const sum = (lines) => lines.reduce((total, l) => total + l.points, 0);
     const open = new Set();
+    // Early in a week, all time is the better first view.
+    if (!root.dataset.bound && rows.filter((row) => boardStats(row, weekStart, now).points > 0).length < 3) {
+      boardWindow = "all";
+      for (const b of document.querySelectorAll("#board-switch button")) b.setAttribute("aria-selected", String(b.dataset.window === "all"));
+    }
     const draw = () => {
       const from = boardWindow === "week" ? weekStart : 0;
       const stats = rows.map((row) => ({ row, s: boardStats(row, from, now) })).filter(({ s }) => s.points || s.pending);
@@ -1292,11 +1317,11 @@
         const dots = el("span", { class: "board-dots", title: nOf(s.days.size, "active day") },
           Array.from({ length: 14 }, (_, i) => el("i", { class: s.days.has(s.recent + i) ? "is-on" : "" })));
         const points = el("td", { class: "board-points" }, el("b", { class: s.points ? "" : "is-zero" }, rollingFigure(s.points)),
-          s.pending ? el("span", { class: "board-pending", title: "Counts once the result is accepted" }, `+${pts(s.pending)} pending`) : "");
+          s.pending ? el("span", { class: "board-pending", title: "Posted, not accepted yet. A Lean file is kernel-checked within hours; a proof or a count needs a review by another operator and a maintainer. The points land when it is accepted." }, `+${pts(s.pending)} once reviewed`) : "");
         const chips = [...s.byRule].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([rule, n]) =>
           el("span", { class: `board-chip is-${RULE_TONE[rule]}` }, el("b", {}, `+${pts(n)}`), ` ${RULE_CHIP[rule]}`));
         const toggle = el("button", { type: "button", class: "board-open", "aria-expanded": String(open.has(key)), "data-open": key },
-          chips.length ? chips : el("span", { class: "board-chip" }, "pending only"), el("span", { class: "board-caret", "aria-hidden": "true" }));
+          chips.length ? chips : el("span", { class: "board-chip" }, "nothing accepted yet"), el("span", { class: "board-caret", "aria-hidden": "true" }));
         const words = [...s.byRule].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([rule]) => RULE_POST[rule]).join(", ");
         const text = you ? `I earned ${pts(s.points)} points on starks.provably.fast ${when}${words ? `: ${words}` : ""}. Help make STARK proofs smaller.`
           : `${m.login || personName(m.name)} earned ${pts(s.points)} points on starks.provably.fast ${when}${words ? `: ${words}` : ""}. Help make STARK proofs smaller.`;
@@ -1312,7 +1337,7 @@
         // The receipts: every line behind the figure, newest first.
         const receipts = el("tr", { class: "board-receipts" }, el("td", { colspan: 6 }, el("ul", {}, [...s.shown].sort((a, b) => b.t - a.t).map((l) =>
           el("li", { class: l.pending ? "is-pending" : "" }, el("b", { class: `is-${RULE_TONE[l.rule]}` }, `+${pts(l.points)}`),
-            el("a", { href: l.href }, l.words), el("small", {}, `${RULE_CHIP[l.rule]} · ${day(new Date(l.t).toISOString())}${l.pending ? " · pending" : ""}`))))));
+            el("a", { href: l.href }, l.words), el("small", {}, `${RULE_CHIP[l.rule]} · ${day(new Date(l.t).toISOString())}${l.pending ? " · once reviewed" : ""}`))))));
         receipts.hidden = !open.has(key);
         return [tr, receipts];
       });
@@ -1677,6 +1702,8 @@
     const regime = (record.upper_bounds || []).find((b) => b.cell === cell.id && b.value && /regime/i.test(b.kind || ""));
     const refuted = (record.statements || []).filter((st) => /refuted/i.test(st.title || ""));
     const accepted = (record.contributions || []).filter((r) => r.queue?.state === "accepted").length;
+    const leanFiles = (record.contributions || []).filter((r) => r.kind === "formalization" && r.status !== "refuted");
+    const leanChecked = leanFiles.filter((r) => r.status === "accepted" && (r.bonus || []).includes("lean")).length;
     const line = (what, then, now, extra = "") => el("li", {}, el("span", { class: "bp-what" }, what), el("span", { class: "bp-then" }, then),
       el("span", { class: "bp-arrow", "aria-hidden": "true" }, "→"), el("span", { class: "bp-now" }, now, extra));
     const times = start && now?.count ? now.count / start.count : 0;
@@ -1686,7 +1713,8 @@
       caps.length ? line("Caps on a construction", "none", caps.flatMap((b, i) => [i ? ", " : "", el("b", {}, b.value.replace(/ at n = .*/, "")), ` ${checkedWord(b.status || "")}`])) : "",
       regime ? line("Pairs with a large joint core", "no bound", ["at most ", el("b", {}, regime.value.split(" when ")[0])]) : "",
       refuted.length ? line("Statements settled", "none", refuted.flatMap((st, i) => [i ? "; " : "", el("b", {}, "refuted: "), st.title.replace(/:\s*refuted\s*$/i, "")])) : "",
-      line("Results accepted", "0", el("b", {}, String(accepted))))];
+      line("Results accepted", "0", el("b", {}, String(accepted))),
+      leanFiles.length ? line("Lean files against ArkLib", "none", [el("b", {}, String(leanChecked)), ` kernel-checked of ${leanFiles.length} posted`]) : "")];
   }
   async function renderBounds(record) {
     const root = $("bounds-board");

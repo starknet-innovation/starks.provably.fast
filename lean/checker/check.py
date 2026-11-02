@@ -2,13 +2,16 @@
 """The Lean receipt for one submitted file (docs/LEAN_CHECK.md, first version).
 
     python3 check.py TARGET < Solution.lean  >  receipt JSON on the last line
+    python3 check.py LEMMA  < Any.lean       >  the same, for a file that proves no pinned statement
 
 Inside the checker image, with no network: the file is placed in the pinned package as
 Solution.lean, its statement is compared with the target's template by text (the pinned
 `theorem solution` line and every hole defined without sorry), `lake build Solution` compiles it,
 `leanchecker Solution` (the toolchain's own checker) replays its declarations in the kernel, and `#print axioms solution`
-lists what it rests on. The receipt says exactly which of those passed; it is not the comparator
-the design describes, and the responder's reply says so.
+lists what it rests on. With the target LEMMA no statement is compared: every declaration the file
+adds is replayed and its axioms collected, so a posted lemma gets a receipt too. The receipt says
+exactly which of those passed; it is not the comparator the design describes, and the responder's
+reply says so.
 """
 from __future__ import annotations
 
@@ -25,6 +28,26 @@ PKG = Path("/opt/lean/pkg")
 PERMITTED = ["propext", "Quot.sound", "Classical.choice"]
 BUILD_SECONDS = int(os.environ.get("LEAN_BUILD_SECONDS", "1800"))
 CHECK_SECONDS = int(os.environ.get("LEAN_CHECK_SECONDS", "1800"))
+
+
+# Every declaration the module Solution adds, and the union of the axioms they rest on, in the
+# words `#print axioms` uses so the same regex reads both.
+ALL_AXIOMS = """import Solution
+import Lean
+open Lean Meta in
+#eval show MetaM Unit from do
+  let env ← getEnv
+  let some idx := env.getModuleIdx? `Solution | throwError "no module Solution"
+  let mut axioms : NameSet := {}
+  let mut count := 0
+  for (n, _) in env.constants.toList do
+    if env.getModuleIdxFor? n == some idx && !n.isInternal then
+      count := count + 1
+      for a in (← collectAxioms n) do
+        axioms := axioms.insert a
+  IO.println s!"declarations: {count}"
+  IO.println s!"depends on axioms: [{", ".intercalate (axioms.toList.map toString)}]"
+"""
 
 
 def run(args: list[str], seconds: int) -> tuple[int | None, str]:
@@ -69,7 +92,8 @@ def main() -> int:
                "toolchain": (PKG / "lean-toolchain").read_text().strip(), "checker": "leanchecker from the toolchain",
                "method": "statement by text against the template; lake build; leanchecker replay of the module; #print axioms",
                "permitted_axioms": PERMITTED, "steps": {}}
-    ok, why, holes = statement_check(target, source)
+    lemma = target == "LEMMA"
+    ok, why, holes = (True, "no pinned statement: every declaration in the file is checked", []) if lemma else statement_check(target, source)
     receipt["steps"]["statement"] = {"ok": ok, "detail": why, "holes": holes}
     if not ok:
         receipt["verdict"] = "REJECTED"
@@ -90,8 +114,11 @@ def main() -> int:
         started = time.time()
         code, out = run(["lake", "env", "leanchecker", "Solution"], CHECK_SECONDS)
         receipt["steps"]["kernel_replay"] = {"ok": code == 0, "seconds": round(time.time() - started, 1), "output": out.strip()[-2000:]}
-        (PKG / "Axioms.lean").write_text("import Solution\n#print axioms solution\n")
+        (PKG / "Axioms.lean").write_text(ALL_AXIOMS if lemma else "import Solution\n#print axioms solution\n")
         acode, aout = run(["lake", "env", "lean", "Axioms.lean"], 600)
+        if lemma:
+            found = re.search(r"declarations: (\d+)", aout)
+            receipt["declarations"] = int(found.group(1)) if found else 0
         axioms: list[str] = []
         found = re.search(r"depends on axioms: \[([^\]]*)\]", aout)
         if found:
