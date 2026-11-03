@@ -517,7 +517,8 @@
         more = el("button", { type: "button", class: "record-table-more", "aria-expanded": String(all) }, all ? "Show fewer" : `Show all ${rows.length}`);
         more.addEventListener("click", () => { all = !all; draw(); wrap.querySelector(".record-table-more").focus(); });
       }
-      wrap.replaceChildren(el("p", { class: "record-table-note" }, note), el("div", { class: "record-table-scroll" }, table), more || "");
+      // The note and the show-all toggle share a row above the table, so the toggle is found before the scroll.
+      wrap.replaceChildren(el("div", { class: "record-table-head" }, el("p", { class: "record-table-note" }, note), more || ""), el("div", { class: "record-table-scroll" }, table));
     };
     draw();
     return wrap;
@@ -1427,7 +1428,7 @@
       root.replaceChildren(...[certifiedMap(live.instances || [], (a) => (profiles.get(a) ? `@${profiles.get(a)}` : personName(a)))].filter(Boolean),
         sortableTable(el("div", { class: "record-table-wrap is-certified" }), { columns, rows, sort: certifiedSort, row, limit: 20,
         tie: (a, b) => b.best.certified - a.best.certified,
-        note: `Each row is the most bad challenges anyone has built at one size, rate and agreement: a higher count is a stronger lower bound. "Posted by" names who posted the certified instance; the post says whose construction it is. ${nOf(rows.length, "row")}; click one for its parameters, field and post.` }));
+        note: `The best count at each size, rate and agreement; higher is a stronger lower bound. Click a row for its parameters and post.` }));
     } catch {
       root.replaceChildren(el("p", { class: "loading" }, "The certified counts could not be read just now."));
     }
@@ -1441,15 +1442,14 @@
     }
     return frac(v, n);
   }
-  // Every certified submission, in two views. "How counts grow" follows each rate and agreement as n
-  // grows: the best count per point of the domain at each size joined by a line, every submission a
-  // faint dot behind it. Level means the count keeps pace with n. "What's been tried" is the grid of
-  // settings, agreement across and n up, tinted by how many submissions each has had; empty cells are
-  // settings nobody has posted. Every dot opens its post.
-  const CERT_VIEWS = [["growth", "How counts grow"], ["tried", "What's been tried"]];
+  // Every certified submission, in three views. "Where it grows" places each rate and agreement against
+  // the agreement thresholds, coloured by how fast its best count grows with n. "How counts grow" has one
+  // panel per rate, a line per agreement through the best count per point at each size. "What's been
+  // tried" is the grid of settings by size, each cell counting its submissions and opening its best post.
+  const CERT_VIEWS = [["map", "Where it grows"], ["growth", "How counts grow"], ["tried", "What's been tried"]];
   // Rates other than these share one grey, named "other rates" in the key.
   const RATE_HUES = { "1/8": "r18", "1/4": "r14", "1/2": "r12" };
-  let certView = "growth";
+  let certView = "map";
   function certifiedMap(instances, who) {
     const subs = instances.filter((i) => i && [i.n, i.k, i.A, i.certified, i.per_n, i.created_at].every(Number.isFinite) && i.certified > 0 && i.n > 0 && i.per_n > 0).sort((a, b) => a.created_at - b.created_at);
     if (!subs.length) return null;
@@ -1494,95 +1494,168 @@
       a.addEventListener("pointerenter", () => show(i)); a.addEventListener("focus", () => show(i));
       return a;
     };
+    // Per setting: its best point at each size, where it sits against the thresholds, and how fast its
+    // count grows: the least-squares slope of log count on log n over sizes within 16x of its largest.
+    // A slope of 1 is linear; one size, or sizes within 2x of each other, give no slope.
+    const info = new Map(cols.map((c) => {
+      const pts = [...new Set(subs.filter((i) => colOf(i) === c).map((i) => i.n))].sort((a, b) => a - b).map((n) => bestOf(cells.get(`${c} ${n}`)));
+      const top = pts[pts.length - 1], rate = top.k / top.n, agree = top.A / top.n;
+      const zone = agree >= Math.sqrt(rate) ? "linear" : agree >= a1(rate) ? "t1" : "open";
+      const fit = pts.filter((i) => i.n * 16 >= top.n);
+      let exp = null;
+      if (fit.length > 1 && top.n >= 2 * fit[0].n) {
+        const xs = fit.map((i) => Math.log(i.n)), ys = fit.map((i) => Math.log(i.per_n * i.n));
+        const mx = xs.reduce((a, b) => a + b) / xs.length, my = ys.reduce((a, b) => a + b) / ys.length;
+        exp = xs.reduce((a, x, k) => a + (x - mx) * (ys[k] - my), 0) / xs.reduce((a, x) => a + (x - mx) ** 2, 0);
+      }
+      // An agreement a few points off a fraction (5/8+1) is not one ratio: A / n drifts toward it as n grows.
+      const drift = /[+−]/.test(c.split("|")[1]) && pts.length > 1;
+      return [c, { pts, rate, agree, zone, exp, top, drift }];
+    }));
+    const ZONE_NAME = { open: "below first order, where T3 asks", t1: "between first order and Johnson, where T1 asks", linear: "above Johnson, linear already known" };
+    const pace = (e) => (e === null ? "one" : e > 1.1 ? "fast" : e >= 0.9 ? "even" : "slow");
+    const paceWords = (e) => (e === null ? "one size, no slope yet" : `best count grows like n^${e.toFixed(2)}`);
+    const driftWords = (s) => (s.drift ? ` · agreement drifts with n, A / n from ${(s.pts[0].A / s.pts[0].n).toFixed(4)} to ${s.agree.toFixed(4)}` : "");
+    let focus = null;
+    // The tried settings against the agreement thresholds, coloured by how fast each count grows.
+    function map(W) {
+      const narrow = W < 640, H = narrow ? Math.round(W * 0.85) : 420, L = 46, R = 14, T = 12, B = 40;
+      const X = (r) => L + r * (W - L - R), Y = (a) => T + (1 - a) * (H - T - B);
+      const svg = svgEl("svg", { class: "board-svg certmap-svg", viewBox: `0 0 ${W} ${H}`, role: "group", "aria-label": "Each tried rate and agreement against the agreement thresholds, coloured by how fast its count grows with n" });
+      const text = (cls, x, y, words, anchor = "middle") => { const t = svgEl("text", { class: cls, x, y, "text-anchor": anchor }); t.textContent = words; svg.append(t); return t; };
+      for (const [v, label] of [[0, "0"], [0.25, "1/4"], [0.5, "1/2"], [0.75, "3/4"], [1, "1"]]) {
+        svg.append(svgEl("line", { class: "rg-grid", x1: X(v), x2: X(v), y1: Y(0), y2: Y(1) }), svgEl("line", { class: "rg-grid", x1: X(0), x2: X(1), y1: Y(v), y2: Y(v) }));
+        text("rg-axis", X(v), Y(0) + 18, label); text("rg-axis", L - 8, Y(v) + 4, label, "end");
+      }
+      text("rg-axis-title", X(1), Y(0) + 36, "code rate ρ →", "end");
+      text("rg-axis-title", X(0) + 8, Y(1) + 16, "↑ agreement A / n", "start");
+      const N = 200, rs = Array.from({ length: N + 1 }, (_, i) => 0.0005 + 0.9985 * (i / N));
+      const line = (f) => rs.map((r, i) => `${i ? "L" : "M"}${X(r).toFixed(1)} ${Y(f(r)).toFixed(1)}`).join(" ");
+      const band = (up, lo) => `${line(up)} ${rs.slice().reverse().map((r) => `L${X(r).toFixed(1)} ${Y(lo(r)).toFixed(1)}`).join(" ")} Z`;
+      svg.append(svgEl("path", { class: "rg-band-linear", d: band(() => 1, Math.sqrt) }), svgEl("path", { class: "certmap-band-t1", d: band(Math.sqrt, a1) }));
+      for (const c of [CURVES[1], CURVES[2], CURVES[3]]) svg.append(svgEl("path", { class: `rg-curve is-${c.id}`, d: line(c.f) }));
+      if (!narrow) {
+        text("certmap-curve-name is-johnson", X(0.06), Y(Math.sqrt(0.06)) - 8, "Johnson √ρ", "start");
+        text("certmap-curve-name is-first", X(0.8), Y(a1(0.8)) + 18, "first order a₁(ρ)");
+        text("certmap-curve-name is-capacity", X(0.93), Y(0.93) + 18, "limit ρ");
+      }
+      // Settings that land on the same spot step sideways, so every one stays visible and pickable.
+      const placed = [];
+      const order = [...info].sort(([, a], [, b]) => a.agree - b.agree || a.rate - b.rate);
+      for (const [c, s] of order) {
+        const r = (narrow ? 0.55 : 1) * Math.min(8, 2.5 + Math.log2(s.top.n) * 0.5), y = Y(s.agree);
+        let x = X(s.rate);
+        for (let step = 1; placed.some((p) => Math.hypot(p.x - x, p.y - y) < p.r + r); step++) x = X(s.rate) + (step % 2 ? 1 : -1) * Math.ceil(step / 2) * (r + 1.5) * 1.6;
+        placed.push({ x, y, r });
+        const a = svgEl("a", { href: "#", "aria-label": `${where(c)}: ${ZONE_NAME[s.zone]}; ${paceWords(s.exp)}${driftWords(s)}; largest n = ${thousands(s.top.n)}` });
+        a.append(svgEl("circle", { class: `certmap-pace is-${pace(s.exp)}${s.drift ? " is-drift" : ""}`, cx: x.toFixed(1), cy: y.toFixed(1), r: r.toFixed(1) }));
+        const tell = () => read.replaceChildren(el("b", {}, where(c)), ` · ${ZONE_NAME[s.zone]} · ${paceWords(s.exp)}${driftWords(s)} · sizes ${s.pts.map((i) => thousands(i.n)).join(", ")} · best ${thousands(s.top.certified)} at n = ${thousands(s.top.n)}`);
+        a.addEventListener("pointerenter", tell); a.addEventListener("focus", tell);
+        a.addEventListener("click", (event) => { event.preventDefault(); focus = c; setView("growth"); });
+        svg.append(a);
+      }
+      return svg;
+    }
+    // One panel per rate, sharing both scales, so lines at one rate are compared with each other.
     function growth(W) {
-      const padL = 52, padR = 70, padT = 30, padB = 42, H = Math.round(Math.min(440, Math.max(320, W * 0.45)));
       const ns = [...sizes].reverse(), x0 = Math.log2(ns[0]), x1 = Math.log2(ns[ns.length - 1]);
       // The scale fits the best counts; the few weaker submissions below it are left off and counted.
       const per = [...cells.values()].map((h) => bestOf(h).per_n), y0 = Math.floor(Math.log10(Math.min(...per))), y1 = Math.ceil(Math.log10(Math.max(...per)));
       const below = subs.filter((i) => Math.log10(i.per_n) < y0).length;
-      const X = (n) => padL + ((Math.log2(n) - x0) / (x1 - x0 || 1)) * (W - padL - padR);
-      const Y = (v) => padT + (1 - (Math.log10(v) - y0) / (y1 - y0 || 1)) * (H - padT - padB);
-      const svg = svgEl("svg", { class: "board-svg certmap-svg", viewBox: `0 0 ${W} ${H}`, role: "group", "aria-label": "Best bad challenges per point of the domain as n grows, one line per rate and agreement" });
+      if (below) guide.append(` ${nOf(below, "weaker submission")} below ${thousands(10 ** y0)} hidden.`);
+      const panels = [...Object.entries(RATE_HUES), ["other", "other"]].map(([r, k]) => [r, k, cols.filter((c) => hue(c) === k)]).filter(([, , cs]) => cs.length);
+      const across = W >= 760 ? 2 : 1, gap = 20, pw = (W - gap * (across - 1)) / across, ph = 280;
+      const down = Math.ceil(panels.length / across), H = down * ph + (down - 1) * gap;
+      const svg = svgEl("svg", { class: "board-svg certmap-svg", viewBox: `0 0 ${W} ${H}`, role: "group", "aria-label": "Best bad challenges per point of the domain as n grows, one panel per rate, one line per agreement" });
       const text = (cls, x, y, words, anchor = "middle", into = svg) => { const t = svgEl("text", { class: cls, x, y, "text-anchor": anchor }); t.textContent = words; into.append(t); return t; };
-      for (let e = y0; e <= y1; e++) {
-        for (const m of [1, 2, 5]) {
-          const v = m * 10 ** e;
-          if (v > 10 ** y1) break;
-          svg.append(svgEl("line", { class: "board-grid", x1: padL, x2: W - padR, y1: Y(v), y2: Y(v), opacity: m === 1 ? 1 : 0.45 }));
-          text("board-axis", padL - 8, Y(v) + 4, thousands(v), "end");
+      const groups = [];
+      panels.forEach(([rateName, k, cs], idx) => {
+        const ox = (idx % across) * (pw + gap), oy = Math.floor(idx / across) * (ph + gap), pl = 44, pr = 64, pt = 26, pb = 30;
+        const X = (n) => ox + pl + ((Math.log2(n) - x0) / (x1 - x0 || 1)) * (pw - pl - pr);
+        const Y = (v) => oy + pt + (1 - (Math.log10(v) - y0) / (y1 - y0 || 1)) * (ph - pt - pb);
+        text(`certmap-rate is-${k}`, ox + pl, oy + 14, k === "other" ? "other rates" : `rate ${rateName}`, "start");
+        text("board-axis", ox + pw - pr, oy + 14, "per point, by n", "end");
+        for (let e = y0; e <= y1; e++) {
+          svg.append(svgEl("line", { class: "board-grid", x1: ox + pl, x2: ox + pw - pr, y1: Y(10 ** e), y2: Y(10 ** e) }));
+          text("board-axis", ox + pl - 6, Y(10 ** e) + 4, thousands(10 ** e), "end");
         }
-      }
-      // Narrow, every other size is named.
-      ns.forEach((n, k) => { if (W >= 560 || k % 2 === 0) text("board-axis", X(n), H - padB + 18, thousands(n)); });
-      text("board-axis", W - padR, H - 6, "n, the size of the domain →", "end");
-      text("board-axis", 0, 12, "↑ bad challenges per point", "start");
-      if (below) guide.append(` ${nOf(below, "weaker submission")} below ${thousands(10 ** y0)} per point ${below === 1 ? "is" : "are"} left off.`);
-      const groups = [], labels = [];
-      for (const c of cols) {
-        const mine = subs.filter((i) => colOf(i) === c);
-        const pts = [...new Set(mine.map((i) => i.n))].sort((a, b) => a - b).map((n) => bestOf(cells.get(`${c} ${n}`)));
-        const g = svgEl("g", { class: `certmap-series is-${hue(c)}` });
-        for (const i of mine) if (!pts.includes(i) && Math.log10(i.per_n) >= y0) g.append(dot(i, X(i.n), Y(i.per_n), 2.4, "certmap-sub"));
-        if (pts.length > 1) {
-          g.append(svgEl("path", { class: "certmap-line", d: pts.map((i, k) => `${k ? "L" : "M"}${X(i.n).toFixed(1)} ${Y(i.per_n).toFixed(1)}`).join(" ") }));
-          const last = pts[pts.length - 1];
-          labels.push({ g, c, x: X(last.n) + 8, y: Y(last.per_n) + 4 });
+        // Powers of two only: the odd sizes sit between them unlabelled.
+        const every = pw < 420 ? 2 : 1;
+        for (let e = Math.ceil(x0); e <= Math.floor(x1); e += every) text("board-axis", X(2 ** e), oy + ph - pb + 16, thousands(2 ** e));
+        const labels = [];
+        for (const c of cs) {
+          const { pts, zone } = info.get(c);
+          const g = svgEl("g", { class: `certmap-series is-z-${zone}` });
+          for (const i of subs) if (colOf(i) === c && !pts.includes(i) && Math.log10(i.per_n) >= y0) g.append(dot(i, X(i.n), Y(i.per_n), 2.2, "certmap-sub"));
+          if (pts.length > 1) {
+            g.append(svgEl("path", { class: "certmap-line", d: pts.map((i, j) => `${j ? "L" : "M"}${X(i.n).toFixed(1)} ${Y(i.per_n).toFixed(1)}`).join(" ") }));
+            const last = pts[pts.length - 1];
+            labels.push({ g, c, x: X(last.n) + 7, y: Y(last.per_n) + 4 });
+          }
+          for (const i of pts) g.append(dot(i, X(i.n), Y(i.per_n), 3.6, "certmap-best"));
+          g.addEventListener("pointerenter", () => { svg.classList.add("is-focus"); groups.forEach((h) => h.classList.toggle("is-lit", h === g)); showLine(c, pts); });
+          g.addEventListener("pointerleave", () => { if (focus !== c) { svg.classList.toggle("is-focus", Boolean(focus)); g.classList.remove("is-lit"); groups.forEach((h) => h.classList.toggle("is-lit", h.dataset.col === focus)); } });
+          g.dataset.col = c;
+          groups.push(g);
         }
-        for (const i of pts) g.append(dot(i, X(i.n), Y(i.per_n), 4, "certmap-best"));
-        const on = () => { svg.classList.add("is-focus"); g.classList.add("is-lit"); showLine(c, pts); };
-        const off = () => { svg.classList.remove("is-focus"); g.classList.remove("is-lit"); };
-        g.addEventListener("pointerenter", on); g.addEventListener("pointerleave", off);
-        groups.push(g);
-      }
-      // Line labels at their right ends, nudged apart where they would overlap.
-      labels.sort((a, b) => a.y - b.y);
-      labels.forEach((l, k) => { if (k && l.y - labels[k - 1].y < 13) l.y = labels[k - 1].y + 13; text("certmap-label", l.x, l.y, l.c.split("|")[1], "start", l.g); });
+        labels.sort((a, b) => a.y - b.y);
+        labels.forEach((l, j) => { if (j && l.y - labels[j - 1].y < 13) l.y = labels[j - 1].y + 13; text("certmap-label", l.x, l.y, l.c.split("|")[1], "start", l.g); });
+      });
       svg.append(...groups);
+      const lit = focus && groups.find((h) => h.dataset.col === focus);
+      if (lit) { svg.classList.add("is-focus"); lit.classList.add("is-lit"); showLine(focus, info.get(focus).pts); }
       return svg;
     }
+    // One fixed-height cell per setting and size, shaded by submissions and labelled with their count;
+    // a cell opens its best post. Agreement labels sit at an angle so every column keeps its name.
     function tried(W) {
-      const padL = 74, padR = 8, padT = 30, axis = 34, GAP = 6;
-      const colW = (W - padL - padR) / cols.length, perRow = Math.max(1, Math.floor((colW - 12) / GAP));
-      const rowH = new Map(sizes.map((n) => [n, Math.max(36, 16 + GAP * Math.max(1, ...cols.map((c) => Math.ceil((cells.get(`${c} ${n}`) || []).length / perRow))))]));
-      const rowTop = new Map();
-      let y = padT;
-      for (const n of sizes) { rowTop.set(n, y); y += rowH.get(n); }
-      const H = y + axis, most = Math.log(Math.max(...[...cells.values()].map((h) => h.length)));
+      const padL = 74, padR = 8, padT = 26, rowH = 22, axis = 64;
+      const colW = (W - padL - padR) / cols.length, H = padT + sizes.length * rowH + axis;
+      const most = Math.log(Math.max(...[...cells.values()].map((h) => h.length)));
       const svg = svgEl("svg", { class: "board-svg certmap-svg is-grid", viewBox: `0 0 ${W} ${H}`, width: W, role: "group", "aria-label": "Certified submissions by rate, agreement and size" });
-      const text = (cls, x, y, words, anchor = "middle") => { const t = svgEl("text", { class: cls, x, y, "text-anchor": anchor }); t.textContent = words; svg.append(t); return t; };
-      const rowLabel = new Map(), colLabel = new Map();
-      for (const n of sizes) {
-        const top = rowTop.get(n);
-        svg.append(svgEl("line", { class: "board-grid", x1: padL, x2: W - padR, y1: top, y2: top }));
-        rowLabel.set(n, text("board-axis", padL - 8, top + rowH.get(n) / 2 + 4, `n = ${thousands(n)}`, "end"));
-      }
-      text("board-axis", padL - 8, padT - 12, "rate", "end");
-      text("board-axis", padL - 8, H - 10, "agreement", "end");
+      const text = (cls, x, y, words, anchor = "middle", extra = {}) => { const t = svgEl("text", { class: cls, x, y, "text-anchor": anchor, ...extra }); t.textContent = words; svg.append(t); return t; };
+      const rowLabel = new Map(), colLabel = new Map(), top = (r) => padT + r * rowH;
+      sizes.forEach((n, r) => {
+        svg.append(svgEl("line", { class: "board-grid", x1: padL, x2: W - padR, y1: top(r), y2: top(r) }));
+        rowLabel.set(n, text("board-axis", padL - 8, top(r) + rowH / 2 + 4, thousands(n), "end"));
+      });
+      text("board-axis", padL - 8, padT - 8, "rate →", "end");
+      const bottom = top(sizes.length);
       cols.forEach((c, x) => {
         const [rate, agree] = c.split("|"), left = padL + x * colW;
-        colLabel.set(c, text("board-axis", left + colW / 2, H - 10, agree));
-        // A new rate starts a group: a rule down the grid and the rate above it.
+        const lx = left + colW / 2, ly = bottom + 10;
+        colLabel.set(c, text("board-axis certmap-agree", lx, ly, agree, "end", { transform: `rotate(-60 ${lx.toFixed(1)} ${ly})` }));
+        // A new rate starts a group: a rule down the grid and the rate above it, where it fits.
         if (!x || cols[x - 1].split("|")[0] !== rate) {
-          svg.append(svgEl("line", { class: "board-grid", x1: left, x2: left, y1: padT - 22, y2: H - axis }));
-          text(`certmap-rate is-${hue(c)}`, left + 4, padT - 12, rate, "start");
+          svg.append(svgEl("line", { class: "board-grid", x1: left, x2: left, y1: padT - 20, y2: bottom }));
+          const span = cols.slice(x).findIndex((d) => d.split("|")[0] !== rate);
+          if ((span < 0 ? cols.length - x : span) * colW >= rate.length * 7 + 6) text(`certmap-rate is-${hue(c)}`, left + 4, padT - 8, rate, "start");
         }
-        for (const n of sizes) {
+        sizes.forEach((n, r) => {
           const here = cells.get(`${c} ${n}`);
-          if (!here) continue;
-          const top = rowTop.get(n), h = rowH.get(n), c0 = Math.min(perRow, here.length), r0 = Math.ceil(here.length / perRow);
-          const g = svgEl("g", { class: "certmap-g", style: `--heat: ${Math.round(6 + (most ? Math.log(here.length) / most : 1) * 30)}%` });
-          g.append(svgEl("rect", { class: "certmap-cell", x: left + 2, y: top + 2, width: colW - 4, height: h - 4, rx: 7 }));
-          here.forEach((i, k) => g.append(dot(i, left + colW / 2 + ((k % perRow) - (c0 - 1) / 2) * GAP, top + h / 2 + (Math.floor(k / perRow) - (r0 - 1) / 2) * GAP, 2.3, `certmap-dot${i.leading ? " is-lead" : ""}`)));
+          if (!here) return;
+          const best = bestOf(here);
+          const g = svgEl("a", { class: "certmap-g", href: `/threads/${best.thread_id}#${best.post_id}`, style: `--heat: ${Math.round(14 + (most ? Math.log(here.length) / most : 1) * 50)}%`,
+            "aria-label": `${where(c)}, n = ${thousands(n)}: ${nOf(here.length, "submission")}, best ${thousands(best.certified)} by ${who(best.author)}` });
+          g.append(svgEl("rect", { class: "certmap-cell", x: left + 1, y: top(r) + 2, width: Math.max(1, colW - 2), height: rowH - 4, rx: 3 }));
+          if (colW >= 13) {
+            const t = svgEl("text", { class: "certmap-count", x: lx, y: top(r) + rowH / 2 + 3.5, "text-anchor": "middle" });
+            t.textContent = String(here.length);
+            g.append(t);
+          }
           const on = (lit) => { rowLabel.get(n).classList.toggle("is-on", lit); colLabel.get(c).classList.toggle("is-on", lit); if (lit) showCell(here); };
           g.addEventListener("pointerenter", () => on(true)); g.addEventListener("pointerleave", () => on(false));
+          g.addEventListener("focus", () => on(true)); g.addEventListener("blur", () => on(false));
           svg.append(g);
-        }
+        });
       });
+      text("board-axis", padL - 8, bottom + 14, "agreement", "end");
       return svg;
     }
     const GUIDES = {
-      growth: "Each line follows one rate and agreement as n grows, through the best count per point at each size: level means the count grows in step with n, falling means slower. Colour is the rate; the label at a line's end is its agreement. Faint dots are the other submissions.",
-      tried: "Each cell is a setting someone has posted; darker cells have had more submissions, and each dot is one, filled where it leads. Empty cells are untried. Agreement 5/8+1 means A = 5n/8 + 1.",
+      map: "One dot per rate and agreement tried. Colour is how fast its best count grows with n; hollow means one size so far. Above Johnson a linear bound is known. Click a dot for its line.",
+      growth: "Best count per point as n grows, one line per agreement. Level means linear in n; rising means faster.",
+      tried: "Submissions per setting; empty cells are untried. 5/8+1 means A = 5n/8 + 1.",
     };
     let drawn = 0;
     const draw = (force) => {
@@ -1590,33 +1663,32 @@
       if (W === drawn && !force) return;
       drawn = W;
       guide.textContent = GUIDES[certView];
-      legend.replaceChildren(...(certView === "growth"
-        ? [...Object.entries(RATE_HUES), ["other", "other"]].filter(([, k]) => cols.some((c) => hue(c) === k)).map(([r, k]) => el("span", { class: `certmap-rate-key is-${k}` }, r === "other" ? "other rates" : `rate ${r}`))
-        : [el("i", { class: "is-lead", "aria-hidden": "true" }), "leads its setting", el("i", { "aria-hidden": "true" }), "other submission"]));
+      const key = (cls, words) => el("span", { class: `certmap-zone-key ${cls}` }, words);
+      legend.replaceChildren(...(certView === "map" ? [key("is-fast", "faster than n"), key("is-even", "about n"), key("is-slow", "slower than n"), key("is-one", "one size"), key("is-drift", "drifting agreement")]
+        : certView === "growth" ? [key("is-z-open", "below first order"), key("is-z-t1", "T1 band"), key("is-z-linear", "above Johnson")]
+        : []));
       // ponytail: below 820px the grid scrolls sideways rather than reflowing.
-      plot.replaceChildren(certView === "growth" ? growth(Math.max(320, W)) : tried(Math.max(820, W)));
+      plot.replaceChildren(certView === "map" ? map(Math.max(320, W)) : certView === "growth" ? growth(Math.max(320, W)) : tried(Math.max(820, W)));
       // Where the grid scrolls, it opens on rate 1/2, where most of the work is.
-      plot.scrollLeft = plot.scrollWidth;
+      if (certView === "tried") plot.scrollLeft = plot.scrollWidth;
     };
+    function setView(key) {
+      certView = key;
+      views.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === key)));
+      draw(true);
+    }
     for (const [key, name] of CERT_VIEWS) {
-      const button = el("button", { type: "button", class: "chip", "aria-pressed": String(key === certView) }, name);
-      button.addEventListener("click", () => {
-        certView = key;
-        views.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-        draw(true);
-      });
+      const button = el("button", { type: "button", class: "chip", "data-view": key, "aria-pressed": String(key === certView) }, name);
+      button.addEventListener("click", () => { focus = null; setView(key); });
       views.append(button);
     }
     show(subs[subs.length - 1]);
-    // What good looks like, with the lines still rising at their largest n named from the data.
-    const rising = cols.filter((c) => {
-      const pts = sizes.filter((n) => cells.has(`${c} ${n}`)).slice(0, 2).map((n) => bestOf(cells.get(`${c} ${n}`)).per_n);
-      return pts.length === 2 && pts[0] > pts[1];
-    });
+    // What good looks like: below Johnson, the settings whose counts outpace n are named.
+    const rising = cols.filter((c) => { const t = info.get(c); return t.zone !== "linear" && t.exp !== null && t.exp > 1.1; });
     const aim = el("p", { class: "regime-aim" }, el("b", {}, "The aim: "),
-      "lift a line. Each point is the most bad challenges anyone has built at that size, so a higher point is a stronger lower bound. A line that keeps rising as n grows would refute T3's linear bound; one that stays level is consistent with it. ",
-      rising.length ? ["Still rising at its largest n: ", el("b", {}, rising.map((c) => where(c).toLowerCase()).join("; ")), ". Try the next size up. "] : null,
-      "Or extend a short line to a new n, or pick an empty cell in What's been tried.");
+      "a count growing faster than n below Johnson. ",
+      rising.length ? ["Record improving fastest: ", el("b", {}, rising.map((c) => `${where(c).toLowerCase()} (n^${info.get(c).exp.toFixed(2)}${info.get(c).drift ? ", agreement drifts with n" : ""})`).join("; ")),
+        ". A rising record is not yet growth; try the next size up."] : "Extend a one-size setting, or try the empty band.");
     root.append(caption, views, guide, aim, plot, read);
     requestAnimationFrame(() => draw());
     if ("ResizeObserver" in window) new ResizeObserver(() => draw()).observe(plot);

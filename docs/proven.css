@@ -352,6 +352,8 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .lane-svg a:focus { outline: none; }
 .certmap .board-chart { overflow-x: auto; }
 .certmap .certmap-svg.is-grid { min-width: 820px; }
+.certmap-count { fill: var(--ink); font: 600 10px var(--sans); font-variant-numeric: tabular-nums; pointer-events: none; }
+.certmap-agree { font-size: 10.5px; }
 .certmap-views { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
 .certmap-views button { cursor: pointer; background: none; font: inherit; font-size: 12.5px; }
 .certmap-views button[aria-pressed="true"] { border-color: var(--ink-2); background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
@@ -366,10 +368,6 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .certmap .is-r12 { --hue: var(--ink); }
 .certmap .regime-aim { margin: 0 0 12px; max-width: 80ch; }
 .certmap-key { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
-.certmap-key i { width: 7px; height: 7px; margin-right: -8px; border: 1.3px solid var(--ink-2); border-radius: 50%; }
-.certmap-key i.is-lead { background: var(--ink-2); }
-.certmap-rate-key { display: inline-flex; align-items: center; gap: 6px; }
-.certmap-rate-key::before { content: ""; width: 14px; height: 3px; border-radius: 2px; background: var(--hue); }
 .certmap-series { color: var(--hue); transition: opacity .15s; }
 .certmap-svg.is-focus .certmap-series:not(.is-lit) { opacity: .15; }
 .certmap-line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
@@ -379,17 +377,43 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .certmap-rate { fill: var(--hue); font: 650 12px var(--sans); }
 .certmap-g { color: var(--ink); }
 .certmap-cell { fill: color-mix(in srgb, var(--ink) var(--heat), transparent); }
-.certmap-g:hover .certmap-cell { stroke: var(--ink); stroke-width: 1.5; }
-.certmap-dot { fill: var(--bg-2); stroke: currentColor; stroke-width: 1.1; }
-.certmap-dot.is-lead { fill: currentColor; }
-.certmap-svg a:hover :is(.certmap-dot, .certmap-sub, .certmap-best), .certmap-svg a:focus-visible :is(.certmap-dot, .certmap-sub, .certmap-best) { r: 5; opacity: 1; }
+.certmap-g:is(:hover, :focus-visible) .certmap-cell { stroke: var(--ink); stroke-width: 1.5; }
+.certmap-svg a:hover :is(.certmap-sub, .certmap-best), .certmap-svg a:focus-visible :is(.certmap-sub, .certmap-best) { r: 5; opacity: 1; }
 .certmap-svg .board-axis.is-on { fill: var(--ink); font-weight: 700; }
+/* Where it grows: dots coloured by pace; lines coloured by where their agreement sits. */
+.certmap-band-t1 { fill: color-mix(in srgb, var(--accent) 22%, transparent); }
+.certmap-curve-name { font: 600 12px var(--sans); paint-order: stroke; stroke: var(--bg-2); stroke-width: 4px; }
+.certmap-curve-name.is-johnson { fill: var(--record); }
+.certmap-curve-name.is-first { fill: var(--accent); }
+.certmap-curve-name.is-capacity { fill: var(--amber); }
+.certmap { --pace-fast: var(--coral, #ff6b57); --pace-even: var(--ink); --pace-slow: var(--muted); }
+.certmap-pace { stroke: var(--bg-2); stroke-width: 1.5; cursor: pointer; }
+.certmap-pace.is-fast { fill: var(--pace-fast); }
+.certmap-pace.is-even { fill: var(--pace-even); }
+.certmap-pace.is-slow { fill: var(--pace-slow); }
+.certmap-pace.is-one { fill: var(--bg-2); stroke: var(--ink-2); stroke-width: 1.4; }
+.certmap-pace.is-drift { stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 2 2; }
+.certmap-svg a:hover .certmap-pace, .certmap-svg a:focus-visible .certmap-pace { stroke: var(--ink); stroke-width: 2.5; }
+.certmap .is-z-open { --hue: var(--amber); }
+.certmap .is-z-t1 { --hue: var(--accent); }
+.certmap .is-z-linear { --hue: color-mix(in srgb, var(--record) 55%, var(--muted)); }
+.certmap-series.is-z-linear:not(.is-lit) { opacity: .55; }
+.certmap-zone-key { display: inline-flex; align-items: center; gap: 6px; }
+.certmap-zone-key::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--hue); }
+.certmap-zone-key[class*="is-z-"]::before { width: 14px; height: 3px; border-radius: 2px; }
+.certmap-zone-key.is-fast::before { background: var(--pace-fast); }
+.certmap-zone-key.is-even::before { background: var(--pace-even); }
+.certmap-zone-key.is-slow::before { background: var(--pace-slow); }
+.certmap-zone-key.is-one::before { background: none; border: 1.4px solid var(--ink-2); }
+.certmap-zone-key.is-drift::before { background: none; border: 1.4px dashed var(--ink); }
 .record-progress { gap: 14px 24px; }
 .record-progress .rec-card { background: var(--bg); }
 @media (max-width: 760px) { .record-progress { grid-template-columns: 1fr; } }
 /* The record as one sortable table: the title takes two lines and opens to the row's details. */
 .record-table-note { margin: 0 0 8px 4px; color: var(--muted); font-size: 13px; }
-.record-table-more { display: block; margin: 10px auto 0; padding: 6px 14px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; color: var(--ink); font: 600 12.5px var(--sans); cursor: pointer; }
+.record-table-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px; margin: 0 0 8px; }
+.record-table-head .record-table-note { flex: 1 1 300px; margin-bottom: 0; }
+.record-table-more { flex: none; margin: 0; padding: 6px 14px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; color: var(--ink); font: 600 12.5px var(--sans); cursor: pointer; }
 .record-table-more:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .record-table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); }
 .record-table { width: 100%; min-width: 860px; border-collapse: collapse; font-size: 13.5px; }
