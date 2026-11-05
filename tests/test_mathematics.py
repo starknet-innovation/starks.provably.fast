@@ -218,7 +218,9 @@ class QueueAndCredits(unittest.TestCase):
 class RulesV2(unittest.TestCase):
     def test_targets_carry_the_cells_caps_and_statements(self):
         t = m.load_targets()
-        self.assertEqual(t["rules"]["version"], 3)
+        self.assertEqual(t["rules"]["version"], 5)
+        self.assertEqual(len(t["rules"]["claim_board"]), 19)
+        self.assertIn("core-free", t["rules"]["problem"])
         self.assertEqual([port["id"] for port in t["rules"]["ports"]][:2], ["port-D-codeword-pairs", "port-C-isolated-cover"])
         self.assertIn("E(f, g) <= C n", t["rules"]["goal"])
         self.assertNotIn("quadratic", t["statements"][1]["title"].lower())

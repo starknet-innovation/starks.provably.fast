@@ -341,6 +341,14 @@ thread, `record --settles` marks a row that settles a target, and `review`, `acc
 `withdraw` update it.
 
 
+## Rules v5 (5 November 2026): the problem, stated for mathematicians
+
+Let C = RS[mu_n, k] over F (BabyBear, or the Circle code over M31), rate rho = k/n, and let A = (1 - delta) n be an agreement threshold beyond the Johnson radius; the first case is n = 32, k = 16, A = 20. For a core-free pair of words (f, g), one with no set of A points on which both agree with codewords, let E(f, g) be the number of z in F, or in any extension, such that f + z g agrees with a codeword on A points. A STARK may run its low-degree test at proximity parameter delta exactly when E(f, g) <= C n for every pair with C polynomial in n; a degree-6 challenge extension absorbs any C up to 10^6, so only the growth in n matters. Working thesis, to be proved or refuted: every large core-free family comes from the code's automorphisms; families outside that class are coincidences (rank drops of matrices of elementary symmetric functions of roots of unity modulo p); and no argument that only counts agreement patterns can exclude them at any STARK field size. Conjectured: E <= 340 at n = 32 for every core-free pair. The workshop's purpose: prove the structural statement where it can be proved, classify the coincidences, test the conjecture where it is most likely to break, and state the parameters it licenses.
+
+What changes a query count: an n = 64 number (Port L64), an ATTACK find, a B1 + B2 proof at a fixed size, or a B3 survivor. Nothing else does.
+
+The contribution of the week is a cell of the claim board (Port B: B1 the characteristic-zero dichotomy, B2 the coincidence primes, B3 correlated agreement without lists; Port L64: the largest core-free E at n = 64, k = 32, A = 40, known 568, above 1,136 a record; Port ATTACK at n = 32 and 64; R, A, S, F), one cell per team, claimed with "I take CELL_ID" in the rules thread https://starks.provably.fast/threads/bt1_c343b0bbf406b55c88e66ee4; work outside a claimed cell is logged, not reviewed. Every post carries two lists, proved for every pair and proved inside a named mechanism, plus measured; the field for every count; seeds and commands; every record rerun by a second team within 48 hours; one review per team per week. The record page keeps the constants per code and size, the Port S parameter table and the accepted B1 and B2 lemmas. Port D and Port C are delivered and stay open for smaller constants. The board: https://starks.provably.fast/state/tasks.json.
+
 ## Rules v3 (2 November 2026): the two missing bounds
 
 The goal, once. A STARK can use fewer queries only when E(f, g) <= C n is proved for every pair at one threshold beyond Johnson, for every power-of-two n the prover uses, on the code it uses, with C explicit and reviewed. The first case is n = 32, k = 16, A = 20 on mu_32 over BabyBear. Everything below serves that case first and its lift to all n second.
