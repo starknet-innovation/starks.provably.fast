@@ -1843,7 +1843,38 @@
       el("span", { class: "record-title" }, el("a", { href: THREAD.test(st.source || "") ? `/threads/${st.source}` : "/state/tasks.json" }, st.title),
         el("small", {}, st.statement), el("small", {}, `${st.consequence} Open ports: ${st.ports.join("; ")}.`), el("small", {}, `Evidence: ${st.evidence}`)),
       el("span", { class: "verdict is-posted" }, "to prove")));
-    root.replaceChildren(el("h3", { class: "record-group-title" }, el("span", { class: "record-target" }, "cells"), "Where a count still earns a record"),
+    const rules = record.rules || {};
+    // Rules v5: the problem, the claim board, and the tables that say what is proved, posted and measured.
+    const problem = rules.problem ? [el("p", { class: "bounds-week" }, el("b", {}, "The problem. "), rules.problem),
+      el("p", { class: "bounds-week" }, el("b", {}, "What changes a query count. "), rules.what_changes_a_query_count || "")] : [];
+    const tasksLive = window.__tasks || null;
+    const holders = new Map(((tasksLive && tasksLive.claim_board) || []).map((c) => [c.id, c]));
+    const board = (rules.claim_board || []).map((c) => {
+      const live = holders.get(c.id);
+      const state = live ? (live.open ? "open" : `held by ${live.holder}`) : "see tasks.json";
+      return el("li", { class: "record-row is-proof" },
+        el("span", { class: "record-kind" }, c.port),
+        el("span", { class: "record-title" }, el("code", {}, c.id), " ", c.title, el("small", {}, c.statement), el("small", {}, `Done when: ${c.done_when}`)),
+        el("span", { class: `verdict ${live && !live.open ? "is-posted" : "is-accepted"}` }, state));
+    });
+    const table = (cols, rowsOf) => el("div", { class: "table-scroll" }, el("table", { class: "constants" },
+      el("thead", {}, el("tr", {}, cols.map((c) => el("th", {}, c)))),
+      el("tbody", {}, rowsOf.map((cells) => el("tr", {}, cells.map((v) => el("td", {}, v || "")))))));
+    const constants = (rules.constants || []).length ? [
+      el("h3", { class: "record-group-title", id: "constants" }, el("span", { class: "record-target" }, "constants"), "Proved and measured, per code and size"),
+      table(["code", "n, k, A", "proved for every pair", "posted, not yet accepted", "measured", "conjectured"],
+        rules.constants.map((c) => [c.code, `${c.n}, ${c.k}, ${c.A}`, c.proved_every_pair, c.posted, c.measured, c.conjectured]))] : [];
+    const portS = rules.port_s ? [
+      el("h3", { class: "record-group-title", id: "port-s" }, el("span", { class: "record-target" }, "parameters"), `Port S: ${rules.port_s.parameters}`),
+      rules.port_s.rows && rules.port_s.rows.length ? table(rules.port_s.columns, rules.port_s.rows) : el("p", { class: "bounds-week" }, rules.port_s.status)] : [];
+    const lemmas = rules.lemmas ? [
+      el("h3", { class: "record-group-title", id: "lemmas" }, el("span", { class: "record-target" }, "lemmas"), rules.lemmas.title),
+      rules.lemmas.rows && rules.lemmas.rows.length ? el("ol", { class: "record-list" }, rules.lemmas.rows.map((l) => el("li", { class: "record-row is-lemma" },
+        el("span", { class: "record-kind" }, l.port), el("span", { class: "record-title" }, l.title, el("small", {}, l.statement)), el("span", { class: "verdict is-accepted" }, "accepted")))) : el("p", { class: "bounds-week" }, rules.lemmas.status)] : [];
+    root.replaceChildren(...problem,
+      ...(board.length ? [el("h3", { class: "record-group-title", id: "claim-board" }, el("span", { class: "record-target" }, "claim"), "The claim board: one cell per team"), el("ol", { class: "record-list" }, board)] : []),
+      ...constants, ...portS, ...lemmas,
+      el("h3", { class: "record-group-title" }, el("span", { class: "record-target" }, "cells"), "Where a count still earns a record"),
       el("ol", { class: "record-list" }, rows),
       el("h3", { class: "record-group-title", id: "statements" }, el("span", { class: "record-target" }, "prove"), "Statements ranked first"),
       el("ol", { class: "record-list" }, asks));
@@ -1852,6 +1883,7 @@
     try {
       const [record, profiles] = await Promise.all([loadRecord(), loadProfiles()]);
       record.profiles = profiles;
+      if ($("cells-list")) { try { window.__tasks = await (await fetch("/state/tasks.json", { headers: { accept: "application/json" } })).json(); } catch { window.__tasks = null; } }
       renderRecord(record);
       renderTargets(record);
       renderProgress(record);
