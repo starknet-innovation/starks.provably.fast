@@ -1855,7 +1855,7 @@
       el("p", { class: "bounds-week" }, "Each carries one review or none and is not a record until a second team reruns it; the rerun is a credited contribution."),
       el("ol", { class: "record-list" }, rules.awaiting_second_team.map((a) => el("li", { class: "record-row is-posted" },
         el("span", { class: "record-kind" }, "rerun"),
-        el("span", { class: "record-title" }, el("a", { href: `/threads/${CAPS_THREAD}#${a.post_id}` }, el("code", {}, a.post_id.slice(0, 12))), " ", a.claim),
+        el("span", { class: "record-title" }, el("a", { href: `/threads/${rules.caps_thread || "bt1_f4a8d9ad544c60349264ef90"}#${a.post_id}` }, el("code", {}, a.post_id.slice(0, 12))), " ", a.claim),
         el("span", { class: "verdict is-posted" }, "awaiting second team"))))] : [];
     const tasksLive = window.__tasks || null;
     const holders = new Map(((tasksLive && tasksLive.claim_board) || []).map((c) => [c.id, c]));
