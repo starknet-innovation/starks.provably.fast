@@ -1067,12 +1067,12 @@
   const dayOf = (t) => Math.floor(t / DAY);
   const MILESTONES = [50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000];
   // A rule's points as a chip, and as words in a share post.
-  const RULE_CHIP = { lean: "Lean-checked", lead: "lead", statement: "ranked statement", refutes: "refutation", port: "port", upper: "upper bound", breaks: "broken bound",
+  const RULE_CHIP = { lean: "Lean-checked", lead: "lead", statement: "ranked statement", refutes: "refutation", bound: "missing bound", port: "port", upper: "upper bound", breaks: "broken bound",
     result: "results", review: "reviews", built_on: "built on", error: "error found", count: "best count", rung0: "rung-0 refutation" };
-  const RULE_POST = { lean: "a proof kernel-checked in Lean against ArkLib", lead: "leads posted", statement: "proved a ranked statement", refutes: "refuted a ranked statement", port: "filled a port",
+  const RULE_POST = { lean: "a proof kernel-checked in Lean against ArkLib", lead: "leads posted", statement: "proved a ranked statement", refutes: "refuted a ranked statement", bound: "proved a missing bound", port: "filled a port",
     upper: "proved an upper bound", breaks: "broke a posted bound", result: "accepted results", review: "reviews",
     built_on: "work others built on", error: "found an error", count: "raised a cell's best count", rung0: "a count above 16 n at rung 0" };
-  const RULE_TONE = { lean: "record", lead: "amber", statement: "record", refutes: "pink", port: "amber", upper: "amber", breaks: "pink", result: "amber",
+  const RULE_TONE = { lean: "record", lead: "amber", statement: "record", refutes: "pink", bound: "record", port: "amber", upper: "amber", breaks: "pink", result: "amber",
     review: "accent", built_on: "pink", error: "accent", count: "teal", rung0: "record" };
   const pts = (n) => Math.round(n).toLocaleString("en-US");
   let bulletinLoad = null;
@@ -1253,7 +1253,7 @@
     if (!root || !P) return;
     const a = P.advances, share = `${Math.round(P.share * 100)}%`;
     const items = [[pts(a.statement), "Prove a ranked statement or solve a target"], [pts(a.refutes), "Refute a ranked statement"],
-      [pts(a.bound || 500), "Prove one of the two missing bounds (Port D, Port C)"], [pts(a.port), "Fill a port of one"], [pts(a.upper), "Prove an upper bound"], [pts(a.result), "Any other accepted result"],
+      [pts(a.bound || 500), "Prove a missing bound (a cell of the claim board)"], [pts(a.port), "Fill a port of one"], [pts(a.upper), "Prove an upper bound"], [pts(a.result), "Any other accepted result"],
       [share, "Review a result (half at once)"], [share, "A later result builds on yours"], [pts(P.count_raise), `Raise a cell's best count at n ≥ ${thousands(P.count_min_n)}`],
       [`×${P.bonuses.week}`, "The contribution of the week"], [`×${P.bonuses.lean}`, "A Lean proof, kernel-checked against ArkLib"]];
     root.replaceChildren(el("h3", {}, "How points work"),
@@ -1785,7 +1785,9 @@
     const week = $("bounds-week"), ask = record.rules?.contribution_of_the_week;
     if (week && typeof ask === "string" && ask) {
       const first = [...(record.statements || [])].sort((a, b) => a.rank - b.rank).find((st) => THREAD.test(st.source || ""));
-      week.replaceChildren(el("b", {}, "This week: "), `${ask}.`, ...(first ? [" ", el("a", { href: `/threads/${first.source}` }, "The thread")] : []));
+      const rulesThread = THREAD.test(record.rules?.thread || "") ? record.rules.thread : first?.source;
+      week.replaceChildren(el("b", {}, "This week: "), `${ask}.`, ...(rulesThread ? [" ", el("a", { href: `/threads/${rulesThread}` }, "The rules thread")] : []),
+        " ", el("a", { href: "/record#claim-board" }, "The claim board"));
       week.hidden = false;
     }
     const live = await loadBulletinRecords().catch(() => ({}));
@@ -1846,7 +1848,15 @@
     const rules = record.rules || {};
     // Rules v5: the problem, the claim board, and the tables that say what is proved, posted and measured.
     const problem = rules.problem ? [el("p", { class: "bounds-week" }, el("b", {}, "The problem. "), rules.problem),
-      el("p", { class: "bounds-week" }, el("b", {}, "What changes a query count. "), rules.what_changes_a_query_count || "")] : [];
+      el("p", { class: "bounds-week" }, el("b", {}, "What changes a query count. "), rules.what_changes_a_query_count || ""),
+      ...(rules.prize ? [el("p", { class: "bounds-week" }, el("b", {}, "The prize. "), rules.prize)] : [])] : [];
+    const awaiting = (rules.awaiting_second_team || []).length ? [
+      el("h3", { class: "record-group-title", id: "awaiting-second-team" }, el("span", { class: "record-target" }, "reruns"), "Awaiting a second team"),
+      el("p", { class: "bounds-week" }, "Each carries one review or none and is not a record until a second team reruns it; the rerun is a credited contribution."),
+      el("ol", { class: "record-list" }, rules.awaiting_second_team.map((a) => el("li", { class: "record-row is-posted" },
+        el("span", { class: "record-kind" }, "rerun"),
+        el("span", { class: "record-title" }, el("a", { href: `/threads/${CAPS_THREAD}#${a.post_id}` }, el("code", {}, a.post_id.slice(0, 12))), " ", a.claim),
+        el("span", { class: "verdict is-posted" }, "awaiting second team"))))] : [];
     const tasksLive = window.__tasks || null;
     const holders = new Map(((tasksLive && tasksLive.claim_board) || []).map((c) => [c.id, c]));
     const board = (rules.claim_board || []).map((c) => {
