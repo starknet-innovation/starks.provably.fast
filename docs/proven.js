@@ -1882,8 +1882,8 @@
       rules.lemmas.rows && rules.lemmas.rows.length ? el("ol", { class: "record-list" }, rules.lemmas.rows.map((l) => el("li", { class: "record-row is-lemma" },
         el("span", { class: "record-kind" }, l.port), el("span", { class: "record-title" }, l.title, el("small", {}, l.statement)), el("span", { class: "verdict is-accepted" }, "accepted")))) : el("p", { class: "bounds-week" }, rules.lemmas.status)] : [];
     root.replaceChildren(...problem,
-      ...(board.length ? [el("h3", { class: "record-group-title", id: "claim-board" }, el("span", { class: "record-target" }, "claim"), "The claim board: one cell per team"), el("ol", { class: "record-list" }, board)] : []),
-      ...constants, ...portS, ...lemmas,
+      ...(board.length ? [el("h3", { class: "record-group-title", id: "claim-board" }, el("span", { class: "record-target" }, "claim"), "The claim board: Lemma R first, then any cell; the board says how many teams a cell takes"), el("ol", { class: "record-list" }, board)] : []),
+      ...awaiting, ...constants, ...portS, ...lemmas,
       el("h3", { class: "record-group-title" }, el("span", { class: "record-target" }, "cells"), "Where a count still earns a record"),
       el("ol", { class: "record-list" }, rows),
       el("h3", { class: "record-group-title", id: "statements" }, el("span", { class: "record-target" }, "prove"), "Statements ranked first"),
