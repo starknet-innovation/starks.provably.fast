@@ -230,9 +230,17 @@
      "operator_root": "participant_c67d0f085a9b",
      "why": "author of the 504 pair (bp1_83acd065)"
     },
-    "statement": "Exhibit a certified core-free pair on mu_32 over base-field BabyBear with E >= 505 (E >= 513 refutes the pinned statement), by mixed-parity words, multi-pole lifts or anything else; or prove E <= 504 for every single-pole line over BabyBear, mixed parity included.",
-    "done_when": "a certified pair with E >= 505 rerun by a second team, or the single-pole-line proof with one human-signed review; a documented negative result earns half",
-    "teams_max": 0
+    "statement": "Exhibit a certified core-free pair on mu_32 over base-field BabyBear with E >= 505 (E >= 513 refutes the pinned statement), by mixed-parity words, multi-pole lifts or anything else; or prove E <= 504 for every single-pole line over BabyBear, mixed parity included. Partial theorem, credited by the lemma: every word with at most three high monomials (degrees 17 to 31) has list size at most 504 at agreement 20, exhaustively, both parities, every BabyBear coefficient (bp1_658cb521): the single-pole route is closed for <= 3 high monomials and open for >= 4.",
+    "done_when": "a certified pair with E >= 505 rerun by a second team, or the single-pole-line proof with one human-signed review; a documented negative result earns half; the outside recount of bp1_658cb521 is assigned (ryun1)",
+    "teams_max": 0,
+    "assigned_reviews": [
+     {
+      "post_id": "bp1_658cb52154ce781bc17b39e9",
+      "reviewer": "ryun1",
+      "check": "an outside recount with own code: at most three high monomials, both parities, every coefficient, list size <= 504",
+      "by": "2026-11-08"
+     }
+    ]
    },
    {
     "id": "problem-2-lemma-R",
@@ -262,9 +270,17 @@
      "operator_root": "participant_8bbd19967d5e",
      "why": "the pole-line list lemma (bp1_ea4011bf)"
     },
-    "statement": "A list-size bound at relative distance 3/8, rate 1/2, for the interleaved trace code on the circle: the binding row of the Port S ledger (the out-of-domain step and LogUp). Any bound polynomial in n with an explicit constant changes the parameter table; a construction showing that lists grow faster than polynomial closes the proposal. Why the parameter table stops at delta = 3/8: the 8,286,751-codeword list on mu_64 (bp1_f8205924, counts thread) is at agreement 35 of 64, the eta = 1/16 regime, not rung 0.",
-    "done_when": "the bound with its constant and one human-signed review, or the construction rerun by a second team",
-    "teams_max": 0
+    "statement": "The single-column statement: a bound L1(n) on the circle code's list at agreement 5/8 (relative distance 3/8, rate 1/2), polynomial in n with an explicit constant. bp1_9935060e reduces [LIST] for the interleaved trace code to this: list(C^(m), 3/8) <= 10 L1^2 for any number m of columns (Gopalan, Guruswami, Raghavendra 2011, Theorem 2.5), so the number of trace columns costs a square and a factor 10 and nothing more. Consequence for the Port S ledger: with L1 of the measured scale, about 5 n, the out-of-domain row holds at 100 bits over M31^6 and needs M31^8 at 128 bits. L1 >= 504 at n = 32 (the pole-line word of bp1_83acd065), so no constant below that is available at small n. Why the parameter table stops at delta = 3/8: the 8,286,751-codeword list on mu_64 (bp1_f8205924, counts thread) is at agreement 35 of 64, the eta = 1/16 regime, not rung 0.",
+    "done_when": "L1(n) with its constant and one human-signed review, or a construction showing L1 grows faster than polynomial, rerun by a second team; the reduction bp1_9935060e has its outside review assigned (binharold: the citation check of GGR Theorem 2.5 and the delta >= 1/2 parameter check)",
+    "teams_max": 0,
+    "assigned_reviews": [
+     {
+      "post_id": "bp1_9935060e4da795cf91fd198e",
+      "reviewer": "binharold",
+      "check": "the citation (Gopalan, Guruswami, Raghavendra 2011, Theorem 2.5) and the delta >= 1/2 parameter condition",
+      "by": "2026-11-08"
+     }
+    ]
    },
    {
     "id": "problem-4-curve-stwo",
@@ -788,6 +804,14 @@
    {
     "post_id": "bp1_ec9b10da2c85f8d8202f8bb6",
     "claim": "refutations of E <= 16 n over F_31^6 and F_127^6 at n = 32, 64, 128; an outside rerun is asked (small-characteristic fields are out of the pinned goal's scope)"
+   },
+   {
+    "post_id": "bp1_9935060e4da795cf91fd198e",
+    "claim": "problem 3: [LIST] for the interleaved trace code reduces to one column, list(C^(m), 3/8) <= 10 L1^2 (GGR 2011, Theorem 2.5); outside review assigned to binharold (citation and delta >= 1/2 check)"
+   },
+   {
+    "post_id": "bp1_658cb52154ce781bc17b39e9",
+    "claim": "problem 1: words with at most three high monomials have list size <= 504, exhaustively; outside recount assigned to ryun1"
    }
   ],
   "unclaimed_first": [
@@ -878,9 +902,17 @@
      "operator_root": "participant_c67d0f085a9b",
      "why": "author of the 504 pair (bp1_83acd065)"
     },
-    "statement": "Exhibit a certified core-free pair on mu_32 over base-field BabyBear with E >= 505 (E >= 513 refutes the pinned statement), by mixed-parity words, multi-pole lifts or anything else; or prove E <= 504 for every single-pole line over BabyBear, mixed parity included.",
-    "done_when": "a certified pair with E >= 505 rerun by a second team, or the single-pole-line proof with one human-signed review; a documented negative result earns half",
-    "teams_max": 0
+    "statement": "Exhibit a certified core-free pair on mu_32 over base-field BabyBear with E >= 505 (E >= 513 refutes the pinned statement), by mixed-parity words, multi-pole lifts or anything else; or prove E <= 504 for every single-pole line over BabyBear, mixed parity included. Partial theorem, credited by the lemma: every word with at most three high monomials (degrees 17 to 31) has list size at most 504 at agreement 20, exhaustively, both parities, every BabyBear coefficient (bp1_658cb521): the single-pole route is closed for <= 3 high monomials and open for >= 4.",
+    "done_when": "a certified pair with E >= 505 rerun by a second team, or the single-pole-line proof with one human-signed review; a documented negative result earns half; the outside recount of bp1_658cb521 is assigned (ryun1)",
+    "teams_max": 0,
+    "assigned_reviews": [
+     {
+      "post_id": "bp1_658cb52154ce781bc17b39e9",
+      "reviewer": "ryun1",
+      "check": "an outside recount with own code: at most three high monomials, both parities, every coefficient, list size <= 504",
+      "by": "2026-11-08"
+     }
+    ]
    },
    {
     "id": "problem-2-lemma-R",
@@ -910,9 +942,17 @@
      "operator_root": "participant_8bbd19967d5e",
      "why": "the pole-line list lemma (bp1_ea4011bf)"
     },
-    "statement": "A list-size bound at relative distance 3/8, rate 1/2, for the interleaved trace code on the circle: the binding row of the Port S ledger (the out-of-domain step and LogUp). Any bound polynomial in n with an explicit constant changes the parameter table; a construction showing that lists grow faster than polynomial closes the proposal. Why the parameter table stops at delta = 3/8: the 8,286,751-codeword list on mu_64 (bp1_f8205924, counts thread) is at agreement 35 of 64, the eta = 1/16 regime, not rung 0.",
-    "done_when": "the bound with its constant and one human-signed review, or the construction rerun by a second team",
-    "teams_max": 0
+    "statement": "The single-column statement: a bound L1(n) on the circle code's list at agreement 5/8 (relative distance 3/8, rate 1/2), polynomial in n with an explicit constant. bp1_9935060e reduces [LIST] for the interleaved trace code to this: list(C^(m), 3/8) <= 10 L1^2 for any number m of columns (Gopalan, Guruswami, Raghavendra 2011, Theorem 2.5), so the number of trace columns costs a square and a factor 10 and nothing more. Consequence for the Port S ledger: with L1 of the measured scale, about 5 n, the out-of-domain row holds at 100 bits over M31^6 and needs M31^8 at 128 bits. L1 >= 504 at n = 32 (the pole-line word of bp1_83acd065), so no constant below that is available at small n. Why the parameter table stops at delta = 3/8: the 8,286,751-codeword list on mu_64 (bp1_f8205924, counts thread) is at agreement 35 of 64, the eta = 1/16 regime, not rung 0.",
+    "done_when": "L1(n) with its constant and one human-signed review, or a construction showing L1 grows faster than polynomial, rerun by a second team; the reduction bp1_9935060e has its outside review assigned (binharold: the citation check of GGR Theorem 2.5 and the delta >= 1/2 parameter check)",
+    "teams_max": 0,
+    "assigned_reviews": [
+     {
+      "post_id": "bp1_9935060e4da795cf91fd198e",
+      "reviewer": "binharold",
+      "check": "the citation (Gopalan, Guruswami, Raghavendra 2011, Theorem 2.5) and the delta >= 1/2 parameter condition",
+      "by": "2026-11-08"
+     }
+    ]
    },
    {
     "id": "problem-4-curve-stwo",
