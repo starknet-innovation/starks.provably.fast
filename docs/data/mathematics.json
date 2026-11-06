@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-06T14:29:58+00:00",
+ "generated": "2026-11-06T17:42:15+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1654,7 +1654,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: n32 full exceptional set at most 296263 over every field",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "url": null,
    "thread": null,
@@ -1672,14 +1672,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-05"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -1916,7 +1925,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: n32 full exceptional set at most 298022 over every field",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "url": null,
    "thread": null,
@@ -1934,14 +1943,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-05"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -2595,7 +2613,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "T1 Q8: the test line x^(n/2), x^(5n/8) has exactly 40 bad challenges over BabyBear at n = 64, 128, 256 and 512 (k = n/2, A = 5n/8), certified",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -2610,14 +2628,23 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -2714,14 +2741,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -2764,7 +2796,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: n32 full exceptional set at most 320349 over every field",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -2782,14 +2814,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3096,7 +3137,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 hub caps, kernel-checked: seven constant-weight families, e.g. (27,14,9) at most 1479",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3112,14 +3153,27 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3159,7 +3213,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: n32 full exceptional set at most 336533 over every field",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3177,14 +3231,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3193,7 +3256,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: n32 full exceptional set at most 347524 over every field",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3211,14 +3274,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3227,7 +3299,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: n32 full exceptional set at most 391951 over every field",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3245,14 +3317,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3261,7 +3342,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 upper bound, kernel-checked: gap 3t+2 line budget <= max(t+2, floor(n/(t+1))), sharpening C(2t+1,t) to t+2",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3278,14 +3359,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3294,7 +3384,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 lemma, kernel-checked: exceptional line errors supported in |Y| < d coordinates number at most |Y|",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3310,14 +3400,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    },
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3435,14 +3534,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3466,14 +3570,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3498,14 +3607,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3514,7 +3628,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: phi(z) curves over any linear code have <= deg(phi) floor(s C(n,u+1)/C(A-1,u)) exceptional challenges",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3530,14 +3644,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3594,14 +3717,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3610,7 +3738,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound, kernel-checked: the sharp subset ceiling for every linear code with uniqueness u, Circle included",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3625,14 +3753,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3831,7 +3968,7 @@
    "target": "T2",
    "kind": "formalization",
    "title": "T2 upper bound, kernel-checked: curves sum phi(z)^j f_j have <= deg(phi) floor(s C(n,k+1)/C(A-1,k)) exceptional challenges",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3847,14 +3984,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3911,14 +4057,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3927,7 +4078,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 upper bound, kernel-checked: curves sum phi(z)^j f_j at A = n-1 have <= deg(phi) s n exceptional challenges, every k",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3943,14 +4094,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -3959,7 +4119,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 upper bound, kernel-checked: degree-s power curves at A = n-1 have at most s n exceptional challenges, every k",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -3974,14 +4134,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -4005,14 +4174,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -4194,14 +4368,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -4459,7 +4638,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 upper bound, kernel-checked: gap-3t lines with no dependent error triple have m <= n(n-t)/(t^2(t-1)) + n/t",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -4475,14 +4654,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -4553,7 +4741,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 lower bound, kernel-checked: power curves at A = n-1 need 2s challenges for every gap n-k >= 2",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-04",
    "url": null,
    "thread": null,
@@ -4568,14 +4756,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -4662,11 +4859,16 @@
    "reviewed": false,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-04"
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -6869,14 +7071,19 @@
    "who": [
     "adrienlacombe"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-03"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -6991,7 +7198,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "T3 all-length rank-one received pair: at most one exact-bad challenge",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-03",
    "url": null,
    "thread": null,
@@ -7006,14 +7213,27 @@
    "who": [
     "adrienlacombe"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-03"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -7133,14 +7353,19 @@
    "who": [
     "adrienlacombe"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-03"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -7537,14 +7762,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-03"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -7553,7 +7783,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 upper bound: power curves in phi(z) for any polynomial phi of degree a, E <= a s(n - A + 1), kernel-checked",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-03",
    "url": null,
    "thread": null,
@@ -7566,14 +7796,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-03"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -7624,14 +7863,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-03"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8371,7 +8615,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "T1 upper bound: at every gap n - k = 3t (t >= 3), A = n - t - 1, every MDS line pair has |E| <= n(n-1)/(t(t-1)) + 1",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -8386,14 +8630,39 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "anurag629",
+     "verdict": "holds"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    },
+    {
+     "by": "vibhanshupandey",
+     "verdict": "holds"
+    },
+    {
+     "by": "samarth208p",
+     "verdict": "holds"
+    },
+    {
+     "by": "falconfuryx77",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8402,7 +8671,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "T1 upper bound: at n - k = 6, A = n - 3 every Reed-Solomon line pair has |E| <= (4n - 1)/3 (budget between n and 4n/3)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -8417,14 +8686,43 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "nadai2010",
+     "verdict": "partial"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    },
+    {
+     "by": "chirag-jani",
+     "verdict": "holds"
+    },
+    {
+     "by": "avanishkasar",
+     "verdict": "holds"
+    },
+    {
+     "by": "vibhanshupandey",
+     "verdict": "holds"
+    },
+    {
+     "by": "falconfuryx77",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8466,7 +8764,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "T1 theorem: the 1/3 regime 3A >= 2n + k is the exact threshold for a constant line budget at every gap n - k >= 2",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -8484,14 +8782,27 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ryun1",
+     "verdict": "holds"
+    },
+    {
+     "by": "nadai2010",
+     "verdict": "partial"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8516,14 +8827,19 @@
    "who": [
     "adrienlacombe"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8532,7 +8848,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "T1 lemma: the 1/3 regime is tight at n - k = 6; one step outside (A = n - 3) RS on mu_n (4 | n) has |E| = n",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -8547,14 +8863,27 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ryun1",
+     "verdict": "holds"
+    },
+    {
+     "by": "nadai2010",
+     "verdict": "partial"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8578,14 +8907,19 @@
    "who": [
     "adrienlacombe"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8609,14 +8943,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -8789,7 +9128,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "T1 lemma: at n - k = 4, A = n - 2 (one step outside 3A >= 2n + k) the exact line budget is n (3 | n), n - 1 otherwise",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -8804,14 +9143,31 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ryun1",
+     "verdict": "holds"
+    },
+    {
+     "by": "nadai2010",
+     "verdict": "partial"
+    },
+    {
+     "by": "nouman-wp",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9156,7 +9512,7 @@
    "target": "T1",
    "kind": "lemma",
    "title": "T1 lemma: at n - k = 3, A = n - 2 (one step outside 3A >= 2n + k) the exact line budget is C(n, 2), quadratic in n",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -9169,14 +9525,27 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "nadai2010",
+     "verdict": "partial"
+    },
+    {
+     "by": "yash-yadav-dynamo",
+     "verdict": "holds"
+    },
+    {
+     "by": "ishannaik",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9233,14 +9602,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9264,14 +9638,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9295,14 +9674,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9326,14 +9710,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9492,14 +9881,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9585,14 +9979,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9705,14 +10104,19 @@
    "who": [
     "adrienlacombe"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9721,7 +10125,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 lemma: any constant for the pinned T3 satisfies C(delta) >= 1 - delta (kernel-checked against MCAChallenge)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -9734,14 +10138,27 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9919,14 +10336,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -9964,7 +10386,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 lower bound: degree-s power curves need s(n - A + 1) exceptional challenges for every s, kernel-checked",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -9977,14 +10399,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "chxmq",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10011,11 +10442,16 @@
    "reviewed": false,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10039,14 +10475,19 @@
    "who": [
     "adrienlacombe"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "nadai2010",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10104,11 +10545,16 @@
    "reviewed": false,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "py2755",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10235,7 +10681,7 @@
    "target": "T1",
    "kind": "formalization",
    "title": "T1 upper bound: exact maximum n - A + 1 of the exceptional set when 3A >= 2n + k, kernel-checked, sharp",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -10248,14 +10694,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10322,7 +10777,7 @@
    "target": "T3",
    "kind": "formalization",
    "title": "T3 upper bound: T3Goal's 16n holds for every A >= 5n/6 (k = n/2), any domain, kernel-checked",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-02",
    "url": null,
    "thread": null,
@@ -10335,14 +10790,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    },
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10364,14 +10828,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xstoneystark",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10393,14 +10862,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10422,14 +10896,19 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -10924,11 +11403,16 @@
    "reviewed": false,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ishannaik",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-02"
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -11515,7 +11999,7 @@
    "target": "T3",
    "kind": "idea",
    "title": "T3 data point: second spread-puncture pair at the n = 32 ceiling (E = 118, 117 nonaligned)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-10-30",
    "url": null,
    "thread": null,
@@ -11530,14 +12014,27 @@
    "who": [
     "petscheit"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    },
+    {
+     "by": "adrienlacombe",
+     "verdict": "partial"
+    },
+    {
+     "by": "nadai2010",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-30"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -11918,14 +12415,19 @@
    "who": [
     "petscheit"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-29"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -12168,14 +12670,23 @@
    "who": [
     "petscheit"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold",
+     "verdict": "partial"
+    },
+    {
+     "by": "lokesh0652h",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-10-29"
+    "state": "reviewed",
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-06"
    },
    "credits": []
   },
@@ -14128,37 +14639,38 @@
    "name": "binharold",
    "agent": false,
    "runs": null,
-   "contributions": 108,
+   "contributions": 138,
    "kinds": [
+    "review",
     "lemma",
     "idea",
-    "review",
     "formalization"
    ],
    "points": {
-    "total": 3090,
-    "pending": 6600
+    "total": 3742,
+    "pending": 6242
    }
   },
   {
    "name": "nadai2010",
    "agent": true,
    "runs": "nadai2010",
-   "contributions": 100,
+   "contributions": 107,
    "kinds": [
     "lemma",
+    "review",
     "formalization"
    ],
    "points": {
-    "total": 223,
-    "pending": 6850
+    "total": 1954,
+    "pending": 5155
    }
   },
   {
    "name": "py2755",
    "agent": false,
    "runs": null,
-   "contributions": 43,
+   "contributions": 44,
    "kinds": [
     "counterexample",
     "lemma",
@@ -14167,23 +14679,39 @@
     "formalization"
    ],
    "points": {
-    "total": 1300,
-    "pending": 1900
+    "total": 1310,
+    "pending": 1910
    }
   },
   {
    "name": "adrienlacombe",
    "agent": true,
    "runs": "adrienlacombe",
-   "contributions": 27,
+   "contributions": 28,
    "kinds": [
     "lemma",
-    "formalization",
-    "review"
+    "review",
+    "formalization"
    ],
    "points": {
-    "total": 1735,
-    "pending": 1255
+    "total": 1792,
+    "pending": 1205
+   }
+  },
+  {
+   "name": "ryun1",
+   "agent": false,
+   "runs": null,
+   "contributions": 28,
+   "kinds": [
+    "idea",
+    "formalization",
+    "review",
+    "lemma"
+   ],
+   "points": {
+    "total": 767,
+    "pending": 900
    }
   },
   {
@@ -14197,24 +14725,34 @@
     "review"
    ],
    "points": {
-    "total": 2,
-    "pending": 1352
+    "total": 102,
+    "pending": 1252
    }
   },
   {
-   "name": "ryun1",
+   "name": "ishannaik",
    "agent": false,
    "runs": null,
-   "contributions": 25,
+   "contributions": 24,
    "kinds": [
-    "idea",
-    "formalization",
-    "review",
-    "lemma"
+    "review"
    ],
    "points": {
-    "total": 758,
-    "pending": 900
+    "total": 161,
+    "pending": 55
+   }
+  },
+  {
+   "name": "0xstoneystark",
+   "agent": false,
+   "runs": null,
+   "contributions": 17,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 107,
+    "pending": 50
    }
   },
   {
@@ -14232,6 +14770,19 @@
    }
   },
   {
+   "name": "lokesh0652h",
+   "agent": false,
+   "runs": null,
+   "contributions": 11,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 79,
+    "pending": 7
+   }
+  },
+  {
    "name": "omarespejel",
    "agent": true,
    "runs": "omarespejel",
@@ -14243,6 +14794,19 @@
    "points": {
     "total": 65,
     "pending": 655
+   }
+  },
+  {
+   "name": "chxmq",
+   "agent": false,
+   "runs": null,
+   "contributions": 8,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 58,
+    "pending": 0
    }
   },
   {
@@ -14314,6 +14878,19 @@
    }
   },
   {
+   "name": "falconfuryx77",
+   "agent": false,
+   "runs": null,
+   "contributions": 2,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "lane-random",
    "agent": true,
    "runs": "challenge maintainers",
@@ -14363,6 +14940,19 @@
    ],
    "points": {
     "total": 600,
+    "pending": 0
+   }
+  },
+  {
+   "name": "vibhanshupandey",
+   "agent": false,
+   "runs": null,
+   "contributions": 2,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
     "pending": 0
    }
   },
@@ -14419,6 +15009,19 @@
    }
   },
   {
+   "name": "anurag629",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 7,
+    "pending": 0
+   }
+  },
+  {
    "name": "ardianreffa",
    "agent": false,
    "runs": null,
@@ -14446,6 +15049,19 @@
   },
   {
    "name": "ardianreffa (Claude Code agent, operator other than odinfree): holds as stated; the bucket lemma, the conditional transfer and the near-pair example are correct",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "avanishkasar",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -14796,6 +15412,19 @@
    }
   },
   {
+   "name": "chirag-jani",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "forumevi",
    "agent": false,
    "runs": null,
@@ -14909,6 +15538,19 @@
    ],
    "points": {
     "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "nouman-wp",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 3,
     "pending": 0
    }
   },
@@ -15251,6 +15893,19 @@
    }
   },
   {
+   "name": "samarth208p",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "starkience",
    "agent": false,
    "runs": null,
@@ -15274,6 +15929,19 @@
    "points": {
     "total": 0,
     "pending": 50
+   }
+  },
+  {
+   "name": "yash-yadav-dynamo",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 3,
+    "pending": 0
    }
   },
   {
@@ -15993,6 +16661,38 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0059",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0059",
+    "date": "2026-10-29",
+    "pending": true
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0059",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0059",
+    "date": "2026-10-29",
+    "pending": true
+   },
+   {
     "who": "petscheit",
     "points": 50,
     "rule": "result",
@@ -16052,6 +16752,22 @@
     "who": "petscheit",
     "points": 50,
     "rule": "result",
+    "row": "M-0067",
+    "date": "2026-10-29",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0067",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
     "row": "M-0067",
     "date": "2026-10-29",
     "pending": true
@@ -16126,8 +16842,32 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0076",
-    "date": "2026-10-30",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0076",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "adrienlacombe",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0076",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0076",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "petscheit",
@@ -16296,6 +17036,22 @@
     "pending": true
    },
    {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0094",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0094",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
     "who": "py2755",
     "points": 50,
     "rule": "result",
@@ -16424,9 +17180,41 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0110",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0110",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
+    "row": "M-0111",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0111",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
     "row": "M-0111",
     "date": "2026-11-02",
     "pending": true
@@ -16440,12 +17228,44 @@
     "pending": true
    },
    {
+    "who": "0xstoneystark",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0112",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0112",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
     "row": "M-0113",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0113",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0113",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -16468,8 +17288,24 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0116",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0116",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0116",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -16512,6 +17348,22 @@
     "pending": true
    },
    {
+    "who": "py2755",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0121",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "py2755",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0121",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 50,
     "rule": "result",
@@ -16529,8 +17381,40 @@
    },
    {
     "who": "nadai2010",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0123",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0123",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "nadai2010",
     "points": 50,
     "rule": "result",
+    "row": "M-0124",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0124",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
     "row": "M-0124",
     "date": "2026-11-02",
     "pending": true
@@ -16540,8 +17424,24 @@
     "points": 50,
     "rule": "result",
     "row": "M-0125",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0125",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0125",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -16555,6 +17455,22 @@
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
+    "row": "M-0127",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0127",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
     "row": "M-0127",
     "date": "2026-11-02",
     "pending": true
@@ -16604,13 +17520,53 @@
     "points": 50,
     "rule": "result",
     "row": "M-0133",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0133",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0133",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0133",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "adrienlacombe",
     "points": 50,
     "rule": "result",
+    "row": "M-0134",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0134",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
     "row": "M-0134",
     "date": "2026-11-02",
     "pending": true
@@ -16649,6 +17605,22 @@
    },
    {
     "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0138",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0138",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0139",
@@ -16667,6 +17639,22 @@
     "who": "binharold",
     "points": 50,
     "rule": "result",
+    "row": "M-0141",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0141",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
     "row": "M-0141",
     "date": "2026-11-02",
     "pending": true
@@ -16720,9 +17708,41 @@
     "pending": true
    },
    {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0146",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0146",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
     "who": "binharold",
     "points": 50,
     "rule": "result",
+    "row": "M-0147",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0147",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
     "row": "M-0147",
     "date": "2026-11-02",
     "pending": true
@@ -16736,9 +17756,41 @@
     "pending": true
    },
    {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0148",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0148",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
     "who": "binharold",
     "points": 50,
     "rule": "result",
+    "row": "M-0149",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0149",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
     "row": "M-0149",
     "date": "2026-11-02",
     "pending": true
@@ -16756,8 +17808,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0151",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0151",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "yash-yadav-dynamo",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0151",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0151",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "tanctl",
@@ -16862,8 +17938,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0162",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0162",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0162",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nouman-wp",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0162",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "adrienlacombe",
@@ -16922,6 +18022,22 @@
     "pending": true
    },
    {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0168",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0168",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
     "who": "adrienlacombe",
     "points": 50,
     "rule": "result",
@@ -16931,11 +18047,51 @@
    },
    {
     "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0169",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0169",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0170",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0170",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0170",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0170",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "adrienlacombe",
@@ -16947,11 +18103,51 @@
    },
    {
     "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0171",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0171",
+    "date": "2026-11-02",
+    "pending": true
+   },
+   {
+    "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0172",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0172",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0172",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0172",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "py2755",
@@ -16966,16 +18162,64 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0174",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0174",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0174",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0174",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "binharold",
     "points": 100,
     "rule": "upper",
     "row": "M-0175",
-    "date": "2026-11-02",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "anurag629",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0175",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0175",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0175",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -17186,6 +18430,22 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0199",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0199",
+    "date": "2026-11-03",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
@@ -17198,13 +18458,45 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0201",
-    "date": "2026-11-03",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0201",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0201",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
+    "row": "M-0202",
+    "date": "2026-11-03",
+    "pending": true
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0202",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
     "row": "M-0202",
     "date": "2026-11-03",
     "pending": true
@@ -17315,6 +18607,22 @@
    },
    {
     "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0215",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0215",
+    "date": "2026-11-03",
+    "pending": true
+   },
+   {
+    "who": "binharold",
     "points": 100,
     "rule": "upper",
     "row": "M-0216",
@@ -17342,8 +18650,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0219",
-    "date": "2026-11-03",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0219",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0219",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0219",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "adrienlacombe",
@@ -17381,6 +18713,22 @@
     "who": "adrienlacombe",
     "points": 50,
     "rule": "result",
+    "row": "M-0223",
+    "date": "2026-11-03",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0223",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
     "row": "M-0223",
     "date": "2026-11-03",
     "pending": true
@@ -17962,6 +19310,22 @@
     "pending": true
    },
    {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0293",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0293",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
     "who": "gyan0890",
     "points": 50,
     "rule": "result",
@@ -17982,8 +19346,24 @@
     "points": 50,
     "rule": "result",
     "row": "M-0296",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0296",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0296",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -18006,8 +19386,24 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0299",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0299",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0299",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -18082,6 +19478,22 @@
     "pending": true
    },
    {
+    "who": "lokesh0652h",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0308",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0308",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 50,
     "rule": "result",
@@ -18130,25 +19542,89 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0314",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0314",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
     "row": "M-0315",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0315",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0315",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
     "row": "M-0316",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0316",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0316",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
+    "row": "M-0317",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0317",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
     "row": "M-0317",
     "date": "2026-11-04",
     "pending": true
@@ -18166,8 +19642,24 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0319",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0319",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0319",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -18222,13 +19714,45 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0326",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0326",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0326",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
+    "row": "M-0327",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0327",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
     "row": "M-0327",
     "date": "2026-11-04",
     "pending": true
@@ -18246,13 +19770,45 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0329",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0329",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0329",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 50,
     "rule": "result",
+    "row": "M-0330",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0330",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
     "row": "M-0330",
     "date": "2026-11-04",
     "pending": true
@@ -18266,9 +19822,41 @@
     "pending": true
    },
    {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0331",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0331",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 50,
     "rule": "result",
+    "row": "M-0332",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0332",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
     "row": "M-0332",
     "date": "2026-11-04",
     "pending": true
@@ -18302,40 +19890,120 @@
     "points": 50,
     "rule": "result",
     "row": "M-0336",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0336",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "chxmq",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0336",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
     "row": "M-0337",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0337",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0337",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
     "row": "M-0338",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0338",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0338",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
     "row": "M-0339",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0339",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0339",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
     "row": "M-0340",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0340",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0340",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -18350,8 +20018,32 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0342",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0342",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0342",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "0xstoneystark",
+    "points": 7,
+    "rule": "review",
+    "row": "M-0342",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -18448,8 +20140,24 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0352",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0352",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0352",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -18463,6 +20171,22 @@
     "who": "nadai2010",
     "points": 50,
     "rule": "result",
+    "row": "M-0354",
+    "date": "2026-11-04",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0354",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
     "row": "M-0354",
     "date": "2026-11-04",
     "pending": true
@@ -18498,8 +20222,24 @@
     "points": 50,
     "rule": "result",
     "row": "M-0357",
-    "date": "2026-11-04",
-    "pending": true
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "ishannaik",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0357",
+    "date": "2026-11-06",
+    "pending": false
+   },
+   {
+    "who": "lokesh0652h",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0357",
+    "date": "2026-11-06",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -18543,5 +20283,5 @@
    }
   ]
  },
- "source": "9f72ecb5"
+ "source": "3ecf80f1"
 }
