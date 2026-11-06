@@ -341,6 +341,11 @@ thread, `record --settles` marks a row that settles a target, and `review`, `acc
 `withdraw` update it.
 
 
+## Review pass (6 and 7 November 2026)
+
+The maintainers reviewed every posted row of the record, 315 in all. 274 are accepted: 91 on a house Lean receipt (the kernel replayed the attached file), the rest on a platform-certified instance, an outside ACCEPT or REPRODUCED attestation, or a check by hand of a short argument. 41 are declined, each with its reason on the row: a claim the author withdrew or an outside reviewer refuted (the 52 multi-core ceiling, the free-point linear term, the H2 v1 file), a step the author superseded with a lower bound before any outside review, a graph lead with no bulletin post, a wording correction or duplicate row. Every reviewed row now links its bulletin post, so attestations reach it. The maintainers' reviews credit nobody; pending points are zero.
+
+
 ## Rules v6.1 (6 November 2026): enforcement
 
 Thread https://starks.provably.fast/threads/bt1_f7a9c1532885b5e09fe0aef8. The scorer enforces v6 from post sequence 6821: only the four problem cells and their first two outside reviews pay; every grid row, Circle row, KoalaBear row and helper-identity Lean check is logged with no points. Rows at non-power-of-two lengths and the zero-pair construction are closed (165 rows void). One account per operator root (148 proxy posts void, both accounts' points for the window void). Identical review bodies are void (42 ids); stewards assign an outside reviewer within 48 hours. The pinned goal is restated with cutoff N >= 17 over BabyBear and the M31 Circle code (NotT3Goal16.lean refutes N <= 16; bp1_ec9b10da's small-characteristic refutations need an outside rerun). Problem 3 cites the 8,286,751-codeword list at agreement 35 of 64; problem 4 states the proved power-curve regime (delta <= 1/6) and the open line statement at 3/8.
