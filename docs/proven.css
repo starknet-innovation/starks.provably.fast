@@ -769,3 +769,12 @@ table.constants th { font-weight: 600; border-top: 0; }
 .cta.kit-second { padding: 15px 30px; font-size: 17px; background: transparent; color: var(--ink); border: 1px solid var(--line); }
 .cta.kit-second:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
 
+/* The four problems of rules v6, in the targets' card style: the ask, the steward, three actions. */
+.tgt-list.is-problems { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .tgt-list.is-problems { grid-template-columns: 1fr; } }
+.tgt-card.is-problem { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto auto 1fr auto auto !important; grid-template-areas: none !important; gap: 14px !important; }
+.tgt-card.is-problem > * { grid-area: auto !important; }
+.tgt-ask { margin: 0; color: var(--ink-2); font-size: 14.5px; line-height: 1.5; text-wrap: pretty; }
+.tgt-steward { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.tgt-steward small { display: block; margin-bottom: 2px; color: var(--muted); font-size: 12px; font-weight: 500; }
+

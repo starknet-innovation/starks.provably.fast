@@ -1778,8 +1778,8 @@
       el("span", { class: "bp-arrow", "aria-hidden": "true" }, "→"), el("span", { class: "bp-now" }, now, extra));
     const times = start && now?.count ? now.count / start.count : 0;
     return [el("p", { class: "bp-head" }, `Since the first result, ${opened ? day(opened) : "in October"}`), el("ul", { class: "bp-list" },
-      start && now?.count ? line(`Most built at n = ${thousands(now.n || 1024)}`, `${thousands(start.count)}, ${day(new Date(start.t).toISOString())}`,
-        el("b", {}, thousands(now.count)), el("small", { class: "bp-gain" }, `×${times.toFixed(1)}`)) : "",
+      start && now?.count ? line(`Record at n = ${thousands(now.n || 1024)}`, `${thousands(start.count)}, ${day(new Date(start.t).toISOString())}`,
+        el("b", {}, thousands(now.count)), times >= 1.05 ? el("small", { class: "bp-gain" }, `×${times.toFixed(1)}`) : el("small", { class: "bp-gain" }, ` ${perN(now.count / (now.n || 1024))} n, core-free`)) : "",
       caps.length ? line("Caps on a construction", "none", caps.flatMap((b, i) => [i ? ", " : "", el("b", {}, b.value.replace(/ at n = .*/, "")), ` ${checkedWord(b.status || "")}`])) : "",
       regime ? line("Pairs with a large joint core", "no bound", ["at most ", el("b", {}, regime.value.split(" when ")[0])]) : "",
       refuted.length ? line("Statements settled", "none", refuted.flatMap((st, i) => [i ? "; " : "", el("b", {}, "refuted: "), st.title.replace(/:\s*refuted\s*$/i, "")])) : "",
@@ -1788,9 +1788,9 @@
   }
   async function renderBounds(record) {
     const root = $("bounds-board");
-    if (!root) return;
+    if (!root && !$("bounds-week") && !$("bounds-progress")) return;
     const every = (record.upper_bounds || []).find((b) => /proven bound on E/i.test(b.kind || "") && b.value);
-    if ($("bounds-open") && every) $("bounds-open").textContent = `Proven for every pair: E ≤ ${every.value}.`;
+    // The bounds line is written by hand in index.html; `every` only decides whether the ruler shows a proven mark.
     // The one task the maintainers most want done this week, when the rules name one, with the thread
     // of the statement ranked first.
     const week = $("bounds-week"), ask = record.rules?.contribution_of_the_week;
@@ -1836,6 +1836,7 @@
         el("td", { class: "bounds-best" }, count), el("td", {}, cap),
         el("td", { class: "bounds-state-cell" }, el("span", { class: `bounds-state is-${c.state}`, title: STATE_TITLES[c.state] || "" }, STATE_WORDS[c.state] || c.state)));
     });
+    if (!root) return;
     root.replaceChildren(el("table", { class: "bounds-table" }, el("thead", {}, el("tr", {},
       el("th", { scope: "col" }, "Other cells"), el("th", { scope: "col" }, "Best count"),
       el("th", { scope: "col" }, "Cap", el("button", { type: "button", class: "info-tip", popovertarget: "caps-help", "aria-label": "What a cap is" }, "i")),
@@ -1927,11 +1928,23 @@
       el("h3", { class: "record-group-title", id: "statements" }, el("span", { class: "record-target" }, "prove"), "Statements ranked first"),
       el("ol", { class: "record-list" }, asks));
   }
+  // The home's four problem cards: who holds each, from the served task list.
+  function renderProblems() {
+    const cells = new Map(((window.__tasks && window.__tasks.claim_board) || []).map((c) => [c.id, c]));
+    for (const card of document.querySelectorAll("[data-problem]")) {
+      const live = cells.get(card.dataset.problem), pill = card.querySelector("[data-problem-state]");
+      if (!live || !pill) continue;
+      const holders = live.holders || [];
+      pill.textContent = holders.length ? `${holders.length === 1 ? "taken by" : `${holders.length} teams:`} ${holders.slice(0, 3).join(", ")}${holders.length > 3 ? ` and ${holders.length - 3} more` : ""}` : "Open";
+      pill.classList.toggle("is-yes", holders.length > 0);
+    }
+  }
   async function renderMathematics() {
     try {
       const [record, profiles] = await Promise.all([loadRecord(), loadProfiles()]);
       record.profiles = profiles;
-      if ($("cells-list")) { try { window.__tasks = await (await fetch("/state/tasks.json", { headers: { accept: "application/json" } })).json(); } catch { window.__tasks = null; } }
+      if ($("cells-list") || $("problems")) { try { window.__tasks = await (await fetch("/state/tasks.json", { headers: { accept: "application/json" } })).json(); } catch { window.__tasks = null; } }
+      renderProblems();
       renderRecord(record);
       renderTargets(record);
       renderProgress(record);
