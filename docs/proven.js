@@ -1872,8 +1872,9 @@
       el("tbody", {}, rowsOf.map((cells) => el("tr", {}, cells.map((v) => el("td", {}, v || "")))))));
     const constants = (rules.constants || []).length ? [
       el("h3", { class: "record-group-title", id: "constants" }, el("span", { class: "record-target" }, "constants"), "Proved and measured, per code and size"),
-      table(["code", "n, k, A", "proved for every pair", "posted, not yet accepted", "measured", "conjectured"],
-        rules.constants.map((c) => [c.code, `${c.n}, ${c.k}, ${c.A}`, c.proved_every_pair, c.posted, c.measured, c.conjectured]))] : [];
+      table(["code", "n, k, A", "field", "proved for every pair", "posted, not yet accepted", "measured", "open question"],
+        rules.constants.map((c) => [c.code, `${c.n}, ${c.k}, ${c.A}`, c.field || "", c.proved_every_pair, c.posted, c.measured, c.conjectured])),
+      ...(rules.constants_note ? [el("p", { class: "bounds-week" }, rules.constants_note)] : [])] : [];
     const portS = rules.port_s ? [
       el("h3", { class: "record-group-title", id: "port-s" }, el("span", { class: "record-target" }, "parameters"), `Port S: ${rules.port_s.parameters}`),
       rules.port_s.rows && rules.port_s.rows.length ? table(rules.port_s.columns, rules.port_s.rows) : el("p", { class: "bounds-week" }, rules.port_s.status)] : [];
@@ -1881,6 +1882,28 @@
       el("h3", { class: "record-group-title", id: "lemmas" }, el("span", { class: "record-target" }, "lemmas"), rules.lemmas.title),
       rules.lemmas.rows && rules.lemmas.rows.length ? el("ol", { class: "record-list" }, rules.lemmas.rows.map((l) => el("li", { class: "record-row is-lemma" },
         el("span", { class: "record-kind" }, l.port), el("span", { class: "record-title" }, l.title, el("small", {}, l.statement)), el("span", { class: "verdict is-accepted" }, "accepted")))) : el("p", { class: "bounds-week" }, rules.lemmas.status)] : [];
+    if (rules.mode && (rules.problems || []).length) {
+      // Rules v6, hard-problem mode: the four problems and nothing else until the window closes.
+      const m = rules.mode;
+      const problems = rules.problems.map((c) => {
+        const live = holders.get(c.id);
+        const st = c.steward || {};
+        return el("li", { class: "record-row is-proof" },
+          el("span", { class: "record-kind" }, "problem"),
+          el("span", { class: "record-title" }, el("code", {}, c.id), " ", c.title, el("small", {}, c.statement),
+            el("small", {}, `Done when: ${c.done_when}`),
+            el("small", {}, "Steward: ", st.login ? el("a", { href: `/people#${st.login}` }, st.login) : "open", st.why ? ` (${st.why})` : "", "; the living post of approaches tried is theirs in the caps thread.")),
+          el("span", { class: `verdict ${live && live.holders && live.holders.length ? "is-posted" : "is-accepted"}` }, live && live.holders && live.holders.length ? `taken by ${live.holders.join(", ")}` : "open"));
+      });
+      root.replaceChildren(...problem,
+        el("p", { class: "bounds-week" }, el("b", {}, `Rules v6, ${m.name}, since ${m.since}. `),
+          `Earns nothing: ${(m.earns_nothing || []).join("; ")}. Still counts: ${(m.still_counts || []).join("; ")}. ${m.proof_claims || ""} ${m.stewards || ""}`,
+          m.thread ? [" ", el("a", { href: `/threads/${m.thread}` }, "The rules thread")] : ""),
+        el("h3", { class: "record-group-title", id: "claim-board" }, el("span", { class: "record-target" }, "problems"), "The four problems, and nothing else until the window closes"),
+        el("ol", { class: "record-list" }, problems),
+        el("p", { class: "bounds-week" }, `Every other cell of the claim board (${(rules.claim_board || []).filter((c) => c.frozen).length}) is frozen in tasks.json and pays nothing until the window closes.`));
+      return;
+    }
     root.replaceChildren(...problem,
       ...(board.length ? [el("h3", { class: "record-group-title", id: "claim-board" }, el("span", { class: "record-target" }, "claim"), "The claim board: Lemma R first, then any cell; the board says how many teams a cell takes"), el("ol", { class: "record-list" }, board)] : []),
       ...awaiting, ...constants, ...portS, ...lemmas,
