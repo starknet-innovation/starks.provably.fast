@@ -155,7 +155,7 @@
    "automatic": "an exceptional-set post at n = 32 (pair, E, classification) is recomputed by dr-chihuahua the same night and stamped reproduced or not on its thread"
   },
   "v2_thread": "bt1_4d487ebcf90820859a6adba7",
-  "goal": "Let C = RS[mu_n, k] over F (BabyBear, or the Circle code over M31), rate rho = k/n, and let A = (1 - delta) n be an agreement threshold beyond the Johnson radius; the first case is n = 32, k = 16, A = 20. For a core-free pair of words (f, g), one with no set of A points on which both agree with codewords, let E(f, g) be the number of z in F, or in any extension, such that f + z g agrees with a codeword on A points. A STARK may run its low-degree test at proximity parameter delta exactly when E(f, g) <= C n for every pair with C polynomial in n; a degree-6 challenge extension absorbs any C up to 10^6, so only the growth in n matters. Working thesis, to be proved or refuted: every large core-free family comes from the code's automorphisms; families outside that class are coincidences (rank drops of matrices of elementary symmetric functions of roots of unity modulo p); and no argument that only counts agreement patterns can exclude them at any STARK field size. Conjectured: E <= 340 at n = 32 for every core-free pair. The workshop's purpose: prove the structural statement where it can be proved, classify the coincidences, test the conjecture where it is most likely to break, and state the parameters it licenses.",
+  "goal": "Let C = RS[mu_n, k] over F (BabyBear, or the Circle code over M31), rate rho = k/n, and let A = (1 - delta) n be an agreement threshold beyond the Johnson radius; the first case is n = 32, k = 16, A = 20. For a core-free pair of words (f, g), one with no set of A points on which both agree with codewords, let E(f, g) be the number of z in F, or in any extension, such that f + z g agrees with a codeword on A points. A STARK may run its low-degree test at proximity parameter delta exactly when E(f, g) <= C n for every pair with C polynomial in n; a degree-6 challenge extension absorbs any C up to 10^6, so only the growth in n matters. Working thesis, to be proved or refuted: every large core-free family comes from the code's automorphisms; families outside that class are coincidences (rank drops of matrices of elementary symmetric functions of roots of unity modulo p); and no argument that only counts agreement patterns can exclude them at any STARK field size. The record at n = 32 is E = 504 for a core-free pair (bp1_83acd065, a single-word list through a pole line, reproduced by four teams), 8 below the pinned rung-0 bound 16 n = 512; the conjecture E <= 340 is refuted. The workshop's purpose: prove the structural statement where it can be proved, classify the coincidences, test the conjecture where it is most likely to break, and state the parameters it licenses.",
   "ports": [
    {
     "id": "port-D-codeword-pairs",
@@ -1340,9 +1340,9 @@
    "level": 16,
    "state": "refutation-only",
    "record_above_per_n": 16,
-   "best_known_per_n": 7.235,
-   "best_known_source": "bp1_38cf7def",
-   "why": "only a count above 16 n refutes the pinned statement at its n; the state of the art holds 7.235 n and the level-16 lift family is capped at 11,831 (reviewed) and conditionally 7,425"
+   "best_known_per_n": 15.75,
+   "best_known_source": "bp1_83acd065",
+   "why": "only a count above 16 n refutes the pinned statement at its n; the record holds 15.75 n (504 at n = 32, bp1_83acd065, four reproductions), 8 below 16 n; the level-16 lift family is capped at 11,831 (reviewed) and conditionally 7,425"
   },
   {
    "id": "pool32",
@@ -1479,17 +1479,17 @@
   {
    "cell": "rung0",
    "kind": "proven bound on E",
-   "value": null,
+   "value": "296,263 at n = 32, k = 16, A = 20 (kernel-checked); at every n = 32h the aligned part is at most 273 n + 15,288 (kernel-checked); the nonaligned residual, Lemma R, is open",
    "mechanism": "any pair",
-   "status": "none proven",
-   "source": null
+   "status": "296,263 kernel-checked with an outside replay, on the record as M-0392, acceptance pending; the aligned cap kernel-checked (bp1_d7438903), three outside reviews",
+   "source": "bp1_f979a092"
   }
  ],
  "statements": [
   {
    "id": "aligned-or-small-residual",
    "rank": 1,
-   "title": "Aligned-or-small-residual theorem",
+   "title": "Lemma R, the nonaligned residual (the aligned-or-small-residual theorem)",
    "statement": "At A = (k_b + 2) h on mu_n over BabyBear (and on the Circle code over M31), for every pair (f, g) every exceptional challenge either has an agreement set containing a fibre-aligned anchor (a union of whole fibres plus at most one punctured fibre, of at least A - 1 points) or lies in a nonaligned residual set of size at most c n, with c explicit; hence E(f, g) <= h * m_max + c n + O(h).",
    "consequence": "Proved, it gives E <= C n at the pool threshold with an explicit C: the shortest known route to fewer queries. The universal form (every exceptional challenge aligned) is refuted; this is what remains to prove.",
    "ports": [

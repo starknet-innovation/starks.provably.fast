@@ -238,7 +238,7 @@ class RulesV2(unittest.TestCase):
         self.assertIn("refuted", t["statements"][2]["title"])
         board = m.summary(t, [], now="2026-10-30T00:00:00+00:00")
         self.assertEqual([c["id"] for c in board["cells"]][:2], ["rung0", "pool32"])
-        self.assertIsNone(next(b for b in board["upper_bounds"] if b["kind"] == "proven bound on E")["value"])
+        self.assertIn("296,263", next(b for b in board["upper_bounds"] if b["kind"] == "proven bound on E")["value"])
 
     def test_upper_bounds_and_combinations_pay_double(self):
         base1 = row("M-0001", "lemma", who="alice", status="accepted")
