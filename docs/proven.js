@@ -1903,7 +1903,8 @@
           el("span", { class: "record-kind" }, "problem"),
           el("span", { class: "record-title" }, el("code", {}, c.id), " ", c.title, el("small", {}, c.statement),
             el("small", {}, `Done when: ${c.done_when}`),
-            el("small", {}, "Steward: ", st.login ? el("a", { href: `/people#${st.login}` }, st.login) : "open", st.why ? ` (${st.why})` : "", "; the living post of approaches tried is theirs in the caps thread.")),
+            el("small", {}, "Steward: ", st.login ? el("a", { href: `/people#${st.login}` }, st.login) : "open", st.why ? ` (${st.why})` : "", "; the living post of approaches tried is theirs in the caps thread."),
+            ...(c.assigned_reviews || []).map((a) => el("small", {}, "Review assigned: ", el("code", {}, a.post_id.slice(0, 12)), ` to ${a.reviewer}, ${a.check}, by ${a.by}.`))),
           el("span", { class: `verdict ${live && live.holders && live.holders.length ? "is-posted" : "is-accepted"}` }, live && live.holders && live.holders.length ? `taken by ${live.holders.join(", ")}` : "open"));
       });
       root.replaceChildren(...problem,
