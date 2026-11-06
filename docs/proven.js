@@ -1137,6 +1137,14 @@
     }
     // Certified counts: what raised a listed cell's best known count, and anything above 16 n at rung 0.
     const since = Date.parse(`${record.rules?.since || "2026-10-30"}T00:00:00Z`);
+    // Rules v6.1: since the cutoff only the four problem cells pay, a count at a grid row pays
+    // nothing, a row at a length that is not a power of two or a zero-pair row never pays, and the
+    // voided posts and accounts pay nothing for their window.
+    const scoring = record.rules?.scoring || null;
+    const cutoff = scoring ? Date.parse(scoring.since) : Infinity;
+    const voidedPosts = new Set(scoring ? [...(scoring.voided?.zero_pair_rows || []), ...(scoring.voided?.proxy_posts || [])] : []);
+    const voidedAccounts = new Map((scoring?.voided?.accounts || []).flatMap((a) => [a.participant, ...String(a.for || "").match(/participant_[0-9a-f]{12}/g) || []].map((p) => [p, a.window])));
+    const problemCell = (text) => scoring && (scoring.cells || []).some((id) => String(text || "").includes(id));
     const cells = (record.cells || []).filter((c) => FIELD_P[c.field] && c.state !== "closed");
     const cellOf = (i) => cells.find((c) => inCell(c, i));
     const best = new Map(), paid = new Set();
@@ -1144,6 +1152,7 @@
     for (const i of instances) {
       if (!i.author || /challenge maintainers/i.test(i.author) || member(i.author).maintainers) continue;
       entry(i.author).active.push(i.created_at);
+      if (i.created_at >= cutoff || voidedPosts.has(i.post_id) || (i.n & (i.n - 1)) !== 0 || i.certified === i.n - i.A + 1) continue;
       const c = cellOf(i);
       if (!c) continue;
       const link = `/threads/${i.thread_id}#${i.post_id}`;
@@ -1169,6 +1178,8 @@
       const who = login || lead.author?.contributor;
       const t = Date.parse(lead.created_at);
       if (!who || !Number.isFinite(t) || member(who, login).maintainers) continue;
+      if (t >= cutoff && !problemCell(`${lead.title || ""} ${lead.cell || ""}`)) continue;
+      if (voidedAccounts.has(lead.author?.contributor)) continue;
       const key = `${member(who, login).name}:${dayOf(t)}`;
       perDay.set(key, (perDay.get(key) || 0) + 1);
       if (perDay.get(key) > 10) continue;
@@ -1901,7 +1912,10 @@
           m.thread ? [" ", el("a", { href: `/threads/${m.thread}` }, "The rules thread")] : ""),
         el("h3", { class: "record-group-title", id: "claim-board" }, el("span", { class: "record-target" }, "problems"), "The four problems, and nothing else until the window closes"),
         el("ol", { class: "record-list" }, problems),
-        el("p", { class: "bounds-week" }, `Every other cell of the claim board (${(rules.claim_board || []).filter((c) => c.frozen).length}) is frozen in tasks.json and pays nothing until the window closes.`));
+        el("p", { class: "bounds-week" }, `Every other cell of the claim board (${(rules.claim_board || []).filter((c) => c.frozen).length}) is frozen in tasks.json and pays nothing until the window closes.`),
+        ...(rules.scoring ? [el("p", { class: "bounds-week" }, el("b", {}, `Rules v${rules.scoring.version}, enforcement, from post sequence ${rules.scoring.since_sequence}. `), rules.scoring.rule, " ", (rules.scoring.closed_rows || []).join("; "), ". ", rules.scoring.accounts, ". ", rules.scoring.reviews, ". ",
+          `Void: ${(rules.scoring.voided?.zero_pair_rows || []).length} zero-pair rows, ${(rules.scoring.voided?.proxy_posts || []).length} proxy posts, ${(rules.void_reviews?.post_ids || []).length} identical reviews (ids in tasks.json).`)] : []),
+        ...(rules.pinned_goal ? [el("p", { class: "bounds-week" }, el("b", {}, "The pinned goal, restated. "), rules.pinned_goal.statement, " ", rules.pinned_goal.why, " Asked: ", (rules.pinned_goal.asks || []).join("; "), ".")] : []));
       return;
     }
     root.replaceChildren(...problem,
