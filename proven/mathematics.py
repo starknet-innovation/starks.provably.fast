@@ -234,6 +234,20 @@ def row_points(row: dict, rules: dict | None = None) -> tuple[int, str]:
     return round(value), rule
 
 
+def scored(row: dict, scoring: dict) -> bool:
+    """Rules v6.1: a row dated after the cutoff pays only when it sits in one of the four problem
+    cells (named in its title, its cell field or its lead), or is a review of such a row; every
+    other row since the cutoff is logged. Rows before the cutoff pay as before."""
+    if not scoring:
+        return True
+    since = str(scoring.get("since") or "")[:10]
+    if not since or str(row.get("date") or "") < since:
+        return True
+    cells = scoring.get("cells") or []
+    text = " ".join(str(row.get(key) or "") for key in ("cell", "title", "lead"))
+    return any(cell in text for cell in cells)
+
+
 def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
     """Every point the record pays, a line each: who, how many, by which rule, for which row, when,
     and whether it is still pending (the row is posted and not yet accepted)."""
@@ -245,8 +259,11 @@ def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
             lines.append({"who": name, "points": round(points), "rule": rule, "row": row["id"],
                           **({"of": of} if of else {}), **({"lean": True} if "lean" in row.get("bonus", []) else {}), "date": when, "pending": pending})
 
+    scoring = (rules or {}).get("scoring") or {}
     for row in records:
         if row["status"] == "withdrawn" or row["kind"] == "source":
+            continue
+        if not scored(row, scoring):
             continue
         if row["status"] == "refuted":
             for review in row.get("reviews", []):
