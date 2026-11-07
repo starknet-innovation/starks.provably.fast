@@ -372,10 +372,21 @@ def rewrite(records: list[dict], path: Path = RECORDS) -> None:
     path.write_text("".join(json.dumps(r, sort_keys=True, ensure_ascii=False) + "\n" for r in records))
 
 
-def lead_rows(records: list[dict], leads: list[dict], since: str, logins: dict[str, str] | None = None) -> list[dict]:
+def lead_post(lead_id: str, name: str, posts: dict | None) -> dict | None:
+    """The bulletin post behind a lead: among the posts that name it (tasks.json `lead_posts`), the
+    oldest by the row's author, else the oldest. None when nothing names it."""
+    candidates = (posts or {}).get(lead_id) or []
+    mine = [p for p in candidates if str(p.get("login") or "").lower() == name.lower()]
+    return (mine or candidates or [None])[0]
+
+
+def lead_rows(records: list[dict], leads: list[dict], since: str, logins: dict[str, str] | None = None,
+              posts: dict | None = None) -> list[dict]:
     """A posted row for every graph LEAD since `since` that no row names (as its lead or in builds_on),
     its target, kind and bound read from its title. `leads` are the graph route's records; `logins`
-    maps a graph contributor (github-..., hosted-agent-...) to a login."""
+    maps a graph contributor (github-..., hosted-agent-...) to a login; `posts` is tasks.json's
+    `lead_posts` (lead -> the posts that name it), which gives the row its thread and post link so
+    review attestations reach it."""
     known = {ref for row in records for ref in row.get("builds_on", [])} | {row["lead"] for row in records if row.get("lead")}
     number = max((int(row["id"][2:]) for row in records), default=0)
     out: list[dict] = []
@@ -387,10 +398,14 @@ def lead_rows(records: list[dict], leads: list[dict], since: str, logins: dict[s
         if not title or not who:
             continue
         number += 1
+        name = (logins or {}).get(who, who)
+        post = lead_post(lead["record_id"], name, posts)
         row = {"id": f"M-{number:04d}", "target": lead_target(title), "kind": lead_kind(title), "title": title,
-               "who": [{"name": (logins or {}).get(who, who)}], "lead": lead["record_id"],
+               "who": [{"name": name}], "lead": lead["record_id"],
                "builds_on": [p["record_id"] for p in lead.get("parents", []) if GRAPH_RECORD.match(str(p.get("record_id", "")))],
-               "thread": None, "url": None, "date": str(lead["created_at"])[:10], "status": "posted", "reviews": []}
+               "thread": post["thread_id"] if post else None,
+               "url": f"https://starks.provably.fast/threads/{post['thread_id']}#{post['post_id']}" if post else None,
+               "date": str(lead["created_at"])[:10], "status": "posted", "reviews": []}
         bound = lead_bound(title)
         if bound:
             row["bound"] = bound
@@ -477,6 +492,7 @@ def main(argv: list[str] | None = None) -> int:
     leads.add_argument("--graph", required=True, help="the graph route's records, a JSON array or one record per line")
     leads.add_argument("--since", required=True, help="YYYY-MM-DD")
     leads.add_argument("--profiles", help="the profiles route's JSON, to name people by login")
+    leads.add_argument("--posts", help="tasks.json (its lead_posts) or a lead -> posts JSON, to link each row to its bulletin post")
     for name in ("accept", "refute", "withdraw"):
         decision = sub.add_parser(name)
         decision.add_argument("record")
@@ -524,7 +540,11 @@ def main(argv: list[str] | None = None) -> int:
                     for actor in identity.get("actor_ids", []) + [identity.get("bulletin_actor")]:
                         if actor and identity.get("login"):
                             logins[actor] = identity["login"]
-            rows = lead_rows(records, graph, args.since, logins)
+            posts = None
+            if args.posts:
+                loaded = json.loads(Path(args.posts).read_text())
+                posts = loaded.get("lead_posts", loaded) if isinstance(loaded, dict) else None
+            rows = lead_rows(records, graph, args.since, logins, posts)
             validate(targets, records + rows)
             for row in rows:
                 append(row)

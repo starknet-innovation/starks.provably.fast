@@ -336,7 +336,8 @@ review by someone other than its authors. It is Lean-checked when an accepted fo
 its pinned declaration.
 
 Maintainers: `python3 -m proven.mathematics check` validates the record, `board` writes
-`results/mathematics.json` for the site, `record --thread` adds a row for a contribution posted in a
+`results/mathematics.json` for the site, `leads --graph GRAPH --since DATE --profiles PROFILES --posts TASKS_JSON` adds a posted row for every
+graph lead with its thread and post link (tasks.json `lead_posts`, kept by the responder), `record --thread` adds a row for a contribution posted in a
 thread, `record --settles` marks a row that settles a target, and `review`, `accept`, `refute` and
 `withdraw` update it.
 

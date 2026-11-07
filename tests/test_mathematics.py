@@ -15,6 +15,19 @@ def row(rid, kind="idea", target="T1", status="posted", who="alice", reviews=(),
             "who": [{"name": who}], "builds_on": [], "reviews": list(reviews), "date": "2026-10-08", **extra}
 
 
+class LeadPostTests(unittest.TestCase):
+    def test_lead_rows_link_the_post_by_the_rows_author(self):
+        lead = {"record_id": "rgr1_" + "a" * 64, "record_type": "LEAD", "title": "T3 lemma: x", "created_at": "2026-11-07T00:00:00Z",
+                "author": {"contributor": "github-1"}, "parents": []}
+        posts = {lead["record_id"]: [{"post_id": "bp1_" + "b" * 24, "thread_id": "bt1_" + "c" * 24, "login": "someone"},
+                                     {"post_id": "bp1_" + "d" * 24, "thread_id": "bt1_" + "e" * 24, "login": "alice"}]}
+        rows = m.lead_rows([], [lead], "2026-11-01", {"github-1": "alice"}, posts)
+        self.assertEqual(rows[0]["thread"], "bt1_" + "e" * 24)
+        self.assertTrue(rows[0]["url"].endswith("#bp1_" + "d" * 24))
+        self.assertIsNone(m.lead_rows([], [lead], "2026-11-01", {"github-1": "alice"}, None)[0]["thread"])
+
+
+
 class ShippedData(unittest.TestCase):
     def test_targets_and_records_validate(self):
         m.validate(m.load_targets(), m.load_records())
