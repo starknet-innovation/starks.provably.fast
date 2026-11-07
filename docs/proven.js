@@ -1165,7 +1165,9 @@
     const cutoff = scoring ? Date.parse(scoring.since) : Infinity;
     const voidedPosts = new Set(scoring ? [...(scoring.voided?.zero_pair_rows || []), ...(scoring.voided?.proxy_posts || [])] : []);
     const voidedAccounts = new Map((scoring?.voided?.accounts || []).flatMap((a) => [a.participant, ...String(a.for || "").match(/participant_[0-9a-f]{12}/g) || []].map((p) => [p, a.window])));
-    const problemCell = (text) => scoring && (scoring.cells || []).some((id) => String(text || "").includes(id));
+    // A lead names its cell by id, or as "Problem 2" / "problem 3a" (the cell whose id starts with that number).
+    const problemCell = (text) => scoring && ((scoring.cells || []).some((id) => String(text || "").includes(id))
+      || [...String(text || "").matchAll(/\bproblem[ -]?(\d[abc]?)\b/gi)].some((m) => (scoring.cells || []).some((id) => id.toLowerCase().startsWith(`problem-${m[1].toLowerCase()}-`))));
     const cells = (record.cells || []).filter((c) => FIELD_P[c.field] && c.state !== "closed");
     const cellOf = (i) => cells.find((c) => inCell(c, i));
     const best = new Map(), paid = new Set();
