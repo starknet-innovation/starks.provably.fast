@@ -1075,9 +1075,22 @@
   const RULE_TONE = { lean: "record", lead: "amber", statement: "record", refutes: "pink", bound: "record", port: "amber", upper: "amber", breaks: "pink", result: "amber",
     review: "accent", built_on: "pink", error: "accent", count: "teal", rung0: "record" };
   const pts = (n) => Math.round(n).toLocaleString("en-US");
+  // The slow reads behind the board (the bulletin's certified records, the graph's leads) are kept
+  // in the browser for ten minutes: the board draws from the record alone at once, then from the
+  // kept copies, then from the live reads when they land.
+  const KEEP_MS = 10 * 60_000;
+  const kept = (key) => {
+    try {
+      const raw = localStorage.getItem(key);
+      const row = raw ? JSON.parse(raw) : null;
+      return row && Date.now() - row.t < KEEP_MS ? row.v : null;
+    } catch { return null; }
+  };
+  const keep = (key, v) => { try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), v })); } catch { /* storage off */ } };
   let bulletinLoad = null;
   const loadBulletinRecords = () => (bulletinLoad ||= fetch("/api/participation/bulletin/records?topic=MATHEMATICS", { cache: "no-cache" })
-    .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status))))));
+    .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+    .then((v) => { keep("starks-bulletin-records", v); return v; }));
   // The graph's leads since rules v2 that the record does not hold yet (neither as a row's own lead
   // nor in its builds_on): each is a result's points, pending until the maintainers record and
   // accept it (ten a person a day at most, so a flood of leads stays small). Older leads were
@@ -1089,14 +1102,20 @@
     if (!digest) return [];
     const recorded = new Set((record.contributions || []).flatMap((r) => [...(r.builds_on || []), ...(r.lead ? [r.lead] : [])]));
     const since = `${record.rules?.since || "2026-10-30"}T00:00:00Z`;
-    const leads = [];
-    for (let cursor = 0, n = 0; n < 20; n += 1) {
-      const page = await fetch(`/api/participation/graph?campaign_digest=${digest}&cursor=${cursor}&limit=100`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-      if (!page) break;
-      leads.push(...(page.records || []).filter((r) => r && r.record_type === "LEAD" && !recorded.has(r.record_id) && String(r.created_at) >= since).map((r) => ({ ...r, campaign: campaign.campaign_id })));
-      if (!Number.isSafeInteger(page.next_cursor) || page.next_cursor <= cursor) break;
-      cursor = page.next_cursor;
+    // The pages are a hundred records each at cursors 0, 100, 200, ...: eight at a time, until a
+    // page comes back short, instead of one after another.
+    const page = (cursor) => fetch(`/api/participation/graph?campaign_digest=${digest}&cursor=${cursor}&limit=100`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const pages = [];
+    for (let cursor = 0, done = false; !done && cursor < 4000; cursor += 800) {
+      const burst = await Promise.all([0, 100, 200, 300, 400, 500, 600, 700].map((step) => page(cursor + step)));
+      for (const p of burst) {
+        if (!p || !(p.records || []).length) { done = true; break; }
+        pages.push(p);
+        if (!Number.isSafeInteger(p.next_cursor) || (p.records || []).length < 100) { done = true; break; }
+      }
     }
+    const leads = pages.flatMap((p) => (p.records || []).filter((r) => r && r.record_type === "LEAD" && !recorded.has(r.record_id) && String(r.created_at) >= since).map((r) => ({ ...r, campaign: campaign.campaign_id })));
+    keep("starks-leads", leads);
     return leads;
   }
   // Every point, with the crew member it pays and when.
@@ -1275,9 +1294,10 @@
     const root = $("crew");
     if (!root) return;
     renderPointsRules(record);
-    let records = { instances: [] };
-    try { records = await loadBulletinRecords(); } catch { /* the record's points alone */ }
-    let rows = boardPeople(record, records);
+    // First from the record and whatever the browser kept; the live reads redraw below.
+    let records = kept("starks-bulletin-records") || { instances: [] };
+    const keptLeads = kept("starks-leads") || [];
+    let rows = boardPeople(record, records, keptLeads);
     let all = rows.flatMap((row) => row.lines);
     const now = Date.now();
     let seen = 0;
@@ -1367,13 +1387,12 @@
       confetti(note);
     };
     boardRedraw();
-    // The graph's leads arrive after the first draw: each adds its pending points.
-    loadLeads(record).then((leads) => {
-      if (!leads.length) return;
-      rows = boardPeople(record, records, leads);
-      all = rows.flatMap((row) => row.lines);
-      draw();
-    }).catch(() => { /* the board stands without them */ });
+    // The live reads arrive after the first draw: the certified counts, then the graph's leads with
+    // their pending points. Each redraws once.
+    let liveLeads = keptLeads;
+    const redraw = () => { rows = boardPeople(record, records, liveLeads); all = rows.flatMap((row) => row.lines); draw(); };
+    loadBulletinRecords().then((live) => { records = live; redraw(); }).catch(() => { /* the record's points alone */ });
+    loadLeads(record).then((leads) => { liveLeads = leads; redraw(); }).catch(() => { /* the board stands without them */ });
     if (!still && window.PvfastMotion) window.PvfastMotion.animate("#crew tbody tr.board-row", { opacity: [0.35, 1], y: [6, 0], delay: window.PvfastMotion.stagger(25), duration: 500, ease: "out(3)" });
     if (!root.dataset.bound) {
       root.dataset.bound = "1";
@@ -1952,16 +1971,23 @@
   }
   async function renderMathematics() {
     try {
+      // The task list is the slowest read and only the problems and cells need it: the rest draws
+      // first, from the record, and the board from the browser's kept copies.
+      const tasks = ($("cells-list") || $("problems"))
+        ? fetch("/state/tasks.json", { headers: { accept: "application/json" } }).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+        : Promise.resolve(null);
       const [record, profiles] = await Promise.all([loadRecord(), loadProfiles()]);
       record.profiles = profiles;
-      if ($("cells-list") || $("problems")) { try { window.__tasks = await (await fetch("/state/tasks.json", { headers: { accept: "application/json" } })).json(); } catch { window.__tasks = null; } }
+      window.__tasks = kept("starks-tasks");
       renderProblems();
       renderRecord(record);
       renderTargets(record);
       renderProgress(record);
       renderBounds(record);
-      renderCells(record);
       renderBoard(record);
+      renderCells(record);
+      window.__tasks = await tasks;
+      if (window.__tasks) { keep("starks-tasks", window.__tasks); renderProblems(); renderCells(record); }
       const version = $("foot-version");
       if (version && record.source) version.textContent = `Built from provably.fast ${record.source} · ArkLib ${record.lean.commit.slice(0, 8)}`;
     } catch {
