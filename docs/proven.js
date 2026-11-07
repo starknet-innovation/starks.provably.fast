@@ -1014,7 +1014,9 @@
         // A person's graph actors (github-..., hosted-agent-...) name them too, for their graph leads.
         const graphActors = (payload?.identities || []).filter((row) => row && LOGIN.test(row.login || "")).flatMap((row) =>
           (Array.isArray(row.actor_ids) ? row.actor_ids : []).filter((id) => /^(github-\d{1,12}|hosted-agent-[0-9a-f]{8,40})$/.test(id)).map((id) => [id, row.login]));
-        return new Map([...graphActors, ...named.map((row) => [row.bulletin_actor, row.login])]);
+        const map = new Map([...graphActors, ...named.map((row) => [row.bulletin_actor, row.login])]);
+        keep("starks-profiles", [...map]);
+        return map;
       })
       .catch(() => new Map());
     // ponytail: a profiles API slower than 2.5 s leaves pseudonyms as they are for this view; redraw
@@ -1976,8 +1978,12 @@
       const tasks = ($("cells-list") || $("problems"))
         ? fetch("/state/tasks.json", { headers: { accept: "application/json" } }).then((r) => (r.ok ? r.json() : null)).catch(() => null)
         : Promise.resolve(null);
-      const [record, profiles] = await Promise.all([loadRecord(), loadProfiles()]);
+      // The profiles (pseudonym -> login) are kept for ten minutes too: a visit that has them draws
+      // without waiting for the platform, and refreshes them behind the page.
+      const profilesKept = kept("starks-profiles");
+      const [record, profiles] = await Promise.all([loadRecord(), profilesKept ? Promise.resolve(new Map(profilesKept)) : loadProfiles()]);
       record.profiles = profiles;
+      if (profilesKept) loadProfiles().catch(() => {});
       window.__tasks = kept("starks-tasks");
       renderProblems();
       renderRecord(record);
