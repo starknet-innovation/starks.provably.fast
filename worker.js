@@ -58,8 +58,40 @@ async function challenge(env) {
   return registry.entry;
 }
 
+// The reads behind the people board and the task list are slow to build (a thread listing, a
+// thread, a blob; the graph's pages): each is kept in the Worker's cache for a minute and served
+// from there, refreshed in the background once it is older than that, dropped after ten.
+const CACHED_READ = /^\/api\/participation\/(graph|bulletin\/records)$/;
+async function cached(request, ctx, ttl, build) {
+  const store = typeof caches === "undefined" ? null : caches.default;
+  if (!store || request.method !== "GET") return build();
+  const url = new URL(request.url);
+  const key = new Request(url.origin + url.pathname + url.search, { method: "GET" });
+  const put = async () => {
+    const fresh = await build();
+    if (fresh.ok) {
+      const copy = new Response(fresh.clone().body, fresh);
+      copy.headers.set("x-built-at", String(Date.now()));
+      copy.headers.set("cache-control", `public, max-age=${ttl * 10}`);
+      await store.put(key, copy).catch(() => {});
+    }
+    return fresh;
+  };
+  const hit = await store.match(key).catch(() => undefined);
+  if (hit) {
+    const age = (Date.now() - Number(hit.headers.get("x-built-at") || 0)) / 1000;
+    if (age < ttl * 10) {
+      if (age >= ttl && ctx) ctx.waitUntil(put().catch(() => {}));
+      const out = new Response(hit.body, hit);
+      out.headers.set("cache-control", `public, max-age=${ttl}`);
+      return out;
+    }
+  }
+  return put();
+}
+
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const reading = request.method === "GET" || request.method === "HEAD";
     // A site's earlier name answers with its current one, path and query kept: proven.provably.fast
@@ -100,7 +132,7 @@ export default {
       return response;
     }
     const digest = reading ? url.pathname.match(STATE_DIGEST) : null;
-    if (digest || (reading && url.pathname === STATE_TASKS)) return state(env, digest ? digest[1] : null);
+    if (digest || (reading && url.pathname === STATE_TASKS)) return cached(request, ctx, 120, () => state(env, digest ? digest[1] : null));
     if (reading && (url.pathname === "/workshop" || url.pathname === "/workshop/")) return workshop(request, env);
     if (reading && url.pathname === "/") {
       const own = await env.ASSETS.fetch(request);
@@ -130,6 +162,9 @@ export default {
       headers["content-type"] = "application/json";
       const bearer = request.headers.get("authorization");
       if (bearer) headers.authorization = bearer;
+    }
+    if (read && CACHED_READ.test(url.pathname) && !request.headers.has("authorization")) {
+      return cached(request, ctx, 60, () => forward(request, env, url, headers, false));
     }
     return forward(request, env, url, headers, write);
   },
