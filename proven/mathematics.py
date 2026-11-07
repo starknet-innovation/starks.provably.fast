@@ -136,7 +136,9 @@ def validate(targets: dict, records: list[dict]) -> None:
         if row.get("lead") is not None and not GRAPH_RECORD.match(str(row["lead"])):
             raise RecordError(f"{rid}: lead {row['lead']!r} is not a graph record (rgr1_...)")
         if int(rid[2:]) >= GRAPH_REQUIRED_FROM and row["kind"] not in ("source", "review") \
-                and not row.get("lead") and not any(GRAPH_RECORD.match(ref) for ref in row.get("builds_on", [])):
+                and not row.get("lead") and not any(GRAPH_RECORD.match(ref) for ref in row.get("builds_on", [])) \
+                and not (row.get("cell") and row.get("url")):
+            # Rules v6.2: a bulletin post in a problem cell is the unit of work; its row needs no graph lead.
             raise RecordError(f"{rid}: no lead and builds_on names no graph record (rgr1_...); propose its lead first")
         for review in row.get("reviews", []):
             if review.get("verdict") not in VERDICTS or not review.get("by"):
@@ -234,18 +236,40 @@ def row_points(row: dict, rules: dict | None = None) -> tuple[int, str]:
     return round(value), rule
 
 
+PROBLEM_WORD = re.compile(r"\bproblem[ -]?(\d[abc]?)\b", re.IGNORECASE)
+
+
+def cell_of(text: str, cells: list[str]) -> str | None:
+    """The problem cell a text names: the cell id itself, or the words "Problem 2" / "problem 3a",
+    which name the cell whose id starts with that number (the first such cell in `cells`)."""
+    for cell in cells:
+        if cell in text:
+            return cell
+    for found in PROBLEM_WORD.finditer(text):
+        prefix = f"problem-{found.group(1).lower()}-"
+        for cell in cells:
+            if cell.lower().startswith(prefix):
+                return cell
+    return None
+
+
 def scored(row: dict, scoring: dict) -> bool:
-    """Rules v6.1: a row dated after the cutoff pays only when it sits in one of the four problem
-    cells (named in its title, its cell field or its lead), or is a review of such a row; every
-    other row since the cutoff is logged. Rows before the cutoff pay as before."""
+    """Rules v6.1: a row posted after the cutoff (post sequence 6821, 2026-11-05T12:37:21Z) pays only
+    when it sits in one of the problem cells (named in its title, its cell field or its lead, by id or
+    as "Problem N"), or is a review of such a row; every other row since the cutoff is logged. Rows
+    before the cutoff pay as before. The moment compared is the row's `posted` time (its bulletin
+    post, else its graph admission) when the row has one, else its date; a date alone on the cutoff
+    day counts as before it."""
     if not scoring:
         return True
-    since = str(scoring.get("since") or "")[:10]
-    if not since or str(row.get("date") or "") < since:
+    since = str(scoring.get("since") or "")
+    if not since:
         return True
-    cells = scoring.get("cells") or []
+    when = str(row.get("posted") or row.get("date") or "")
+    if when < since:
+        return True
     text = " ".join(str(row.get(key) or "") for key in ("cell", "title", "lead"))
-    return any(cell in text for cell in cells)
+    return cell_of(text, scoring.get("cells") or []) is not None
 
 
 def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
@@ -382,12 +406,12 @@ def lead_post(lead_id: str, name: str, posts: dict | None) -> dict | None:
 
 def lead_rows(records: list[dict], leads: list[dict], since: str, logins: dict[str, str] | None = None,
               posts: dict | None = None) -> list[dict]:
-    """A posted row for every graph LEAD since `since` that no row names (as its lead or in builds_on),
-    its target, kind and bound read from its title. `leads` are the graph route's records; `logins`
+    """A posted row for every graph LEAD since `since` that no row has as its lead (a lead cited only
+    in another row's builds_on still gets its own row), its target, kind and bound read from its title. `leads` are the graph route's records; `logins`
     maps a graph contributor (github-..., hosted-agent-...) to a login; `posts` is tasks.json's
     `lead_posts` (lead -> the posts that name it), which gives the row its thread and post link so
     review attestations reach it."""
-    known = {ref for row in records for ref in row.get("builds_on", [])} | {row["lead"] for row in records if row.get("lead")}
+    known = {row["lead"] for row in records if row.get("lead")}
     number = max((int(row["id"][2:]) for row in records), default=0)
     out: list[dict] = []
     for lead in sorted(leads, key=lambda r: r.get("created_at", "")):
@@ -405,7 +429,8 @@ def lead_rows(records: list[dict], leads: list[dict], since: str, logins: dict[s
                "builds_on": [p["record_id"] for p in lead.get("parents", []) if GRAPH_RECORD.match(str(p.get("record_id", "")))],
                "thread": post["thread_id"] if post else None,
                "url": f"https://starks.provably.fast/threads/{post['thread_id']}#{post['post_id']}" if post else None,
-               "date": str(lead["created_at"])[:10], "status": "posted", "reviews": []}
+               "date": str(lead["created_at"])[:10], "posted": str(lead["created_at"])[:19] + "Z",
+               "status": "posted", "reviews": []}
         bound = lead_bound(title)
         if bound:
             row["bound"] = bound

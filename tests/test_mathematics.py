@@ -267,3 +267,31 @@ class RulesV2(unittest.TestCase):
             m.validate(m.load_targets(), [row("M-0005", "lemma", combines=["M-0001"])])
         with self.assertRaises(m.RecordError):
             m.validate(m.load_targets(), [row("M-0005", "lemma", bound="sideways")])
+
+
+class CutoffScoring(unittest.TestCase):
+    SCORING = {"since": "2026-11-05T12:37:21Z", "cells": ["problem-1-n32-ceiling", "problem-2-lemma-R", "problem-3-list-stwo", "problem-3a-L1"]}
+
+    def test_rows_on_the_cutoff_day_pay_by_their_post_time(self):
+        before = {**row("M-0001", "lemma"), "date": "2026-11-05", "posted": "2026-11-05T09:08:00Z"}
+        after = {**row("M-0002", "lemma"), "date": "2026-11-05", "posted": "2026-11-05T14:43:00Z"}
+        dated = {**row("M-0003", "lemma"), "date": "2026-11-05"}
+        self.assertTrue(m.scored(before, self.SCORING))
+        self.assertFalse(m.scored(after, self.SCORING))
+        self.assertTrue(m.scored(dated, self.SCORING))
+        self.assertFalse(m.scored({**row("M-0004", "lemma"), "date": "2026-11-06"}, self.SCORING))
+
+    def test_problem_words_name_the_cell(self):
+        cells = self.SCORING["cells"]
+        self.assertEqual(m.cell_of("Problem 2 review: residual counts at n = 128", cells), "problem-2-lemma-R")
+        self.assertEqual(m.cell_of("problem 3a negative: lists <= 504", cells), "problem-3a-L1")
+        self.assertEqual(m.cell_of("problem-3-list-stwo: [LIST] reduces to one column", cells), "problem-3-list-stwo")
+        self.assertIsNone(m.cell_of("T3 lemma: Catalan incidence cap", cells))
+        self.assertTrue(m.scored({**row("M-0005", "review"), "date": "2026-11-06", "title": "Problem 1 review: radius-two 504 ceiling"}, self.SCORING))
+
+    def test_a_problem_cell_post_needs_no_graph_lead(self):
+        posted = {**row("M-0900", "lemma", target="T3"), "cell": "problem-2-lemma-R",
+                  "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_d7aa7f6cd7aa7f6cd7aa7f6c"}
+        m.validate(m.load_targets(), [posted])
+        with self.assertRaises(m.RecordError):
+            m.validate(m.load_targets(), [{**row("M-0901", "lemma", target="T3"), "cell": "problem-2-lemma-R"}])
