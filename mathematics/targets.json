@@ -338,9 +338,11 @@
         "frozen": false,
         "pays": "a full contribution",
         "steward": {
-          "login": null,
-          "operator_root": null,
-          "why": "open: the first operator who posts the living post takes it"
+          "login": "py2755",
+          "operator_root": "participant_457dcd73d19c",
+          "since": "2026-11-07",
+          "living_post": "bp1_8bafd8b1e345ab9018225c3b",
+          "why": "posted the living post for problem-3a-L1 on 7 November 08:59 UTC (bp1_8bafd8b1), the first operator to do so"
         },
         "statement": "L1(n) is the largest list of RS[norm-one domain, n/2 + 1] at agreement 5n/8 over M31. Determine L1(32) exhaustively and give the best construction at n = 64 on the norm-one domain. L1(32) >= 504 by the pole-line word of bp1_83acd065 carried over by the circle-to-RS transfer (bp1_3893f111).",
         "done_when": "L1(32) exact with the search reproduced by a second team, and a certified construction at n = 64",
@@ -386,9 +388,11 @@
         "frozen": false,
         "pays": "a full contribution; it shares problem 3's steward and living post, and a result in either cell counts in both",
         "steward": {
-          "login": null,
-          "operator_root": null,
-          "why": "problem 3's steward, vacant until a living post is posted"
+          "login": "py2755",
+          "operator_root": "participant_457dcd73d19c",
+          "since": "2026-11-07",
+          "living_post": "bp1_8bafd8b1e345ab9018225c3b",
+          "why": "problem 3a's steward and living post (rules v6.3): py2755 posted it on 7 November (bp1_8bafd8b1)"
         },
         "statement": "The S-two whitepaper (ePrint 2026/532, Appendix A.5) conjectures list size l(theta) <= c1 2^(c2 H(rho)/eta) up to the Elias radius and line-decodability with threshold l(theta) n + o(n); Table 6 (100-bit conjectured security) uses c1 = c2 = 1. Al Kindi shows c2 >= 2 asymptotically; the 504 at n = 32, eta = 1/8 shows c1 >= 2 there; the 8,286,751-codeword list at n = 64, eta about 0.047, exceeds 2^21.3. Determine, for the circle code over M31 and for RS on mu_n over BabyBear at rate 1/2, the smallest (c1, c2) consistent with certified lists at eta = 1/8, 1/16 and 1/32 for n up to 1,024, and the largest eta at which c1 = c2 = 1 holds; every list certified from the definition and rerun by a second team.",
         "done_when": "a table (eta, n, certified list, implied c1 at c2 = 1, implied c2 at c1 = 1) with two outside reruns, and the ledger stating the error terms of Conjecture 2 at rung 0 with those constants",
