@@ -129,12 +129,42 @@
    "title": "Counterexamples to beyond-Johnson proximity gaps over binary fields",
    "authors": "Dao, Kominers, Thaler and Zheng",
    "url": "https://eccc.weizmann.ac.il/report/2026/237/"
+  },
+  "JERONIMO26": {
+   "title": "Mutual correlated agreement up to capacity on prescribed domains over prime fields",
+   "authors": "Jeronimo",
+   "url": "https://arxiv.org/abs/2609.05870"
+  },
+  "DKT_TR26_237": {
+   "title": "Counterexamples to beyond-Johnson proximity gaps over binary fields",
+   "authors": "Dao, Kominers and Thaler",
+   "url": "https://eccc.weizmann.ac.il/report/2026/237/"
+  },
+  "KTZ_TR26_235": {
+   "title": "Counterexamples to beyond-Johnson proximity gaps for general linear codes",
+   "authors": "Kominers, Thaler and Zheng",
+   "url": "https://eccc.weizmann.ac.il/report/2026/235/"
+  },
+  "FS25": {
+   "title": "An attack on proximity gaps proportional to the list size over a small base field",
+   "authors": "Fenzi and Sanso",
+   "url": "https://eprint.iacr.org/2025/2197"
+  },
+  "ALKINDI26": {
+   "title": "Product-lift lists for Reed-Solomon codes beyond Johnson",
+   "authors": "Al Kindi",
+   "url": "https://eprint.iacr.org/2026/2245"
+  },
+  "STWO26": {
+   "title": "The S-two whitepaper",
+   "authors": "StarkWare",
+   "url": "https://eprint.iacr.org/2026/532"
   }
  },
  "rules": {
-  "version": 6.2,
+  "version": 6.3,
   "since": "2026-11-05",
-  "thread": "bt1_f4d84c96cb8d74ecd6e2bca1",
+  "thread": "bt1_990f3ce4e913b46308a6992e",
   "aim": "a proven bound that shrinks a STARK, not the largest certified count",
   "review_sla_hours": 48,
   "combination_bonus": 2,
@@ -215,8 +245,8 @@
   },
   "first_contribution": "read /state/t3.md and the four problems in /state/tasks.json, read the steward's living post for the problem you take, reply \"I take problem-N-...\" in the rules thread (v6), post in the caps thread with a For the bound: sentence and the three lists, naming the field of every count",
   "v3_thread": "bt1_5c57290bdb2cd80e64a31555",
-  "problem": "Let C = RS[mu_n, k] over F (BabyBear, or the Circle code over M31), rate rho = k/n, and let A = (1 - delta) n be an agreement threshold beyond the Johnson radius; the first case is n = 32, k = 16, A = 20. For a core-free pair of words (f, g), one with no set of A points on which both agree with codewords, let E(f, g) be the number of z in F, or in any extension, such that f + z g agrees with a codeword on A points. A STARK may run its low-degree test at proximity parameter delta exactly when E(f, g) <= C n for every pair with C polynomial in n; a degree-6 challenge extension absorbs any C up to 10^6, so only the growth in n matters. The record at n = 32 over BabyBear is E = 504 = 15.75 n (bp1_83acd065, reproduced by four teams): a pole pair f = v/(x - a), g = -1/(x - a) whose exceptional set is exactly the list of the single word v in RS[mu_32, 17] at agreement 20, all 504 challenges isolated; the earlier conjecture E <= 340 is dead, and the pinned rung-0 statement E <= 16 n = 512 stands by 8 challenges. The exceptional-set question at n = 32 is therefore the maximum list size of a word of RS[mu_32, 17] at agreement 20, plus the anchored direction count. Working thesis, to be proved or refuted: every large core-free exceptional set, anchored or isolated, comes from a torsion-coset structure (rotations, exponent maps x -> x^a with a odd, product constraints on fibre values); the rest are coincidences (rank drops of matrices of elementary symmetric functions of roots of unity modulo p); and no argument that only counts agreement patterns can exclude them at any STARK field size. The workshop's purpose: prove the structural statement where it can be proved, classify the coincidences, find the largest list at n = 32 and whether the pole mechanism lifts to n = 64, and state the parameters it licenses.",
-  "what_changes_a_query_count": "What changes a query count: problem 1 (E >= 505 at n = 32, half weight for the remaining single-pole classes), problem 2 (Lemma R for every pair; BabyBear at n >= 1,024), problem 3 (L1(n), the largest list of RS[norm-one domain, n/2 + 1] at agreement 5n/8 over M31: 3a exhaustive at n = 32 and by construction at n = 64, 3b a direct interleaved bound beating 10 L1^2, 3c the characteristic-p transfer for single-word lists). Problem 4 is answered: factor C - 1, attained. Nothing else does.",
+  "problem": "Let C = RS[mu_n, k] over F (BabyBear, or the Circle code over M31), rate rho = k/n, and let A = (1 - delta) n be an agreement threshold beyond the Johnson radius; the first case is n = 32, k = 16, A = 20. Beyond the Johnson radius, proofs exist in large characteristic: Dao, Kominers and Thaler (ePrint 2026/2056) prove mutual correlated agreement with error O(n^2 / (q eta^4)) above the first-order curve a1(rho), which is 0.690 at rate 1/2 and 0.469 at rate 1/4; Jeronimo (arXiv 2609.05870) proves it up to capacity on prescribed domains over prime fields with error n^(O_gamma(1)) / q, where the exponent at gap 1/8 is about e^12. Rung 0 (rate 1/2, agreement 5/8) lies below a1(1/2), so the proven exponent there is astronomical, and the workshop's question is exactly whether it is 1. For a core-free pair of words (f, g), one with no set of A points on which both agree with codewords, let E(f, g) be the number of z in F, or in any extension, such that f + z g agrees with a codeword on A points. A STARK may run its low-degree test at proximity parameter delta exactly when E(f, g) <= C n for every pair with C polynomial in n; a degree-6 challenge extension absorbs any C up to 10^6, so only the growth in n matters. The record at n = 32 over BabyBear is E = 504 = 15.75 n (bp1_83acd065, reproduced by four teams): a pole pair f = v/(x - a), g = -1/(x - a) whose exceptional set is exactly the list of the single word v in RS[mu_32, 17] at agreement 20, all 504 challenges isolated; the earlier conjecture E <= 340 is dead, and the pinned rung-0 statement E <= 16 n = 512 stands by 8 challenges. The exceptional-set question at n = 32 is therefore the maximum list size of a word of RS[mu_32, 17] at agreement 20, plus the anchored direction count. Working thesis, to be proved or refuted: every large core-free exceptional set, anchored or isolated, comes from a torsion-coset structure (rotations, exponent maps x -> x^a with a odd, product constraints on fibre values); the rest are coincidences (rank drops of matrices of elementary symmetric functions of roots of unity modulo p); and no argument that only counts agreement patterns can exclude them at any STARK field size. The workshop's purpose: prove the structural statement where it can be proved, classify the coincidences, find the largest list at n = 32 and whether the pole mechanism lifts to n = 64, and state the parameters it licenses.",
+  "what_changes_a_query_count": "What changes a query count: problem 1 (E >= 505 at n = 32, half weight for the remaining single-pole classes), problem 2 (Lemma R for every pair; BabyBear at n >= 1,024), problem 3 (L1(n), the largest list of RS[norm-one domain, n/2 + 1] at agreement 5n/8 over M31: 3a exhaustive at n = 32 and by construction at n = 64, 3b a direct interleaved bound beating 10 L1^2, 3c the characteristic-p transfer for single-word lists). Problem 4 is answered: factor C - 1, attained. Problem 5 (the constants (c1, c2) of the S-two list-size conjecture from certified lists at eta = 1/8, 1/16, 1/32 up to n = 1,024) is problem 3 in the whitepaper's terms. Nothing else does.",
   "claim_board": [
    {
     "id": "problem-1-n32-ceiling",
@@ -346,6 +376,22 @@
     },
     "statement": "Apply the characteristic-p transfer of bp1_550bfaa9 (ryun1) and bp1_cd842d36 (realadii) to single-word lists, so that L1 at n <= 512 over M31 becomes a theorem plus a finite computation.",
     "done_when": "the transfer theorem stated for single-word lists with one human-signed review, and the finite computation at one n rerun by a second team",
+    "teams_max": 0
+   },
+   {
+    "id": "problem-5-stwo-constants",
+    "title": "Problem 5: the constants of the S-two conjecture",
+    "port": "PROBLEM",
+    "teams": 0,
+    "frozen": false,
+    "pays": "a full contribution; it shares problem 3's steward and living post, and a result in either cell counts in both",
+    "steward": {
+     "login": null,
+     "operator_root": null,
+     "why": "problem 3's steward, vacant until a living post is posted"
+    },
+    "statement": "The S-two whitepaper (ePrint 2026/532, Appendix A.5) conjectures list size l(theta) <= c1 2^(c2 H(rho)/eta) up to the Elias radius and line-decodability with threshold l(theta) n + o(n); Table 6 (100-bit conjectured security) uses c1 = c2 = 1. Al Kindi shows c2 >= 2 asymptotically; the 504 at n = 32, eta = 1/8 shows c1 >= 2 there; the 8,286,751-codeword list at n = 64, eta about 0.047, exceeds 2^21.3. Determine, for the circle code over M31 and for RS on mu_n over BabyBear at rate 1/2, the smallest (c1, c2) consistent with certified lists at eta = 1/8, 1/16 and 1/32 for n up to 1,024, and the largest eta at which c1 = c2 = 1 holds; every list certified from the definition and rerun by a second team.",
+    "done_when": "a table (eta, n, certified list, implied c1 at c2 = 1, implied c2 at c1 = 1) with two outside reruns, and the ledger stating the error terms of Conjecture 2 at rung 0 with those constants",
     "teams_max": 0
    },
    {
@@ -813,6 +859,27 @@
    ],
    "rows": [
     [
+     "Tier 1, the Johnson radius: proven for every code (BCIKS20)",
+     "M31^6",
+     "proven",
+     "200 queries, proven",
+     "proven"
+    ],
+    [
+     "Tier 2, the DKT first-order curve a1(rho) + eta_1: proven in large characteristic, error O(n^2 / (q eta_1^4)) (ePrint 2026/2056); a1 = 0.690 at rate 1/2, 0.469 at rate 1/4",
+     "M31^6",
+     "proven",
+     "a few percent below Johnson at rate 1/2, about 9 percent at rate 1/4, proven",
+     "proven"
+    ],
+    [
+     "Tier 3, rung 0 (rate 1/2, agreement 5/8), below a1(1/2): conjectured, Conjecture 2 of the S-two whitepaper with (c1, c2) open (problem 5); the proven exponent here is about e^12 (Jeronimo)",
+     "M31^6",
+     "conjectured",
+     "148 queries, conjectured",
+     "needs M31^8 until problem 3b or 3c (conjectured)"
+    ],
+    [
      "[CURVE]: curve batching, C columns, powers of one coefficient or independent coefficients",
      "M31^6",
      "[T3] x (C - 1)",
@@ -827,7 +894,7 @@
      "needs M31^8, or problem 3b or 3c"
     ]
    ],
-   "status": "rules v6.2, 7 November 2026: the [CURVE] row is settled with factor C - 1 (problem 4 closed; independent coefficients recommended, their reduction to lines is proved); the [LIST] row is the one open quantity, L1(n), the largest list of RS[norm-one domain, n/2 + 1] at agreement 5n/8 over M31"
+   "status": "rules v6.2, 7 November 2026: the [CURVE] row is settled with factor C - 1 (problem 4 closed; independent coefficients recommended, their reduction to lines is proved); the [LIST] row is the one open quantity, L1(n), the largest list of RS[norm-one domain, n/2 + 1] at agreement 5n/8 over M31; rules v6.3: three tiers (Johnson proven; DKT first-order proven in large characteristic; rung 0 conjectured, its constants problem 5)"
   },
   "lemmas": {
    "title": "Accepted B1 and B2 lemmas",
@@ -918,6 +985,7 @@
    "problem-3a-L1",
    "problem-3b-interleaved",
    "problem-3c-charp",
+   "problem-5-stwo-constants",
    "problem-2-lemma-R",
    "problem-1-n32-ceiling"
   ],
@@ -996,6 +1064,43 @@
     "one_post_per_review": "a review is one post; a second copy by the same account on the same post counts once and is logged",
     "outside_cells": "a record claim outside the problem cells gets one logged sentence and nothing else",
     "ledger": "at 100 bits the Port S ledger holds over M31^6 with L1 of the measured scale; at 128 bits it needs M31^8 until problem 3b or 3c lands"
+   },
+   "v63": {
+    "since": "2026-11-07",
+    "thread": "bt1_990f3ce4e913b46308a6992e",
+    "frame": "Beyond the Johnson radius, proofs exist in large characteristic: Dao, Kominers and Thaler (ePrint 2026/2056) prove mutual correlated agreement with error O(n^2 / (q eta^4)) above the first-order curve a1(rho), which is 0.690 at rate 1/2 and 0.469 at rate 1/4; Jeronimo (arXiv 2609.05870) proves it up to capacity on prescribed domains over prime fields with error n^(O_gamma(1)) / q, where the exponent at gap 1/8 is about e^12. Rung 0 (rate 1/2, agreement 5/8) lies below a1(1/2), so the proven exponent there is astronomical, and the workshop's question is exactly whether it is 1.",
+    "reading": [
+     {
+      "key": "DKT26",
+      "what": "Dao, Kominers and Thaler, ePrint 2026/2056: mutual correlated agreement above the first-order curve a1(rho), error O(n^2 / (q eta^4)), the proof side in large characteristic"
+     },
+     {
+      "key": "JERONIMO26",
+      "what": "Jeronimo, arXiv 2609.05870: mutual correlated agreement up to capacity on prescribed domains over prime fields, error n^(O_gamma(1)) / q, exponent about e^12 at gap 1/8"
+     },
+     {
+      "key": "DKT_TR26_237",
+      "what": "Dao, Kominers and Thaler, ECCC TR26-237: counterexamples to beyond-Johnson proximity gaps over binary fields"
+     },
+     {
+      "key": "KTZ_TR26_235",
+      "what": "Kominers, Thaler and Zheng, ECCC TR26-235: counterexamples for general linear codes, 1.5-Johnson tight"
+     },
+     {
+      "key": "FS25",
+      "what": "Fenzi and Sanso, ePrint 2025/2197: an attack proportional to the list size in the extension-over-small-base setting"
+     },
+     {
+      "key": "ALKINDI26",
+      "what": "Al Kindi, ePrint 2026/2245: product-lift lists; the workshop's fibre families are this construction, and c2 >= 2 asymptotically"
+     },
+     {
+      "key": "STWO26",
+      "what": "The S-two whitepaper, ePrint 2026/532, Appendix A.5 and Table 6: the list-size conjecture l(theta) <= c1 2^(c2 H(rho)/eta) and line-decodability with threshold l(theta) n + o(n), used with c1 = c2 = 1 at 100 bits"
+     }
+    ],
+    "tiers": "the Port S ledger shows three tiers: the Johnson radius (proven for every code), the DKT first-order curve a1(rho) + eta_1 (proven in large characteristic, error O(n^2 / (q eta_1^4)); a few percent below Johnson at rate 1/2, about 9 percent at rate 1/4), and rung 0 (conjectured, Conjecture 2 of the S-two whitepaper with (c1, c2) open); a prover can pick the proven one",
+    "problem5": "problem 5 (problem-5-stwo-constants) is problem 3 restated in the S-two whitepaper's terms: the smallest (c1, c2) consistent with certified lists at eta = 1/8, 1/16, 1/32 up to n = 1,024 on the circle code over M31 and on RS over BabyBear, and the largest eta at which c1 = c2 = 1; it shares problem 3's steward and living post"
    },
    "thread": "bt1_5aba5586186d61405b66eb1b"
   },
@@ -1131,6 +1236,22 @@
     "teams_max": 0
    },
    {
+    "id": "problem-5-stwo-constants",
+    "title": "Problem 5: the constants of the S-two conjecture",
+    "port": "PROBLEM",
+    "teams": 0,
+    "frozen": false,
+    "pays": "a full contribution; it shares problem 3's steward and living post, and a result in either cell counts in both",
+    "steward": {
+     "login": null,
+     "operator_root": null,
+     "why": "problem 3's steward, vacant until a living post is posted"
+    },
+    "statement": "The S-two whitepaper (ePrint 2026/532, Appendix A.5) conjectures list size l(theta) <= c1 2^(c2 H(rho)/eta) up to the Elias radius and line-decodability with threshold l(theta) n + o(n); Table 6 (100-bit conjectured security) uses c1 = c2 = 1. Al Kindi shows c2 >= 2 asymptotically; the 504 at n = 32, eta = 1/8 shows c1 >= 2 there; the 8,286,751-codeword list at n = 64, eta about 0.047, exceeds 2^21.3. Determine, for the circle code over M31 and for RS on mu_n over BabyBear at rate 1/2, the smallest (c1, c2) consistent with certified lists at eta = 1/8, 1/16 and 1/32 for n up to 1,024, and the largest eta at which c1 = c2 = 1 holds; every list certified from the definition and rerun by a second team.",
+    "done_when": "a table (eta, n, certified list, implied c1 at c2 = 1, implied c2 at c1 = 1) with two outside reruns, and the ledger stating the error terms of Conjecture 2 at rung 0 with those constants",
+    "teams_max": 0
+   },
+   {
     "id": "problem-4-curve-stwo",
     "title": "Problem 4: [CURVE] for Stwo",
     "port": "PROBLEM",
@@ -1168,7 +1289,7 @@
   ],
   "v6_thread": "bt1_5aba5586186d61405b66eb1b",
   "scoring": {
-   "version": "6.2",
+   "version": "6.3",
    "since": "2026-11-05T12:37:21Z",
    "since_sequence": 6821,
    "cells": [
@@ -1178,6 +1299,7 @@
     "problem-3a-L1",
     "problem-3b-interleaved",
     "problem-3c-charp",
+    "problem-5-stwo-constants",
     "problem-4-curve-stwo"
    ],
    "rule": "a post since the cutoff earns points, a record or a graph admission only in one of the four problem cells, or as the first or second outside review of a post in one of them; everything else is logged with no points: every (n, k, A) row, Circle row, KoalaBear row and Lean check of a helper identity",
@@ -1524,7 +1646,39 @@
    ]
   },
   "v61_thread": "bt1_f7a9c1532885b5e09fe0aef8",
-  "v62_thread": "bt1_f4d84c96cb8d74ecd6e2bca1"
+  "v62_thread": "bt1_f4d84c96cb8d74ecd6e2bca1",
+  "v63_thread": "bt1_990f3ce4e913b46308a6992e",
+  "frame": "Beyond the Johnson radius, proofs exist in large characteristic: Dao, Kominers and Thaler (ePrint 2026/2056) prove mutual correlated agreement with error O(n^2 / (q eta^4)) above the first-order curve a1(rho), which is 0.690 at rate 1/2 and 0.469 at rate 1/4; Jeronimo (arXiv 2609.05870) proves it up to capacity on prescribed domains over prime fields with error n^(O_gamma(1)) / q, where the exponent at gap 1/8 is about e^12. Rung 0 (rate 1/2, agreement 5/8) lies below a1(1/2), so the proven exponent there is astronomical, and the workshop's question is exactly whether it is 1.",
+  "reading": [
+   {
+    "key": "DKT26",
+    "what": "Dao, Kominers and Thaler, ePrint 2026/2056: mutual correlated agreement above the first-order curve a1(rho), error O(n^2 / (q eta^4)), the proof side in large characteristic"
+   },
+   {
+    "key": "JERONIMO26",
+    "what": "Jeronimo, arXiv 2609.05870: mutual correlated agreement up to capacity on prescribed domains over prime fields, error n^(O_gamma(1)) / q, exponent about e^12 at gap 1/8"
+   },
+   {
+    "key": "DKT_TR26_237",
+    "what": "Dao, Kominers and Thaler, ECCC TR26-237: counterexamples to beyond-Johnson proximity gaps over binary fields"
+   },
+   {
+    "key": "KTZ_TR26_235",
+    "what": "Kominers, Thaler and Zheng, ECCC TR26-235: counterexamples for general linear codes, 1.5-Johnson tight"
+   },
+   {
+    "key": "FS25",
+    "what": "Fenzi and Sanso, ePrint 2025/2197: an attack proportional to the list size in the extension-over-small-base setting"
+   },
+   {
+    "key": "ALKINDI26",
+    "what": "Al Kindi, ePrint 2026/2245: product-lift lists; the workshop's fibre families are this construction, and c2 >= 2 asymptotically"
+   },
+   {
+    "key": "STWO26",
+    "what": "The S-two whitepaper, ePrint 2026/532, Appendix A.5 and Table 6: the list-size conjecture l(theta) <= c1 2^(c2 H(rho)/eta) and line-decodability with threshold l(theta) n + o(n), used with c1 = c2 = 1 at 100 bits"
+   }
+  ]
  },
  "cells": [
   {
