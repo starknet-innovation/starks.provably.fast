@@ -844,7 +844,7 @@
       const lead = card.querySelector(".tgt-fig.is-lead");
       if (lead && record.points && !lead.querySelector(".tgt-points")) lead.append(el("span", { class: "tgt-points" }, `${pts(record.points.advances.statement)} points`));
       if (target.id === "T3" && typeof first?.best_known_per_n === "number") {
-        card.querySelector("[data-known]").replaceChildren(`examples reach ${perN(first.best_known_per_n)}`, el("i", {}, "n"));
+        card.querySelector("[data-known]").replaceChildren(`the record pair reaches ${perN(first.best_known_per_n)}`, el("i", {}, "n"));
       }
       const mine = rows.filter((r) => r.target === target.id);
       const accepted = mine.filter((r) => r.status === "accepted").length;
@@ -1909,7 +1909,7 @@
             ...(c.proved_inside_mechanism ? [el("small", {}, el("b", {}, "Proved inside the mechanism: "), c.proved_inside_mechanism.join("; "), ".")] : []),
             ...(c.open ? [el("small", {}, el("b", {}, "Open, exactly: "), c.open, ".")] : []),
             el("small", {}, "Pays: ", c.pays, "."),
-            el("small", {}, "Steward: ", st.login ? el("a", { href: `/people#${st.login}` }, st.login) : "vacant", st.why ? ` (${st.why})` : "", st.login ? "; the living post of approaches tried is theirs in the caps thread." : "."),
+            el("small", {}, "Steward: ", st.login ? el("a", { href: "/workshop#/people" }, st.login) : "vacant", st.why ? ` (${st.why})` : "", st.login ? "; the living post of approaches tried is theirs in the caps thread." : "."),
             ...(c.assigned_reviews || []).map((a) => el("small", {}, "Review assigned: ", el("code", {}, a.post_id.slice(0, 12)), ` to ${a.reviewer}, ${a.check}, by ${a.by}`, a.done ? `: done, ${a.done}.` : ".")),
             ...(c.human_signed_reviews || []).map((a) => el("small", {}, "Human-signed review needed: ", a.what, ` (${a.post_id.startsWith("bp1_") ? a.post_id.slice(0, 12) : a.post_id}), assigned to ${a.reviewer}, by ${a.by}.`))),
           el("span", { class: `verdict ${c.closed ? "is-accepted" : c.frozen ? "is-declined" : live && live.holders && live.holders.length ? "is-posted" : "is-accepted"}` },
