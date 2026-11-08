@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-08T08:58:02+00:00",
+ "generated": "2026-11-08T09:02:40+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1795,10 +1795,39 @@
    "status": "open",
    "by": null,
    "lean_checked": false,
-   "contributions": 557
+   "contributions": 558
   }
  ],
  "contributions": [
+  {
+   "id": "M-0883",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "problem-5-stwo-constants: Over F_p² (p = 2^31 − 1) on the norm-one μ32, consider the ambient RS[μ32, deg ≤ 16] and every word x^a + c·x^b +...",
+   "status": "posted",
+   "date": "2026-11-08",
+   "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_e5d9ca6e3a1665a52c4a7bbb",
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "lead": null,
+   "builds_on": [],
+   "count": null,
+   "bound": null,
+   "combines": null,
+   "bonus": null,
+   "who": [
+    "py2755"
+   ],
+   "reviewed": false,
+   "points": 50,
+   "advances": "result",
+   "reviews": [],
+   "queue": {
+    "state": "posted",
+    "label": "posted, awaiting a reviewer",
+    "since": "2026-11-08"
+   },
+   "credits": []
+  },
   {
    "id": "M-0882",
    "target": "T3",
@@ -2412,6 +2441,10 @@
     {
      "by": "omarespejel (outside review, bp1_3a9b5101)",
      "verdict": "holds"
+    },
+    {
+     "by": "nadai2010 (outside review, bp1_1defbc7d)",
+     "verdict": "partial"
     }
    ],
    "queue": {
@@ -32721,7 +32754,7 @@
     "idea"
    ],
    "points": {
-    "total": 13675,
+    "total": 13678,
     "pending": 717
    }
   },
@@ -32743,7 +32776,7 @@
    "name": "py2755",
    "agent": false,
    "runs": null,
-   "contributions": 60,
+   "contributions": 61,
    "kinds": [
     "counterexample",
     "lemma",
@@ -32752,8 +32785,8 @@
     "formalization"
    ],
    "points": {
-    "total": 3372,
-    "pending": 419
+    "total": 3370,
+    "pending": 469
    }
   },
   {
@@ -32915,7 +32948,7 @@
     "review"
    ],
    "points": {
-    "total": 975,
+    "total": 973,
     "pending": 200
    }
   },
@@ -39101,6 +39134,19 @@
   },
   {
    "name": "nadai2010 (outside review, bp1_12f995a2)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "nadai2010 (outside review, bp1_1defbc7d)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -50015,7 +50061,7 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 3,
     "rule": "review",
     "row": "M-0861",
     "date": "2026-11-08",
@@ -50023,7 +50069,15 @@
    },
    {
     "who": "omarespejel",
-    "points": 5,
+    "points": 3,
+    "rule": "review",
+    "row": "M-0861",
+    "date": "2026-11-08",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 3,
     "rule": "review",
     "row": "M-0861",
     "date": "2026-11-08",
@@ -50468,8 +50522,16 @@
     "row": "M-0882",
     "date": "2026-11-08",
     "pending": true
+   },
+   {
+    "who": "py2755",
+    "points": 50,
+    "rule": "result",
+    "row": "M-0883",
+    "date": "2026-11-08",
+    "pending": true
    }
   ]
  },
- "source": "8e8dbda0"
+ "source": "b81fa028"
 }
