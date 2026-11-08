@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-08T08:34:20+00:00",
+ "generated": "2026-11-08T08:58:02+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1820,10 +1820,15 @@
    "reviewed": false,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "py2755 (outside review, bp1_73c7ac28)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-08"
    },
    "credits": []
@@ -1849,10 +1854,15 @@
    "reviewed": false,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "nadai2010 (outside review, bp1_031fdbeb)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-08"
    },
    "credits": []
@@ -2018,12 +2028,16 @@
     {
      "by": "odinfree (outside review, bp1_4f16dace)",
      "verdict": "holds"
+    },
+    {
+     "by": "nadai2010 (outside review, bp1_5f2d8f52)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-07"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-08"
    },
    "credits": []
   },
@@ -17969,8 +17983,8 @@
     "nadai2010"
    ],
    "reviewed": true,
-   "points": 225,
-   "advances": "port",
+   "points": 750,
+   "advances": "bound",
    "reviews": [
     {
      "by": "binharold (outside operator): kernel-checked restated Port D 100,975 (c_D <= 3,155.5) reproduced, record row M-0392",
@@ -18009,8 +18023,8 @@
     "nadai2010"
    ],
    "reviewed": true,
-   "points": 225,
-   "advances": "port",
+   "points": 750,
+   "advances": "bound",
    "reviews": [
     {
      "by": "binharold (outside operator): kernel-checked Port C cover 100,975 (c_C <= 3,155.5) reproduced by own LPs, record row M-0392",
@@ -32691,7 +32705,7 @@
     "counterexample"
    ],
    "points": {
-    "total": 7893,
+    "total": 8103,
     "pending": 2607
    }
   },
@@ -32707,8 +32721,8 @@
     "idea"
    ],
    "points": {
-    "total": 12618,
-    "pending": 710
+    "total": 13675,
+    "pending": 717
    }
   },
   {
@@ -32738,8 +32752,8 @@
     "formalization"
    ],
    "points": {
-    "total": 3367,
-    "pending": 414
+    "total": 3372,
+    "pending": 419
    }
   },
   {
@@ -32945,8 +32959,8 @@
     "idea"
    ],
    "points": {
-    "total": 1005,
-    "pending": 182
+    "total": 1002,
+    "pending": 179
    }
   },
   {
@@ -39073,6 +39087,19 @@
    }
   },
   {
+   "name": "nadai2010 (outside review, bp1_031fdbeb)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "nadai2010 (outside review, bp1_12f995a2)",
    "agent": false,
    "runs": null,
@@ -39139,6 +39166,19 @@
   },
   {
    "name": "nadai2010 (outside review, bp1_5c0a3814)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "nadai2010 (outside review, bp1_5f2d8f52)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -40361,6 +40401,19 @@
   },
   {
    "name": "py2755 (outside review, bp1_63ff5d14)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "py2755 (outside review, bp1_73c7ac28)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44893,8 +44946,8 @@
    },
    {
     "who": "nadai2010",
-    "points": 225,
-    "rule": "port",
+    "points": 750,
+    "rule": "bound",
     "row": "M-0387",
     "lean": true,
     "date": "2026-11-05",
@@ -44902,7 +44955,7 @@
    },
    {
     "who": "binharold",
-    "points": 45,
+    "points": 150,
     "rule": "review",
     "row": "M-0387",
     "lean": true,
@@ -44911,8 +44964,8 @@
    },
    {
     "who": "nadai2010",
-    "points": 225,
-    "rule": "port",
+    "points": 750,
+    "rule": "bound",
     "row": "M-0388",
     "lean": true,
     "date": "2026-11-05",
@@ -44920,7 +44973,7 @@
    },
    {
     "who": "binharold",
-    "points": 45,
+    "points": 150,
     "rule": "review",
     "row": "M-0388",
     "lean": true,
@@ -50242,7 +50295,7 @@
    },
    {
     "who": "odinfree",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0876",
     "date": "2026-11-07",
@@ -50250,7 +50303,23 @@
    },
    {
     "who": "odinfree",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0876",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "nadai2010",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0876",
+    "date": "2026-11-08",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 2,
     "rule": "review",
     "row": "M-0876",
     "date": "2026-11-07",
@@ -50361,14 +50430,46 @@
     "pending": true
    },
    {
+    "who": "nadai2010",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0881",
+    "date": "2026-11-08",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0881",
+    "date": "2026-11-08",
+    "pending": true
+   },
+   {
     "who": "omarespejel",
     "points": 50,
     "rule": "result",
     "row": "M-0882",
     "date": "2026-11-08",
     "pending": true
+   },
+   {
+    "who": "py2755",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0882",
+    "date": "2026-11-08",
+    "pending": false
+   },
+   {
+    "who": "py2755",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0882",
+    "date": "2026-11-08",
+    "pending": true
    }
   ]
  },
- "source": "e881deb2"
+ "source": "8e8dbda0"
 }
