@@ -231,7 +231,7 @@ class QueueAndCredits(unittest.TestCase):
 class RulesV2(unittest.TestCase):
     def test_targets_carry_the_cells_caps_and_statements(self):
         t = m.load_targets()
-        self.assertEqual(t["rules"]["version"], 6.3)
+        self.assertEqual(t["rules"]["version"], 6.4)
         self.assertEqual(t["rules"]["scoring"]["since_sequence"], 6821)
         self.assertEqual(len(t["rules"]["claim_board"]), 36)
         self.assertEqual([p["id"] for p in t["rules"]["problems"]], ["problem-1-n32-ceiling", "problem-2-lemma-R", "problem-3-list-stwo", "problem-3a-L1", "problem-3b-interleaved", "problem-3c-charp", "problem-5-stwo-constants", "problem-4-curve-stwo"])
