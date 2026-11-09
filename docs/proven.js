@@ -418,7 +418,7 @@
     }
     if (row.status === "accepted") return ["accepted", "accepted"];
     if (row.status === "refuted") return ["refuted", "refuted"];
-    const reviews = row.reviews || [];
+    const reviews = (row.reviews || []).filter((r) => r.verdict !== "read");
     if (reviews.length) {
       const sameOperator = reviews.every((r) => /same operator/i.test(r.by || ""));
       const verdicts = [...new Set(reviews.map((r) => r.verdict || ""))];
@@ -1168,6 +1168,20 @@
     // A lead names its cell by id, or as "Problem 2" / "problem 3a" (the cell whose id starts with that number).
     const problemCell = (text) => scoring && ((scoring.cells || []).some((id) => String(text || "").includes(id))
       || [...String(text || "").matchAll(/\bproblem[ -]?(\d[abc]?)\b/gi)].some((m) => (scoring.cells || []).some((id) => id.toLowerCase().startsWith(`problem-${m[1].toLowerCase()}-`))));
+    // Rules v7: since its cutoff a lead pays only in a full-weight cell (a ledger-only cell pays for a
+    // recorded ledger change, which a lead alone cannot show).
+    const v7 = scoring?.v7 || null, v7since = v7 ? Date.parse(v7.since) : Infinity;
+    const cellOfText = (text) => {
+      const s = String(text || ""), ids = scoring?.cells || [];
+      const hit = ids.find((id) => s.includes(id));
+      if (hit) return hit;
+      for (const m of s.matchAll(/\bproblem[ -]?(\d[abc]?)\b/gi)) {
+        const id = ids.find((x) => x.toLowerCase().startsWith(`problem-${m[1].toLowerCase()}-`));
+        if (id) return id;
+      }
+      return null;
+    };
+    const v7Pays = (text) => { const c = cellOfText(text); return Boolean(c && (v7.weights || {})[c] > 0 && !(v7.ledger_only || []).includes(c)); };
     const cells = (record.cells || []).filter((c) => FIELD_P[c.field] && c.state !== "closed");
     const cellOf = (i) => cells.find((c) => inCell(c, i));
     const best = new Map(), paid = new Set();
@@ -1202,6 +1216,7 @@
       const t = Date.parse(lead.created_at);
       if (!who || !Number.isFinite(t) || member(who, login).maintainers) continue;
       if (t >= cutoff && !problemCell(`${lead.title || ""} ${lead.cell || ""}`)) continue;
+      if (t >= v7since && !v7Pays(`${lead.title || ""} ${lead.cell || ""}`)) continue;
       if (voidedAccounts.has(lead.author?.contributor)) continue;
       const key = `${member(who, login).name}:${dayOf(t)}`;
       perDay.set(key, (perDay.get(key) || 0) + 1);
@@ -1339,7 +1354,9 @@
         el("th", { scope: "col" }, "Points", el("button", { type: "button", class: "info-tip", popovertarget: "points-help", "aria-label": "How points work" }, "i")),
         el("th", { scope: "col" }, el("span", { class: "sr-only" }, "Earned for")), el("th", { scope: "col" }, el("span", { class: "sr-only" }, "Share")));
       const when = "so far";
-      const body = stats.flatMap(({ row, s }) => {
+      // The home page shows the first few (data-limit) and links to everyone.
+      const limit = Number(root.dataset.limit) || Infinity;
+      const body = stats.slice(0, limit).flatMap(({ row, s }) => {
         const m = row.m, you = isYou(m), key = m.login || m.name;
         const name = m.login ? el("a", { class: "kit-person-name", href: `/workshop#/people/${encodeURIComponent(m.login)}` }, label(m))
           : el("span", { class: "kit-person-name" }, label(m));
@@ -1947,6 +1964,9 @@
         ...(m.v62 ? [el("p", { class: "bounds-week" }, el("b", {}, `Rules v6.2, after the first day, since ${m.v62.since}. `),
           `Problem 4 is answered for the ledger and closed with full credit. Problem 3 splits into 3a, 3b and 3c. Problem 2's answer has a shape on the record. Problem 1 pays half. ${m.v62.stewards}. ${m.v62.human_signed}. ${m.v62.one_post_per_review}. ${m.v62.outside_cells}. ${m.v62.ledger}.`,
           " ", el("a", { href: `/threads/${m.v62.thread}` }, "The v6.2 thread"))] : []),
+        ...(m.v7 ? [el("p", { class: "bounds-week" }, el("b", {}, `Rules v7, the two results that change the parameter table, since ${m.v7.since}. `),
+          `${m.v7.weights}. ${m.v7.lemma_r}. ${m.v7.reviews}. The finish line is ${m.v7.finish_line}. ${m.v7.lapsed}.`,
+          " ", el("a", { href: `/threads/${m.v7.thread}` }, "The v7 thread"))] : []),
         ...(m.v64 ? [el("p", { class: "bounds-week" }, el("b", {}, `Rules v6.4, the conjecture's own definitions, since ${m.v64.since}. `),
           `${m.v64.problem5}. ${m.v64.stewards}. ${m.v64.human_signed}.`, rules.acceptance ? ` Acceptance: ${rules.acceptance}.` : "",
           " ", el("a", { href: `/threads/${m.v64.thread}` }, "The v6.4 thread"))] : []),
@@ -1978,6 +1998,17 @@
       pill.classList.toggle("is-yes", holders.length > 0);
     }
   }
+  // The problem counters read the record, so they never go stale: posts in the problem cells, the
+  // outside reviews on them (a review recorded as read is not counted) and the rows accepted.
+  function fillCounters(record) {
+    const rows = (record.contributions || []).filter((r) => r.cell && r.status !== "withdrawn");
+    const outside = (v) => v.verdict !== "read" && !/same operator|platform-certified/i.test(v.by || "");
+    const n = { "problem-posts": rows.length, "outside-reviews": rows.reduce((s, r) => s + (r.reviews || []).filter(outside).length, 0),
+      accepted: rows.filter((r) => r.status === "accepted").length };
+    for (const node of document.querySelectorAll("[data-count]")) {
+      if (n[node.dataset.count] !== undefined) node.textContent = thousands(n[node.dataset.count]);
+    }
+  }
   async function renderMathematics() {
     try {
       // The task list is the slowest read and only the problems and cells need it: the rest draws
@@ -1991,6 +2022,7 @@
       const [record, profiles] = await Promise.all([loadRecord(), profilesKept ? Promise.resolve(new Map(profilesKept)) : loadProfiles()]);
       record.profiles = profiles;
       if (profilesKept) loadProfiles().catch(() => {});
+      fillCounters(record);
       window.__tasks = kept("starks-tasks");
       renderProblems();
       renderRecord(record);
