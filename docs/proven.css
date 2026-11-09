@@ -329,6 +329,7 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .lane-key-item.is-accepted::before { background: var(--record); }
 .lane-key-item.is-reviewed::before { border: 2px solid var(--record); }
 .lane-key-item.is-posted::before { border: 1.5px solid var(--muted); }
+.lane-key-item.is-refuted::before { background: var(--coral); }
 .lane-key-item.is-record::before { border: 2px solid var(--amber); background: var(--record); }
 .lane-key-item.is-arc::before { width: 16px; height: 0; border-radius: 0; border-top: 1.5px solid var(--muted); opacity: .6; }
 .lane-label { font: 700 12px var(--sans); }
@@ -370,6 +371,9 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .certmap-key { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
 .certmap-series { color: var(--hue); transition: opacity .15s; }
 .certmap-svg.is-focus .certmap-series:not(.is-lit) { opacity: .15; }
+.certmap-series:not(.is-named):not(.is-lit) { opacity: .3; }
+.certmap-series:not(.is-named) .certmap-line { stroke-width: 1.25; }
+.certmap-series.is-lit .certmap-line { stroke-width: 2.5; }
 .certmap-line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
 .certmap-best { fill: currentColor; stroke: var(--bg-2); stroke-width: 1.5; }
 .certmap-sub { fill: currentColor; opacity: .3; }
@@ -392,12 +396,14 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .certmap-pace.is-even { fill: var(--pace-even); }
 .certmap-pace.is-slow { fill: var(--pace-slow); }
 .certmap-pace.is-one { fill: var(--bg-2); stroke: var(--ink-2); stroke-width: 1.4; }
+.certmap-pace.is-many { stroke: var(--ink-2); stroke-width: 1.4; }
+.certmap-many { fill: var(--ink); font: 650 9.5px var(--sans); font-variant-numeric: tabular-nums; pointer-events: none; paint-order: stroke; stroke: var(--bg-2); stroke-width: 3px; }
 .certmap-pace.is-drift { stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 2 2; }
 .certmap-svg a:hover .certmap-pace, .certmap-svg a:focus-visible .certmap-pace { stroke: var(--ink); stroke-width: 2.5; }
 .certmap .is-z-open { --hue: var(--amber); }
 .certmap .is-z-t1 { --hue: var(--accent); }
 .certmap .is-z-linear { --hue: color-mix(in srgb, var(--record) 55%, var(--muted)); }
-.certmap-series.is-z-linear:not(.is-lit) { opacity: .55; }
+.certmap-svg:not(.is-focus) .certmap-series.is-z-linear.is-named:not(.is-lit) { opacity: .55; }
 .certmap-zone-key { display: inline-flex; align-items: center; gap: 6px; }
 .certmap-zone-key::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--hue); }
 .certmap-zone-key[class*="is-z-"]::before { width: 14px; height: 3px; border-radius: 2px; }

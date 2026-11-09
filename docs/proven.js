@@ -640,7 +640,7 @@
     const root = el("figure", { class: "lane-timeline" });
     const caption = el("figcaption", { class: "lane-key" },
       el("span", { class: "record-viz-title" }, "Every contribution, by target"),
-      ...STAGES.slice(0, 3).map(([k, w]) => el("span", { class: `lane-key-item is-${k}` }, w)),
+      ...STAGES.map(([k, w]) => el("span", { class: `lane-key-item is-${k}` }, w)),
       el("span", { class: "lane-key-item is-record" }, "T3 record at n = 1,024"),
       el("span", { class: "lane-key-item is-arc" }, "builds on"));
     const plot = el("div", { class: "board-chart" });
@@ -658,9 +658,15 @@
       const padL = 46, padR = 14, padT = 22, axis = 24;
       const X = (t) => padL + ((t - t0) / (t1 - t0)) * (W - padL - padR);
       const dayW = (W - padL - padR) / ((t1 - t0) / DAY);
-      const cols = Math.max(1, Math.floor(dayW / GAP));
-      const rowsOf = (n) => Math.ceil(n / cols);
-      const laneH = new Map(lanes.map((id) => [id, Math.max(44, 26 + GAP * Math.max(1, ...[...sameDay].filter(([k]) => k.startsWith(`${id} `)).map(([, ids]) => rowsOf(ids.length))))]));
+      // A day's dots pack into a grid on its day. A day too busy for ten rows packs tighter, with
+      // smaller dots, so one busy day does not set the height of its whole lane.
+      const ROWS = 10, room = Math.max(dayW, GAP);
+      const pack = new Map([...sameDay].map(([key, ids]) => {
+        let c = Math.max(1, Math.floor(room / GAP)), g = GAP;
+        while (Math.ceil(ids.length / c) * g > ROWS * GAP && room / (c + 1) >= 3.5) g = room / ++c;
+        return [key, { g, c: Math.min(c, ids.length), n: Math.ceil(ids.length / c) }];
+      }));
+      const laneH = new Map(lanes.map((id) => [id, Math.max(44, 26 + Math.max(GAP, ...[...pack].filter(([k]) => k.startsWith(`${id} `)).map(([, p]) => p.n * p.g)))]));
       const laneTop = new Map();
       let y = padT;
       for (const id of lanes) { laneTop.set(id, y); y += laneH.get(id); }
@@ -668,8 +674,8 @@
       const at = new Map();
       for (const [key, ids] of sameDay) {
         const [id, date] = key.split(" ");
-        const c = Math.min(cols, ids.length), n = rowsOf(ids.length), x = X(Date.parse(date)), mid = laneTop.get(id) + laneH.get(id) / 2;
-        ids.forEach((rid, i) => at.set(rid, [x + ((i % c) - (c - 1) / 2) * GAP, mid + (Math.floor(i / c) - (n - 1) / 2) * GAP]));
+        const { g, c, n } = pack.get(key), x = X(Date.parse(date)), mid = laneTop.get(id) + laneH.get(id) / 2;
+        ids.forEach((rid, i) => at.set(rid, [x + ((i % c) - (c - 1) / 2) * g, mid + (Math.floor(i / c) - (n - 1) / 2) * g, g]));
       }
       const svg = svgEl("svg", { class: "board-svg lane-svg", viewBox: `0 0 ${W} ${H}`, role: "group", "aria-label": "Contributions over time for T3, T2 and T1" });
       lanes.forEach((id, i) => {
@@ -709,9 +715,9 @@
       }
       const dots = new Map();
       for (const r of dated) {
-        const [cx, cy] = at.get(r.id), [, label] = recordState(r);
+        const [cx, cy, g] = at.get(r.id), [, label] = recordState(r);
         const a = svgEl("a", { href: `#${r.id}`, "aria-label": `${r.id}, ${r.target} ${KIND_WORDS[r.kind] || r.kind}, ${day(r.date)}, ${who(r)}: ${r.title} (${label})` });
-        const dot = svgEl("circle", { class: `lane-dot is-${stageOf(r)}${records.has(r.id) ? " is-record" : ""}`, cx: cx.toFixed(1), cy: cy.toFixed(1), r: 4.5 });
+        const dot = svgEl("circle", { class: `lane-dot is-${stageOf(r)}${records.has(r.id) ? " is-record" : ""}`, cx: cx.toFixed(1), cy: cy.toFixed(1), r: (4.5 * g / GAP).toFixed(2) });
         a.append(dot);
         dots.set(r.id, dot);
         const on = () => {
@@ -1585,25 +1591,39 @@
       const band = (up, lo) => `${line(up)} ${rs.slice().reverse().map((r) => `L${X(r).toFixed(1)} ${Y(lo(r)).toFixed(1)}`).join(" ")} Z`;
       svg.append(svgEl("path", { class: "rg-band-linear", d: band(() => 1, Math.sqrt) }), svgEl("path", { class: "certmap-band-t1", d: band(Math.sqrt, a1) }));
       for (const c of [CURVES[1], CURVES[2], CURVES[3]]) svg.append(svgEl("path", { class: `rg-curve is-${c.id}`, d: line(c.f) }));
-      if (!narrow) {
-        text("certmap-curve-name is-johnson", X(0.06), Y(Math.sqrt(0.06)) - 8, "Johnson √ρ", "start");
-        text("certmap-curve-name is-first", X(0.8), Y(a1(0.8)) + 18, "first order a₁(ρ)");
-        text("certmap-curve-name is-capacity", X(0.93), Y(0.93) + 18, "limit ρ");
-      }
-      // Settings that land on the same spot step sideways, so every one stays visible and pickable.
+      // Settings that land on the same spot step a little sideways; one that still finds no room joins
+      // the dot it hits, which then shows how many settings it holds. Fast growers are placed first, so
+      // they keep their own spot. Dots never stray far from their true rate.
       const placed = [];
-      const order = [...info].sort(([, a], [, b]) => a.agree - b.agree || a.rate - b.rate);
+      const order = [...info].sort(([, a], [, b]) => (b.exp ?? -Infinity) - (a.exp ?? -Infinity) || b.top.n - a.top.n);
       for (const [c, s] of order) {
-        const r = (narrow ? 0.55 : 1) * Math.min(8, 2.5 + Math.log2(s.top.n) * 0.5), y = Y(s.agree);
-        let x = X(s.rate);
-        for (let step = 1; placed.some((p) => Math.hypot(p.x - x, p.y - y) < p.r + r); step++) x = X(s.rate) + (step % 2 ? 1 : -1) * Math.ceil(step / 2) * (r + 1.5) * 1.6;
-        placed.push({ x, y, r });
-        const a = svgEl("a", { href: "#", "aria-label": `${where(c)}: ${ZONE_NAME[s.zone]}; ${paceWords(s.exp)}${driftWords(s)}; largest n = ${thousands(s.top.n)}` });
-        a.append(svgEl("circle", { class: `certmap-pace is-${pace(s.exp)}${s.drift ? " is-drift" : ""}`, cx: x.toFixed(1), cy: y.toFixed(1), r: r.toFixed(1) }));
-        const tell = () => read.replaceChildren(el("b", {}, where(c)), ` · ${ZONE_NAME[s.zone]} · ${paceWords(s.exp)}${driftWords(s)} · sizes ${s.pts.map((i) => thousands(i.n)).join(", ")} · best ${thousands(s.top.certified)} at n = ${thousands(s.top.n)}`);
+        const r = (narrow ? 0.55 : 1) * Math.min(8, Math.max(pace(s.exp) === "fast" ? 6 : 0, 2.5 + Math.log2(s.top.n) * 0.5)), y = Y(s.agree), x0 = X(s.rate);
+        const hit = (x) => placed.find((p) => Math.hypot(p.x - x, p.y - y) < p.r + r);
+        const x = [0, 1, -1, 2, -2].map((k) => Math.min(W - r, Math.max(r, x0 + k * (r + 1.5) * 1.6))).find((x) => !hit(x));
+        if (x === undefined) hit(x0).members.push([c, s]);
+        else placed.push({ x, y, r, members: [[c, s]] });
+      }
+      // Least important first, so fast growers draw on top.
+      for (const p of placed.reverse()) {
+        const [[c, s]] = p.members, many = p.members.length > 1;
+        const r = many ? Math.min(12, Math.max(narrow ? 0 : 7, p.r + 1.5 + Math.log2(p.members.length))) : p.r;
+        const words = many ? `${p.members.length} settings near ${where(c).toLowerCase()}; ${s.exp === null ? "none with a slope yet" : `the fastest ${paceWords(s.exp)}`}`
+          : `${where(c)}: ${ZONE_NAME[s.zone]}; ${paceWords(s.exp)}${driftWords(s)}; largest n = ${thousands(s.top.n)}`;
+        const a = svgEl("a", { href: "#", "aria-label": words });
+        a.append(svgEl("circle", { class: `certmap-pace is-${pace(s.exp)}${s.drift && !many ? " is-drift" : ""}${many ? " is-many" : ""}`, cx: p.x.toFixed(1), cy: p.y.toFixed(1), r: r.toFixed(1) }));
+        if (many && r >= 7) { const t = svgEl("text", { class: "certmap-many", x: p.x.toFixed(1), y: (p.y + 3.5).toFixed(1), "text-anchor": "middle" }); t.textContent = String(p.members.length); a.append(t); }
+        const tell = () => many
+          ? read.replaceChildren(el("b", {}, `${p.members.length} settings here`), " · ", p.members.slice(0, 6).map(([m, t]) => `${where(m).toLowerCase()} (${t.exp === null ? "one size" : `n^${t.exp.toFixed(2)}`})`).join("; "), p.members.length > 6 ? `; ${p.members.length - 6} more` : "", " · click for the fastest one's line")
+          : read.replaceChildren(el("b", {}, where(c)), ` · ${ZONE_NAME[s.zone]} · ${paceWords(s.exp)}${driftWords(s)} · sizes ${s.pts.map((i) => thousands(i.n)).join(", ")} · best ${thousands(s.top.certified)} at n = ${thousands(s.top.n)}`);
         a.addEventListener("pointerenter", tell); a.addEventListener("focus", tell);
         a.addEventListener("click", (event) => { event.preventDefault(); focus = c; setView("growth"); });
         svg.append(a);
+      }
+      // Curve names last, so no dot hides them.
+      if (!narrow) {
+        text("certmap-curve-name is-johnson", X(0.36), Y(Math.sqrt(0.36)) - 10, "Johnson √ρ", "end");
+        text("certmap-curve-name is-first", X(0.62), Y(a1(0.62)) + 20, "first order a₁(ρ)", "start");
+        text("certmap-curve-name is-capacity", X(0.9), Y(0.9) + 22, "limit ρ", "start");
       }
       return svg;
     }
@@ -1649,10 +1669,21 @@
           g.dataset.col = c;
           groups.push(g);
         }
-        labels.sort((a, b) => a.y - b.y);
-        labels.forEach((l, j) => { if (j && l.y - labels[j - 1].y < 13) l.y = labels[j - 1].y + 13; text("certmap-label", l.x, l.y, l.c.split("|")[1], "start", l.g); });
+        // Name at most six lines a panel, fastest growth first, then the highest count; a name that would
+        // overlap another or leave the panel is dropped, and its line fades until hovered.
+        const named = [], ex = (l) => info.get(l.c).exp ?? -Infinity;
+        labels.sort((a, b) => ex(b) - ex(a) || a.y - b.y);
+        for (const l of labels) {
+          // A name that would run off the panel sits above its end point instead.
+          const words = k === "other" ? l.c.replace("|", " · ") : l.c.split("|")[1], w = words.length * 7, over = l.x + w > ox + pw;
+          const x = over ? l.x - 7 - w : l.x, y = over ? l.y - 12 : l.y;
+          if (named.length >= 6 || y < oy + pt || y > oy + ph - pb || named.some((m) => Math.abs(m.y - y) < 13 && m.x < x + w && x < m.x + m.w)) continue;
+          named.push({ x, y, w }); l.g.classList.add("is-named");
+          text("certmap-label", x, y, words, "start", l.g);
+        }
       });
-      svg.append(...groups);
+      // Named lines draw on top.
+      svg.append(...groups.sort((a, b) => a.classList.contains("is-named") - b.classList.contains("is-named")));
       const lit = focus && groups.find((h) => h.dataset.col === focus);
       if (lit) { svg.classList.add("is-focus"); lit.classList.add("is-lit"); showLine(focus, info.get(focus).pts); }
       return svg;
@@ -1704,8 +1735,8 @@
       return svg;
     }
     const GUIDES = {
-      map: "One dot per rate and agreement tried. Colour is how fast its best count grows with n; hollow means one size so far. Above Johnson a linear bound is known. Click a dot for its line.",
-      growth: "Best count per point as n grows, one line per agreement. Level means linear in n; rising means faster.",
+      map: "One dot per rate and agreement tried. Colour is how fast its best count grows with n; hollow means one size so far; a number is how many settings share that spot, coloured by the fastest. Above Johnson a linear bound is known. Click a dot for its line.",
+      growth: "Best count per point as n grows, one line per agreement. Level means linear in n; rising means faster. The fastest-growing lines are named; hover any faded line for its name.",
       tried: "Submissions per setting; empty cells are untried. 5/8+1 means A = 5n/8 + 1.",
     };
     let drawn = 0;
