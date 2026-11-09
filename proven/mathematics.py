@@ -50,7 +50,7 @@ OUT = ROOT / "results" / "mathematics.json"
 
 KINDS = ("idea", "lemma", "counterexample", "proof-sketch", "proof", "formalization", "review", "source")
 STATUSES = ("posted", "accepted", "refuted", "withdrawn")
-VERDICTS = ("holds", "fails", "partial")
+VERDICTS = ("holds", "fails", "partial", "read")
 RECORD_ID = re.compile(r"^M-\d{4}$")
 # A provably.fast thread, and a record in the mathematics research graph.
 THREAD_ID = re.compile(r"^bt1_[0-9a-f]{24}$")
@@ -233,6 +233,9 @@ def row_points(row: dict, rules: dict | None = None) -> tuple[int, str]:
     # Rules v2: a row that combines two or more earlier records counts double.
     if len(row.get("combines", [])) >= 2:
         value *= (rules or {}).get("combination_bonus", 2)
+    weight = cell_weight(row, (rules or {}).get("scoring") or {})
+    if weight is not None:
+        value *= weight
     return round(value), rule
 
 
@@ -259,7 +262,8 @@ def scored(row: dict, scoring: dict) -> bool:
     as "Problem N"), or is a review of such a row; every other row since the cutoff is logged. Rows
     before the cutoff pay as before. The moment compared is the row's `posted` time (its bulletin
     post, else its graph admission) when the row has one, else its date; a date alone on the cutoff
-    day counts as before it."""
+    day counts as before it. Rules v7: since its cutoff a row pays only in a cell with a positive
+    weight (cell_weight)."""
     if not scoring:
         return True
     since = str(scoring.get("since") or "")
@@ -269,7 +273,36 @@ def scored(row: dict, scoring: dict) -> bool:
     if when < since:
         return True
     text = " ".join(str(row.get(key) or "") for key in ("cell", "title", "lead"))
-    return cell_of(text, scoring.get("cells") or []) is not None
+    if cell_of(text, scoring.get("cells") or []) is None:
+        return False
+    weight = cell_weight(row, scoring)
+    return weight is None or weight > 0
+
+
+def problem_cell(row: dict, scoring: dict) -> str | None:
+    """The problem cell of a row posted since the v6.1 cutoff: its `cell`, else the cell its title or lead names."""
+    if not scoring or str(row.get("posted") or row.get("date") or "") < str(scoring.get("since") or ""):
+        return None
+    return row.get("cell") or cell_of(" ".join(str(row.get(key) or "") for key in ("title", "lead")), scoring.get("cells") or [])
+
+
+def cell_weight(row: dict, scoring: dict) -> float | None:
+    """Rules v7: the weight of a row posted since the v7 cutoff, by its cell (None before the cutoff).
+    A cell missing from the weights pays nothing; a ledger-only cell pays its weight only for a row
+    marked `changes_ledger` (a result that changes a row of the Port S ledger)."""
+    v7 = scoring.get("v7") or {}
+    since = str(v7.get("since") or "")
+    when = str(row.get("posted") or row.get("date") or "")
+    if not since or when < since:
+        return None
+    weights = v7.get("weights") or {}
+    cell = row.get("cell") or cell_of(" ".join(str(row.get(key) or "") for key in ("title", "lead")),
+                                      scoring.get("cells") or list(weights))
+    if cell not in weights:
+        return 0.0
+    if cell in (v7.get("ledger_only") or []) and not row.get("changes_ledger"):
+        return 0.0
+    return float(weights[cell])
 
 
 def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
@@ -358,7 +391,8 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
         points["pending" if line["pending"] else "total"] += line["points"]
     for entry in people.values():
         entry.setdefault("points", {"total": 0, "pending": 0})
-    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "url", "thread", "lead", "builds_on", "count", "bound", "combines", "bonus")}
+    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "posted", "url", "thread", "lead", "builds_on", "count", "bound", "combines", "bonus")}
+              | {"cell": problem_cell(row, (targets.get("rules") or {}).get("scoring") or {})}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
                  "points": row_points(row, targets.get("rules"))[0], "advances": row_points(row, targets.get("rules"))[1],
                  "reviews": [{"by": r.get("by"), "verdict": r.get("verdict")} for r in row.get("reviews", [])],

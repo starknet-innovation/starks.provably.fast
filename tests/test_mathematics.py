@@ -231,10 +231,10 @@ class QueueAndCredits(unittest.TestCase):
 class RulesV2(unittest.TestCase):
     def test_targets_carry_the_cells_caps_and_statements(self):
         t = m.load_targets()
-        self.assertEqual(t["rules"]["version"], 6.4)
+        self.assertEqual(t["rules"]["version"], 7)
         self.assertEqual(t["rules"]["scoring"]["since_sequence"], 6821)
-        self.assertEqual(len(t["rules"]["claim_board"]), 36)
-        self.assertEqual([p["id"] for p in t["rules"]["problems"]], ["problem-1-n32-ceiling", "problem-2-lemma-R", "problem-3-list-stwo", "problem-3a-L1", "problem-3b-interleaved", "problem-3c-charp", "problem-5-stwo-constants", "problem-4-curve-stwo"])
+        self.assertEqual(len(t["rules"]["claim_board"]), 40)
+        self.assertEqual([p["id"] for p in t["rules"]["problems"]], ["problem-1-n32-ceiling", "problem-2-lemma-R", "problem-2a-fibre", "problem-2b-star", "problem-2c-general", "problem-3-list-stwo", "problem-3a-L1", "problem-3a-upper", "problem-3b-interleaved", "problem-3c-charp", "problem-5-stwo-constants", "problem-4-curve-stwo"])
         self.assertIn("port-LIST32", [c["id"] for c in t["rules"]["claim_board"]])
         self.assertEqual(len(t["rules"]["void_reviews"]["post_ids"]), 42)
         self.assertIn("lift-lemma-R", [c["id"] for c in t["rules"]["claim_board"]])
@@ -295,3 +295,30 @@ class CutoffScoring(unittest.TestCase):
         m.validate(m.load_targets(), [posted])
         with self.assertRaises(m.RecordError):
             m.validate(m.load_targets(), [{**row("M-0901", "lemma", target="T3"), "cell": "problem-2-lemma-R"}])
+
+
+class RulesV7(unittest.TestCase):
+    SCORING = {"since": "2026-11-05T12:37:21Z", "cells": ["problem-1-n32-ceiling", "problem-2-lemma-R", "problem-2a-fibre", "problem-3a-L1", "problem-3a-upper"],
+               "v7": {"since": "2026-11-09T20:05:58Z", "weights": {"problem-2-lemma-R": 1, "problem-2a-fibre": 1, "problem-3a-upper": 1, "problem-1-n32-ceiling": 0.25},
+                      "ledger_only": ["problem-1-n32-ceiling"]}}
+
+    def posted(self, rid, cell, when="2026-11-10T08:00:00Z", **extra):
+        return {**row(rid, "lemma", target="T3", status="accepted"), "cell": cell, "title": f"{cell}: x", "posted": when, "date": when[:10], **extra}
+
+    def test_full_weight_quarter_and_logged_cells(self):
+        rules = {"scoring": self.SCORING}
+        self.assertEqual(m.row_points(self.posted("M-0001", "problem-3a-upper"), rules)[0], 50)
+        self.assertEqual(m.row_points(self.posted("M-0002", "problem-1-n32-ceiling", changes_ledger=True), rules)[0], 12)
+        self.assertFalse(m.scored(self.posted("M-0003", "problem-1-n32-ceiling"), self.SCORING))
+        self.assertTrue(m.scored(self.posted("M-0004", "problem-1-n32-ceiling", changes_ledger=True), self.SCORING))
+        self.assertFalse(m.scored(self.posted("M-0005", "problem-3a-L1"), self.SCORING))
+        self.assertTrue(m.scored(self.posted("M-0006", "problem-3a-L1", when="2026-11-09T19:00:00Z"), self.SCORING))
+        self.assertEqual(m.row_points(self.posted("M-0007", "problem-3a-L1", when="2026-11-09T19:00:00Z"), rules)[0], 50)
+
+    def test_a_read_review_pays_nothing(self):
+        base = {**row("M-0010", "lemma", who="alice", status="accepted"),
+                "reviews": [{"by": "bob (outside review, bp1_1)", "verdict": "read"}, {"by": "carol (outside review, bp1_2)", "verdict": "holds"}]}
+        m.validate(m.load_targets(), [base])
+        paid = {l["who"] for l in m.ledger([base], m.load_targets()["rules"])}
+        self.assertIn("carol", paid)
+        self.assertNotIn("bob", paid)
