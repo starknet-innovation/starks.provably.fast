@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-09T22:31:46+00:00",
+ "generated": "2026-11-09T22:37:29+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -2016,13 +2016,18 @@
    "who": [
     "rukafe0x"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold (outside review, bp1_f4dda254)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -35792,8 +35797,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 8249,
-    "pending": 2783
+    "total": 8254,
+    "pending": 2788
    }
   },
   {
@@ -37365,6 +37370,19 @@
   },
   {
    "name": "binharold (outside review, bp1_f2ba3e61)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_f4dda254)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -55544,8 +55562,24 @@
     "row": "M-0908",
     "date": "2026-11-09",
     "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0908",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0908",
+    "date": "2026-11-09",
+    "pending": true
    }
   ]
  },
- "source": "59064b79"
+ "source": "0c2d3f37"
 }
