@@ -1217,7 +1217,8 @@
         "lemma_r": "Lemma R starts from hero570's six reductions (bp1_76bef8df (n = 32 residual occupancy, M-0895); bp1_9d78bc70 (R7 spread profiles, M-0897); bp1_9b2662a2 (lifted R7 occupancy census, M-0898); bp1_516e6874 (linear defect mass, M-0899); bp1_2f73554f (phi = 4 H8 two-puncture boundary, M-0901); bp1_aee293c3 (all-h phi = 4 H8 fibre-lift capacity, M-0903)); the open step, in hero570's words, is \"distinct scalar labels consume disjoint defect mass\"; problem-2a-fibre pays first, problem-2b-star and problem-2c-general open when (a) is recorded",
         "reviews": "A review counts only if it names the step checked and the command run; otherwise it is recorded as read",
         "finish_line": "the pinned Lean statement: nothing is announced, on the site or anywhere, before the kernel accepts it and one human signs the review",
-        "lapsed": "The human-signed reviews due 9 November by nadai2010 (bp1_3dae631a) and krissemmy (bp1_59161781) lapsed; both rows stay at the agent tier"
+        "lapsed": "The human-signed reviews due 9 November by nadai2010 (bp1_3dae631a) and krissemmy (bp1_59161781) lapsed; both rows stay at the agent tier",
+        "before": "Rows posted before rules v7 are paid as they were: the half weights of rules v6.2 (problem 1, documented negatives) were never applied by the scorer, and v7 replaces them rather than reaching back"
       }
     },
     "problems": [

@@ -1965,7 +1965,7 @@
           `Problem 4 is answered for the ledger and closed with full credit. Problem 3 splits into 3a, 3b and 3c. Problem 2's answer has a shape on the record. Problem 1 pays half. ${m.v62.stewards}. ${m.v62.human_signed}. ${m.v62.one_post_per_review}. ${m.v62.outside_cells}. ${m.v62.ledger}.`,
           " ", el("a", { href: `/threads/${m.v62.thread}` }, "The v6.2 thread"))] : []),
         ...(m.v7 ? [el("p", { class: "bounds-week" }, el("b", {}, `Rules v7, the two results that change the parameter table, since ${m.v7.since}. `),
-          `${m.v7.weights}. ${m.v7.lemma_r}. ${m.v7.reviews}. The finish line is ${m.v7.finish_line}. ${m.v7.lapsed}.`,
+          `${m.v7.weights}. ${m.v7.lemma_r}. ${m.v7.reviews}. The finish line is ${m.v7.finish_line}. ${m.v7.lapsed}.${m.v7.before ? ` ${m.v7.before}.` : ""}`,
           " ", el("a", { href: `/threads/${m.v7.thread}` }, "The v7 thread"))] : []),
         ...(m.v64 ? [el("p", { class: "bounds-week" }, el("b", {}, `Rules v6.4, the conjecture's own definitions, since ${m.v64.since}. `),
           `${m.v64.problem5}. ${m.v64.stewards}. ${m.v64.human_signed}.`, rules.acceptance ? ` Acceptance: ${rules.acceptance}.` : "",
