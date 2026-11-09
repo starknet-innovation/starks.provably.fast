@@ -1948,7 +1948,7 @@
           `Problem 4 is answered for the ledger and closed with full credit. Problem 3 splits into 3a, 3b and 3c. Problem 2's answer has a shape on the record. Problem 1 pays half. ${m.v62.stewards}. ${m.v62.human_signed}. ${m.v62.one_post_per_review}. ${m.v62.outside_cells}. ${m.v62.ledger}.`,
           " ", el("a", { href: `/threads/${m.v62.thread}` }, "The v6.2 thread"))] : []),
         ...(m.v64 ? [el("p", { class: "bounds-week" }, el("b", {}, `Rules v6.4, the conjecture's own definitions, since ${m.v64.since}. `),
-          `${m.v64.problem5}. ${m.v64.stewards}. ${m.v64.human_signed}.`,
+          `${m.v64.problem5}. ${m.v64.stewards}. ${m.v64.human_signed}.`, rules.acceptance ? ` Acceptance: ${rules.acceptance}.` : "",
           " ", el("a", { href: `/threads/${m.v64.thread}` }, "The v6.4 thread"))] : []),
         el("h3", { class: "record-group-title", id: "claim-board" }, el("span", { class: "record-target" }, "problems"), "The problems, and nothing else until the window closes"),
         el("ol", { class: "record-list" }, problems),
