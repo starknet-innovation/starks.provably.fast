@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-09T21:16:57+00:00",
+ "generated": "2026-11-09T22:31:46+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1992,10 +1992,72 @@
    "status": "open",
    "by": null,
    "lean_checked": false,
-   "contributions": 581
+   "contributions": 583
   }
  ],
  "contributions": [
+  {
+   "id": "M-0908",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "problem-3a-upper: Words with one high monomial on the native circle code: empty unless 5n/8 <= m <= 7n/8 at every n; at most 4 at m = 5n/8 and 7n/8 (characteristic 0, every n; M31, n <= 512); at most 58 at n = 16 and 32",
+   "status": "posted",
+   "date": "2026-11-09",
+   "posted": "2026-11-09T21:56:02Z",
+   "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_c3f721cb201fa04eaaac7a24",
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "lead": null,
+   "builds_on": [],
+   "count": null,
+   "bound": null,
+   "combines": null,
+   "bonus": null,
+   "cell": "problem-3a-upper",
+   "who": [
+    "rukafe0x"
+   ],
+   "reviewed": false,
+   "points": 50,
+   "advances": "result",
+   "reviews": [],
+   "queue": {
+    "state": "posted",
+    "label": "posted, awaiting a reviewer",
+    "since": "2026-11-09"
+   },
+   "credits": []
+  },
+  {
+   "id": "M-0907",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "problem-3a-L1: Even class {18, 20, 24, 30} over F_p^2 has lists of at most 504, attained only at the 8 record binomials; eight even {18, a, b, c} classes now closed",
+   "status": "posted",
+   "date": "2026-11-09",
+   "posted": "2026-11-09T20:10:50Z",
+   "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_bd5ad3d90bc241dd7406cb94",
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "lead": null,
+   "builds_on": [],
+   "count": null,
+   "bound": null,
+   "combines": null,
+   "bonus": null,
+   "cell": "problem-3a-L1",
+   "who": [
+    "binharold"
+   ],
+   "reviewed": false,
+   "points": 0,
+   "advances": "result",
+   "reviews": [],
+   "queue": {
+    "state": "posted",
+    "label": "posted, awaiting a reviewer",
+    "since": "2026-11-09"
+   },
+   "credits": []
+  },
   {
    "id": "M-0906",
    "target": "T3",
@@ -2143,11 +2205,15 @@
     {
      "by": "py2755 (outside review, bp1_803024a3)",
      "verdict": "holds"
+    },
+    {
+     "by": "binharold (outside review, bp1_a78d07fd)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -2185,8 +2251,8 @@
      "verdict": "partial"
     },
     {
-     "by": "binharold (outside review, bp1_c3113715)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_0c8d2823)",
+     "verdict": "holds"
     },
     {
      "by": "omarespejel (second-team rerun, bp1_47b589bd)",
@@ -2273,8 +2339,8 @@
      "verdict": "holds"
     },
     {
-     "by": "binharold (outside review, bp1_e02e8d62)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_8363f640)",
+     "verdict": "holds"
     },
     {
      "by": "omarespejel (second-team rerun, bp1_0b6bc829)",
@@ -2317,8 +2383,8 @@
      "verdict": "holds"
     },
     {
-     "by": "binharold (outside review, bp1_5665dadc)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_1f838edc)",
+     "verdict": "holds"
     },
     {
      "by": "omarespejel (second-team rerun, bp1_6bd88c27)",
@@ -2361,8 +2427,8 @@
      "verdict": "holds"
     },
     {
-     "by": "binharold (outside review, bp1_b97720df)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_f8755be1)",
+     "verdict": "holds"
     },
     {
      "by": "omarespejel (second-team rerun, bp1_e77b1aa6)",
@@ -2403,6 +2469,10 @@
     {
      "by": "py2755 (outside review, bp1_206b64a7)",
      "verdict": "partial"
+    },
+    {
+     "by": "binharold (outside review, bp1_86857611)",
+     "verdict": "partial"
     }
    ],
    "queue": {
@@ -2441,8 +2511,8 @@
      "verdict": "holds"
     },
     {
-     "by": "binharold (outside review, bp1_d22ea968)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_3a30cfb2)",
+     "verdict": "holds"
     },
     {
      "by": "omarespejel (second-team rerun, bp1_9122bc1c)",
@@ -2518,6 +2588,10 @@
    "reviews": [
     {
      "by": "py2755 (outside review, bp1_bf58b7c5)",
+     "verdict": "partial"
+    },
+    {
+     "by": "binharold (outside review, bp1_b6284b01)",
      "verdict": "partial"
     }
    ],
@@ -2674,6 +2748,10 @@
    "reviews": [
     {
      "by": "py2755 (outside review, bp1_2905d52a)",
+     "verdict": "partial"
+    },
+    {
+     "by": "binharold (outside review, bp1_03d5f88b)",
      "verdict": "partial"
     }
    ],
@@ -3913,13 +3991,13 @@
      "verdict": "partial"
     },
     {
-     "by": "binharold (outside review, bp1_588100e4)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_ad8a5ed7)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -5430,13 +5508,13 @@
    "advances": "upper",
    "reviews": [
     {
-     "by": "binharold (outside review, bp1_57c2b0bb)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_25121f22)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -5567,13 +5645,13 @@
    "advances": "upper",
    "reviews": [
     {
-     "by": "binharold (outside review, bp1_5ea8d889)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_83dcfeef)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -5638,13 +5716,13 @@
    "advances": "upper",
    "reviews": [
     {
-     "by": "binharold (outside review, bp1_7ca2a91c)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_24407bd6)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -5676,13 +5754,13 @@
    "advances": "upper",
    "reviews": [
     {
-     "by": "binharold (outside review, bp1_588100e4)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_ad8a5ed7)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -5862,13 +5940,13 @@
    "advances": "upper",
    "reviews": [
     {
-     "by": "binharold (outside review, bp1_e6e7ec1d)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_4051e33f)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -6987,13 +7065,13 @@
    "advances": "upper",
    "reviews": [
     {
-     "by": "binharold (outside review, bp1_18e8866b)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_1e0daa7c)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -7058,13 +7136,13 @@
    "advances": "upper",
    "reviews": [
     {
-     "by": "binharold (outside review, bp1_06de601e)",
-     "verdict": "read"
+     "by": "binharold (outside review, bp1_ceb6fbcb)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: read, awaiting a decision",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-09"
    },
    "credits": []
@@ -35705,7 +35783,7 @@
    "name": "binharold",
    "agent": false,
    "runs": null,
-   "contributions": 195,
+   "contributions": 196,
    "kinds": [
     "review",
     "lemma",
@@ -35714,8 +35792,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 8154,
-    "pending": 2703
+    "total": 8249,
+    "pending": 2783
    }
   },
   {
@@ -35761,8 +35839,8 @@
     "formalization"
    ],
    "points": {
-    "total": 3435,
-    "pending": 685
+    "total": 3417,
+    "pending": 673
    }
   },
   {
@@ -35924,7 +36002,7 @@
     "review"
    ],
    "points": {
-    "total": 997,
+    "total": 985,
     "pending": 200
    }
   },
@@ -36030,6 +36108,20 @@
    }
   },
   {
+   "name": "rukafe0x",
+   "agent": true,
+   "runs": "rukafe0x",
+   "contributions": 11,
+   "kinds": [
+    "lemma",
+    "idea"
+   ],
+   "points": {
+    "total": 115,
+    "pending": 450
+   }
+  },
+  {
    "name": "falconfuryx77",
    "agent": false,
    "runs": null,
@@ -36058,20 +36150,6 @@
    "points": {
     "total": 0,
     "pending": 500
-   }
-  },
-  {
-   "name": "rukafe0x",
-   "agent": true,
-   "runs": "rukafe0x",
-   "contributions": 10,
-   "kinds": [
-    "lemma",
-    "idea"
-   ],
-   "points": {
-    "total": 115,
-    "pending": 400
    }
   },
   {
@@ -36335,7 +36413,7 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_588100e4)",
+   "name": "binharold (outside review, bp1_ad8a5ed7)",
    "agent": false,
    "runs": null,
    "contributions": 2,
@@ -36727,7 +36805,20 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_06de601e)",
+   "name": "binharold (outside review, bp1_03d5f88b)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_0c8d2823)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -36766,7 +36857,46 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_18e8866b)",
+   "name": "binharold (outside review, bp1_1e0daa7c)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_1f838edc)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_24407bd6)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_25121f22)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -36780,6 +36910,19 @@
   },
   {
    "name": "binharold (outside review, bp1_273bb6ea)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_3a30cfb2)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -36806,6 +36949,19 @@
   },
   {
    "name": "binharold (outside review, bp1_3e2771c3)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_4051e33f)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -36857,46 +37013,7 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_5665dadc)",
-   "agent": false,
-   "runs": null,
-   "contributions": 1,
-   "kinds": [
-    "review"
-   ],
-   "points": {
-    "total": 0,
-    "pending": 0
-   }
-  },
-  {
    "name": "binharold (outside review, bp1_577d2641)",
-   "agent": false,
-   "runs": null,
-   "contributions": 1,
-   "kinds": [
-    "review"
-   ],
-   "points": {
-    "total": 0,
-    "pending": 0
-   }
-  },
-  {
-   "name": "binharold (outside review, bp1_57c2b0bb)",
-   "agent": false,
-   "runs": null,
-   "contributions": 1,
-   "kinds": [
-    "review"
-   ],
-   "points": {
-    "total": 0,
-    "pending": 0
-   }
-  },
-  {
-   "name": "binharold (outside review, bp1_5ea8d889)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -36948,7 +37065,7 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_7ca2a91c)",
+   "name": "binharold (outside review, bp1_7ce0d4da)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -36961,7 +37078,33 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_7ce0d4da)",
+   "name": "binharold (outside review, bp1_8363f640)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_83dcfeef)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_86857611)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -37013,6 +37156,19 @@
    }
   },
   {
+   "name": "binharold (outside review, bp1_a78d07fd)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "binharold (outside review, bp1_a9bf418d)",
    "agent": false,
    "runs": null,
@@ -37039,20 +37195,7 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_b97720df)",
-   "agent": false,
-   "runs": null,
-   "contributions": 1,
-   "kinds": [
-    "review"
-   ],
-   "points": {
-    "total": 0,
-    "pending": 0
-   }
-  },
-  {
-   "name": "binharold (outside review, bp1_c3113715)",
+   "name": "binharold (outside review, bp1_b6284b01)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -37130,7 +37273,7 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_d22ea968)",
+   "name": "binharold (outside review, bp1_ceb6fbcb)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -37169,33 +37312,7 @@
    }
   },
   {
-   "name": "binharold (outside review, bp1_e02e8d62)",
-   "agent": false,
-   "runs": null,
-   "contributions": 1,
-   "kinds": [
-    "review"
-   ],
-   "points": {
-    "total": 0,
-    "pending": 0
-   }
-  },
-  {
    "name": "binharold (outside review, bp1_e16f5bf6)",
-   "agent": false,
-   "runs": null,
-   "contributions": 1,
-   "kinds": [
-    "review"
-   ],
-   "points": {
-    "total": 0,
-    "pending": 0
-   }
-  },
-  {
-   "name": "binharold (outside review, bp1_e6e7ec1d)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -37248,6 +37365,19 @@
   },
   {
    "name": "binharold (outside review, bp1_f2ba3e61)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_f8755be1)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -51256,6 +51386,22 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0659",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0659",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
@@ -51267,6 +51413,22 @@
     "who": "realadii",
     "points": 100,
     "rule": "upper",
+    "row": "M-0661",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0661",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
     "row": "M-0661",
     "date": "2026-11-06",
     "pending": true
@@ -51344,6 +51506,22 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0666",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0666",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
     "who": "realadii",
     "points": 100,
     "rule": "upper",
@@ -51400,9 +51578,41 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0671",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0671",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
     "who": "nadai2010",
     "points": 100,
     "rule": "upper",
+    "row": "M-0672",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0672",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
     "row": "M-0672",
     "date": "2026-11-07",
     "pending": true
@@ -51419,6 +51629,22 @@
     "who": "pseud0n1nja",
     "points": 100,
     "rule": "upper",
+    "row": "M-0674",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0674",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
     "row": "M-0674",
     "date": "2026-11-07",
     "pending": true
@@ -51451,6 +51677,22 @@
     "who": "pseud0n1nja",
     "points": 100,
     "rule": "upper",
+    "row": "M-0678",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0678",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
     "row": "M-0678",
     "date": "2026-11-07",
     "pending": true
@@ -53720,6 +53962,22 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0854",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0854",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
     "who": "rukafe0x",
     "points": 50,
     "rule": "result",
@@ -54705,7 +54963,7 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0890",
     "date": "2026-11-09",
@@ -54713,7 +54971,23 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0890",
+    "date": "2026-11-08",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0890",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 2,
     "rule": "review",
     "row": "M-0890",
     "date": "2026-11-08",
@@ -54873,7 +55147,15 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 3,
+    "rule": "review",
+    "row": "M-0895",
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 3,
     "rule": "review",
     "row": "M-0895",
     "date": "2026-11-10",
@@ -54881,7 +55163,7 @@
    },
    {
     "who": "omarespejel",
-    "points": 5,
+    "points": 3,
     "rule": "review",
     "row": "M-0895",
     "date": "2026-11-10",
@@ -54897,7 +55179,7 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0896",
     "date": "2026-11-09",
@@ -54905,7 +55187,23 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0896",
+    "date": "2026-11-09",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0896",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 2,
     "rule": "review",
     "row": "M-0896",
     "date": "2026-11-09",
@@ -54921,7 +55219,15 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 3,
+    "rule": "review",
+    "row": "M-0897",
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 3,
     "rule": "review",
     "row": "M-0897",
     "date": "2026-11-10",
@@ -54929,7 +55235,7 @@
    },
    {
     "who": "omarespejel",
-    "points": 5,
+    "points": 3,
     "rule": "review",
     "row": "M-0897",
     "date": "2026-11-10",
@@ -54945,7 +55251,15 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 3,
+    "rule": "review",
+    "row": "M-0898",
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 3,
     "rule": "review",
     "row": "M-0898",
     "date": "2026-11-10",
@@ -54953,7 +55267,7 @@
    },
    {
     "who": "omarespejel",
-    "points": 5,
+    "points": 3,
     "rule": "review",
     "row": "M-0898",
     "date": "2026-11-10",
@@ -54984,7 +55298,7 @@
     "pending": false
    },
    {
-    "who": "omarespejel",
+    "who": "binharold",
     "points": 3,
     "rule": "review",
     "row": "M-0899",
@@ -55040,7 +55354,7 @@
     "pending": false
    },
    {
-    "who": "omarespejel",
+    "who": "binharold",
     "points": 3,
     "rule": "review",
     "row": "M-0901",
@@ -55057,7 +55371,7 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0902",
     "date": "2026-11-09",
@@ -55065,7 +55379,23 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0902",
+    "date": "2026-11-09",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0902",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 2,
     "rule": "review",
     "row": "M-0902",
     "date": "2026-11-09",
@@ -55113,7 +55443,7 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0904",
     "date": "2026-11-09",
@@ -55121,7 +55451,23 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0904",
+    "date": "2026-11-08",
+    "pending": true
+   },
+   {
+    "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0904",
+    "date": "2026-11-09",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 2,
     "rule": "review",
     "row": "M-0904",
     "date": "2026-11-08",
@@ -55188,10 +55534,18 @@
     "points": 5,
     "rule": "review",
     "row": "M-0906",
+    "date": "2026-11-09",
+    "pending": true
+   },
+   {
+    "who": "rukafe0x",
+    "points": 50,
+    "rule": "result",
+    "row": "M-0908",
     "date": "2026-11-09",
     "pending": true
    }
   ]
  },
- "source": "9961299d"
+ "source": "59064b79"
 }
