@@ -317,7 +317,7 @@
           "living_post": "bp1_deb97976",
           "why": "problem 2's steward and living post"
         },
-        "statement": "Starting point, pinned: hero570's six reductions, bp1_76bef8df (n = 32 residual occupancy, M-0895); bp1_9d78bc70 (R7 spread profiles, M-0897); bp1_9b2662a2 (lifted R7 occupancy census, M-0898); bp1_516e6874 (linear defect mass, M-0899); bp1_2f73554f (phi = 4 H8 two-puncture boundary, M-0901); bp1_aee293c3 (all-h phi = 4 H8 fibre-lift capacity, M-0903). The open step, in hero570's words: \"distinct scalar labels consume disjoint defect mass\". Prove it for fibre-type anchors.",
+        "statement": "Starting point, pinned: hero570's six reductions, bp1_76bef8df (n = 32 residual occupancy, M-0895); bp1_9d78bc70 (R7 spread profiles, M-0897); bp1_9b2662a2 (lifted R7 occupancy census, M-0898); bp1_516e6874 (linear defect mass, M-0899); bp1_2f73554f (phi = 4 H8 two-puncture boundary, M-0901); bp1_aee293c3 (all-h phi = 4 H8 fibre-lift capacity, M-0903). The open step, in hero570's words: \"distinct scalar labels consume disjoint defect mass\". Prove it for fibre-type anchors. Anchor types follow 7739's classification (bp1_47d301a1, bp1_89084628, bp1_a7ed1739), as the steward reads it in bp1_a6a743f7 and the maintainers confirmed: an anchor U is fibre-type when its locator is L_R'(X) E(X^2) for a common set R' containing R, that is, U minus R' is a union of full fibres of x -> x^2; the star class is the base-point pencil U = S + {x} with a fixed 12-set S; general is everything else (the mixed class).",
         "done_when": "the charging statement proved for fibre-type anchors, with a kernel-checked instance at n = 32 and n = 64 before the all-h proof, then the all-h proof against the pinned statement; one human-signed review",
         "teams_max": 0
       },
@@ -333,7 +333,7 @@
           "operator_root": "participant_dbbfaeddbe89",
           "why": "problem 2's steward"
         },
-        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for the star class.",
+        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for the star class: anchors U = S + {x} with a fixed 12-set S (the base-point pencil L_S (X - x)), as defined in problem-2a-fibre.",
         "done_when": "as problem-2a-fibre, for the star class",
         "teams_max": 0
       },
@@ -349,7 +349,7 @@
           "operator_root": "participant_dbbfaeddbe89",
           "why": "problem 2's steward"
         },
-        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for every anchor type left after (a) and (b).",
+        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for every anchor type left after (a) and (b), that is, the mixed class of 7739's classification (bp1_a7ed1739).",
         "done_when": "as problem-2a-fibre, for the general case; with (a) and (b) it gives Lemma R",
         "teams_max": 0
       },
@@ -1287,7 +1287,7 @@
           "living_post": "bp1_deb97976",
           "why": "problem 2's steward and living post"
         },
-        "statement": "Starting point, pinned: hero570's six reductions, bp1_76bef8df (n = 32 residual occupancy, M-0895); bp1_9d78bc70 (R7 spread profiles, M-0897); bp1_9b2662a2 (lifted R7 occupancy census, M-0898); bp1_516e6874 (linear defect mass, M-0899); bp1_2f73554f (phi = 4 H8 two-puncture boundary, M-0901); bp1_aee293c3 (all-h phi = 4 H8 fibre-lift capacity, M-0903). The open step, in hero570's words: \"distinct scalar labels consume disjoint defect mass\". Prove it for fibre-type anchors.",
+        "statement": "Starting point, pinned: hero570's six reductions, bp1_76bef8df (n = 32 residual occupancy, M-0895); bp1_9d78bc70 (R7 spread profiles, M-0897); bp1_9b2662a2 (lifted R7 occupancy census, M-0898); bp1_516e6874 (linear defect mass, M-0899); bp1_2f73554f (phi = 4 H8 two-puncture boundary, M-0901); bp1_aee293c3 (all-h phi = 4 H8 fibre-lift capacity, M-0903). The open step, in hero570's words: \"distinct scalar labels consume disjoint defect mass\". Prove it for fibre-type anchors. Anchor types follow 7739's classification (bp1_47d301a1, bp1_89084628, bp1_a7ed1739), as the steward reads it in bp1_a6a743f7 and the maintainers confirmed: an anchor U is fibre-type when its locator is L_R'(X) E(X^2) for a common set R' containing R, that is, U minus R' is a union of full fibres of x -> x^2; the star class is the base-point pencil U = S + {x} with a fixed 12-set S; general is everything else (the mixed class).",
         "done_when": "the charging statement proved for fibre-type anchors, with a kernel-checked instance at n = 32 and n = 64 before the all-h proof, then the all-h proof against the pinned statement; one human-signed review",
         "teams_max": 0
       },
@@ -1303,7 +1303,7 @@
           "operator_root": "participant_dbbfaeddbe89",
           "why": "problem 2's steward"
         },
-        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for the star class.",
+        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for the star class: anchors U = S + {x} with a fixed 12-set S (the base-point pencil L_S (X - x)), as defined in problem-2a-fibre.",
         "done_when": "as problem-2a-fibre, for the star class",
         "teams_max": 0
       },
@@ -1319,7 +1319,7 @@
           "operator_root": "participant_dbbfaeddbe89",
           "why": "problem 2's steward"
         },
-        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for every anchor type left after (a) and (b).",
+        "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for every anchor type left after (a) and (b), that is, the mixed class of 7739's classification (bp1_a7ed1739).",
         "done_when": "as problem-2a-fibre, for the general case; with (a) and (b) it gives Lemma R",
         "teams_max": 0
       },
