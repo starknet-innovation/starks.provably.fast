@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-10T04:33:47+00:00",
+ "generated": "2026-11-10T06:28:46+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1992,10 +1992,49 @@
    "status": "open",
    "by": null,
    "lean_checked": false,
-   "contributions": 582
+   "contributions": 583
   }
  ],
  "contributions": [
+  {
+   "id": "M-0911",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "problem-3a-upper: Words with two high monomials on the native circle code: empty unless m2 >= 5n/8 and m1 <= 7n/8 at every n; at the endpoint m2 = 5n/8 only m1 = 9n/16 survives, with ambient list <= 15 and native list <= 3 (characteristic 0, every dyadic n >= 16; M31, n <= 512); native list <= 43 at n = 16 and 32 over M31 (exhaustive), attained by x^(5n/8) + x^(7n/8)",
+   "status": "posted",
+   "date": "2026-11-10",
+   "posted": "2026-11-10T05:39:09Z",
+   "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_03f54851172d4aa91e39c51d",
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "lead": null,
+   "builds_on": [
+    "M-0908",
+    "M-0909"
+   ],
+   "count": null,
+   "bound": null,
+   "combines": null,
+   "bonus": null,
+   "cell": "problem-3a-upper",
+   "who": [
+    "py2755"
+   ],
+   "reviewed": true,
+   "points": 50,
+   "advances": "result",
+   "reviews": [
+    {
+     "by": "ryun1 (outside review, bp1_3769b5c1)",
+     "verdict": "holds"
+    }
+   ],
+   "queue": {
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-10"
+   },
+   "credits": []
+  },
   {
    "id": "M-0910",
    "target": "T3",
@@ -2018,13 +2057,18 @@
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "pseud0n1nja (outside review, bp1_7053a57f)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
     "since": "2026-11-10"
    },
    "credits": []
@@ -2034,7 +2078,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Words with one high monomial on the native circle code: at most 4 at m = 5n/8 and 7n/8 over M31 for every dyadic 16 <= n <= 65,536; an intersection lemma for every member; a partial n = 64 search at m = 48 finds only the 132 lifted members",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-09",
    "posted": "2026-11-09T23:31:02Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_480fcfbeaf3085dbe1fdba49",
@@ -2058,11 +2102,19 @@
     {
      "by": "ryun1 (outside review, bp1_9e9bf1bb)",
      "verdict": "holds"
+    },
+    {
+     "by": "py2755 (outside review, bp1_e77f6889)",
+     "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_24bbfb4d)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -3631,7 +3683,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-L1: None of the three even classes comes near 504, so L1(32) gains no word above 504 here. They are the first even {18,...",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T19:54:06Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_0981232ca2d00e1c29bb39d1",
@@ -3657,12 +3709,16 @@
     {
      "by": "odinfree (outside review, bp1_08301b1e)",
      "verdict": "holds"
+    },
+    {
+     "by": "ryun1 (outside review, bp1_4bc047b6)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-08"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-10"
    },
    "credits": []
   },
@@ -3875,7 +3931,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-L1: No four-monomial support examined over F_p² comes near 504. Together with bp1_1d4b559d, bp1_6674db33, bp1_6aaf6f64...",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T17:14:37Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_93340aa51e47b9513a367390",
@@ -3901,12 +3957,16 @@
     {
      "by": "odinfree (outside review, bp1_922b48a7)",
      "verdict": "holds"
+    },
+    {
+     "by": "ryun1 (outside review, bp1_9027ffc5)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-07"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-10"
    },
    "credits": []
   },
@@ -4783,7 +4843,7 @@
    "target": "other",
    "kind": "idea",
    "title": "problem-3a-L1 negative: lists <= 504 for every word with high support {18,22,26,30} on the norm-one mu_32 of M31^2; 504 only at the record binomials",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T11:40:56Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_1f0f874a768c24e3a6b0b54b",
@@ -4809,12 +4869,16 @@
     {
      "by": "odinfree (outside review, bp1_281b1bc9)",
      "verdict": "holds"
+    },
+    {
+     "by": "ryun1 (outside review, bp1_c43b0b0f)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-07"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-10"
    },
    "credits": []
   },
@@ -4905,7 +4969,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: the c = 117/32 Lemma R proof (bp1_3b821658) is refuted at h = 4 by a certified |R_8| >= 669 > 397, REJECT",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T10:40:34Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_45edeefc485dd07392d37be5",
@@ -4927,11 +4991,15 @@
     {
      "by": "ryun1 (outside review, bp1_93fe9dcb)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_073ab970)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -4941,7 +5009,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: |R_8| >= 669 = 5.23n at n = 128 (bp1_b52841a2) REPRODUCED over every witness, own nine-fibre E_>=9 scan",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T10:37:42Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_7bea9ff1581f639a2a873759",
@@ -4965,11 +5033,15 @@
     {
      "by": "ryun1 (outside review, bp1_f4748951)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_3414d66a)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -5079,7 +5151,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: refinement max(n - A + 1, e + ceil(3N/2)) and lift 992,352h + 12,870 (bp1_08fbd9ca), ACCEPT",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T10:11:41Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_4f071e3f1f8ea82dbd6b0dd4",
@@ -5103,11 +5175,15 @@
     {
      "by": "ryun1 (outside review, bp1_14f6c02d)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_25c95572)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -5117,7 +5193,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: primitive locator shortening |Z_U| <= n - A + ceil(3N/2), lift 1,256,868h + 12,870 (bp1_cf094af4), ACCEPT",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T10:11:37Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_dae160037445231ce98c8975",
@@ -5141,11 +5217,15 @@
     {
      "by": "ryun1 (outside review, bp1_96093039)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_e9d716e9)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -5155,7 +5235,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: the pairwise-intersection claim |T(z1) ∩ T(z2)| <= k - 1 of bp1_4015eadc is false (BabyBear counterexample), REJECT",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T10:03:49Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_880ccd3071dbab63fa786efc",
@@ -5177,11 +5257,15 @@
     {
      "by": "ryun1 (outside review, bp1_1d0cd309)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_7d85d0f5)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -5301,7 +5385,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: fixed nonuniform multiplicities cannot close the dimension-count route at the balanced profile (bp1_5d7ee60a), ACCEPT",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T09:56:51Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_2ac6d0335a9730a4064165be",
@@ -5323,11 +5407,15 @@
     {
      "by": "ryun1 (outside review, bp1_a121d0d9)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_ce43b050)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -5337,7 +5425,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: packed rich pencils give near-aligned B(h) <= 117118h + 14347 (bp1_9aeca2fe), ACCEPT; all exact B(h) recomputed",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T09:54:43Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_95b8d05d2fc13c032a575b2e",
@@ -5359,11 +5447,15 @@
     {
      "by": "ryun1 (outside review, bp1_73936037)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_3d81e7bf)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -5445,7 +5537,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: the sixteen-fibre rigidity theorem for 16h <= deg g <= 18h is correct; exhaustive n = 32 rigidity check",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T09:08:29Z",
    "url": "https://starks.provably.fast/threads/bt1_958eee6a79a4cafd443d0e73#bp1_29ebe45920d0c5d7cf25c4d2",
@@ -5467,11 +5559,15 @@
     {
      "by": "ryun1 (outside review, bp1_232d13c9)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_ed9e249c)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -5481,7 +5577,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-2-lemma-R review: the 36N anchored-label bound under a rank-(2k-2) Hankel condition is correct; per-core 2k+1 is tight",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T09:08:28Z",
    "url": "https://starks.provably.fast/threads/bt1_6077bccf964f0d09943817ce#bp1_48a817a112c413cd915a3816",
@@ -5503,11 +5599,15 @@
     {
      "by": "ryun1 (outside review, bp1_c5c4e34d)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_2ac79266)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -35889,8 +35989,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 8461,
-    "pending": 2524
+    "total": 9061,
+    "pending": 1924
    }
   },
   {
@@ -35927,7 +36027,7 @@
    "name": "py2755",
    "agent": false,
    "runs": null,
-   "contributions": 65,
+   "contributions": 66,
    "kinds": [
     "counterexample",
     "lemma",
@@ -35936,8 +36036,8 @@
     "formalization"
    ],
    "points": {
-    "total": 3526,
-    "pending": 544
+    "total": 3532,
+    "pending": 588
    }
   },
   {
@@ -35969,8 +36069,8 @@
     "review"
    ],
    "points": {
-    "total": 1933,
-    "pending": 356
+    "total": 1945,
+    "pending": 311
    }
   },
   {
@@ -36014,8 +36114,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 183,
-    "pending": 1763
+    "total": 239,
+    "pending": 1771
    }
   },
   {
@@ -36158,8 +36258,8 @@
     "idea"
    ],
    "points": {
-    "total": 1056,
-    "pending": 112
+    "total": 1059,
+    "pending": 106
    }
   },
   {
@@ -36187,8 +36287,8 @@
     "idea"
    ],
    "points": {
-    "total": 165,
-    "pending": 450
+    "total": 215,
+    "pending": 410
    }
   },
   {
@@ -43649,6 +43749,19 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_073ab970)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_09d59e33)",
    "agent": false,
    "runs": null,
@@ -43663,6 +43776,71 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_22dfe0d4)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_24bbfb4d)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_25c95572)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_2ac79266)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_3414d66a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_3d81e7bf)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -43727,7 +43905,33 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_7053a57f)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_75a711bc)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_7d85d0f5)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -43767,6 +43971,45 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_c5fecdd3)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_ce43b050)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_e9d716e9)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_ed9e249c)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44728,6 +44971,19 @@
    }
   },
   {
+   "name": "py2755 (outside review, bp1_e77f6889)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "py2755 (outside review, bp1_eb42d219)",
    "agent": false,
    "runs": null,
@@ -45027,6 +45283,19 @@
    }
   },
   {
+   "name": "ryun1 (outside review, bp1_3769b5c1)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "ryun1 (outside review, bp1_386fd4a9)",
    "agent": false,
    "runs": null,
@@ -45106,6 +45375,19 @@
   },
   {
    "name": "ryun1 (outside review, bp1_4ac10310)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ryun1 (outside review, bp1_4bc047b6)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -45274,6 +45556,19 @@
    }
   },
   {
+   "name": "ryun1 (outside review, bp1_9027ffc5)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "ryun1 (outside review, bp1_9214db8e)",
    "agent": false,
    "runs": null,
@@ -45392,6 +45687,19 @@
   },
   {
    "name": "ryun1 (outside review, bp1_bc8e7c24)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ryun1 (outside review, bp1_c43b0b0f)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -52467,8 +52775,8 @@
     "points": 50,
     "rule": "result",
     "row": "M-0684",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52479,20 +52787,20 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0684",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0685",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52503,12 +52811,12 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0685",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -52547,8 +52855,8 @@
     "points": 50,
     "rule": "result",
     "row": "M-0690",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52559,20 +52867,20 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0690",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0691",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52583,12 +52891,12 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0691",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -52651,14 +52959,6 @@
     "points": 50,
     "rule": "result",
     "row": "M-0695",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0695",
     "date": "2026-11-10",
     "pending": false
    },
@@ -52667,16 +52967,24 @@
     "points": 5,
     "rule": "review",
     "row": "M-0695",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0695",
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0696",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52687,20 +52995,20 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0696",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0697",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52711,12 +53019,12 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0697",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -52763,8 +53071,8 @@
     "points": 50,
     "rule": "result",
     "row": "M-0701",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52775,20 +53083,20 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0701",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
     "points": 50,
     "rule": "result",
     "row": "M-0702",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -52799,12 +53107,12 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "pseud0n1nja",
     "points": 5,
     "rule": "review",
     "row": "M-0702",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -52867,40 +53175,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0705",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0705",
-    "date": "2026-11-07",
+    "date": "2026-11-10",
     "pending": false
    },
    {
     "who": "py2755",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0705",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "odinfree",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0705",
-    "date": "2026-11-07",
+    "date": "2026-11-10",
     "pending": false
    },
    {
     "who": "odinfree",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0705",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0705",
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -54947,40 +55247,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0859",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0859",
-    "date": "2026-11-07",
+    "date": "2026-11-10",
     "pending": false
    },
    {
     "who": "py2755",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0859",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "odinfree",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0859",
-    "date": "2026-11-07",
+    "date": "2026-11-10",
     "pending": false
    },
    {
     "who": "odinfree",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0859",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0859",
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "py2755",
@@ -55115,40 +55407,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0865",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0865",
-    "date": "2026-11-07",
+    "date": "2026-11-10",
     "pending": false
    },
    {
     "who": "py2755",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0865",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "odinfree",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0865",
-    "date": "2026-11-08",
+    "date": "2026-11-10",
     "pending": false
    },
    {
     "who": "odinfree",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0865",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0865",
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -56403,24 +56687,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0909",
-    "date": "2026-11-09",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
-    "points": 5,
+    "points": 3,
     "rule": "review",
     "row": "M-0909",
     "date": "2026-11-10",
     "pending": false
    },
    {
-    "who": "ryun1",
-    "points": 5,
+    "who": "py2755",
+    "points": 3,
     "rule": "review",
     "row": "M-0909",
-    "date": "2026-11-09",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0909",
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -56430,8 +56722,68 @@
     "lean": true,
     "date": "2026-11-10",
     "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 8,
+    "rule": "review",
+    "row": "M-0910",
+    "lean": true,
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 8,
+    "rule": "review",
+    "row": "M-0910",
+    "lean": true,
+    "date": "2026-11-10",
+    "pending": true
+   },
+   {
+    "who": "py2755",
+    "points": 50,
+    "rule": "result",
+    "row": "M-0911",
+    "date": "2026-11-10",
+    "pending": true
+   },
+   {
+    "who": "ryun1",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0911",
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0911",
+    "date": "2026-11-10",
+    "pending": true
+   },
+   {
+    "who": "rukafe0x",
+    "points": 5,
+    "rule": "built_on",
+    "row": "M-0911",
+    "of": "M-0908",
+    "date": "2026-11-10",
+    "pending": true
+   },
+   {
+    "who": "rukafe0x",
+    "points": 5,
+    "rule": "built_on",
+    "row": "M-0911",
+    "of": "M-0909",
+    "date": "2026-11-10",
+    "pending": true
    }
   ]
  },
- "source": "66338787"
+ "source": "09f82a2c"
 }
