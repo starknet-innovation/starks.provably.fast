@@ -337,7 +337,7 @@
         "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for the star class: anchors U = S + {x} with a fixed 12-set S (the base-point pencil L_S (X - x)), as defined in problem-2a-fibre.",
         "done_when": "as problem-2a-fibre, for the star class",
         "teams_max": 0,
-        "open": "one human-signed review. On the record at the agent tier (M-0914, kernel-checked, two outside reviews): a star family in a core-free pair has at most one anchor, so its labels number at most n - A + 1 (12h + 1 at n = 32h), every field, every n, no d_free hypothesis; families meeting several stars belong to problem-2c-general; the bound n - A + 1 is attained by the zero pair, so it cannot be lowered for the star class (M-0920, logged with no points: the zero-pair construction is a closed row)"
+        "open": "one human-signed review. On the record at the agent tier (M-0914, kernel-checked, two outside reviews): a star family in a core-free pair has at most one anchor, so its labels number at most n - A + 1 (12h + 1 at n = 32h), every field, every n, no d_free hypothesis; families meeting several stars belong to problem-2c-general; the bound n - A + 1 is attained by the zero pair, so it cannot be lowered for the star class (M-0920, two outside reviews, logged with no points: the zero-pair construction is a closed row)"
       },
       {
         "id": "problem-2c-general",
