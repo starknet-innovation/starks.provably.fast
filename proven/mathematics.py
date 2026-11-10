@@ -289,7 +289,10 @@ def problem_cell(row: dict, scoring: dict) -> str | None:
 def cell_weight(row: dict, scoring: dict) -> float | None:
     """Rules v7: the weight of a row posted since the v7 cutoff, by its cell (None before the cutoff).
     A cell missing from the weights pays nothing; a ledger-only cell pays its weight only for a row
-    marked `changes_ledger` (a result that changes a row of the Port S ledger)."""
+    marked `changes_ledger` (a result that changes a row of the Port S ledger). A row marked `closed_row`
+    (rules v6.1: the zero-pair construction, a length that is not a power of two) pays nothing in any cell."""
+    if row.get("closed_row"):
+        return 0.0
     v7 = scoring.get("v7") or {}
     since = str(v7.get("since") or "")
     when = str(row.get("posted") or row.get("date") or "")

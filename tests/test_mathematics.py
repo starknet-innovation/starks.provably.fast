@@ -316,6 +316,11 @@ class RulesV7(unittest.TestCase):
         self.assertTrue(m.scored(self.posted("M-0006", "problem-3a-L1", when="2026-11-09T19:00:00Z"), self.SCORING))
         self.assertEqual(m.row_points(self.posted("M-0007", "problem-3a-L1", when="2026-11-09T19:00:00Z"), rules)[0], 50)
 
+    def test_a_closed_row_pays_nothing_in_a_paying_cell(self):
+        closed = self.posted("M-0008", "problem-3a-upper", closed_row="zero-pair construction")
+        self.assertFalse(m.scored(closed, self.SCORING))
+        self.assertEqual(m.row_points(closed, {"scoring": self.SCORING})[0], 0)
+
     def test_a_read_review_pays_nothing(self):
         base = {**row("M-0010", "lemma", who="alice", status="accepted"),
                 "reviews": [{"by": "bob (outside review, bp1_1)", "verdict": "read"}, {"by": "carol (outside review, bp1_2)", "verdict": "holds"}]}
