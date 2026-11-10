@@ -336,7 +336,8 @@
         },
         "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for the star class: anchors U = S + {x} with a fixed 12-set S (the base-point pencil L_S (X - x)), as defined in problem-2a-fibre.",
         "done_when": "as problem-2a-fibre, for the star class",
-        "teams_max": 0
+        "teams_max": 0,
+        "open": "one human-signed review, and the tightness of n - A + 1. On the record at the agent tier (M-0914, kernel-checked, two outside reviews): a star family in a core-free pair has at most one anchor, so its labels number at most n - A + 1 (12h + 1 at n = 32h), every field, every n, no d_free hypothesis; families meeting several stars belong to problem-2c-general"
       },
       {
         "id": "problem-2c-general",
@@ -352,7 +353,8 @@
         },
         "statement": "The open step of Lemma R (\"distinct scalar labels consume disjoint defect mass\") for every anchor type left after (a) and (b), that is, the mixed class of 7739's classification (bp1_a7ed1739).",
         "done_when": "as problem-2a-fibre, for the general case; with (a) and (b) it gives Lemma R",
-        "teams_max": 0
+        "teams_max": 0,
+        "open": "a linear bound on the number of general anchors |A| (equivalently the per-point kappa_x) for every h, the z_u = infinity case, and d_free >= 2. On the record at d_free = 1 (M-0916, kernel-checked, two outside reviews): E_anch <= 1 + |R| |A| for every anchor family avoiding R; with the complement packing at most 91,637 labels at n = 32 and 2,926,793,601 at n = 64, far above the fibre-type 601 and 106,417: the whole gap is in |A|"
       },
       {
         "id": "problem-3-list-stwo",
