@@ -1199,7 +1199,9 @@
       const c = cellOf(i);
       if (!c) continue;
       const link = `/threads/${i.thread_id}#${i.post_id}`;
-      if (c.state === "refutation-only" && i.per_n > (c.record_above_per_n || 16)) {
+      // Only a count at a size the statement speaks for refutes it: T3 holds once n >= N, so a count
+      // above 16 n at n = 16 refutes nothing (the same n >= count_min_n a raise needs).
+      if (c.state === "refutation-only" && i.n >= (P.count_min_n || 256) && i.per_n > (c.record_above_per_n || 16)) {
         entry(i.author).lines.push({ points: P.advances?.statement || 1000, pending: true, rule: "rung0", t: i.created_at, id: i.post_id.slice(0, 12),
           words: `${thousands(i.certified)} at n = ${thousands(i.n)}, above 16 n`, href: link });
       }
@@ -1965,10 +1967,11 @@
       el("h3", { class: "record-group-title", id: "lemmas" }, el("span", { class: "record-target" }, "lemmas"), rules.lemmas.title),
       rules.lemmas.rows && rules.lemmas.rows.length ? el("ol", { class: "record-list" }, rules.lemmas.rows.map((l) => el("li", { class: "record-row is-lemma" },
         el("span", { class: "record-kind" }, l.port), el("span", { class: "record-title" }, l.title, el("small", {}, l.statement)), el("span", { class: "verdict is-accepted" }, "accepted")))) : el("p", { class: "bounds-week" }, rules.lemmas.status)] : [];
-    if (rules.mode && (rules.problems || []).length) {
+    const problemCells = (rules.claim_board || []).filter((c) => c.port === "PROBLEM");
+    if (rules.mode && problemCells.length) {
       // Rules v6, hard-problem mode: the four problems and nothing else until the window closes.
       const m = rules.mode;
-      const problems = rules.problems.map((c) => {
+      const problems = problemCells.map((c) => {
         const live = holders.get(c.id);
         const st = c.steward || {};
         return el("li", { class: "record-row is-proof" },
