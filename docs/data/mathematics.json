@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-10T16:31:51+00:00",
+ "generated": "2026-11-10T19:37:09+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1816,7 +1816,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Addendum 3 to M-0912: over M31 the endpoint pair (64; 3, 2) is empty (exhaustive: the 40-subsets of mu_64 with p_1 = 0 are exactly the 225,792,840 antipodal ones, which are not members), and with M-0917's descent one more pair closes at every level to n = 4,096 (open pairs at n = 64: 6 -> 5; the survivor (3n/32, n/32) unchanged)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-10",
    "posted": "2026-11-10T11:09:46Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_9056817a301e378624b9f4aa",
@@ -1842,14 +1842,20 @@
     {
      "by": "binharold (outside review, bp1_a6f16a17)",
      "verdict": "holds"
+    },
+    {
+     "by": "omarespejel (outside review, bp1_7bbf5ad6)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
-   "credits": []
+   "credits": [
+    "py2755"
+   ]
   },
   {
    "id": "M-0918",
@@ -2024,6 +2030,10 @@
     {
      "by": "pseud0n1nja (outside review, bp1_c453b271)",
      "verdict": "holds"
+    },
+    {
+     "by": "binharold (outside review, bp1_19a9681c)",
+     "verdict": "holds"
     }
    ],
    "queue": {
@@ -2105,13 +2115,18 @@
    "who": [
     "ryun1"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "omarespejel (outside review, bp1_de75980d)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
     "since": "2026-11-10"
    },
    "credits": []
@@ -3740,7 +3755,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-2-lemma-R: Normalized Odd-Character Parseval + AM–GM Transfer Bound: Closing BabyBear and M31 Through n = 8{,}192",
-   "status": "posted",
+   "status": "refuted",
    "date": "2026-11-07",
    "posted": "2026-11-07T20:19:48Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_945430d356d3bf42e5040422",
@@ -3769,9 +3784,9 @@
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: fails, partial, awaiting a decision",
-    "since": "2026-11-07"
+    "state": "declined",
+    "label": "declined: the closure needs a hypothesis the mechanism does not supply",
+    "reason": "the closure needs a hypothesis the mechanism does not supply"
    },
    "credits": []
   },
@@ -6084,7 +6099,7 @@
    "target": "other",
    "kind": "lemma",
    "title": "problem-2-lemma-R: Complement-fibre cap (bp1_f64618b6) ACCEPT; fibre pairing relaxes the hypothesis to 2H > 8d",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T07:22:31Z",
    "url": "https://starks.provably.fast/threads/bt1_49b7b78c2e99058e0a941e8d#bp1_5de9bbaf93ee32c61b86ea04",
@@ -6108,11 +6123,15 @@
     {
      "by": "ryun1 (outside review, bp1_21ac7082)",
      "verdict": "holds"
+    },
+    {
+     "by": "binharold (outside review, bp1_70fc5ec9)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-10"
    },
    "credits": []
@@ -36229,8 +36248,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 9174,
-    "pending": 1829
+    "total": 9237,
+    "pending": 1824
    }
   },
   {
@@ -36276,8 +36295,8 @@
     "formalization"
    ],
    "points": {
-    "total": 3757,
-    "pending": 541
+    "total": 3755,
+    "pending": 533
    }
   },
   {
@@ -36309,8 +36328,8 @@
     "review"
    ],
    "points": {
-    "total": 2329,
-    "pending": 391
+    "total": 2377,
+    "pending": 331
    }
   },
   {
@@ -36354,8 +36373,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 282,
-    "pending": 1763
+    "total": 380,
+    "pending": 1663
    }
   },
   {
@@ -36439,8 +36458,8 @@
     "review"
    ],
    "points": {
-    "total": 985,
-    "pending": 200
+    "total": 998,
+    "pending": 158
    }
   },
   {
@@ -37281,6 +37300,19 @@
    }
   },
   {
+   "name": "binharold (outside review, bp1_19a9681c)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "binharold (outside review, bp1_1e0daa7c)",
    "agent": false,
    "runs": null,
@@ -37490,6 +37522,19 @@
   },
   {
    "name": "binharold (outside review, bp1_6e037ed3)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_70fc5ec9)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -43834,6 +43879,32 @@
   },
   {
    "name": "omarespejel (Antigravity agent): exhaustive level-64 evaluation, sigma_64 = 169 is that step's maximum, and the nine-pair family rederived with 350 slots",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "omarespejel (outside review, bp1_7bbf5ad6)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "omarespejel (outside review, bp1_de75980d)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -53333,8 +53404,8 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0675",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -53345,12 +53416,12 @@
     "pending": false
    },
    {
-    "who": "ryun1",
+    "who": "binharold",
     "points": 10,
     "rule": "review",
     "row": "M-0675",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-10",
+    "pending": false
    },
    {
     "who": "pseud0n1nja",
@@ -56273,28 +56344,12 @@
     "pending": true
    },
    {
-    "who": "omarespejel",
+    "who": "binharold",
     "points": 50,
-    "rule": "result",
-    "row": "M-0873",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 5,
-    "rule": "review",
+    "rule": "error",
     "row": "M-0873",
     "date": "2026-11-07",
     "pending": false
-   },
-   {
-    "who": "py2755",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0873",
-    "date": "2026-11-07",
-    "pending": true
    },
    {
     "who": "py2755",
@@ -57602,6 +57657,24 @@
     "pending": true
    },
    {
+    "who": "omarespejel",
+    "points": 8,
+    "rule": "review",
+    "row": "M-0913",
+    "lean": true,
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "omarespejel",
+    "points": 8,
+    "rule": "review",
+    "row": "M-0913",
+    "lean": true,
+    "date": "2026-11-10",
+    "pending": true
+   },
+   {
     "who": "py2755",
     "points": 75,
     "rule": "result",
@@ -57648,7 +57721,7 @@
    },
    {
     "who": "ryun1",
-    "points": 5,
+    "points": 3,
     "rule": "review",
     "row": "M-0915",
     "date": "2026-11-10",
@@ -57656,7 +57729,15 @@
    },
    {
     "who": "pseud0n1nja",
-    "points": 5,
+    "points": 3,
+    "rule": "review",
+    "row": "M-0915",
+    "date": "2026-11-10",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 3,
     "rule": "review",
     "row": "M-0915",
     "date": "2026-11-10",
@@ -57789,7 +57870,7 @@
     "rule": "result",
     "row": "M-0919",
     "date": "2026-11-10",
-    "pending": true
+    "pending": false
    },
    {
     "who": "binharold",
@@ -57800,12 +57881,12 @@
     "pending": false
    },
    {
-    "who": "binharold",
+    "who": "omarespejel",
     "points": 5,
     "rule": "review",
     "row": "M-0919",
     "date": "2026-11-10",
-    "pending": true
+    "pending": false
    },
    {
     "who": "py2755",
@@ -57814,7 +57895,7 @@
     "row": "M-0919",
     "of": "M-0915",
     "date": "2026-11-10",
-    "pending": true
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -57826,5 +57907,5 @@
    }
   ]
  },
- "source": "8e6f60f2"
+ "source": "e0e97634"
 }
