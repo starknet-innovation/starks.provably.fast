@@ -107,10 +107,13 @@ main:focus { outline: none; }
 .auth-button:disabled { opacity: .6; cursor: progress; }
 .auth-icon { width: 18px; height: 18px; flex: none; fill: currentColor; }
 .auth-avatar { border-radius: 50%; }
-@media (max-width: 720px) { .auth-label { display: none; } .auth-button { padding: 0 9px; } }
 .tg-club svg { width: 18px; height: 18px; }
-/* Between 861 and 960px the sections and the call to action leave it its icon alone. */
-@media (min-width: 861px) and (max-width: 960px) { .bar .tg-link { gap: 0; width: 36px; padding: 0; justify-content: center; font-size: 0; } }
+/* The bar fits everything from 1240px. Below that the Standings and Telegram pills keep their icons,
+   below 1061px sign-in keeps its mark, and between 861 and 960px, where the sections still sit in
+   the bar, the call to action steps out (the hero carries it). */
+@media (max-width: 1239px) { .bar .tg-link { gap: 0; width: 36px; padding: 0; justify-content: center; font-size: 0; } }
+@media (max-width: 1060px) { .auth-label { display: none; } .auth-button { padding: 0 9px; } }
+@media (min-width: 861px) and (max-width: 960px) { .bar .cta { display: none; } }
 .cta {
   display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px;
   background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 500; font-size: 14px;
