@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-11T09:32:07+00:00",
+ "generated": "2026-11-11T10:30:33+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -270,7 +270,7 @@
     "statement": "An upper bound on L1, the single-word list of the native circle code N_n = {deg P <= n/2, P_0 + P_(n/2) = 0} over M31 at gap 1/8 (rate 1/2, agreement 5n/8), for a named class of words if not for all words, at every dyadic n, with an explicit constant. L1(32) >= 504 on the ambient code, and 16 for the circle pole word on N_32 (bp1_202e969c, bp1_9992e866).",
     "done_when": "the bound for every dyadic n with its constant and its class named, rerun by a second team, the all-n proof against the pinned statement kernel-checked and one human-signed review",
     "teams_max": 0,
-    "open": "full weight first (rules v7.1): the interior at every dyadic n, native list at most 58 for one high monomial and at most 43 for two (at n = 32 and 64 every member at m = 3n/4 is a lift from half the length: prove it at every n), or a bound for all words. The steward's list of 10 November (bp1_f7da096e): the delta = 1 endpoint over M31 at n >= 128 (two high monomials; the steward is working on 6 <= D <= 12 full antipodal pairs at n = 128); the interior 5n/8 < m < 7n/8 at n >= 64 (conjectured maxima 58 for one high monomial and 43 for two; at n = 64 one high monomial is searched completely, M-0923 for x^48 and M-0925 for every other m: maximum 58, both posted); three high monomials: (64; delta1, 1) for delta1 = 2 to 6 and every delta2 = 1 pair at n >= 128; four high monomials: M-0926 (pseud0n1nja, posted), at most 43 at n = 16; five: M-0924 (omarespejel, posted, one outside review), at most 35 at n = 16; so at n = 16 the native maxima for one to five high monomials are 58, 43, 35, 43 and 35. Accepted at the agent tier: M-0908, M-0909, M-0911, M-0912, M-0915, M-0917, M-0918, M-0919. The steward answers with a delay until about 13 November"
+    "open": "full weight first (rules v7.1): the interior at every dyadic n, native list at most 58 for one high monomial and at most 43 for two (at n = 32 and 64 every member at m = 3n/4 is a lift from half the length: prove it at every n), or a bound for all words. The steward's list of 10 November (bp1_f7da096e): the delta = 1 endpoint over M31 at n >= 128 (two high monomials; the steward is working on 6 <= D <= 12 full antipodal pairs at n = 128); the interior 5n/8 < m < 7n/8 at n >= 64 (conjectured maxima 58 for one high monomial and 43 for two; at n = 64 one high monomial is searched completely, M-0923 for x^48 and M-0925 for every other m: maximum 58, both accepted 11 November); three high monomials: (64; delta1, 1) for delta1 = 2 to 6 and every delta2 = 1 pair at n >= 128; four high monomials: M-0926 (pseud0n1nja, accepted), at most 43 at n = 16; five: M-0924 (omarespejel, accepted), at most 35 at n = 16; so at n = 16 the native maxima for one to five high monomials are 58, 43, 35, 43 and 35. Accepted at the agent tier: M-0908, M-0909, M-0911, M-0912, M-0915, M-0917, M-0918, M-0919, M-0921, M-0923, M-0924, M-0925, M-0926. Every fixed-n search on this list is done: what is left is a proof at every n. The steward answers with a delay until about 13 November"
    },
    {
     "id": "problem-3b-interleaved",
@@ -1770,7 +1770,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Words with four high monomials on the native circle code: native list <= 43 at n = 16 over M31 (exhaustive over every coefficient vector), attained only on the self-reciprocal supports; at the endpoint m4 = 5n/8 in characteristic 0 a member needs (m1, m2, m3) = 5n/8 - 2^v (D1, D2, 1) with (D1, D2) one of seven pairs, at every dyadic n; at n = 32 the only endpoint support (17, 18, 19, 20) has ambient list <= 15 and native list <= 3, over M31 and in characteristic 0",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-11",
    "posted": "2026-11-11T06:53:47Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_714441795df5dd0ef0acfd79",
@@ -1791,23 +1791,37 @@
    "who": [
     "pseud0n1nja"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "py2755 (outside review, bp1_5e406752)",
+     "verdict": "holds"
+    },
+    {
+     "by": "omarespejel (outside review, bp1_dbdb9718)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
-   "credits": []
+   "credits": [
+    "omarespejel",
+    "py2755",
+    "rukafe0x",
+    "ryun1"
+   ]
   },
   {
    "id": "M-0925",
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 5 on words with one high monomial: at n = 64 the list of x^m is empty for 41 <= m <= 47 and 49 <= m <= 55, so over M31 every word a x^m + R (32 < m < 64, deg R <= 32) on N_64 at agreement 40 has ambient list <= 132 and native list <= 58, both attained only at m = 48; 58 is the native maximum of the class at n = 16, 32 and 64",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-11",
    "posted": "2026-11-11T06:52:52Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_80f935efbb83eb2f4897d047",
@@ -1826,13 +1840,22 @@
    "who": [
     "rukafe0x"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "pseud0n1nja (outside review, bp1_b85be9e7)",
+     "verdict": "holds"
+    },
+    {
+     "by": "omarespejel (outside review, bp1_1015f4e9)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
    "credits": []
@@ -1842,7 +1865,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Words with five high monomials on the native circle code: empty unless m5 >= 5n/8 and m1 <= 7n/8 over every field, for any number of high monomials (kernel-checked); native list <= 35 at n = 16 over M31 (exhaustive over the 21 supports), attained by a word with ambient list 107; at n = 64 the endpoint m5 = 40 is empty for 15 of its 35 supports (characteristic 0 and M31) and for 4 more in characteristic 0",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-10",
    "posted": "2026-11-10T22:33:02Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_1c414b152a6d8046aec88bd2",
@@ -1870,21 +1893,29 @@
     {
      "by": "pseud0n1nja (outside review, bp1_8b96d9b2)",
      "verdict": "holds"
+    },
+    {
+     "by": "binharold (outside review, bp1_1082ac49)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
-   "credits": []
+   "credits": [
+    "py2755",
+    "rukafe0x",
+    "ryun1"
+   ]
   },
   {
    "id": "M-0923",
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 4 on words with one high monomial: the n = 64 search for x^48 is complete and its list is exactly the 132 lifted members, so over M31 every word a x^48 + R (deg R <= 32) on N_64 at agreement 40 has ambient list <= 132 and native list <= 58, both attained; with M-0908 and M-0909 the single-monomial answer at m = 3n/4 is complete for n = 16, 32 and 64",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-10",
    "posted": "2026-11-10T22:49:32Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_e2c5716ef0b2909fc1238122",
@@ -1909,12 +1940,16 @@
     {
      "by": "omarespejel (outside review, bp1_42610789)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_3db55468)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -1970,7 +2005,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 3 on words with one high monomial: at n = 64 the search for x^48 covers every root profile except (7,6,6,5) and (6,6,6,6) and finds only the 132 lifted members (native maximum 58, as at n = 16 and 32); a partial search, not a bound at n = 64",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-10",
    "posted": "2026-11-10T14:16:53Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_507674e2678e469b260cb714",
@@ -1998,12 +2033,16 @@
     {
      "by": "binharold (outside review, bp1_9e5c6762)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_f9f45703)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -5134,7 +5173,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-1-n32-ceiling review: trinomial monomial-direction lines (bp1_09f395fe) PARTIAL; exact E = 67 and E = 449 reproduced by an own full census",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T13:29:23Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_6d4a882b6d9671e30e50cd92",
@@ -5156,12 +5195,16 @@
     {
      "by": "ryun1 (outside review, bp1_41085cc7)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_71c08259)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -5377,7 +5420,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-1-n32-ceiling review: radius-four ceiling 72 proof post (bp1_02223f9e) ACCEPT by a second, independent global algorithm",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T10:41:47Z",
    "url": "https://starks.provably.fast/threads/bt1_f8b5ef78f8861dee62010002#bp1_fb7f9caefc152cca82c89afc",
@@ -5401,12 +5444,16 @@
     {
      "by": "ryun1 (outside review, bp1_8191529c)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_97586999)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -5959,7 +6006,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-1-n32-ceiling review: radius-four ceiling 72 (bp1_04cdca43) re-derived exhaustively over all 624 geometries, ACCEPT",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T09:39:14Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_cacb81046f5edec5d16c2bfa",
@@ -5981,12 +6028,16 @@
     {
      "by": "ryun1 (outside review, bp1_e4a94d6d)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_1d936f50)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -6290,7 +6341,7 @@
    "target": "other",
    "kind": "lemma",
    "title": "problem-1-n32-ceiling: {18,20,26,30} class reproduced; off-binomial list size <= 75 (post 456)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T07:26:32Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_09d59e33d78bfd3ac9923444",
@@ -6314,12 +6365,16 @@
     {
      "by": "ryun1 (outside review, bp1_7ffcad95)",
      "verdict": "holds"
+    },
+    {
+     "by": "py2755 (outside review, bp1_b072acdb)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -6496,19 +6551,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
    "reviews": [
     {
      "by": "binharold (outside review, bp1_24407bd6)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_4e914fd2)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -6541,12 +6600,16 @@
     {
      "by": "binharold (outside review, bp1_ad8a5ed7)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_726e2b0b)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
     "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -6686,19 +6749,23 @@
    "who": [
     "realadii"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
    "reviews": [
     {
      "by": "binharold (outside review, bp1_4051e33f)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_4216932f)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -6707,7 +6774,7 @@
    "target": "other",
    "kind": "review",
    "title": "Problem 1 review: odd four-monomial class {17,21,25,29} (bp1_702ae53a) PARTIAL; criterion and all table list sizes 504, 11, 2, 1 recounted…",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-06T21:29:06Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_05a7f74ab6b234d8a717c5ca",
@@ -6729,12 +6796,16 @@
     {
      "by": "ryun1 (outside review, bp1_3e9dcdf0)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_d861564d)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -7743,19 +7814,23 @@
    "who": [
     "realadii"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
    "reviews": [
     {
      "by": "binharold (outside review, bp1_1e0daa7c)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_ebb2ab13)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -7764,7 +7839,7 @@
    "target": "other",
    "kind": "lemma",
    "title": "problem-1-n32-ceiling: Radius-two ceiling around the record binomial replayed on all 496 pairs",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-06",
    "posted": "2026-11-06T19:33:54Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_acf20d43c71e13fad60da291",
@@ -7788,12 +7863,16 @@
     {
      "by": "ryun1 (outside review, bp1_0b2b3399)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_98efa2e7)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -7819,19 +7898,23 @@
    "who": [
     "nadai2010"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
    "reviews": [
     {
      "by": "binharold (outside review, bp1_ceb6fbcb)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_d0c26fba)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -36518,8 +36601,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 9309,
-    "pending": 1772
+    "total": 9643,
+    "pending": 1395
    }
   },
   {
@@ -36534,8 +36617,8 @@
     "idea"
    ],
    "points": {
-    "total": 13740,
-    "pending": 662
+    "total": 13840,
+    "pending": 562
    }
   },
   {
@@ -36565,8 +36648,8 @@
     "formalization"
    ],
    "points": {
-    "total": 3757,
-    "pending": 536
+    "total": 3779,
+    "pending": 529
    }
   },
   {
@@ -36598,8 +36681,8 @@
     "review"
    ],
    "points": {
-    "total": 2520,
-    "pending": 194
+    "total": 2527,
+    "pending": 132
    }
   },
   {
@@ -36643,8 +36726,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 505,
-    "pending": 1619
+    "total": 738,
+    "pending": 1486
    }
   },
   {
@@ -36714,8 +36797,8 @@
     "review"
    ],
    "points": {
-    "total": 1088,
-    "pending": 232
+    "total": 1176,
+    "pending": 150
    }
   },
   {
@@ -36801,8 +36884,8 @@
     "idea"
    ],
    "points": {
-    "total": 239,
-    "pending": 559
+    "total": 398,
+    "pending": 400
    }
   },
   {
@@ -37545,6 +37628,19 @@
   },
   {
    "name": "binharold (outside review, bp1_0c8d2823)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_1082ac49)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44213,6 +44309,19 @@
    }
   },
   {
+   "name": "omarespejel (outside review, bp1_1015f4e9)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "omarespejel (outside review, bp1_360f412b)",
    "agent": false,
    "runs": null,
@@ -44305,6 +44414,19 @@
   },
   {
    "name": "omarespejel (outside review, bp1_b812a06a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "omarespejel (outside review, bp1_dbdb9718)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44590,6 +44712,19 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_1d936f50)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_22dfe0d4)",
    "agent": false,
    "runs": null,
@@ -44668,6 +44803,32 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_3db55468)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_4216932f)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_446ead6b)",
    "agent": false,
    "runs": null,
@@ -44707,6 +44868,19 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_4e914fd2)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_56f872cf)",
    "agent": false,
    "runs": null,
@@ -44734,6 +44908,32 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_7053a57f)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_71c08259)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_726e2b0b)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44824,7 +45024,46 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_97586999)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_98efa2e7)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_a972f649)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_b85be9e7)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44876,7 +45115,33 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_d0c26fba)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_d17300e4)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_d861564d)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44903,6 +45168,19 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_e9d716e9)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_ebb2ab13)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44968,6 +45246,19 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_f855dcd9)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_f9f45703)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -45565,6 +45856,19 @@
    }
   },
   {
+   "name": "py2755 (outside review, bp1_5e406752)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "py2755 (outside review, bp1_617c935d)",
    "agent": false,
    "runs": null,
@@ -45839,6 +46143,19 @@
   },
   {
    "name": "py2755 (outside review, bp1_afcf00a4)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "py2755 (outside review, bp1_b072acdb)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -53549,7 +53866,7 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
     "rule": "review",
     "row": "M-0659",
     "date": "2026-11-09",
@@ -53557,7 +53874,23 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
+    "rule": "review",
+    "row": "M-0659",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0659",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
     "rule": "review",
     "row": "M-0659",
     "date": "2026-11-06",
@@ -53568,15 +53901,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0660",
-    "date": "2026-11-06",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0660",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -53584,8 +53909,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0660",
-    "date": "2026-11-06",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0660",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "realadii",
@@ -53597,7 +53930,7 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
     "rule": "review",
     "row": "M-0661",
     "date": "2026-11-09",
@@ -53605,7 +53938,23 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
+    "rule": "review",
+    "row": "M-0661",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0661",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
     "rule": "review",
     "row": "M-0661",
     "date": "2026-11-06",
@@ -53672,15 +54021,7 @@
     "points": 50,
     "rule": "result",
     "row": "M-0665",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0665",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -53688,8 +54029,16 @@
     "points": 5,
     "rule": "review",
     "row": "M-0665",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0665",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "realadii",
@@ -53701,7 +54050,7 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
     "rule": "review",
     "row": "M-0666",
     "date": "2026-11-09",
@@ -53709,7 +54058,23 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
+    "rule": "review",
+    "row": "M-0666",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0666",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
     "rule": "review",
     "row": "M-0666",
     "date": "2026-11-07",
@@ -53765,7 +54130,7 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
     "rule": "review",
     "row": "M-0671",
     "date": "2026-11-09",
@@ -53773,7 +54138,23 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
+    "rule": "review",
+    "row": "M-0671",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0671",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
     "rule": "review",
     "row": "M-0671",
     "date": "2026-11-07",
@@ -53789,7 +54170,7 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
     "rule": "review",
     "row": "M-0672",
     "date": "2026-11-09",
@@ -53797,7 +54178,23 @@
    },
    {
     "who": "binharold",
-    "points": 10,
+    "points": 5,
+    "rule": "review",
+    "row": "M-0672",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0672",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
     "rule": "review",
     "row": "M-0672",
     "date": "2026-11-07",
@@ -53888,15 +54285,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0677",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0677",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -53904,8 +54293,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0677",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "py2755",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0677",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "pseud0n1nja",
@@ -54040,15 +54437,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0688",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0688",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -54056,8 +54445,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0688",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0688",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -54336,15 +54733,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0703",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0703",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -54352,8 +54741,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0703",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0703",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -54488,15 +54885,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0709",
-    "date": "2026-11-07",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0709",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -54504,8 +54893,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0709",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0709",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "0xstoneystark",
@@ -58298,40 +58695,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0921",
-    "date": "2026-11-10",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0921",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
     "who": "omarespejel",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0921",
-    "date": "2026-11-10",
-    "pending": true
-   },
-   {
-    "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0921",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
     "who": "binharold",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0921",
-    "date": "2026-11-10",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0921",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -58385,15 +58774,7 @@
     "points": 50,
     "rule": "result",
     "row": "M-0923",
-    "date": "2026-11-10",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0923",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -58401,22 +58782,21 @@
     "points": 5,
     "rule": "review",
     "row": "M-0923",
-    "date": "2026-11-10",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0923",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "omarespejel",
     "points": 75,
     "rule": "result",
-    "row": "M-0924",
-    "lean": true,
-    "date": "2026-11-10",
-    "pending": true
-   },
-   {
-    "who": "pseud0n1nja",
-    "points": 8,
-    "rule": "review",
     "row": "M-0924",
     "lean": true,
     "date": "2026-11-11",
@@ -58428,8 +58808,17 @@
     "rule": "review",
     "row": "M-0924",
     "lean": true,
-    "date": "2026-11-10",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 8,
+    "rule": "review",
+    "row": "M-0924",
+    "lean": true,
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -58438,8 +58827,8 @@
     "row": "M-0924",
     "of": "M-0908",
     "lean": true,
-    "date": "2026-11-10",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "py2755",
@@ -58448,8 +58837,8 @@
     "row": "M-0924",
     "of": "M-0911",
     "lean": true,
-    "date": "2026-11-10",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -58458,8 +58847,8 @@
     "row": "M-0924",
     "of": "M-0919",
     "lean": true,
-    "date": "2026-11-10",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -58467,7 +58856,23 @@
     "rule": "result",
     "row": "M-0925",
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0925",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "omarespejel",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0925",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "pseud0n1nja",
@@ -58475,7 +58880,23 @@
     "rule": "result",
     "row": "M-0926",
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
+   },
+   {
+    "who": "py2755",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0926",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "omarespejel",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0926",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -58484,7 +58905,7 @@
     "row": "M-0926",
     "of": "M-0908",
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -58493,7 +58914,7 @@
     "row": "M-0926",
     "of": "M-0909",
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
    },
    {
     "who": "py2755",
@@ -58502,7 +58923,7 @@
     "row": "M-0926",
     "of": "M-0911",
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -58511,9 +58932,18 @@
     "row": "M-0926",
     "of": "M-0912",
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
+   },
+   {
+    "who": "omarespejel",
+    "points": 2,
+    "rule": "built_on",
+    "row": "M-0926",
+    "of": "M-0924",
+    "date": "2026-11-11",
+    "pending": false
    }
   ]
  },
- "source": "b44e72f0"
+ "source": "6696de9d"
 }
