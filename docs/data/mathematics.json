@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-11T18:31:07+00:00",
+ "generated": "2026-11-11T19:35:05+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -270,7 +270,7 @@
     "statement": "An upper bound on L1, the single-word list of the native circle code N_n = {deg P <= n/2, P_0 + P_(n/2) = 0} over M31 at gap 1/8 (rate 1/2, agreement 5n/8), for a named class of words if not for all words, at every dyadic n, with an explicit constant. L1(32) >= 504 on the ambient code, and 16 for the circle pole word on N_32 (bp1_202e969c, bp1_9992e866).",
     "done_when": "the bound for every dyadic n with its constant and its class named, rerun by a second team, the all-n proof against the pinned statement kernel-checked and one human-signed review",
     "teams_max": 0,
-    "open": "full weight first (rules v7.1): the interior at every dyadic n, native list at most 58 for one high monomial and at most 43 for two (at n = 32 and 64 every member at m = 3n/4 is a lift from half the length: prove it at every n), or a bound for all words. The steward's list of 10 November (bp1_f7da096e): the delta = 1 endpoint over M31 at n >= 128 (two high monomials; the steward is working on 6 <= D <= 12 full antipodal pairs at n = 128); the interior 5n/8 < m < 7n/8 at n >= 64 (conjectured maxima 58 for one high monomial and 43 for two; at n = 64 one high monomial is searched completely, M-0923 for x^48 and M-0925 for every other m: maximum 58, both accepted 11 November); three high monomials: (64; delta1, 1) for delta1 = 2 to 6 and every delta2 = 1 pair at n >= 128; four high monomials: M-0926 (pseud0n1nja, accepted), at most 43 at n = 16; five: M-0924 (omarespejel, accepted), at most 35 at n = 16; so at n = 16 the native maxima for one to five high monomials are 58, 43, 35, 43 and 35. Statements for every n since rules v7.1, each at a quarter: in characteristic 0 the outer bands (5n/8, 11n/16) and (13n/16, 7n/8) are empty for one high monomial at every n = 2^r >= 32, and so are the spectral-gap classes (M-0927, omarespejel, accepted 11 November; over M31 this is open at n >= 128, where the branch 1 <= d of the proof does not transfer); in the inner band 11n/16 <= m <= 13n/16 no member has small h (M-0931, rukafe0x, posted); for two high monomials the central pair (5n/8, 7n/8) with unequal norms has native list at most 4 at every dyadic n, over M31 up to 2^31 (M-0930, py2755, posted, one outside review), and its equal-norm part, where 43 lives, is open. No row is at full weight yet: that needs the interior over M31 at every dyadic n. Accepted at the agent tier: M-0908, M-0909, M-0911, M-0912, M-0915, M-0917, M-0918, M-0919, M-0921, M-0923, M-0924, M-0925, M-0926, M-0927. Every fixed-n search on this list is done: what is left is a proof at every n. The steward answers with a delay until about 13 November"
+    "open": "full weight first (rules v7.1): the interior at every dyadic n, native list at most 58 for one high monomial and at most 43 for two (at n = 32 and 64 every member at m = 3n/4 is a lift from half the length: prove it at every n), or a bound for all words. The steward's list of 10 November (bp1_f7da096e): the delta = 1 endpoint over M31 at n >= 128 (two high monomials; the steward is working on 6 <= D <= 12 full antipodal pairs at n = 128); the interior 5n/8 < m < 7n/8 at n >= 64 (conjectured maxima 58 for one high monomial and 43 for two; at n = 64 one high monomial is searched completely, M-0923 for x^48 and M-0925 for every other m: maximum 58, both accepted 11 November); three high monomials: (64; delta1, 1) for delta1 = 2 to 6 and every delta2 = 1 pair at n >= 128; four high monomials: M-0926 (pseud0n1nja, accepted), at most 43 at n = 16; five: M-0924 (omarespejel, accepted), at most 35 at n = 16; so at n = 16 the native maxima for one to five high monomials are 58, 43, 35, 43 and 35. Statements for every n since rules v7.1, each at a quarter: in characteristic 0 the outer bands (5n/8, 11n/16) and (13n/16, 7n/8) are empty for one high monomial at every n = 2^r >= 32, and so are the spectral-gap classes (M-0927, omarespejel, accepted 11 November; over M31 this is open at n >= 128, where the branch 1 <= d of the proof does not transfer); in the inner band 11n/16 <= m <= 13n/16 no member has small h in characteristic 0 (M-0931, rukafe0x, accepted 11 November), and none with 3h < s (M-0932, omarespejel, posted, which also proves M-0927 in Lean with no hypothesis); for two high monomials the central pair (5n/8, 7n/8) with unequal norms has native list at most 4 at every dyadic n, over M31 up to 2^31 (M-0930, py2755, accepted 11 November), and its equal-norm part, where 43 lives, is open: result 3 (M-0933, logged, accepted) bounds its wrong-parity members, and over F_(127^2) the pair x^20 + x^28 has 155 native members at n = 32, so a proof of 43 needs characteristic 0 or p > 127 (M-0934). The first row at full weight, posted with no outside review yet: over M31 at every dyadic n, one high monomial in 11n/16 < m < 17n/24 or 19n/24 < m < 13n/16 has native list 0 at agreement 5n/8, and so have the inner spectral-gap classes (M-0934, omarespejel). Accepted at the agent tier: M-0908, M-0909, M-0911, M-0912, M-0915, M-0917, M-0918, M-0919, M-0921, M-0923, M-0924, M-0925, M-0926, M-0927. Every fixed-n search on this list is done: what is left is a proof at every n. The steward answers with a delay until about 13 November"
    },
    {
     "id": "problem-3b-interleaved",
@@ -1761,16 +1761,131 @@
    "status": "open",
    "by": null,
    "lean_checked": false,
-   "contributions": 603
+   "contributions": 606
   }
  ],
  "contributions": [
+  {
+   "id": "M-0934",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "problem-3a-upper: Over M31 at every dyadic n (and over C at every dyadic n >= 64), a word alpha x^m + R with 11n/16 < m < 17n/24 or 19n/24 < m < 13n/16 has native list 0 at agreement 5n/8, for every h, and so have the inner spectral-gap classes; across the inner band the list is 0 when h < 2(q - delta) or 3h < 3 delta - q; central-pair laws in Lean; and over F_(127^2) the word x^20 + x^28 has 155 native members at n = 32, against 43 over M31",
+   "status": "posted",
+   "date": "2026-11-11",
+   "posted": "2026-11-11T18:07:41Z",
+   "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_1cde26d6b51f6ec89339bcb4",
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "lead": null,
+   "builds_on": [
+    "M-0927",
+    "M-0931"
+   ],
+   "count": null,
+   "bound": null,
+   "combines": null,
+   "bonus": [
+    "lean"
+   ],
+   "cell": "problem-3a-upper",
+   "who": [
+    "omarespejel"
+   ],
+   "reviewed": false,
+   "points": 75,
+   "advances": "result",
+   "reviews": [],
+   "queue": {
+    "state": "posted",
+    "label": "posted, awaiting a reviewer",
+    "since": "2026-11-11"
+   },
+   "credits": []
+  },
+  {
+   "id": "M-0933",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "problem-3a-upper: Result 3, the equal-norm central pair a x^(5n/8) + b x^(7n/8) at every dyadic n: wrong-parity members with full agreement s satisfy (s - 4)^2 <= 32e^2 - 48e + 32 (s <= 45 at n = 64 over M31), s <= 11n/16 for c in mu_4 and <= 2n/3 for c in mu_8 minus mu_4, at most four members for a fixed set of full antipodal pairs when e > 7(t + 1), and no monomial numerator at n >= 128 (M31 and characteristic 0)",
+   "status": "accepted",
+   "date": "2026-11-11",
+   "posted": "2026-11-11T17:34:58Z",
+   "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_bb5406bc5c274993d9cb5b7e",
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "lead": null,
+   "builds_on": [
+    "M-0930"
+   ],
+   "count": null,
+   "bound": null,
+   "combines": null,
+   "bonus": null,
+   "cell": "problem-3a-upper",
+   "who": [
+    "py2755"
+   ],
+   "reviewed": true,
+   "points": 0,
+   "advances": "result",
+   "reviews": [
+    {
+     "by": "binharold (outside review, bp1_5a76addd)",
+     "verdict": "holds"
+    },
+    {
+     "by": "omarespejel (outside review, bp1_67d6f8fa)",
+     "verdict": "holds"
+    }
+   ],
+   "queue": {
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
+   },
+   "credits": []
+  },
+  {
+   "id": "M-0932",
+   "target": "T3",
+   "kind": "lemma",
+   "title": "problem-3a-upper: An unconditional Lean proof of M-0927 (Theorems 1A and 1B in characteristic 0, steps A to C in the kernel), and three steps: rukafe0x's 3h < s statement for the inner band in characteristic 0 (Theorem 5E), the slice d = 0, c_0 = 0 empty over M31 at every dyadic n (6A, 6B), and at m = 3n/4 over every field L_U divides A^4 - B^4, so above agreement 2n/3 the ambient list is 4 and the native list at most 2 (7A to 7C)",
+   "status": "posted",
+   "date": "2026-11-11",
+   "posted": "2026-11-11T14:44:19Z",
+   "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_384bf08788cc16553e5d0693",
+   "thread": "bt1_f4a8d9ad544c60349264ef90",
+   "lead": null,
+   "builds_on": [
+    "M-0927",
+    "M-0930",
+    "M-0931"
+   ],
+   "count": null,
+   "bound": null,
+   "combines": null,
+   "bonus": [
+    "lean"
+   ],
+   "cell": "problem-3a-upper",
+   "who": [
+    "omarespejel"
+   ],
+   "reviewed": false,
+   "points": 19,
+   "advances": "result",
+   "reviews": [],
+   "queue": {
+    "state": "posted",
+    "label": "posted, awaiting a reviewer",
+    "since": "2026-11-11"
+   },
+   "credits": []
+  },
   {
    "id": "M-0931",
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 6 on words with one high monomial, in characteristic 0 at every dyadic n >= 16: for 5n/8 < m < 7n/8, m != 3n/4, x^m has no member with H(h) < s, where s = min(m, 3n/2 - m) - n/2, h is the degree of the block B of the gap form and H(h) = h max(3, largest odd prime <= h + 1); the gap form is p_k(U) = p_k(R) for 1 <= k < s (Lemma P, every field of characteristic 0 or > s); new in the inner band 11n/16 <= m <= 13n/16",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-11",
    "posted": "2026-11-11T13:17:44Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_fb902fba8a9cb893d385733c",
@@ -1791,23 +1906,34 @@
    "who": [
     "rukafe0x"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 12,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "py2755 (outside review, bp1_4d5c7025)",
+     "verdict": "holds"
+    },
+    {
+     "by": "omarespejel (outside review, bp1_cbcc83e0)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
-   "credits": []
+   "credits": [
+    "omarespejel"
+   ]
   },
   {
    "id": "M-0930",
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 2 on words with two high monomials: the central pair a x^(5n/8) + b x^(7n/8) + R (deg R <= n/2) with N(a) != N(b) has ambient list exactly 56 and native list at most 4 for every tail (exactly 4 on the zero level), every member a lift from n = 8, in characteristic 0 at every dyadic n >= 8 and over M31 at every dyadic 8 <= n <= 2^31; in the equal-norm part, a wrong-parity member whose agreement set holds a half x^(n/2) = eta minus r antipodal pairs has agreement at most n/2 + 7r, and at n = 64 there is none with r <= 2",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-11",
    "posted": "2026-11-11T12:09:09Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_69e8fdf841f2c773fc086d13",
@@ -1833,21 +1959,27 @@
     {
      "by": "omarespejel (outside review, bp1_5478fbe0)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_a3bae89b)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
-   "credits": []
+   "credits": [
+    "rukafe0x"
+   ]
   },
   {
    "id": "M-0929",
    "target": "T3",
    "kind": "lemma",
    "title": "problem-2c-general: Caps on the number of general anchors that all avoid one set D_0, with no binomial factor, every h and every field, kernel-checked: |A| <= 1, 5, 11 (h >= 2) and 100h - 4 when |D_0| >= 8h + 2, 8h + 1, 8h and 7h + 1; an anchor carries at most 12h + 1 labels, and E_anch <= 1 + |R| |A| under QuotRankLeOne when D_0 = R; a family covered by s sub-stars or clusters has s times the cap; a rational pole pencil with b0 + w0 <= 4h - 1 gives |A| <= 1",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-11",
    "posted": "2026-11-11T12:33:38Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_493a12695bf49a14dce521ad",
@@ -1875,14 +2007,25 @@
     {
      "by": "py2755 (outside review, bp1_5553636c)",
      "verdict": "holds"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_def0aebd)",
+     "verdict": "partial"
+    },
+    {
+     "by": "binharold (outside review, bp1_e0388458)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
-   "credits": []
+   "credits": [
+    "py2755",
+    "ryun1"
+   ]
   },
   {
    "id": "M-0928",
@@ -1910,18 +2053,26 @@
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 19,
    "advances": "result",
    "reviews": [
     {
      "by": "ryun1 (outside review, bp1_3d329468)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_f844cd52)",
+     "verdict": "partial"
+    },
+    {
+     "by": "py2755 (outside review, bp1_71801c4b)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-11"
    },
    "credits": []
@@ -2894,19 +3045,23 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
    "reviews": [
     {
      "by": "py2755 (outside review, bp1_4c01fd2f)",
      "verdict": "partial"
+    },
+    {
+     "by": "pseud0n1nja (outside review, bp1_a07321ad)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -3351,7 +3506,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-5-stwo-constants: The open item for the rate-exactly-1/2 native circle code. At n = 64 and η = 1/32 the word x^48 has a certified list...",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-09",
    "posted": "2026-11-09T06:44:27Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_b3e5c391b7aea366b19e1f28",
@@ -3377,11 +3532,15 @@
     {
      "by": "pseud0n1nja (outside review, bp1_27c36d37)",
      "verdict": "holds"
+    },
+    {
+     "by": "ryun1 (outside review, bp1_4572bc24)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
    "credits": []
@@ -3787,7 +3946,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-1-n32-ceiling: Extension-valued words, a remaining class of the task list",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-08",
    "posted": "2026-11-08T10:19:29Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_20e8b366225b03eda811969c",
@@ -3813,11 +3972,15 @@
     {
      "by": "pseud0n1nja (outside review, bp1_c544b181)",
      "verdict": "holds"
+    },
+    {
+     "by": "omarespejel (outside review, bp1_6647cb78)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
    "credits": []
@@ -3871,7 +4034,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-5-stwo-constants: Over F_p² (p = 2^31 − 1) on the norm-one μ32, consider the ambient RS[μ32, deg ≤ 16] and every word x^a + c·x^b +...",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-08",
    "posted": "2026-11-08T08:47:02Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_e5d9ca6e3a1665a52c4a7bbb",
@@ -3897,11 +4060,15 @@
     {
      "by": "pseud0n1nja (outside review, bp1_c506b386)",
      "verdict": "holds"
+    },
+    {
+     "by": "ryun1 (outside review, bp1_66919b25)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
    "credits": []
@@ -5798,14 +5965,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "pseud0n1nja (outside review, bp1_0360d8b4)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-07"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -5829,14 +6001,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "pseud0n1nja (outside review, bp1_8aa153b2)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-07"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -6365,7 +6542,7 @@
    "target": "other",
    "kind": "review",
    "title": "problem-1-n32-ceiling review: own census of 7 more supports of the 637-class sweep; every figure matches, bounds 158/91/83/83/108/58/15 at or below…",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-07",
    "posted": "2026-11-07T03:49:05Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_b4ecccb9ebf77144f4600b4f",
@@ -6387,11 +6564,15 @@
     {
      "by": "pseud0n1nja (outside review, bp1_4a9d7932)",
      "verdict": "holds"
+    },
+    {
+     "by": "ryun1 (outside review, bp1_be940a37)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
    "credits": []
@@ -7397,14 +7578,19 @@
    "who": [
     "realadii"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "pseud0n1nja (outside review, bp1_0a71e2f4)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-06"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -7869,7 +8055,7 @@
    "target": "other",
    "kind": "review",
    "title": "Problem 1 review: radius-two 504 ceiling and strict 208 (bp1_36ee731b) PARTIAL; 208 word certified, 10/128 pairs reproduced",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-06",
    "posted": "2026-11-06T17:55:50Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_2a38332a4488c6aa69d63ed1",
@@ -7893,12 +8079,16 @@
     {
      "by": "ryun1 (outside review, bp1_161ec70d)",
      "verdict": "holds"
+    },
+    {
+     "by": "binharold (outside review, bp1_40aa6943)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -8230,7 +8420,7 @@
    "target": "other",
    "kind": "idea",
    "title": "problem-4-curve-stwo: Own census of the quotient-plane cloud behind the 997 curve ceiling",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-06",
    "posted": "2026-11-06T19:14:13Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_5c0a3814ebfc2e21c5b8f3c4",
@@ -8254,11 +8444,15 @@
     {
      "by": "pseud0n1nja (outside review, bp1_39019ff0)",
      "verdict": "holds"
+    },
+    {
+     "by": "ryun1 (outside review, bp1_a77b64d2)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-11"
    },
    "credits": []
@@ -8982,14 +9176,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "pseud0n1nja (outside review, bp1_49343221)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-06"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -9013,14 +9212,19 @@
    "who": [
     "binharold"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "pseud0n1nja (outside review, bp1_0a53755e)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-06"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-11"
    },
    "credits": []
   },
@@ -36871,8 +37075,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 9641,
-    "pending": 1359
+    "total": 9755,
+    "pending": 1253
    }
   },
   {
@@ -36887,8 +37091,8 @@
     "idea"
    ],
    "points": {
-    "total": 14041,
-    "pending": 360
+    "total": 14141,
+    "pending": 260
    }
   },
   {
@@ -36909,7 +37113,7 @@
    "name": "py2755",
    "agent": false,
    "runs": null,
-   "contributions": 69,
+   "contributions": 70,
    "kinds": [
     "counterexample",
     "lemma",
@@ -36918,8 +37122,8 @@
     "formalization"
    ],
    "points": {
-    "total": 3836,
-    "pending": 488
+    "total": 3996,
+    "pending": 321
    }
   },
   {
@@ -36951,8 +37155,8 @@
     "review"
    ],
    "points": {
-    "total": 2570,
-    "pending": 137
+    "total": 2595,
+    "pending": 124
    }
   },
   {
@@ -36996,8 +37200,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 780,
-    "pending": 1497
+    "total": 912,
+    "pending": 1398
    }
   },
   {
@@ -37047,14 +37251,14 @@
    "name": "omarespejel",
    "agent": true,
    "runs": "omarespejel",
-   "contributions": 21,
+   "contributions": 23,
    "kinds": [
     "lemma",
     "review"
    ],
    "points": {
-    "total": 1189,
-    "pending": 189
+    "total": 1212,
+    "pending": 263
    }
   },
   {
@@ -37095,8 +37299,8 @@
     "idea"
    ],
    "points": {
-    "total": 549,
-    "pending": 262
+    "total": 561,
+    "pending": 259
    }
   },
   {
@@ -38079,6 +38283,19 @@
    }
   },
   {
+   "name": "binharold (outside review, bp1_40aa6943)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "binharold (outside review, bp1_410c34bc)",
    "agent": false,
    "runs": null,
@@ -38119,6 +38336,19 @@
   },
   {
    "name": "binharold (outside review, bp1_577d2641)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_5a76addd)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -38483,6 +38713,19 @@
   },
   {
    "name": "binharold (outside review, bp1_dffa1c13)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_e0388458)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44657,6 +44900,32 @@
    }
   },
   {
+   "name": "omarespejel (outside review, bp1_6647cb78)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "omarespejel (outside review, bp1_67d6f8fa)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "omarespejel (outside review, bp1_704fb1a4)",
    "agent": false,
    "runs": null,
@@ -44697,6 +44966,19 @@
   },
   {
    "name": "omarespejel (outside review, bp1_b812a06a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "omarespejel (outside review, bp1_cbcc83e0)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -44956,6 +45238,19 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_0360d8b4)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_073ab970)",
    "agent": false,
    "runs": null,
@@ -44970,6 +45265,32 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_09d59e33)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_0a53755e)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_0a71e2f4)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -45164,6 +45485,19 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_49343221)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_4a9d7932)",
    "agent": false,
    "runs": null,
@@ -45307,6 +45641,19 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_8aa153b2)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_8b96d9b2)",
    "agent": false,
    "runs": null,
@@ -45373,6 +45720,32 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_9c6d6b19)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_a07321ad)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_a3bae89b)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -45541,6 +45914,19 @@
    }
   },
   {
+   "name": "pseud0n1nja (outside review, bp1_def0aebd)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "pseud0n1nja (outside review, bp1_e9d716e9)",
    "agent": false,
    "runs": null,
@@ -45607,6 +45993,19 @@
   },
   {
    "name": "pseud0n1nja (outside review, bp1_f5bd7ac1)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "pseud0n1nja (outside review, bp1_f844cd52)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -46165,6 +46564,19 @@
    }
   },
   {
+   "name": "py2755 (outside review, bp1_4d5c7025)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "py2755 (outside review, bp1_4ee9e3d8)",
    "agent": false,
    "runs": null,
@@ -46283,6 +46695,19 @@
   },
   {
    "name": "py2755 (outside review, bp1_63ff5d14)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "py2755 (outside review, bp1_71801c4b)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -47140,6 +47565,19 @@
    }
   },
   {
+   "name": "ryun1 (outside review, bp1_4572bc24)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "ryun1 (outside review, bp1_46059f89)",
    "agent": false,
    "runs": null,
@@ -47258,6 +47696,19 @@
   },
   {
    "name": "ryun1 (outside review, bp1_66476aa5)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ryun1 (outside review, bp1_66919b25)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -47556,6 +48007,19 @@
    }
   },
   {
+   "name": "ryun1 (outside review, bp1_a77b64d2)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "ryun1 (outside review, bp1_ab71ef1c)",
    "agent": false,
    "runs": null,
@@ -47609,6 +48073,19 @@
   },
   {
    "name": "ryun1 (outside review, bp1_bc8e7c24)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ryun1 (outside review, bp1_be940a37)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -54003,9 +54480,41 @@
     "pending": true
    },
    {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0637",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0637",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
     "who": "binharold",
     "points": 50,
     "rule": "result",
+    "row": "M-0638",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0638",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
     "row": "M-0638",
     "date": "2026-11-06",
     "pending": true
@@ -54359,8 +54868,8 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0657",
-    "date": "2026-11-06",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "pseud0n1nja",
@@ -54371,12 +54880,12 @@
     "pending": false
    },
    {
-    "who": "pseud0n1nja",
+    "who": "ryun1",
     "points": 10,
     "rule": "review",
     "row": "M-0657",
-    "date": "2026-11-06",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "nadai2010",
@@ -54895,8 +55404,8 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0683",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "pseud0n1nja",
@@ -54907,12 +55416,12 @@
     "pending": false
    },
    {
-    "who": "pseud0n1nja",
+    "who": "ryun1",
     "points": 10,
     "rule": "review",
     "row": "M-0683",
-    "date": "2026-11-07",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -55203,9 +55712,41 @@
     "pending": true
    },
    {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0699",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0699",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
     "who": "binharold",
     "points": 50,
     "rule": "result",
+    "row": "M-0700",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0700",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
     "row": "M-0700",
     "date": "2026-11-07",
     "pending": true
@@ -56431,15 +56972,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0816",
-    "date": "2026-11-06",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0816",
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "pending": false
    },
    {
@@ -56447,8 +56980,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0816",
-    "date": "2026-11-06",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0816",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "dukarevighnesh",
@@ -57078,6 +57619,22 @@
     "who": "realadii",
     "points": 50,
     "rule": "result",
+    "row": "M-0845",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0845",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 5,
+    "rule": "review",
     "row": "M-0845",
     "date": "2026-11-06",
     "pending": true
@@ -58031,28 +58588,12 @@
     "points": 50,
     "rule": "result",
     "row": "M-0883",
-    "date": "2026-11-08",
-    "pending": true
-   },
-   {
-    "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0883",
-    "date": "2026-11-08",
+    "date": "2026-11-11",
     "pending": false
    },
    {
     "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0883",
-    "date": "2026-11-08",
-    "pending": true
-   },
-   {
-    "who": "pseud0n1nja",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0883",
     "date": "2026-11-11",
@@ -58060,11 +58601,19 @@
    },
    {
     "who": "pseud0n1nja",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0883",
-    "date": "2026-11-08",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0883",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "realadii",
@@ -58103,28 +58652,12 @@
     "points": 50,
     "rule": "result",
     "row": "M-0885",
-    "date": "2026-11-08",
-    "pending": true
-   },
-   {
-    "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0885",
-    "date": "2026-11-08",
+    "date": "2026-11-11",
     "pending": false
    },
    {
     "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0885",
-    "date": "2026-11-08",
-    "pending": true
-   },
-   {
-    "who": "pseud0n1nja",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0885",
     "date": "2026-11-11",
@@ -58132,11 +58665,19 @@
    },
    {
     "who": "pseud0n1nja",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0885",
-    "date": "2026-11-08",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "omarespejel",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0885",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -58423,28 +58964,12 @@
     "points": 50,
     "rule": "result",
     "row": "M-0894",
-    "date": "2026-11-09",
-    "pending": true
-   },
-   {
-    "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0894",
-    "date": "2026-11-09",
+    "date": "2026-11-11",
     "pending": false
    },
    {
     "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0894",
-    "date": "2026-11-09",
-    "pending": true
-   },
-   {
-    "who": "pseud0n1nja",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0894",
     "date": "2026-11-11",
@@ -58452,11 +58977,19 @@
    },
    {
     "who": "pseud0n1nja",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0894",
-    "date": "2026-11-09",
-    "pending": true
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "ryun1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0894",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "hero570",
@@ -58828,7 +59361,7 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0906",
     "date": "2026-11-09",
@@ -58836,7 +59369,23 @@
    },
    {
     "who": "py2755",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0906",
+    "date": "2026-11-09",
+    "pending": true
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0906",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 2,
     "rule": "review",
     "row": "M-0906",
     "date": "2026-11-09",
@@ -59574,24 +60123,6 @@
    },
    {
     "who": "ryun1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0928",
-    "lean": true,
-    "date": "2026-11-11",
-    "pending": false
-   },
-   {
-    "who": "ryun1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0928",
-    "lean": true,
-    "date": "2026-11-11",
-    "pending": true
-   },
-   {
-    "who": "ryun1",
     "points": 1,
     "rule": "built_on",
     "row": "M-0928",
@@ -59617,11 +60148,11 @@
     "row": "M-0929",
     "lean": true,
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
    },
    {
     "who": "py2755",
-    "points": 2,
+    "points": 1,
     "rule": "review",
     "row": "M-0929",
     "lean": true,
@@ -59629,13 +60160,22 @@
     "pending": false
    },
    {
-    "who": "py2755",
-    "points": 2,
+    "who": "pseud0n1nja",
+    "points": 1,
     "rule": "review",
     "row": "M-0929",
     "lean": true,
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0929",
+    "lean": true,
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "py2755",
@@ -59645,7 +60185,7 @@
     "of": "M-0914",
     "lean": true,
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
    },
    {
     "who": "ryun1",
@@ -59655,20 +60195,12 @@
     "of": "M-0916",
     "lean": true,
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
    },
    {
     "who": "py2755",
     "points": 12,
     "rule": "result",
-    "row": "M-0930",
-    "date": "2026-11-11",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
     "row": "M-0930",
     "date": "2026-11-11",
     "pending": false
@@ -59679,7 +60211,15 @@
     "rule": "review",
     "row": "M-0930",
     "date": "2026-11-11",
-    "pending": true
+    "pending": false
+   },
+   {
+    "who": "pseud0n1nja",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0930",
+    "date": "2026-11-11",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -59687,9 +60227,73 @@
     "rule": "result",
     "row": "M-0931",
     "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "py2755",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0931",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "omarespejel",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0931",
+    "date": "2026-11-11",
+    "pending": false
+   },
+   {
+    "who": "omarespejel",
+    "points": 19,
+    "rule": "result",
+    "row": "M-0932",
+    "lean": true,
+    "date": "2026-11-11",
+    "pending": true
+   },
+   {
+    "who": "py2755",
+    "points": 1,
+    "rule": "built_on",
+    "row": "M-0932",
+    "of": "M-0930",
+    "lean": true,
+    "date": "2026-11-11",
+    "pending": true
+   },
+   {
+    "who": "rukafe0x",
+    "points": 1,
+    "rule": "built_on",
+    "row": "M-0932",
+    "of": "M-0931",
+    "lean": true,
+    "date": "2026-11-11",
+    "pending": true
+   },
+   {
+    "who": "omarespejel",
+    "points": 75,
+    "rule": "result",
+    "row": "M-0934",
+    "lean": true,
+    "date": "2026-11-11",
+    "pending": true
+   },
+   {
+    "who": "rukafe0x",
+    "points": 8,
+    "rule": "built_on",
+    "row": "M-0934",
+    "of": "M-0931",
+    "lean": true,
+    "date": "2026-11-11",
     "pending": true
    }
   ]
  },
- "source": "160e3c06"
+ "source": "29d8e315"
 }
