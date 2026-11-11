@@ -407,7 +407,7 @@ def summary(targets: dict, records: list[dict], now: str | None = None) -> dict:
         points["pending" if line["pending"] else "total"] += line["points"]
     for entry in people.values():
         entry.setdefault("points", {"total": 0, "pending": 0})
-    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "posted", "url", "thread", "lead", "builds_on", "count", "bound", "combines", "bonus")}
+    public = [{key: row.get(key) for key in ("id", "target", "kind", "title", "status", "date", "posted", "url", "thread", "lead", "builds_on", "count", "bound", "combines", "bonus", "tier")}
               | {"cell": problem_cell(row, (targets.get("rules") or {}).get("scoring") or {})}
               | {"who": [w["name"] for w in row["who"]], "reviewed": holding_review(row),
                  "points": row_points(row, targets.get("rules"))[0], "advances": row_points(row, targets.get("rules"))[1],
