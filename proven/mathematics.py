@@ -157,6 +157,10 @@ def validate(targets: dict, records: list[dict]) -> None:
                 raise RecordError(f"{rid}: a reviewing entry names who reads it and since when")
         if row.get("reason") is not None and not isinstance(row["reason"], str):
             raise RecordError(f"{rid}: a reason is a sentence")
+        v71 = ((targets.get("rules") or {}).get("scoring") or {}).get("v7", {}).get("v7_1") or {}
+        if v71.get("since") and str(row.get("posted") or row.get("date") or "") >= str(v71["since"]) \
+                and row.get("cell") in (v71.get("cells") or []) and row.get("tier") not in (v71.get("tiers") or {}):
+            raise RecordError(f"{rid}: since rules v7.1 a row in {row['cell']} names its tier ({', '.join(v71.get('tiers') or {})})")
         if row.get("advances") is not None and row["advances"] not in ADVANCES:
             raise RecordError(f"{rid}: advances is one of {', '.join(ADVANCES)}")
         if not set(row.get("bonus", [])) <= set(BONUSES):
@@ -305,7 +309,16 @@ def cell_weight(row: dict, scoring: dict) -> float | None:
         return 0.0
     if cell in (v7.get("ledger_only") or []) and not row.get("changes_ledger"):
         return 0.0
-    return float(weights[cell])
+    return float(weights[cell]) * tier_factor(row, cell, v7.get("v7_1") or {})
+
+
+def tier_factor(row: dict, cell: str, v71: dict) -> float:
+    """Rules v7.1: in a full-weight cell a row posted since the v7.1 cutoff pays by its `tier`: full for a
+    bound at every n, a quarter for a step, nothing for a search at one fixed n that settles no open item."""
+    since = str(v71.get("since") or "")
+    if not since or str(row.get("posted") or row.get("date") or "") < since or cell not in (v71.get("cells") or []):
+        return 1.0
+    return float(v71["tiers"][row["tier"]])
 
 
 def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
