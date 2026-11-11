@@ -2035,6 +2035,19 @@
       pill.classList.toggle("is-yes", holders.length > 0);
     }
   }
+  // The five rows accepted last, newest first: what moved most recently, and who moved it.
+  function renderLatest(record) {
+    const list = $("latest-accepted");
+    if (!list) return;
+    const profiles = record.profiles || new Map();
+    const who = (r) => (r.who || []).map((w) => (typeof w === "string" ? w : w && w.name)).filter(Boolean)
+      .map((name) => (profiles.get(name) ? `@${profiles.get(name)}` : personName(name))).join(", ");
+    const rows = (record.contributions || []).filter((r) => r.status === "accepted" && r.date)
+      .sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id)).slice(0, 5);
+    list.replaceChildren(...rows.map((r) => el("li", {},
+      el("a", { href: `/record#${r.id}` }, (r.title || r.id).replace(/^[a-z0-9-]+:\s*/i, "")),
+      el("small", {}, [who(r), day(r.date)].filter(Boolean).join(" · ")))));
+  }
   // The problem counters read the record, so they never go stale: posts in the problem cells, the
   // outside reviews on them (a review recorded as read is not counted) and the rows accepted.
   function fillCounters(record) {
@@ -2060,6 +2073,7 @@
       record.profiles = profiles;
       if (profilesKept) loadProfiles().catch(() => {});
       fillCounters(record);
+      renderLatest(record);
       window.__tasks = kept("starks-tasks");
       renderProblems();
       renderRecord(record);

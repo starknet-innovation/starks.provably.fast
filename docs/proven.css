@@ -787,3 +787,12 @@ table.constants th { font-weight: 600; border-top: 0; }
 .tgt-steward { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--ink); }
 .tgt-steward small { display: block; margin-bottom: 2px; color: var(--muted); font-size: 12px; font-weight: 500; }
 
+/* Latest accepted: five rows, each its title and who and when, on one line where it fits. */
+.starks-latest-list { display: grid; margin: 18px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.starks-latest-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.starks-latest-list a { overflow: hidden; color: var(--ink); text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.starks-latest-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.starks-latest-list small { color: var(--muted); font-size: 13px; white-space: nowrap; }
+@media (max-width: 640px) { .starks-latest-list li { grid-template-columns: 1fr; gap: 2px; } .starks-latest-list a { white-space: normal; } }
+/* The path from submission to credit (kit.css) in the colour of starks. */
+.kit-path { --kit-path: var(--platform); }
