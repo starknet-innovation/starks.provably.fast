@@ -321,6 +321,22 @@ class RulesV7(unittest.TestCase):
         self.assertFalse(m.scored(closed, self.SCORING))
         self.assertEqual(m.row_points(closed, {"scoring": self.SCORING})[0], 0)
 
+    def test_rules_v71_tiers_in_a_full_weight_cell(self):
+        scoring = {**self.SCORING, "v7": {**self.SCORING["v7"], "v7_1": {"since": "2026-11-11T08:00:00Z", "cells": ["problem-3a-upper", "problem-2a-fibre"],
+                                                                       "tiers": {"full": 1, "quarter": 0.25, "logged": 0}}}}
+        rules, after = {"scoring": scoring}, "2026-11-11T09:00:00Z"
+        self.assertEqual(m.row_points(self.posted("M-0001", "problem-3a-upper", when=after, tier="full"), rules)[0], 50)
+        self.assertEqual(m.row_points(self.posted("M-0002", "problem-3a-upper", when=after, tier="quarter"), rules)[0], 12)
+        self.assertFalse(m.scored(self.posted("M-0003", "problem-3a-upper", when=after, tier="logged"), scoring))
+        # A row posted before the v7.1 cutoff keeps its value and needs no tier.
+        self.assertEqual(m.row_points(self.posted("M-0004", "problem-3a-upper"), rules)[0], 50)
+        targets = m.load_targets()
+        targets = {**targets, "rules": {**targets["rules"], "scoring": scoring}}
+        late = {**self.posted("M-0905", "problem-3a-upper", when=after), "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_0"}
+        with self.assertRaises(m.RecordError):
+            m.validate(targets, [late])
+        m.validate(targets, [{**late, "tier": "quarter"}])
+
     def test_a_read_review_pays_nothing(self):
         base = {**row("M-0010", "lemma", who="alice", status="accepted"),
                 "reviews": [{"by": "bob (outside review, bp1_1)", "verdict": "read"}, {"by": "carol (outside review, bp1_2)", "verdict": "holds"}]}
