@@ -337,6 +337,14 @@ class RulesV7(unittest.TestCase):
             m.validate(targets, [late])
         m.validate(targets, [{**late, "tier": "quarter"}])
 
+    def test_rules_v72_full_weight_waits_for_an_outside_kernel_replay(self):
+        v7 = {**self.SCORING["v7"], "v7_1": {"since": "2026-11-11T08:00:00Z", "cells": ["problem-3a-upper"], "tiers": {"full": 1, "quarter": 0.25, "logged": 0}},
+              "v7_2": {"since": "2026-11-12T15:00:00Z", "unreplayed": "quarter"}}
+        rules, after = {"scoring": {**self.SCORING, "v7": v7}}, "2026-11-11T09:00:00Z"
+        self.assertEqual(m.row_points(self.posted("M-0001", "problem-3a-upper", when=after, tier="full"), rules)[0], 12)
+        self.assertEqual(m.row_points(self.posted("M-0002", "problem-3a-upper", when=after, tier="full", bonus=["lean"]), rules)[0], 75)
+        self.assertEqual(m.row_points(self.posted("M-0003", "problem-3a-upper", when=after, tier="quarter"), rules)[0], 12)
+
     def test_a_read_review_pays_nothing(self):
         base = {**row("M-0010", "lemma", who="alice", status="accepted"),
                 "reviews": [{"by": "bob (outside review, bp1_1)", "verdict": "read"}, {"by": "carol (outside review, bp1_2)", "verdict": "holds"}]}

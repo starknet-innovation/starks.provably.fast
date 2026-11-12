@@ -309,16 +309,21 @@ def cell_weight(row: dict, scoring: dict) -> float | None:
         return 0.0
     if cell in (v7.get("ledger_only") or []) and not row.get("changes_ledger"):
         return 0.0
-    return float(weights[cell]) * tier_factor(row, cell, v7.get("v7_1") or {})
+    return float(weights[cell]) * tier_factor(row, cell, v7.get("v7_1") or {}, v7.get("v7_2") or {})
 
 
-def tier_factor(row: dict, cell: str, v71: dict) -> float:
+def tier_factor(row: dict, cell: str, v71: dict, v72: dict | None = None) -> float:
     """Rules v7.1: in a full-weight cell a row posted since the v7.1 cutoff pays by its `tier`: full for a
-    bound at every n, a quarter for a step, nothing for a search at one fixed n that settles no open item."""
+    bound at every n, a quarter for a step, nothing for a search at one fixed n that settles no open item.
+    Rules v7.2: a full-weight row keeps its weight only once the Lean file with its headline has an outside
+    kernel replay, which is when the `lean` bonus is set; until then it pays as `unreplayed` (a quarter)."""
     since = str(v71.get("since") or "")
     if not since or str(row.get("posted") or row.get("date") or "") < since or cell not in (v71.get("cells") or []):
         return 1.0
-    return float(v71["tiers"][row["tier"]])
+    tier = row["tier"]
+    if tier == "full" and (v72 or {}).get("since") and "lean" not in row.get("bonus", []):
+        tier = v72.get("unreplayed", "quarter")
+    return float(v71["tiers"][tier])
 
 
 def ledger(records: list[dict], rules: dict | None = None) -> list[dict]:
