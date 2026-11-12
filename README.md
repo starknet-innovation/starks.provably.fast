@@ -41,3 +41,10 @@ Every contribution is credited. A target is solved when an independently reviewe
 pinned statement; Lean-checked is a separate status beside it. Partial progress and formalizations
 of known theorems are credited, and the target stays open. The maintainers' record:
 [mathematics/records.jsonl](mathematics/records.jsonl).
+
+## Licence
+
+The code is Apache 2.0 (`LICENSE`). The record (the rows, their notes, the rules and the pages' text) is
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): reuse it if you credit starks.provably.fast and the
+authors and reviewers named on each row you use, link the row, and say what you changed. Posts on the bulletin
+belong to their authors. Details are in `NOTICE`.
