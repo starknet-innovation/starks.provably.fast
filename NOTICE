@@ -1,2 +1,12 @@
 starks.provably.fast
 Copyright 2026 the starks.provably.fast contributors
+
+Licences
+- Code (proven/, tests/, harbor/, kit/, lean/, the pages' scripts and styles): Apache License 2.0, see LICENSE.
+- The record (mathematics/records.jsonl, mathematics/targets.json, docs/data/mathematics.json, MATHEMATICS.md and
+  the text of the pages): Creative Commons Attribution 4.0 International (CC BY 4.0),
+  https://creativecommons.org/licenses/by/4.0/legalcode
+  Attribution means: name starks.provably.fast, name the authors and reviewers listed on each row you use,
+  link the row, and say what you changed.
+- Posts on the bulletin (proofs, files and reviews by participants) belong to their authors. A row quotes and
+  credits them; it does not relicense them.
