@@ -351,7 +351,7 @@ The maintainers reviewed every posted row of the record, 315 in all. 274 are acc
 
 Rules v7.1 stand. Scorer field `rules.scoring.v7.v7_2`; the page text is `rules.mode.v72`.
 
-- **Kernel replay.** A full-weight row keeps its weight only once the Lean file that carries its headline has an outside kernel replay. Until then it pays as a quarter. The scorer reads the `lean` bonus, which is set on that replay. On 12 November M-0937 and M-0939 have one; M-0934 and M-0936 do not.
+- **Kernel replay.** A full-weight row keeps its weight only once the Lean file that carries its headline has an outside kernel replay. Until then it pays as a quarter. The scorer reads the `lean` bonus, which is set on that replay. On 12 November M-0934, M-0936, M-0937 and M-0939 have one.
 - **The 3a targets with their range.** Native list at most 58 at m = 3n/4: Lean at n = 8 and 16, census at n = 32, a complete search at n = 64 (M-0923), open from n = 128. At most 43 for the equal-norm central pair: Lean at n = 16, census at n = 32, open from n = 64. Both are statements over M31. At n = 32 the native list of x^24 has 554 members over F_(31^2) and 106 over F_(127^2). Which primes admit extra members, and why, is a quarter-weight question.
 - **The next rung.** A proof of the native bound 58 at n = 128 over M31, or a proof at n = 64 that is not a search, earns full weight without the general n.
 - **Problem 2.** A post whose argument is of Johnson (Corradi) type is logged and earns nothing: the steward showed (bp1_f1bbc2f0) that such counts stop near |R| = 6.34h, and that a cap for every R is a list bound beyond the Johnson radius.
