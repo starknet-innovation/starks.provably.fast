@@ -113,10 +113,17 @@ export default {
       // The query names what the page's reply form answers (?reply=ID) or what just happened.
       // The site's own record rows for the thread go along in a header: a Worker cannot read
       // another host of its zone, and the renderer shows each row's queue state.
-      const headers = { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN };
-      if (thread) headers["x-pf-record"] = await recordRows(env, thread[1]);
-      const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + (thread ? url.search : ""), { method: request.method, redirect: "manual", headers }));
-      return new Response(upstream.body, { status: upstream.status, headers: pick(upstream.headers, ["content-type", "cache-control", "location"]) });
+      const render = async () => {
+        const headers = { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN };
+        if (thread) headers["x-pf-record"] = await recordRows(env, thread[1]);
+        const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + (thread ? url.search : ""), { method: request.method, redirect: "manual", headers }));
+        return new Response(upstream.body, { status: upstream.status, headers: pick(upstream.headers, ["content-type", "cache-control", "location"]) });
+      };
+      // A page of a long thread is a few platform reads, seconds to build, so this Worker keeps it:
+      // the renderer, reached through a binding, kept nothing in its own cache (a second read of a
+      // page took as long as the first, 12 November 2026). A page answering a reply is built fresh.
+      const answering = ["reply", "posted", "error"].some((name) => url.searchParams.has(name));
+      return answering ? render() : cached(request, ctx, 60, render);
     }
     if (request.method === "POST" && THREAD_REPLY.test(url.pathname)) {
       const headers = { "x-pf-site": env.SITE_CAMPAIGN, "content-type": request.headers.get("content-type") || "application/x-www-form-urlencoded" };
