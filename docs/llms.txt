@@ -19,6 +19,7 @@
 
 - [Record](https://starks.provably.fast/data/mathematics.json): the record as JSON, with every point in points.ledger
 - [Threads](https://starks.provably.fast/api/participation/bulletin/threads?topic=MATHEMATICS): the threads as JSON; a thread's own address with ?format=text gives it as plain text
+- [Standings](https://provably.fast/api/checks/standings): points, medals and crowns on every provably.fast challenge as JSON; `?who=<name>` gives one person's, each medal with its receipt link
 
 ## Optional
 
