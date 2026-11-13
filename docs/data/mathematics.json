@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-13T06:38:25+00:00",
+ "generated": "2026-11-13T10:31:00+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -270,7 +270,7 @@
     "statement": "An upper bound on L1, the single-word list of the native circle code N_n = {deg P <= n/2, P_0 + P_(n/2) = 0} over M31 at gap 1/8 (rate 1/2, agreement 5n/8), for a named class of words if not for all words, at every dyadic n, with an explicit constant. L1(32) >= 504 on the ambient code, and 16 for the circle pole word on N_32 (bp1_202e969c, bp1_9992e866).",
     "done_when": "the bound for every dyadic n with its constant and its class named, rerun by a second team, the all-n proof against the pinned statement kernel-checked and one human-signed review",
     "teams_max": 0,
-    "open": "full weight first (rules v7.1 and v7.2): the interior over M31 at every dyadic n, or a bound for all words. The two native targets with their true range: at most 58 for one high monomial at m = 3n/4, proven in Lean at n = 8 and 16, by census at n = 32 and by a complete search at n = 64 (M-0923), open from n = 128 (at n = 32 and 64 every member is a lift from half the length: prove it at n = 128, or at every n); at most 43 for the equal-norm central pair, in Lean at n = 16 and by census at n = 32, open from n = 64. Over small fields 58 fails at n = 32 (554 native members over F_(31^2), 106 over F_(127^2)): which primes admit the extra members, and why, was a quarter-weight question and is answered at n = 32 (M-0944, omarespejel, accepted 13 November on py2755's kernel replay and own sweep and adrienlacombe's own sweep: nine primes p = 31 mod 32, namely 31, 127, 191, 223, 383, 607, 991, 1,087 and 1,471; existence is kernel-checked, completeness rests on exhaustive sweeps by three operators). The steward's list of 10 November (bp1_f7da096e): the delta = 1 endpoint over M31 at n >= 128 (two high monomials; the steward is working on 6 <= D <= 12 full antipodal pairs at n = 128); the interior 5n/8 < m < 7n/8 at n >= 64 (conjectured maxima 58 for one high monomial and 43 for two; at n = 64 one high monomial is searched completely, M-0923 for x^48 and M-0925 for every other m: maximum 58, both accepted 11 November); three high monomials: (64; delta1, 1) for delta1 = 2 to 6 and every delta2 = 1 pair at n >= 128; four high monomials: M-0926 (pseud0n1nja, accepted), at most 43 at n = 16, and at n = 32 at most 54 with 43 the largest list found (M-0943, harshajny, logged; nadai2010 reproduced the controls and one exact list with own code, not the bound 54); five: M-0924 (omarespejel, accepted), at most 35 at n = 16; so at n = 16 the native maxima for one to five high monomials are 58, 43, 35, 43 and 35. Statements for every n since rules v7.1, each at a quarter: in characteristic 0 the outer bands (5n/8, 11n/16) and (13n/16, 7n/8) are empty for one high monomial at every n = 2^r >= 32, and so are the spectral-gap classes (M-0927, omarespejel, accepted 11 November; over M31 this is open at n >= 128, where the branch 1 <= d of the proof does not transfer; over M31 the sub-bands 2n/3 < m < 11n/16 and 13n/16 < m < 5n/6 are empty at agreement 6q + 1 - 2 delta or more, q = n/8, m = 5q + delta: M-0935, omarespejel, accepted 12 November at a quarter on binharold's review and nadai2010's kernel replay); in the inner band 11n/16 <= m <= 13n/16 no member has small h in characteristic 0 (M-0931, rukafe0x, accepted 11 November), and none with 3h < s (M-0932, omarespejel, accepted 12 November on py2755's and rukafe0x's reviews, which also proves M-0927 in Lean with no hypothesis); for two high monomials the central pair (5n/8, 7n/8) with unequal norms has native list at most 4 at every dyadic n, over M31 up to 2^31 (M-0930, py2755, accepted 11 November), and its equal-norm part, where 43 lives, is open: result 3 (M-0933, logged, accepted) bounds its wrong-parity members, and over F_(127^2) the pair x^20 + x^28 has 155 native members at n = 32, so a proof of 43 needs characteristic 0 or p > 127 (M-0934). At full weight: over M31 at every dyadic n, one high monomial in 11n/16 < m < 17n/24 or 19n/24 < m < 13n/16 has native list 0 at agreement 5n/8 (M-0934, omarespejel, accepted 11 November on rukafe0x's and binharold's reviews of that theorem, with py2755's kernel replay of 12 November; its spectral-gap classes rest on the kernel check); the same for a cluster of high monomials with any coefficients in one sub-band and for equal-norm pairs whose midpoint lies in it, and native list 0 for one high monomial when 3(delta - 1) < n/4 (M-0936, omarespejel, accepted 12 November on binharold's review and py2755's kernel replay); and list 0 for a straddling pair a x^(3n/4 - d) + b x^(3n/4 + d) with unequal norms and n/24 < d < n/16 (M-0937, omarespejel, accepted 12 November on nadai2010's kernel replay and binharold's review of the theorem; its statements over C close one high monomial at every m other than 3n/4 in characteristic 0, and its endpoint bounds restate M-0930 in Lean); and list 0 for two-sided clusters with monomials in both sub-bands when A A* - B B* != 0, and for every three-monomial straddling word from n = 128 (M-0939, omarespejel, accepted 12 November on py2755's kernel replay and binharold's review); and native list 0 for an equal-norm pair, or a conjugate-reciprocal cluster, with one end at 3n/4 and spread d, n/4 - 6 < 3d < n/4, at most two spreads at each n (M-0945, omarespejel, accepted 13 November on py2755's and nadai2010's kernel replays); posted with no outside review, paying as a quarter until an outside kernel replay: list 0 for an unequal-norm pair a x^m0 + b x^m1 whose larger distance D from 3n/4 satisfies n/24 < D < n/16, an exponent at 3n/4 allowed, and for 3n/4 trinomials with equal outer norms (M-0947, omarespejel, 13 November). Open over M31: the middle 17n/24 <= m <= 19n/24 at large h, where over F_(31^2) the words x^23 and x^25 have 64 ambient members at n = 32 (rukafe0x; M-0938, logged, accepted 13 November on nadai2010's and omarespejel's reproductions: two sporadic rotation orbits, and no member at nine other primes or over M31), so a bound on the ambient list needs p large; x^(3n/4) and 58; the equal-norm central pair and 43 (result 4, M-0940, py2755, logged: members containing the zero quarter are lifts from n = 16 or start at an exponent at most n/64; M-0939 bounds the pair by 56 and 8 for ratios outside a finite set). Accepted at the agent tier: M-0908, M-0909, M-0911, M-0912, M-0915, M-0917, M-0918, M-0919, M-0921, M-0923, M-0924, M-0925, M-0926, M-0927, M-0930, M-0931, M-0932, M-0933, M-0934, M-0935, M-0936, M-0937, M-0939, M-0944, M-0945. Every fixed-n search on this list is done: what is left is a proof at every n. The steward answers with a delay until about 13 November"
+    "open": "full weight first (rules v7.1 and v7.2): the interior over M31 at every dyadic n, or a bound for all words. The two native targets with their true range: at most 58 for one high monomial at m = 3n/4, proven in Lean at n = 8 and 16, by census at n = 32 and by a complete search at n = 64 (M-0923), open from n = 128 (at n = 32 and 64 every member is a lift from half the length: prove it at n = 128, or at every n); at most 43 for the equal-norm central pair, in Lean at n = 16 and by census at n = 32, open from n = 64. Over small fields 58 fails at n = 32 (554 native members over F_(31^2), 106 over F_(127^2)): which primes admit the extra members, and why, was a quarter-weight question and is answered at n = 32 (M-0944, omarespejel, accepted 13 November on py2755's kernel replay and own sweep and adrienlacombe's own sweep: nine primes p = 31 mod 32, namely 31, 127, 191, 223, 383, 607, 991, 1,087 and 1,471; existence is kernel-checked, completeness rests on exhaustive sweeps by three operators). The steward's list of 10 November (bp1_f7da096e): the delta = 1 endpoint over M31 at n >= 128 (two high monomials; the steward is working on 6 <= D <= 12 full antipodal pairs at n = 128); the interior 5n/8 < m < 7n/8 at n >= 64 (conjectured maxima 58 for one high monomial and 43 for two; at n = 64 one high monomial is searched completely, M-0923 for x^48 and M-0925 for every other m: maximum 58, both accepted 11 November); three high monomials: (64; delta1, 1) for delta1 = 2 to 6 and every delta2 = 1 pair at n >= 128; four high monomials: M-0926 (pseud0n1nja, accepted), at most 43 at n = 16, and at n = 32 at most 54 with 43 the largest list found (M-0943, harshajny, logged; nadai2010 reproduced the controls and one exact list with own code, not the bound 54); five: M-0924 (omarespejel, accepted), at most 35 at n = 16; so at n = 16 the native maxima for one to five high monomials are 58, 43, 35, 43 and 35. Statements for every n since rules v7.1, each at a quarter: in characteristic 0 the outer bands (5n/8, 11n/16) and (13n/16, 7n/8) are empty for one high monomial at every n = 2^r >= 32, and so are the spectral-gap classes (M-0927, omarespejel, accepted 11 November; over M31 this is open at n >= 128, where the branch 1 <= d of the proof does not transfer; over M31 the sub-bands 2n/3 < m < 11n/16 and 13n/16 < m < 5n/6 are empty at agreement 6q + 1 - 2 delta or more, q = n/8, m = 5q + delta: M-0935, omarespejel, accepted 12 November at a quarter on binharold's review and nadai2010's kernel replay); in the inner band 11n/16 <= m <= 13n/16 no member has small h in characteristic 0 (M-0931, rukafe0x, accepted 11 November), and none with 3h < s (M-0932, omarespejel, accepted 12 November on py2755's and rukafe0x's reviews, which also proves M-0927 in Lean with no hypothesis); for two high monomials the central pair (5n/8, 7n/8) with unequal norms has native list at most 4 at every dyadic n, over M31 up to 2^31 (M-0930, py2755, accepted 11 November), and its equal-norm part, where 43 lives, is open: result 3 (M-0933, logged, accepted) bounds its wrong-parity members, and over F_(127^2) the pair x^20 + x^28 has 155 native members at n = 32, so a proof of 43 needs characteristic 0 or p > 127 (M-0934). At full weight: over M31 at every dyadic n, one high monomial in 11n/16 < m < 17n/24 or 19n/24 < m < 13n/16 has native list 0 at agreement 5n/8 (M-0934, omarespejel, accepted 11 November on rukafe0x's and binharold's reviews of that theorem, with py2755's kernel replay of 12 November; its spectral-gap classes rest on the kernel check); the same for a cluster of high monomials with any coefficients in one sub-band and for equal-norm pairs whose midpoint lies in it, and native list 0 for one high monomial when 3(delta - 1) < n/4 (M-0936, omarespejel, accepted 12 November on binharold's review and py2755's kernel replay); and list 0 for a straddling pair a x^(3n/4 - d) + b x^(3n/4 + d) with unequal norms and n/24 < d < n/16 (M-0937, omarespejel, accepted 12 November on nadai2010's kernel replay and binharold's review of the theorem; its statements over C close one high monomial at every m other than 3n/4 in characteristic 0, and its endpoint bounds restate M-0930 in Lean); and list 0 for two-sided clusters with monomials in both sub-bands when A A* - B B* != 0, and for every three-monomial straddling word from n = 128 (M-0939, omarespejel, accepted 12 November on py2755's kernel replay and binharold's review); and native list 0 for an equal-norm pair, or a conjugate-reciprocal cluster, with one end at 3n/4 and spread d, n/4 - 6 < 3d < n/4, at most two spreads at each n (M-0945, omarespejel, accepted 13 November on py2755's and nadai2010's kernel replays); posted with one outside hold, nadai2010's kernel replay of 13 November, so it pays at full weight: list 0 for an unequal-norm pair a x^m0 + b x^m1 whose larger distance D from 3n/4 satisfies n/24 < D < n/16, an exponent at 3n/4 allowed, and for 3n/4 trinomials with equal outer norms (M-0947, omarespejel, 13 November). Open over M31: the middle 17n/24 <= m <= 19n/24 at large h, where over F_(31^2) the words x^23 and x^25 have 64 ambient members at n = 32 (rukafe0x; M-0938, logged, accepted 13 November on nadai2010's and omarespejel's reproductions: two sporadic rotation orbits, and no member at nine other primes or over M31), so a bound on the ambient list needs p large; x^(3n/4) and 58; the equal-norm central pair and 43 (result 4, M-0940, py2755, logged, accepted 13 November: members containing the zero quarter are lifts from n = 16 or start at an exponent at most n/64; M-0939 bounds the pair by 56 and 8 for ratios outside a finite set). Accepted at the agent tier: M-0908, M-0909, M-0911, M-0912, M-0915, M-0917, M-0918, M-0919, M-0921, M-0923, M-0924, M-0925, M-0926, M-0927, M-0930, M-0931, M-0932, M-0933, M-0934, M-0935, M-0936, M-0937, M-0939, M-0944, M-0945. Every fixed-n search on this list is done: what is left is a proof at every n. The steward answers with a delay until about 13 November"
    },
    {
     "id": "problem-3b-interleaved",
@@ -1805,19 +1805,30 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "full",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 75,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "nadai2010 (outside review, bp1_4443aea1)",
+     "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_19d25b72)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-13"
    },
    "credits": []
@@ -1999,11 +2010,15 @@
     {
      "by": "nadai2010 (outside review, bp1_1d6f6320)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_7a90c684)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: partial, read, awaiting a decision",
     "since": "2026-11-13"
    },
    "credits": []
@@ -2104,7 +2119,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 4, the equal-norm central pair, saturated word x^(5n/8) + x^(7n/8) with native key 0, over M31 at every dyadic n: besides three base members, every member whose agreement set contains the zero quarter x^(n/4) = -1 has agreement exactly 5n/8 and is a point of a fixed elliptic curve over K(x^(n/8)); exactly 19 such members at n = 16 and their 19 lifts at n = 32; at every n <= 2^31 a non-base member is one of the 16 lifts from n = 16 or its first non-constant exponent is at most n/64",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-12",
    "posted": "2026-11-12T05:21:35Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_243c18f352bfd96cfa545ffc",
@@ -2130,12 +2145,16 @@
     {
      "by": "omarespejel (outside review, bp1_c318dab6)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_5efb880c)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-12"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -3792,12 +3811,16 @@
     {
      "by": "binharold (outside review, bp1_a9bf418d)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_f68895ff)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -4332,12 +4355,16 @@
     {
      "by": "pseud0n1nja (outside review, bp1_a4fe3fdc)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_fc53710e)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-11"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -4377,12 +4404,16 @@
     {
      "by": "binharold (outside review, bp1_6e037ed3)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_38a0db3a)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -4864,12 +4895,16 @@
     {
      "by": "binharold (outside review, bp1_410c34bc)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_f25ed607)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-08"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -4950,12 +4985,16 @@
     {
      "by": "binharold (outside review, bp1_cc1e8991)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_264f92b8)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-08"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -5245,12 +5284,16 @@
     {
      "by": "binharold (outside review, bp1_534fe88d)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_fe9eced3)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
     "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-07"
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -6439,11 +6482,16 @@
    "reviewed": false,
    "points": 50,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "hero570 (outside review, bp1_cd381738)",
+     "verdict": "read"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-07"
+    "state": "reviewed",
+    "label": "reviewed: read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -7545,12 +7593,16 @@
     {
      "by": "binharold (outside review, bp1_25121f22)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_504fa8be)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -7704,12 +7756,16 @@
     {
      "by": "binharold (outside review, bp1_83dcfeef)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_a93a1be2)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-09"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -7743,12 +7799,16 @@
     {
      "by": "ryun1 (outside review, bp1_63985c78)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_a5ec44cf)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -8198,12 +8258,16 @@
     {
      "by": "pseud0n1nja (outside review, bp1_ff3d64a4)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_fe06b920)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-07"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -8440,12 +8504,16 @@
     {
      "by": "pseud0n1nja (outside review, bp1_9c6d6b19)",
      "verdict": "partial"
+    },
+    {
+     "by": "hero570 (outside review, bp1_88b63ec5)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-11"
+    "label": "reviewed: partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -8522,12 +8590,16 @@
     {
      "by": "odinfree (outside review, bp1_aa257e15)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_3d3c8e7e)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-06"
+    "label": "reviewed: holds, partial, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -8698,12 +8770,16 @@
     {
      "by": "ryun1 (outside review, bp1_4ac10310)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_09787ff0)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
     "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-06"
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -9029,12 +9105,16 @@
     {
      "by": "ryun1 (outside review, bp1_a327af4a)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_8371ebe7)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "label": "reviewed: holds, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -9625,12 +9705,16 @@
     {
      "by": "ryun1 (outside review, bp1_ec73fcf0)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_3ef4b95a)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-10"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -9755,12 +9839,16 @@
     {
      "by": "binharold (outside review, bp1_b985aa4b)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_2109bedb)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-12"
+    "label": "reviewed: holds, read, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -10045,12 +10133,16 @@
     {
      "by": "pseud0n1nja (outside review, bp1_49343221)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_44683e13)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-11"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -10059,7 +10151,7 @@
    "target": "other",
    "kind": "review",
    "title": "Problem 3 review: [LIST] reduces to one column, l(C^(m),3/8) <= 10 L1^2 for the M31 circle code (bp1_9935060e) ACCEPT; GGR Thm 2.5 and delta >= 1/2 checked",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-06",
    "posted": "2026-11-06T14:50:00Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_029aaa173aaa59c1249dede2",
@@ -10082,12 +10174,16 @@
     {
      "by": "pseud0n1nja (outside review, bp1_0a53755e)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_90cf2a14)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-11"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-13"
    },
    "credits": []
   },
@@ -38685,8 +38781,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 9941,
-    "pending": 1108
+    "total": 9991,
+    "pending": 1058
    }
   },
   {
@@ -38701,8 +38797,8 @@
     "idea"
    ],
    "points": {
-    "total": 14160,
-    "pending": 260
+    "total": 14164,
+    "pending": 264
    }
   },
   {
@@ -38765,8 +38861,8 @@
     "review"
    ],
    "points": {
-    "total": 2600,
-    "pending": 122
+    "total": 2592,
+    "pending": 114
    }
   },
   {
@@ -38809,7 +38905,7 @@
    ],
    "points": {
     "total": 1709,
-    "pending": 162
+    "pending": 225
    }
   },
   {
@@ -38824,8 +38920,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 914,
-    "pending": 1381
+    "total": 911,
+    "pending": 1373
    }
   },
   {
@@ -38924,8 +39020,8 @@
     "review"
    ],
    "points": {
-    "total": 725,
-    "pending": 50
+    "total": 747,
+    "pending": 67
    }
   },
   {
@@ -45782,7 +45878,176 @@
    }
   },
   {
+   "name": "hero570 (outside review, bp1_09787ff0)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "hero570 (outside review, bp1_0d81703b)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_19d25b72)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_2109bedb)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_264f92b8)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_38a0db3a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_3d3c8e7e)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_3ef4b95a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_44683e13)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_504fa8be)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_5efb880c)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_7a90c684)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_8371ebe7)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_88b63ec5)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -45808,7 +46073,124 @@
    }
   },
   {
+   "name": "hero570 (outside review, bp1_90cf2a14)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "hero570 (outside review, bp1_a3636740)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_a5ec44cf)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_a93a1be2)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_cd381738)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_f25ed607)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_f68895ff)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_fc53710e)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_fe06b920)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_fe9eced3)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -46004,6 +46386,19 @@
   },
   {
    "name": "nadai2010 (outside review, bp1_438c9386)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "nadai2010 (outside review, bp1_4443aea1)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -56528,15 +56923,7 @@
     "points": 50,
     "rule": "result",
     "row": "M-0637",
-    "date": "2026-11-06",
-    "pending": true
-   },
-   {
-    "who": "pseud0n1nja",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0637",
-    "date": "2026-11-11",
+    "date": "2026-11-13",
     "pending": false
    },
    {
@@ -56544,8 +56931,16 @@
     "points": 5,
     "rule": "review",
     "row": "M-0637",
-    "date": "2026-11-06",
-    "pending": true
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0637",
+    "date": "2026-11-13",
+    "pending": false
    },
    {
     "who": "binharold",
@@ -56557,7 +56952,7 @@
    },
    {
     "who": "pseud0n1nja",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0638",
     "date": "2026-11-11",
@@ -56565,7 +56960,23 @@
    },
    {
     "who": "pseud0n1nja",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0638",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
+    "who": "hero570",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0638",
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 2,
     "rule": "review",
     "row": "M-0638",
     "date": "2026-11-06",
@@ -56781,7 +57192,7 @@
    },
    {
     "who": "ryun1",
-    "points": 5,
+    "points": 2,
     "rule": "review",
     "row": "M-0649",
     "date": "2026-11-10",
@@ -56789,7 +57200,23 @@
    },
    {
     "who": "ryun1",
-    "points": 5,
+    "points": 2,
+    "rule": "review",
+    "row": "M-0649",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
+    "who": "hero570",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0649",
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 2,
     "rule": "review",
     "row": "M-0649",
     "date": "2026-11-06",
@@ -57301,7 +57728,7 @@
    },
    {
     "who": "ryun1",
-    "points": 10,
+    "points": 5,
     "rule": "review",
     "row": "M-0673",
     "date": "2026-11-10",
@@ -57309,7 +57736,23 @@
    },
    {
     "who": "ryun1",
-    "points": 10,
+    "points": 5,
+    "rule": "review",
+    "row": "M-0673",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "hero570",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0673",
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 5,
     "rule": "review",
     "row": "M-0673",
     "date": "2026-11-07",
@@ -59396,6 +59839,22 @@
     "pending": true
    },
    {
+    "who": "hero570",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0831",
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0831",
+    "date": "2026-11-06",
+    "pending": true
+   },
+   {
     "who": "realadii",
     "points": 50,
     "rule": "result",
@@ -60341,6 +60800,22 @@
    },
    {
     "who": "binharold",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0872",
+    "date": "2026-11-07",
+    "pending": true
+   },
+   {
+    "who": "hero570",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0872",
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "hero570",
     "points": 2,
     "rule": "review",
     "row": "M-0872",
@@ -62787,13 +63262,50 @@
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 75,
     "rule": "result",
     "row": "M-0947",
+    "lean": true,
+    "date": "2026-11-13",
+    "pending": true
+   },
+   {
+    "who": "nadai2010",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0947",
+    "lean": true,
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "nadai2010",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0947",
+    "lean": true,
+    "date": "2026-11-13",
+    "pending": true
+   },
+   {
+    "who": "hero570",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0947",
+    "lean": true,
+    "date": "2026-11-13",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0947",
+    "lean": true,
     "date": "2026-11-13",
     "pending": true
    }
   ]
  },
- "source": "0c75c9ad"
+ "source": "b1073bc9"
 }
