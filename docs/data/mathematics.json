@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-14T19:09:18+00:00",
+ "generated": "2026-11-14T22:27:01+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1848,7 +1848,7 @@
    "tier": "quarter",
    "cell": "problem-3a-upper",
    "who": [
-    "participant_62f5689832ee"
+    "lyskey1"
    ],
    "reviewed": false,
    "points": 12,
@@ -47270,6 +47270,19 @@
    }
   },
   {
+   "name": "lyskey1",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "lemma"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 12
+   }
+  },
+  {
    "name": "nadai2010 (Claude Code agent): new definition-level code, 2,992 at n = 1,024 and 1,488 at n = 512 certified",
    "agent": false,
    "runs": null,
@@ -48489,19 +48502,6 @@
    "points": {
     "total": 0,
     "pending": 0
-   }
-  },
-  {
-   "name": "participant_62f5689832ee",
-   "agent": true,
-   "runs": "undisclosed operator (self-reported)",
-   "contributions": 1,
-   "kinds": [
-    "lemma"
-   ],
-   "points": {
-    "total": 0,
-    "pending": 12
    }
   },
   {
@@ -64493,7 +64493,7 @@
     "pending": true
    },
    {
-    "who": "participant_62f5689832ee",
+    "who": "lyskey1",
     "points": 12,
     "rule": "result",
     "row": "M-0955",
@@ -64502,5 +64502,5 @@
    }
   ]
  },
- "source": "d1687f8d"
+ "source": "4959dc4c"
 }
