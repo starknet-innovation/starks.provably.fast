@@ -63,9 +63,10 @@ GRAPH_REQUIRED_FROM = 22
 # port of a ranked statement 150; an upper bound, or a count above a posted one, 100; any other
 # result 50. Its outside reviewers (three at most) share a fifth of it, and so do the authors of the
 # accepted records it builds on. A review that finds the error in a declined row pays 50. The week's
-# contribution counts double and a Lean-checked proof one and a half times; so does nothing else.
+# contribution counts double and a Lean-checked proof one and a half times. Rules v7.4: a proof of a
+# tier 1 pinned statement (a row whose `pinned` is one of `moonshot_targets`) counts double again.
 ADVANCES = {"statement": 1000, "refutes": 500, "bound": 500, "port": 150, "upper": 100, "breaks": 100, "result": 50}
-BONUSES = {"week": 2.0, "lean": 1.5}
+BONUSES = {"week": 2.0, "lean": 1.5, "moonshot": 2.0}
 SHARE = 0.2
 ERROR_FOUND = 50
 # Counts are certified on the bulletin, not recorded here, so the site adds them live: raising a
@@ -162,7 +163,11 @@ def validate(targets: dict, records: list[dict]) -> None:
                 and row.get("cell") in (v71.get("cells") or []) and row.get("tier") not in (v71.get("tiers") or {}):
             raise RecordError(f"{rid}: since rules v7.1 a row in {row['cell']} names its tier ({', '.join(v71.get('tiers') or {})})")
         v73 = ((targets.get("rules") or {}).get("scoring") or {}).get("v7", {}).get("v7_3") or {}
-        if v73.get("since") and row.get("tier") in ("full", "half"):
+        v74 = ((targets.get("rules") or {}).get("scoring") or {}).get("v7", {}).get("v7_4") or {}
+        newest = bool(v74.get("since")) and str(row.get("posted") or row.get("date") or "") >= str(v74["since"])
+        if newest or "moonshot" in row.get("bonus", []) or row.get("pinned") is not None:
+            check_v74(rid, row, v74, newest)
+        if v73.get("since") and row.get("tier") in ("full", "half") and not (newest and row["tier"] == "half"):
             late = str(row.get("posted") or row.get("date") or "") >= str(v73["since"])
             if row["tier"] == "half" and (not late or row.get("cell") not in (v73.get("half_cells") or [])):
                 raise RecordError(f"{rid}: the tier half is for a pinned instance in {', '.join(v73.get('half_cells') or [])}, since rules v7.3")
@@ -233,6 +238,28 @@ def queue_state(row: dict) -> dict:
     if row.get("count"):
         return {"state": "certified", "label": "certified count, awaiting entry", "since": row.get("date")}
     return {"state": "posted", "label": "posted, awaiting a reviewer", "since": row.get("date")}
+
+
+def check_v74(rid: str, row: dict, v74: dict, newest: bool) -> None:
+    """Rules v7.4: a row may name the pinned statement it proves (`pinned`). For a row posted since the
+    cutoff, the tier full is for a tier 1 or tier 2 statement, the tier half is for a Lean module in one
+    of the three lanes, and a statement at one fixed n pays a quarter at most. The moonshot bonus is for
+    a full-weight proof of a tier 1 statement, since the cutoff only."""
+    moonshots = v74.get("moonshot_targets") or []
+    full, quarter = v74.get("full_targets") or [], v74.get("quarter_targets") or []
+    pinned = row.get("pinned")
+    if pinned is not None and pinned not in [*moonshots, *full, *quarter, *(v74.get("proved_targets") or [])]:
+        raise RecordError(f"{rid}: pinned names a pinned Lean statement of rules v7.4, not {pinned!r}")
+    if "moonshot" in row.get("bonus", []) and not (newest and pinned in moonshots and row.get("tier") == "full"):
+        raise RecordError(f"{rid}: the moonshot bonus is for a full-weight proof of {', '.join(moonshots)}, since rules v7.4")
+    if not newest:
+        return
+    if row.get("tier") == "full" and pinned not in [*moonshots, *full]:
+        raise RecordError(f"{rid}: since rules v7.4 a full-weight row proves a pinned statement at every n: {', '.join([*moonshots, *full])}")
+    if row.get("tier") == "half" and row.get("cell") not in (v74.get("half_cells") or []):
+        raise RecordError(f"{rid}: since rules v7.4 the tier half is for a Lean module in {', '.join(v74.get('half_cells') or [])}")
+    if pinned in quarter and row.get("tier") not in ("quarter", "logged"):
+        raise RecordError(f"{rid}: since rules v7.4 {pinned}, a statement at one n, pays a quarter at most")
 
 
 def row_points(row: dict, rules: dict | None = None) -> tuple[int, str]:
@@ -316,21 +343,26 @@ def cell_weight(row: dict, scoring: dict) -> float | None:
         return 0.0
     if cell in (v7.get("ledger_only") or []) and not row.get("changes_ledger"):
         return 0.0
-    return float(weights[cell]) * tier_factor(row, cell, v7.get("v7_1") or {}, v7.get("v7_2") or {})
+    return float(weights[cell]) * tier_factor(row, cell, v7.get("v7_1") or {}, v7.get("v7_2") or {}, v7.get("v7_4") or {})
 
 
-def tier_factor(row: dict, cell: str, v71: dict, v72: dict | None = None) -> float:
+def tier_factor(row: dict, cell: str, v71: dict, v72: dict | None = None, v74: dict | None = None) -> float:
     """Rules v7.1: in a full-weight cell a row posted since the v7.1 cutoff pays by its `tier`: full for a
     bound at every n, a quarter for a step, nothing for a search at one fixed n that settles no open item.
     Rules v7.2: a full-weight row keeps its weight only once the Lean file with its headline has an outside
     kernel replay, which is when the `lean` bonus is set; until then it pays as `unreplayed` (a quarter).
-    Rules v7.3: the tier half is for a pinned instance of the fibre case; `validate` says where each tier may be."""
+    Rules v7.3: the tier half is for a pinned instance of the fibre case; `validate` says where each tier may be.
+    Rules v7.4: since its cutoff the tier half is for a Lean module, and it too pays as `unreplayed` until
+    its file has an outside kernel replay."""
     since = str(v71.get("since") or "")
     if not since or str(row.get("posted") or row.get("date") or "") < since or cell not in (v71.get("cells") or []):
         return 1.0
     tier = row["tier"]
     if tier == "full" and (v72 or {}).get("since") and "lean" not in row.get("bonus", []):
         tier = v72.get("unreplayed", "quarter")
+    if tier == "half" and (v74 or {}).get("since") and "lean" not in row.get("bonus", []) \
+            and str(row.get("posted") or row.get("date") or "") >= str(v74["since"]):
+        tier = v74.get("unreplayed", "quarter")
     return float(v71["tiers"][tier])
 
 

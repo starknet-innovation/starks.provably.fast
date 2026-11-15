@@ -40,6 +40,12 @@ smooth domain, where the fibres are the pairs `{x, -x}`. The statements over M31
 size, `(2 ^ 31 - 1) ^ 2`: over one finite field every count is bounded by a constant, so the
 constants `C` and `K` are capped at `2 ^ 20` inside the statement.
 
+Rules v7.4 (15 November 2026) add no statement. They say which pinned statements earn what: `T1UniformSmooth`,
+`T1Smooth`, `T2Smooth`, `T3Exponent`, `T3` and `T3Goal` at full weight with points doubled; `FibreM31` and
+`InteriorThree` at full weight; `FibreM31At64` and `Interior58` at a quarter. `FibreM31At32` is proved (row M-0957).
+A module that proves no pinned statement is checked with the target `LEMMA`: every declaration is replayed in
+the kernel, and no statement is compared.
+
 The targets T1, T2 and T3 use ArkLib's `LineExactAgreementBound`. For every received line f + z g there is one
 exceptional set of at most B challenges. Outside it, every polynomial of degree below k that agrees
 with the line in at least A places splits as P0 + z P1, where f agrees with P0 and g with P1 on
