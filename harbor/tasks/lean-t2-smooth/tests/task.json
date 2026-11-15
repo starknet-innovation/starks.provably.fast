@@ -1,0 +1,19 @@
+{
+  "challenge": "T2Smooth",
+  "comparator": {
+    "theorem_names": [
+      "solution"
+    ],
+    "definition_names": [
+      "a\u2082",
+      "C",
+      "B"
+    ],
+    "permitted_axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "grade_timeout_sec": 6300
+}

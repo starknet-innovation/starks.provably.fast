@@ -19,6 +19,12 @@ is solved by an independently reviewed proof, with or without Lean.
 | T3 | `MCAChallenge.T3 N C` | smooth domains (cosets of the subgroup of order 2^m), every gap delta above capacity, n at least `N delta`: at most `C delta * n` | `ReedSolomon.exists_capacity_lineAgreement`: C n^(d + 1) on any domain, d depending on delta |
 | T3 milestone | `MCAChallenge.T3Exponent c N C` | as T3, with at most `C delta * n ^ c` for one exponent c | as above |
 | T3 first goal | `MCAChallenge.T3Goal N` | rate 1/2 with the exact k = n/2, agreement at least 5n/8, smooth domains, n at least N: at most `16 * n`; `T3Goal_of_T3` derives it from any T3 result with C(1/8) at most 16 | nothing below the exponents of DKT's method |
+| Lane 3 (rules v7.3) | `MCAChallenge.T1Smooth C B`, `T2Smooth a2 C B` | `T1` and `T2` on smooth domains only, the hypothesis `IsSmoothDomain` that T3 carries | the bounds for every evaluation set, above |
+| Lane 3 milestone | `MCAChallenge.T1UniformSmooth C` | `T1Uniform` on smooth domains only | as above |
+| Lane 1, the named statement | `MCAChallenge.FibreM31 C` | the fibre case of Lemma R over M31 at every h, common defect set of odd size at most 7h: at most `C * n` labels of fibre-type anchors, C at most 2^20 | nothing; the record has packing counts (M-0910) and caps for larger defect sets (M-0928) |
+| Lane 1 instances | `MCAChallenge.FibreM31At32`, `FibreM31At64` | the same at n = 32 (at most 512 labels) and n = 64 (at most 1,024) | nothing |
+| Lane 2, the named statement | `MCAChallenge.Interior58` | over M31 at n = 64, at most 58 native codewords agree with `a x^48 + R` on 40 points | nothing; known by a complete search (M-0923) |
+| Lane 2, after it | `MCAChallenge.InteriorThree K` | over M31 at every dyadic n from 16 to 2^31, at most `K * n` native codewords at agreement 5n/8 for a word with at most three high monomials, K at most 2^20 | nothing |
 
 a1 is `MCAChallenge.firstOrderCurve`, the first-order curve of Dao, Kominers and Thaler (ePrint
 2026/2056, equation 31), with the lower branch in closed form; `firstOrderCurve_lower_branch` proves
@@ -28,7 +34,13 @@ that the closed form solves their equation (30). ArkLib's
 least 11 - 3 sqrt(13) (`firstOrderCurve_eq_threshold`) and lies above it by at most 0.0014 below that
 rate. So ArkLib's general baseline covers T1's shape only from that rate on.
 
-All statements use ArkLib's `LineExactAgreementBound`. For every received line f + z g there is one
+The lane statements of rules v7.3 (15 November 2026) were added beside the targets; no earlier
+declaration changed. The fibre case uses the definitions of the accepted row M-0910 (ryun1) on a
+smooth domain, where the fibres are the pairs `{x, -x}`. The statements over M31 fix the field by its
+size, `(2 ^ 31 - 1) ^ 2`: over one finite field every count is bounded by a constant, so the
+constants `C` and `K` are capped at `2 ^ 20` inside the statement.
+
+The targets T1, T2 and T3 use ArkLib's `LineExactAgreementBound`. For every received line f + z g there is one
 exceptional set of at most B challenges. Outside it, every polynomial of degree below k that agrees
 with the line in at least A places splits as P0 + z P1, where f agrees with P0 and g with P1 on
 that whole agreement set.
@@ -70,3 +82,7 @@ Checked 2026-10-08: `MCAChallenge` compiles against the pinned ArkLib with no wa
 baselines and both `firstOrderCurve` lemmas use only the three standard axioms. The targets are
 open. ArkLib's own build prints two `sorry` warnings, in `ArkLib/Data/Fin/Basic.lean` and
 `ArkLib/Data/MvPolynomial/Interpolation.lean`; `#print axioms` confirms neither is used here.
+
+
+Checked 2026-11-15, with the lane statements of rules v7.3: `MCAChallenge` compiles against the pinned
+ArkLib with no warnings, and each of the eight new templates typechecks with its `sorry`s in place.

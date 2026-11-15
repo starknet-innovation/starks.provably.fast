@@ -8,6 +8,14 @@
   "T3Exponent": {"template": "T3Exponent.lean", "holes": ["c", "N", "C"], "level": "milestone"},
   "T1Uniform": {"template": "T1Uniform.lean", "holes": ["C"], "level": "milestone"},
   "T1": {"template": "T1.lean", "holes": ["C", "B"], "level": "long run"},
-  "T2": {"template": "T2.lean", "holes": ["a₂", "C", "B"], "level": "long run"}
+  "T2": {"template": "T2.lean", "holes": ["a₂", "C", "B"], "level": "long run"},
+  "FibreM31": {"template": "FibreM31.lean", "holes": ["C"], "level": "lane 1, the named statement"},
+  "FibreM31At32": {"template": "FibreM31At32.lean", "holes": [], "level": "lane 1, instance"},
+  "FibreM31At64": {"template": "FibreM31At64.lean", "holes": [], "level": "lane 1, instance"},
+  "Interior58": {"template": "Interior58.lean", "holes": [], "level": "lane 2, the named statement"},
+  "InteriorThree": {"template": "InteriorThree.lean", "holes": ["K"], "level": "lane 2, the statement after it"},
+  "T1UniformSmooth": {"template": "T1UniformSmooth.lean", "holes": ["C"], "level": "lane 3, milestone"},
+  "T1Smooth": {"template": "T1Smooth.lean", "holes": ["C", "B"], "level": "lane 3"},
+  "T2Smooth": {"template": "T2Smooth.lean", "holes": ["a₂", "C", "B"], "level": "lane 3"}
  }
 }

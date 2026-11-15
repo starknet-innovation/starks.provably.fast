@@ -233,9 +233,9 @@ class RulesV2(unittest.TestCase):
         t = m.load_targets()
         self.assertEqual(t["rules"]["version"], 7)
         self.assertEqual(t["rules"]["scoring"]["since_sequence"], 6821)
-        self.assertEqual(len(t["rules"]["claim_board"]), 40)
+        self.assertEqual(len(t["rules"]["claim_board"]), 41)
         self.assertNotIn("problems", t["rules"])
-        self.assertEqual([c["id"] for c in t["rules"]["claim_board"] if c["port"] == "PROBLEM"], ["problem-1-n32-ceiling", "problem-2-lemma-R", "problem-2a-fibre", "problem-2b-star", "problem-2c-general", "problem-3-list-stwo", "problem-3a-L1", "problem-3a-upper", "problem-3b-interleaved", "problem-3c-charp", "problem-5-stwo-constants", "problem-4-curve-stwo"])
+        self.assertEqual([c["id"] for c in t["rules"]["claim_board"] if c["port"] == "PROBLEM"], ["problem-1-n32-ceiling", "problem-2-lemma-R", "problem-2a-fibre", "problem-2b-star", "problem-2c-general", "problem-3-list-stwo", "problem-3a-L1", "problem-3a-upper", "problem-3b-interleaved", "problem-3c-charp", "problem-5-stwo-constants", "problem-6-smooth-fri", "problem-4-curve-stwo"])
         self.assertIn("port-LIST32", [c["id"] for c in t["rules"]["claim_board"]])
         self.assertEqual(len(t["rules"]["void_reviews"]["post_ids"]), 42)
         self.assertIn("lift-lemma-R", [c["id"] for c in t["rules"]["claim_board"]])
@@ -344,6 +344,27 @@ class RulesV7(unittest.TestCase):
         self.assertEqual(m.row_points(self.posted("M-0001", "problem-3a-upper", when=after, tier="full"), rules)[0], 12)
         self.assertEqual(m.row_points(self.posted("M-0002", "problem-3a-upper", when=after, tier="full", bonus=["lean"]), rules)[0], 75)
         self.assertEqual(m.row_points(self.posted("M-0003", "problem-3a-upper", when=after, tier="quarter"), rules)[0], 12)
+
+    def test_rules_v73_full_weight_is_in_the_three_lanes_and_half_is_for_an_instance(self):
+        v7 = {**self.SCORING["v7"], "weights": {**self.SCORING["v7"]["weights"], "problem-2a-fibre": 1, "problem-2c-general": 1},
+              "v7_1": {"since": "2026-11-11T08:00:00Z", "cells": ["problem-3a-upper", "problem-2a-fibre", "problem-2c-general"],
+                       "tiers": {"full": 1, "half": 0.5, "quarter": 0.25, "logged": 0}},
+              "v7_2": {"since": "2026-11-12T15:00:00Z", "unreplayed": "quarter"},
+              "v7_3": {"since": "2026-11-15T09:30:00Z", "full_cells": ["problem-2a-fibre", "problem-3a-upper"], "half_cells": ["problem-2a-fibre"]}}
+        scoring = {**self.SCORING, "cells": [*self.SCORING["cells"], "problem-2c-general"], "v7": v7}
+        rules, late, early = {"scoring": scoring}, "2026-11-15T10:00:00Z", "2026-11-14T10:00:00Z"
+        targets = m.load_targets()
+        targets = {**targets, "rules": {**targets["rules"], "scoring": scoring}}
+        half = self.posted("M-0001", "problem-2a-fibre", when=late, tier="half")
+        self.assertEqual(m.row_points(half, rules)[0], 25)
+        m.validate(targets, [half])
+        m.validate(targets, [self.posted("M-0002", "problem-2c-general", when=early, tier="full")])
+        with self.assertRaisesRegex(m.RecordError, "only problem-2a-fibre, problem-3a-upper pay full weight"):
+            m.validate(targets, [self.posted("M-0003", "problem-2c-general", when=late, tier="full")])
+        with self.assertRaisesRegex(m.RecordError, "the tier half is for a pinned instance"):
+            m.validate(targets, [self.posted("M-0004", "problem-3a-upper", when=late, tier="half")])
+        with self.assertRaisesRegex(m.RecordError, "the tier half is for a pinned instance"):
+            m.validate(targets, [self.posted("M-0005", "problem-2a-fibre", when=early, tier="half")])
 
     def test_a_read_review_pays_nothing(self):
         base = {**row("M-0010", "lemma", who="alice", status="accepted"),

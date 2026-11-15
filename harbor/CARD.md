@@ -30,7 +30,7 @@ Two kinds of task, the same format as [FineEnvs/openai-math](https://huggingface
 | Task | Reward | Known |
 |---|---|---|
 | `count-babybear-m8`, `-m9`, `-m10`: find a line (two words) on the subgroup of order 2^m in BabyBear with as many bad challenges as possible at rate 1/2 and gap 1/8, and list a witness per challenge | certified distinct bad challenges / (16 n), a graded terminal reward; the uncapped count and the flags over the public baseline and over 16 n are reported too | public floor from participants' towers of codeword pairs: 720, 1,488 and 2,992 at n = 256, 512 and 1,024 (reward about 0.18); the four-pair oracle 3n/2 + 4 (reward 0.095); the challenge's first goal says at most 16 n |
-| `lean-t3-goal`, `lean-t3`, `lean-t3-exponent`, `lean-t1-uniform`, `lean-t1`, `lean-t2`: prove one pinned statement in Lean 4 against ArkLib, supplying its constants in closed form | 1 if Comparator accepts the proof and every constant is a closed form, else 0 (binary) | all open; expect 0; the container verifier passes four controls and has not been attacked |
+| `lean-t3-goal`, `lean-t3`, `lean-t3-exponent`, `lean-t1-uniform`, `lean-t1`, `lean-t2` and the eight lane tasks of rules v7.3 (`lean-fibre-m31`, its two instances, `lean-interior58`, `lean-interior-three`, `lean-t1-smooth`, `lean-t1-uniform-smooth`, `lean-t2-smooth`): prove one pinned statement in Lean 4 against ArkLib, supplying its constants in closed form | 1 if Comparator accepts the proof and every constant is a closed form, else 0 (binary) | all open; expect 0; the container verifier passes four controls and has not been attacked |
 
 ## How a task works
 

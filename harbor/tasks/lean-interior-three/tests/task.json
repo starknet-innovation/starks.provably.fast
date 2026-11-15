@@ -1,0 +1,17 @@
+{
+  "challenge": "InteriorThree",
+  "comparator": {
+    "theorem_names": [
+      "solution"
+    ],
+    "definition_names": [
+      "K"
+    ],
+    "permitted_axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "grade_timeout_sec": 6300
+}
