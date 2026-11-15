@@ -161,6 +161,13 @@ def validate(targets: dict, records: list[dict]) -> None:
         if v71.get("since") and str(row.get("posted") or row.get("date") or "") >= str(v71["since"]) \
                 and row.get("cell") in (v71.get("cells") or []) and row.get("tier") not in (v71.get("tiers") or {}):
             raise RecordError(f"{rid}: since rules v7.1 a row in {row['cell']} names its tier ({', '.join(v71.get('tiers') or {})})")
+        v73 = ((targets.get("rules") or {}).get("scoring") or {}).get("v7", {}).get("v7_3") or {}
+        if v73.get("since") and row.get("tier") in ("full", "half"):
+            late = str(row.get("posted") or row.get("date") or "") >= str(v73["since"])
+            if row["tier"] == "half" and (not late or row.get("cell") not in (v73.get("half_cells") or [])):
+                raise RecordError(f"{rid}: the tier half is for a pinned instance in {', '.join(v73.get('half_cells') or [])}, since rules v7.3")
+            if row["tier"] == "full" and late and row.get("cell") not in (v73.get("full_cells") or []):
+                raise RecordError(f"{rid}: since rules v7.3 only {', '.join(v73.get('full_cells') or [])} pay full weight")
         if row.get("advances") is not None and row["advances"] not in ADVANCES:
             raise RecordError(f"{rid}: advances is one of {', '.join(ADVANCES)}")
         if not set(row.get("bonus", [])) <= set(BONUSES):
@@ -316,7 +323,8 @@ def tier_factor(row: dict, cell: str, v71: dict, v72: dict | None = None) -> flo
     """Rules v7.1: in a full-weight cell a row posted since the v7.1 cutoff pays by its `tier`: full for a
     bound at every n, a quarter for a step, nothing for a search at one fixed n that settles no open item.
     Rules v7.2: a full-weight row keeps its weight only once the Lean file with its headline has an outside
-    kernel replay, which is when the `lean` bonus is set; until then it pays as `unreplayed` (a quarter)."""
+    kernel replay, which is when the `lean` bonus is set; until then it pays as `unreplayed` (a quarter).
+    Rules v7.3: the tier half is for a pinned instance of the fibre case; `validate` says where each tier may be."""
     since = str(v71.get("since") or "")
     if not since or str(row.get("posted") or row.get("date") or "") < since or cell not in (v71.get("cells") or []):
         return 1.0

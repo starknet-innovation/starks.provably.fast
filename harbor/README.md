@@ -27,6 +27,7 @@ experiment has been run; the results here came from agent-assisted research.
 | `lean-t3-goal` | Lean | proves `MCAChallenge.T3Goal N`, the first goal (rate 1/2, gap 1/8, constant 16, smooth domains) | 1 if Comparator accepts the proof and `N` is a closed form |
 | `lean-t3`, `lean-t3-exponent` | Lean | T3 and its exponent milestone, holes `N C` and `c N C` | same |
 | `lean-t1-uniform`, `lean-t1`, `lean-t2` | Lean | the long-run targets, holes `C`, `C B`, `a₂ C B` | same |
+| `lean-fibre-m31`, `lean-fibre-m31-at32`, `lean-fibre-m31-at64`, `lean-interior58`, `lean-interior-three`, `lean-t1-smooth`, `lean-t1-uniform-smooth`, `lean-t2-smooth` | Lean | the lane statements of rules v7.3: the fibre case of Lemma R over M31 and its two instances, the native bound 58 at n = 64, the three-monomial bound, and T1, T1Uniform and T2 on smooth domains | same |
 
 Rules v2 (30 October 2026) re-aimed the environment at upper bounds: the three new families pay 1
 for an exact answer to a question a proof needs (the whole exceptional set of a pair, a challenge

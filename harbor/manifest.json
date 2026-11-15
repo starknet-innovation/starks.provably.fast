@@ -176,6 +176,91 @@
    ],
    "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
    "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-fibre-m31",
+   "kind": "lean",
+   "target": "FibreM31",
+   "level": "lane 1, the named statement",
+   "holes": [
+    "C"
+   ],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-fibre-m31-at32",
+   "kind": "lean",
+   "target": "FibreM31At32",
+   "level": "lane 1, instance",
+   "holes": [],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-fibre-m31-at64",
+   "kind": "lean",
+   "target": "FibreM31At64",
+   "level": "lane 1, instance",
+   "holes": [],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-interior58",
+   "kind": "lean",
+   "target": "Interior58",
+   "level": "lane 2, the named statement",
+   "holes": [],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-interior-three",
+   "kind": "lean",
+   "target": "InteriorThree",
+   "level": "lane 2, the statement after it",
+   "holes": [
+    "K"
+   ],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-t1-uniform-smooth",
+   "kind": "lean",
+   "target": "T1UniformSmooth",
+   "level": "lane 3, milestone",
+   "holes": [
+    "C"
+   ],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-t1-smooth",
+   "kind": "lean",
+   "target": "T1Smooth",
+   "level": "lane 3",
+   "holes": [
+    "C",
+    "B"
+   ],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
+  },
+  {
+   "task": "lean-t2-smooth",
+   "kind": "lean",
+   "target": "T2Smooth",
+   "level": "lane 3",
+   "holes": [
+    "a₂",
+    "C",
+    "B"
+   ],
+   "arklib_commit": "35ddcaa83f683011f944f58904be779495a5709a",
+   "oracle": "none (negative control, must score 0)"
   }
  ]
 }

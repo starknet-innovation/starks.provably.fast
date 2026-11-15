@@ -63,6 +63,38 @@
       {
         "name": "lean-t2",
         "path": "tasks/lean-t2"
+      },
+      {
+        "name": "lean-fibre-m31",
+        "path": "tasks/lean-fibre-m31"
+      },
+      {
+        "name": "lean-fibre-m31-at32",
+        "path": "tasks/lean-fibre-m31-at32"
+      },
+      {
+        "name": "lean-fibre-m31-at64",
+        "path": "tasks/lean-fibre-m31-at64"
+      },
+      {
+        "name": "lean-interior58",
+        "path": "tasks/lean-interior58"
+      },
+      {
+        "name": "lean-interior-three",
+        "path": "tasks/lean-interior-three"
+      },
+      {
+        "name": "lean-t1-uniform-smooth",
+        "path": "tasks/lean-t1-uniform-smooth"
+      },
+      {
+        "name": "lean-t1-smooth",
+        "path": "tasks/lean-t1-smooth"
+      },
+      {
+        "name": "lean-t2-smooth",
+        "path": "tasks/lean-t2-smooth"
       }
     ]
   }

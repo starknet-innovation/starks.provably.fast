@@ -1,0 +1,13 @@
+# Read by Harbor's Docker backend for the separate verifier only; the agent's sandbox never gets it.
+# grade.py blocks the grader user's sockets with iptables, which needs NET_ADMIN. In Docker,
+# no-network shares a sidecar's network namespace, whose transparent proxy listens on loopback, so
+# the rule matters here too. The image is the agent's recipe (../environment, a build cache hit),
+# and /tests is this directory, mounted read-only.
+services:
+  main:
+    build:
+      context: ../environment
+    volumes:
+      - ./:/tests:ro
+    cap_add:
+      - NET_ADMIN
