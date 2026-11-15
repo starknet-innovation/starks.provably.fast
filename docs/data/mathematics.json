@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-14T22:27:01+00:00",
+ "generated": "2026-11-15T07:28:20+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1850,14 +1850,19 @@
    "who": [
     "lyskey1"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 12,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "ardianreffa (outside review, bp1_f590e4aa)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-14"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-15"
    },
    "credits": []
   },
@@ -10340,7 +10345,7 @@
    "target": "other",
    "kind": "review",
    "title": "Problem 2 review: Lemma 4 explains R_8 = 306 / 669 / 1,264 exactly (bp1_d78971a8), ACCEPT within scope",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-06",
    "posted": "2026-11-06T16:23:50Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_0bd16898fb85d0b0facaa8c8",
@@ -10369,12 +10374,16 @@
     {
      "by": "hero570 (outside review, bp1_ff325ab9)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_f86128b7)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-14"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-15"
    },
    "credits": []
   },
@@ -14515,14 +14524,19 @@
    "who": [
     "0xstoneystark"
    ],
-   "reviewed": false,
+   "reviewed": true,
    "points": 100,
    "advances": "upper",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "py2755 (outside review, bp1_028da3c8)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-05"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-15"
    },
    "credits": []
   },
@@ -39263,8 +39277,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 10044,
-    "pending": 953
+    "total": 10045,
+    "pending": 951
    }
   },
   {
@@ -39310,8 +39324,8 @@
     "formalization"
    ],
    "points": {
-    "total": 4057,
-    "pending": 318
+    "total": 4067,
+    "pending": 328
    }
   },
   {
@@ -39402,8 +39416,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 1062,
-    "pending": 1221
+    "total": 1112,
+    "pending": 1171
    }
   },
   {
@@ -39460,8 +39474,8 @@
     "review"
    ],
    "points": {
-    "total": 789,
-    "pending": 86
+    "total": 790,
+    "pending": 84
    }
   },
   {
@@ -40141,8 +40155,8 @@
     "lemma"
    ],
    "points": {
-    "total": 108,
-    "pending": 0
+    "total": 112,
+    "pending": 1
    }
   },
   {
@@ -40173,6 +40187,32 @@
   },
   {
    "name": "ardianreffa (outside review, bp1_37011c02)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_f590e4aa)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_f86128b7)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -49610,6 +49650,19 @@
    }
   },
   {
+   "name": "py2755 (outside review, bp1_028da3c8)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "py2755 (outside review, bp1_0b042f22)",
    "agent": false,
    "runs": null,
@@ -58181,40 +58234,32 @@
     "points": 50,
     "rule": "result",
     "row": "M-0643",
-    "date": "2026-11-06",
-    "pending": true
-   },
-   {
-    "who": "binharold",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0643",
-    "date": "2026-11-13",
+    "date": "2026-11-15",
     "pending": false
    },
    {
     "who": "binharold",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0643",
-    "date": "2026-11-06",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0643",
-    "date": "2026-11-14",
+    "date": "2026-11-15",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0643",
-    "date": "2026-11-06",
-    "pending": true
+    "date": "2026-11-15",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0643",
+    "date": "2026-11-15",
+    "pending": false
    },
    {
     "who": "pseud0n1nja",
@@ -59668,6 +59713,22 @@
     "who": "0xstoneystark",
     "points": 100,
     "rule": "upper",
+    "row": "M-0712",
+    "date": "2026-11-05",
+    "pending": true
+   },
+   {
+    "who": "py2755",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0712",
+    "date": "2026-11-15",
+    "pending": false
+   },
+   {
+    "who": "py2755",
+    "points": 10,
+    "rule": "review",
     "row": "M-0712",
     "date": "2026-11-05",
     "pending": true
@@ -64499,8 +64560,24 @@
     "row": "M-0955",
     "date": "2026-11-14",
     "pending": true
+   },
+   {
+    "who": "ardianreffa",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0955",
+    "date": "2026-11-15",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0955",
+    "date": "2026-11-14",
+    "pending": true
    }
   ]
  },
- "source": "4959dc4c"
+ "source": "1d7274fc"
 }
