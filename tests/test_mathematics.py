@@ -366,6 +366,47 @@ class RulesV7(unittest.TestCase):
         with self.assertRaisesRegex(m.RecordError, "the tier half is for a pinned instance"):
             m.validate(targets, [self.posted("M-0005", "problem-2a-fibre", when=early, tier="half")])
 
+    def test_rules_v74_full_weight_is_for_a_pinned_statement_at_every_n(self):
+        lanes = ["problem-2a-fibre", "problem-3a-upper", "problem-6-smooth-fri"]
+        v7 = {**self.SCORING["v7"], "weights": {**self.SCORING["v7"]["weights"], **{cell: 1 for cell in lanes}},
+              "v7_1": {"since": "2026-11-11T08:00:00Z", "cells": lanes, "tiers": {"full": 1, "half": 0.5, "quarter": 0.25, "logged": 0}},
+              "v7_2": {"since": "2026-11-12T15:00:00Z", "unreplayed": "quarter"},
+              "v7_3": {"since": "2026-11-15T09:30:00Z", "full_cells": lanes, "half_cells": ["problem-2a-fibre"]},
+              "v7_4": {"since": "2026-11-15T21:00:00Z", "moonshot_targets": ["T1UniformSmooth", "T3Goal"], "full_targets": ["FibreM31"],
+                       "quarter_targets": ["Interior58"], "proved_targets": ["FibreM31At32"], "half_cells": lanes, "unreplayed": "quarter"}}
+        scoring = {**self.SCORING, "cells": [*self.SCORING["cells"], "problem-2a-fibre", "problem-6-smooth-fri"], "v7": v7}
+        rules, late, early = {"scoring": scoring}, "2026-11-15T22:00:00Z", "2026-11-15T12:00:00Z"
+        targets = m.load_targets()
+        targets = {**targets, "rules": {**targets["rules"], "scoring": scoring}}
+        posted = self.posted
+        # A tier 1 statement: 50 for a result, one and a half times for Lean, double for the moonshot bonus.
+        moonshot = posted("M-0001", "problem-6-smooth-fri", when=late, tier="full", pinned="T1UniformSmooth", bonus=["lean", "moonshot"])
+        m.validate(targets, [moonshot])
+        self.assertEqual(m.row_points(moonshot, rules)[0], 150)
+        tier2 = posted("M-0002", "problem-2a-fibre", when=late, tier="full", pinned="FibreM31", bonus=["lean"])
+        m.validate(targets, [tier2])
+        self.assertEqual(m.row_points(tier2, rules)[0], 75)
+        # A Lean module in a lane: half once an outside kernel replay sets the Lean bonus, a quarter until then.
+        module = posted("M-0003", "problem-3a-upper", when=late, tier="half")
+        m.validate(targets, [module])
+        self.assertEqual(m.row_points(module, rules)[0], 12)
+        self.assertEqual(m.row_points({**module, "bonus": ["lean"]}, rules)[0], 38)
+        # The instance proved under rules v7.3 keeps its half.
+        instance = posted("M-0004", "problem-2a-fibre", when=early, tier="half", pinned="FibreM31At32")
+        m.validate(targets, [instance])
+        self.assertEqual(m.row_points(instance, rules)[0], 25)
+        for bad, why in [
+                (posted("M-0005", "problem-3a-upper", when=late, tier="full"), "a full-weight row proves a pinned statement at every n"),
+                (posted("M-0006", "problem-3a-upper", when=late, tier="full", pinned="Interior58"), "a full-weight row proves a pinned statement at every n"),
+                (posted("M-0007", "problem-3a-upper", when=late, tier="half", pinned="Interior58"), "pays a quarter at most"),
+                (posted("M-0008", "problem-2a-fibre", when=late, tier="full", pinned="FibreM31", bonus=["moonshot"]), "the moonshot bonus is for"),
+                (posted("M-0009", "problem-6-smooth-fri", when=early, tier="full", pinned="T3Goal", bonus=["moonshot"]), "the moonshot bonus is for"),
+                (posted("M-0010", "problem-2c-general", when=late, tier="half"), "the tier half is for a Lean module"),
+                (posted("M-0011", "problem-2a-fibre", when=late, tier="quarter", pinned="FibreM31At128"), "pinned names a pinned Lean statement")]:
+            with self.assertRaisesRegex(m.RecordError, why):
+                m.validate(targets, [bad])
+        m.validate(targets, [posted("M-0012", "problem-3a-upper", when=late, tier="quarter", pinned="Interior58")])
+
     def test_a_read_review_pays_nothing(self):
         base = {**row("M-0010", "lemma", who="alice", status="accepted"),
                 "reviews": [{"by": "bob (outside review, bp1_1)", "verdict": "read"}, {"by": "carol (outside review, bp1_2)", "verdict": "holds"}]}

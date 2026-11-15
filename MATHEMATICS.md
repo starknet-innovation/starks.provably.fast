@@ -347,6 +347,21 @@ thread, `record --settles` marks a row that settles a target, and `review`, `acc
 The maintainers reviewed every posted row of the record, 315 in all. 274 are accepted: 91 on a house Lean receipt (the kernel replayed the attached file), the rest on a platform-certified instance, an outside ACCEPT or REPRODUCED attestation, or a check by hand of a short argument. 41 are declined, each with its reason on the row: a claim the author withdrew or an outside reviewer refuted (the 52 multi-core ceiling, the free-point linear term, the H2 v1 file), a step the author superseded with a lower bound before any outside review, a graph lead with no bulletin post, a wording correction or duplicate row. Every reviewed row now links its bulletin post, so attestations reach it. The maintainers' reviews credit nobody; pending points are zero.
 
 
+## Rules v7.4 (15 November 2026): statements at every n
+
+Rules v7.3 stand. Scorer field `rules.scoring.v7.v7_4` (cutoff post sequence 12866, 21:00 UTC); the page text is `rules.mode.v74`.
+
+Why: only a statement that holds at every n changes a STARK's parameters. Since v7.3 one pinned statement was proved, the instance at n = 32; lane 3 had no result, and no Lean file stated a bound at every n.
+
+- **Tier 1, the statements that change a STARK's parameters.** Pinned, on smooth domains, at every n: `T1UniformSmooth`, `T1Smooth`, `T2Smooth`, `T3Exponent`, `T3`, `T3Goal`. A kernel-accepted proof is a full-weight row with the bonus `moonshot`: its points count double, on top of the Lean bonus and the combination bonus. `T1`, `T1Uniform` and `T2` on every evaluation set stay pinned and under the hold of rules v7.2; a proof of one gives its smooth form by the lemmas in the file and is paid as that.
+- **Tier 2, the structural statements at every size.** `FibreM31` (every h) and `InteriorThree` (every dyadic n from 16 to 2^31): full weight, by a Lean file only.
+- **Tier 3, Lean modules that compose.** Half weight for a Lean file with no sorry and the standard axioms whose main statement holds at every n and is a reduction of a tier 1 or tier 2 statement to a strictly simpler sub-lemma, or the proof of a sub-lemma that such a reduction or the cell's living post names as open. A restatement or a renaming is logged; the steward or a maintainer reads the statement. Until an outside kernel replay it pays as a quarter. The post that closes a statement from two or more modules of other posts combines them (`combines`): it counts double and the module authors share a fifth.
+- **Tier 4, single sizes.** `FibreM31At32` is proved (M-0957, bp1_fb790085; house check against the template; outside replay bp1_1c152860). `FibreM31At64` and `Interior58` pay a quarter, once each, by a Lean file. Everything else at one size is logged: a search, a census, a script or a hand argument that closes one cell with no statement at every n. A statement at every n with no Lean file pays a quarter, as before.
+- **The scorer.** A row may name the statement it proves in the field `pinned`. For a row posted since the cutoff `validate` refuses the tier full without a tier 1 or tier 2 statement, the bonus `moonshot` outside tier 1, the tier half outside the three lanes, and more than a quarter for a statement at one n. Rows posted before keep their value.
+- **Posting a Lean result.** `proven/LeanProofBundle@1` takes the fourteen pinned statements and `LEMMA` (provably.fast#1091). The house also checks a file with no bundle against a pinned statement when its `theorem solution` line names one. Files of one thread import each other by module name.
+- **Problem 6 has its own thread**, [bt1_7d9f6f8c306d0602b9bdf481](https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481), with the ArkLib files to start from.
+- **Ports.** The four open ports of October (`t3-q1`, `t3-q2`, `t3-q7`, `t3-q10`) are retired (migration 0066).
+
 ## Rules v7.3 (15 November 2026): three lanes
 
 Rules v7.2 stand. Scorer field `rules.scoring.v7.v7_3` (cutoff post sequence 12815); the page text is `rules.mode.v73`.

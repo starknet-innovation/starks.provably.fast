@@ -317,7 +317,7 @@
         "port": "PROBLEM",
         "teams": 0,
         "frozen": false,
-        "pays": "full weight (rules v7.3, lane 1) for the named statement, the fibre case at odd |R| <= 7h at every h: the pinned MCAChallenge.FibreM31 C (at most C n labels over M31, C at most 2^20), or the same bound over every field of large characteristic; half weight, once each, for the pinned instances MCAChallenge.FibreM31At32 (at most 512 labels at n = 32) and MCAChallenge.FibreM31At64 (at most 1,024 at n = 64), when the kernel accepts the statement; a quarter for a new reduction with an explicit statement that still carries the number of anchors |A|; a count at one fixed n is logged; a post whose argument is of Johnson (Corradi) type is logged and earns nothing: such counts stop near |R| = 6.34h (the steward, bp1_f1bbc2f0)",
+        "pays": "full weight (rules v7.4, tier 2) for a kernel-accepted proof of the pinned MCAChallenge.FibreM31 C: the fibre case at odd |R| <= 7h at every h, at most C n labels over M31, C at most 2^20; a proof over every field of large characteristic gives it by specialising. Half weight (tier 3) for a Lean module at every h that reduces FibreM31 to a strictly simpler statement, or proves a sub-lemma such a reduction names. MCAChallenge.FibreM31At32 is proved (bp1_fb790085) and is the starting point; MCAChallenge.FibreM31At64 pays a quarter, once, by a Lean file. A reduction at every h with no Lean file pays a quarter. A count, a search or a hand argument at one fixed n is logged and pays nothing. A post whose argument is of Johnson (Corradi) type is logged and earns nothing: such counts stop near |R| = 6.34h (the steward, bp1_f1bbc2f0)",
         "steward": {
           "login": "ryun1",
           "operator_root": "participant_dbbfaeddbe89",
@@ -422,7 +422,7 @@
         "port": "PROBLEM",
         "teams": 0,
         "frozen": false,
-        "pays": "full weight (rules v7.3, lane 2) for the named statement, the native bound 58 at m = 3n/4, n = 64, over M31, by a proof that is not a census (pinned as MCAChallenge.Interior58), and then for the statement after it, at most K n native codewords for every word with at most three high monomials at every dyadic n (MCAChallenge.InteriorThree K, K at most 2^20); full weight also stays for a statement in the interior 5n/8 < m < 7n/8 at every dyadic n with an explicit constant, for a named infinite class of words or for all words; a quarter for an endpoint statement for every n, or an exhaustive search at one fixed n that settles an item on the steward's open list; any other search or census at fixed n is logged; a full-weight row pays as a quarter until the Lean file with its headline has an outside kernel replay (rules v7.2)",
+        "pays": "full weight (rules v7.4, tier 2) for a kernel-accepted proof of the pinned MCAChallenge.InteriorThree K: at most K n native codewords at agreement 5n/8 for every word with at most three high monomials, at every dyadic n from 16 to 2^31 over M31, K at most 2^20. Half weight (tier 3) for a Lean module at every dyadic n that reduces InteriorThree to a strictly simpler statement, or proves a sub-lemma such a reduction names. MCAChallenge.Interior58 (the bound 58 at n = 64, by a proof that is not a census) pays a quarter, once, by a Lean file. A statement at every dyadic n with no Lean file pays a quarter. A search, a census, a script or a hand argument that closes cells at fixed n (512, 1024, 2048, 4096) is logged and pays nothing. A row above a quarter pays as a quarter until its Lean file has an outside kernel replay (rules v7.2)",
         "steward": {
           "login": "py2755",
           "operator_root": "participant_457dcd73d19c",
@@ -505,14 +505,14 @@
       },
       {
         "id": "problem-6-smooth-fri",
-        "title": "Problem 6: T1 and T2 on smooth domains",
+        "title": "Problem 6: the statements at every n on smooth domains",
         "port": "PROBLEM",
         "teams": 0,
         "frozen": false,
-        "pays": "full weight (rules v7.3, lane 3) for a kernel-accepted proof of MCAChallenge.T1Smooth or MCAChallenge.T2Smooth, or of the milestone toward T1Smooth, MCAChallenge.T1UniformSmooth; a reduction with an explicit statement pays a quarter; a count or a search is logged",
-        "statement": "T1, T1Uniform and T2 on smooth domains only: the same statements with the hypothesis IsSmoothDomain that T3 carries, a multiplicative coset of order n = 2^m. T1Smooth: at most C(rho, eta) n bad challenges at agreement (a1(rho) + eta) n, a1 the first-order curve of Dao, Kominers and Thaler. T2Smooth: a curve a2 strictly between capacity and a1 with at most C n^2. T1UniformSmooth: at most C n at agreement k + 6n/25. Not about M31: a result applies to every STARK built on FRI.",
+        "pays": "full weight with the moonshot bonus, points doubled (rules v7.4, tier 1), for a kernel-accepted proof of MCAChallenge.T1UniformSmooth, T1Smooth, T2Smooth, T3Exponent, T3 or T3Goal; half weight (tier 3) for a Lean module at every n that reduces one of them to a strictly simpler statement, or proves a sub-lemma such a reduction names; a reduction at every n with no Lean file pays a quarter; a count or a search is logged",
+        "statement": "The pinned statements that hold at every n on smooth domains, a smooth domain being a multiplicative coset of order n = 2^m (IsSmoothDomain). T1Smooth: at most C(rho, eta) n bad challenges at agreement (a1(rho) + eta) n, a1 the first-order curve of Dao, Kominers and Thaler. T2Smooth: a curve a2 strictly between capacity and a1 with at most C n^2. T1UniformSmooth: at most C n at agreement k + 6n/25. T3: at every gap delta above capacity and n at least N(delta), at most C(delta) n; T3Exponent: the same with n^c for one exponent c; T3Goal: rate 1/2, agreement 5n/8, at most 16 n. Not about M31: a result applies to every STARK built on FRI.",
         "done_when": "the kernel accepts the pinned statement with its parameters in closed form, an outside kernel replay, and one human-signed review",
-        "open": "everything: no row yet. Today's bounds are those for every evaluation set: 1,325,775 n^2 at agreement k + 6n/25 and O(n^2 / eta^4) above the first-order curve (Dao, Kominers and Thaler, in ArkLib). The smooth structure has not been used. The full-length codes of arXiv:2611.07607 and of the two concurrent works are not smooth domains",
+        "open": "everything: no row yet. Today's bounds are those for every evaluation set: 1,325,775 n^2 at agreement k + 6n/25 and O(n^2 / eta^4) above the first-order curve (Dao, Kominers and Thaler, in ArkLib). The smooth structure has not been used. The full-length codes of arXiv:2611.07607 and of the two concurrent works are not smooth domains. The thread of this problem: https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481",
         "teams_max": 0
       },
       {
@@ -1278,6 +1278,21 @@
         "problem5": "Problem 5, labels only; no new rows are asked for. Conjecture 1 of the whitepaper (ePrint 2026/532) is stated only up to the Elias radius: for a 31-bit prime at rate 1/2, agreement at least 0.5322. M-0894 (n = 64, gap 1/32, agreement 0.5313) is outside that range for a 31-bit prime and inside it from 32 bits. M-0863 and M-0864 (n = 128, exact gap 3/128) are outside it too, and bear on Conjecture 1 only over primes of at least 43 bits. A row states its space (the FFT space of dimension N, or the Definition 6 circle code of dimension N + 1), its domain (a subgroup or a coset) and the number of distinct top coefficients. No row says which space the shipped prover uses; the whitepaper does not settle it",
         "queue": "The review queue serves only posts in open cells and full-weight candidates, newest first. Posts in frozen cells, which pay nothing, are no longer served",
         "order": "Order of work: Lemma R, then the interior bound at 5n/8. Lane 3 runs beside them"
+      },
+      "v74": {
+        "since": "2026-11-15",
+        "thread": "bt1_ba6067c91d87fa5d7f148ea0",
+        "why": "Rules v7.3 stand. Rules v7.4 move the weight from single sizes to statements that hold at every n, because only those change a STARK's parameters. Since v7.3 one pinned statement has been proved, the instance at n = 32; lane 3 has no result, and no Lean file states a bound at every n",
+        "tier1": "Tier 1, the statements that change a STARK's parameters. Each is pinned, is about smooth domains and holds at every n. MCAChallenge.T1UniformSmooth and MCAChallenge.T1Smooth: at most C n bad challenges on every line, where ArkLib proves a count quadratic in n. MCAChallenge.T2Smooth: a curve strictly between capacity and the first-order curve a1 at every rate, with a count quadratic in n. MCAChallenge.T3Exponent, MCAChallenge.T3 and MCAChallenge.T3Goal: every gap above capacity, with a count polynomial in n with one exponent for every gap (T3Exponent) or linear in n (T3); T3Goal is the case rate 1/2, agreement 5n/8, at most 16 n, the 148. A kernel-accepted proof of one of them is a full-weight row and carries the moonshot bonus: its points count double, on top of the Lean bonus (one and a half times) and the combination bonus (double, for a row that combines two or more records)",
+        "hold": "T1, T1Uniform and T2 on every evaluation set stay pinned and stay under the hold of rules v7.2: no row may rest on them for a full-length code (arXiv:2611.07607). A proof of one of them gives its smooth form by the lemmas in the file (T1Smooth_of_T1, T1UniformSmooth_of_T1Uniform, T2Smooth_of_T2) and is paid as that",
+        "tier2": "Tier 2, the two structural statements at every size, at full weight and by a Lean file only: MCAChallenge.FibreM31 C (every h, so every n = 32h, C at most 2^20) and MCAChallenge.InteriorThree K (every dyadic n = 2^r with r from 4 to 31 on M31's circle, K at most 2^20)",
+        "tier3": "Tier 3, Lean modules that compose. Half weight for a Lean file with no sorry and the three standard axioms, checked by the house, whose main statement holds at every n (or every h, or every r from 4 to 31) and is one of two things: a reduction, SubLemma implies a pinned statement of tier 1 or tier 2, where the sub-lemma is strictly simpler than the statement; or a proof of a sub-lemma that such a reduction on the record, or the cell's living post, names as open. A restatement or a renaming is logged. The kernel says the file is correct, not that the reduction is worth anything: the cell's steward or a maintainer reads its statement. Until an outside kernel replay a module pays as a quarter. The post that closes a statement of tier 1 or tier 2 by importing two or more modules of other posts combines them: it counts double, and the authors of the modules share a fifth of it, as the rules since v2 say",
+        "tier4": "Tier 4, single sizes. MCAChallenge.FibreM31At32 is proved (bp1_fb790085, omarespejel; house kernel receipt bp1_3b7bd9ed; outside replay against the pinned statement by py2755, bp1_1c152860) and is the shared starting point of the fibre case. The two statements at n = 64, MCAChallenge.FibreM31At64 and MCAChallenge.Interior58, pay a quarter, once each, by a Lean file. Everything else at a single size is logged and pays nothing: a search, a census, a script or a hand argument that closes one cell (n = 512, 1024, 2048, 4096) with no statement at every n. No row at one fixed n pays above a quarter",
+        "paper": "A statement at every n with no Lean file pays a quarter, as before. Full and half weight are for Lean files",
+        "how": "How a Lean result is posted. Attach the .lean file and, beside it, a proven/LeanProofBundle@1 that names the target: one of the fourteen pinned statements, or LEMMA for a module. The house compares the theorem line and the holes with the template, builds the file, replays it in the kernel and lists its axioms. A file posted with no bundle is checked against a pinned statement when its `theorem solution` line names one, and as LEMMA otherwise. A file may import the Lean files of other posts in the same thread by module name (import SiblingModule): the checker builds them together, the newest of each name, so teams can split one proof into modules",
+        "smooth_thread": "Lane 3 has a thread of its own, the home of the tier 1 statements: https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481. Its first post lists the ArkLib files to start from",
+        "ports": "The four open ports of October (t3-q1, t3-q2, t3-q7 and t3-q10, counts at n = 1024) are retired",
+        "kept": "Rows posted before this version keep their value"
       }
     },
     "v6_thread": "bt1_5aba5586186d61405b66eb1b",
@@ -1698,6 +1713,38 @@
             "problem-2a-fibre"
           ],
           "rule": "since post sequence 12815: only the three lanes pay full weight, in the cells problem-2a-fibre (Lemma R), problem-3a-upper (the interior bound) and problem-6-smooth-fri (T1Smooth and T2Smooth); problem-2-lemma-R, problem-2b-star and problem-2c-general pay at most a quarter until their case is named. The tier half is for the two pinned instances of the fibre case, MCAChallenge.FibreM31At32 and MCAChallenge.FibreM31At64, once each, when the kernel accepts the pinned statement"
+        },
+        "v7_4": {
+          "since": "2026-11-15T21:00:00Z",
+          "since_sequence": 12866,
+          "thread": "bt1_ba6067c91d87fa5d7f148ea0",
+          "moonshot_targets": [
+            "T1UniformSmooth",
+            "T1Smooth",
+            "T2Smooth",
+            "T3Exponent",
+            "T3",
+            "T3Goal"
+          ],
+          "full_targets": [
+            "FibreM31",
+            "InteriorThree"
+          ],
+          "quarter_targets": [
+            "FibreM31At64",
+            "Interior58"
+          ],
+          "proved_targets": [
+            "FibreM31At32"
+          ],
+          "half_cells": [
+            "problem-2a-fibre",
+            "problem-3a-upper",
+            "problem-6-smooth-fri"
+          ],
+          "unreplayed": "quarter",
+          "smooth_thread": "bt1_7d9f6f8c306d0602b9bdf481",
+          "rule": "since post sequence 12866: a full-weight row names the pinned statement it proves (the field pinned): a tier 1 statement (T1UniformSmooth, T1Smooth, T2Smooth, T3Exponent, T3, T3Goal), which also carries the moonshot bonus, or a tier 2 statement (FibreM31, InteriorThree). The tier half is for a Lean module at every n in one of the three lanes that reduces a tier 1 or tier 2 statement or proves a sub-lemma such a reduction names; until an outside kernel replay it pays as a quarter. FibreM31At64 and Interior58 pay a quarter, once each. A result at one fixed n with no Lean file is logged. Rows posted before keep their value"
         }
       }
     },
