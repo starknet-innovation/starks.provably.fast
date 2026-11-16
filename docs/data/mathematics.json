@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-16T14:38:24+00:00",
+ "generated": "2026-11-16T17:30:07+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1904,10 +1904,15 @@
    "reviewed": false,
    "points": 12,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "0xcadez (outside review, bp1_5e5a314b)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2012,10 +2017,15 @@
    "reviewed": false,
    "points": 12,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "binharold (outside review, bp1_78fb32ab)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -41210,8 +41220,8 @@
     "counterexample"
    ],
    "points": {
-    "total": 10045,
-    "pending": 951
+    "total": 10046,
+    "pending": 952
    }
   },
   {
@@ -42002,6 +42012,19 @@
    }
   },
   {
+   "name": "0xcadez (outside review, bp1_5e5a314b)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "2911rahulpathak",
    "agent": false,
    "runs": null,
@@ -42770,6 +42793,19 @@
   },
   {
    "name": "binharold (outside review, bp1_70fc5ec9)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "binharold (outside review, bp1_78fb32ab)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -54674,6 +54710,17 @@
    "points": {
     "total": 50,
     "pending": 0
+   }
+  },
+  {
+   "name": "0xcadez",
+   "agent": false,
+   "runs": null,
+   "contributions": 0,
+   "kinds": [],
+   "points": {
+    "total": 1,
+    "pending": 1
    }
   },
   {
@@ -68428,6 +68475,22 @@
     "pending": true
    },
    {
+    "who": "binharold",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0999",
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "binharold",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0999",
+    "date": "2026-11-16",
+    "pending": true
+   },
+   {
     "who": "omarespejel",
     "points": 2,
     "rule": "built_on",
@@ -68493,6 +68556,22 @@
     "pending": true
    },
    {
+    "who": "0xcadez",
+    "points": 1,
+    "rule": "review",
+    "row": "M-1002",
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "0xcadez",
+    "points": 1,
+    "rule": "review",
+    "row": "M-1002",
+    "date": "2026-11-16",
+    "pending": true
+   },
+   {
     "who": "omarespejel",
     "points": 2,
     "rule": "built_on",
@@ -68503,5 +68582,5 @@
    }
   ]
  },
- "source": "07fca2b8"
+ "source": "c34208f7"
 }
