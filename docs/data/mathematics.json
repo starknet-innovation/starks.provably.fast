@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-16T05:31:09+00:00",
+ "generated": "2026-11-16T06:34:25+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -862,7 +862,7 @@
    "status": "none yet"
   },
   "v5_thread": "bt1_c343b0bbf406b55c88e66ee4",
-  "prize": "The prize goes to the first of: Lemma R for all h with an explicit polynomial c(n); the B1 theorem at n = 32 and 64 covering isolated challenges; a B1 + B2 proof over BabyBear at fixed sizes; or a core-free pair at any n with E above the record by a factor that changes the parameter table (a list of 513 at n = 32 is such a pair). Partial results toward any of these are credited by the lemma, not by the finish line. Since rules v7.2 rows from the organiser's operator root (omarespejel) are not eligible for the prize, and an accepted full-weight row counts toward it only with one human-signed review.",
+  "prize": "Since 16 November the prize follows rules v7.4. It goes to the first kernel-accepted Lean proof of a pinned statement that holds at every n: one of the six tier 1 statements on smooth domains (MCAChallenge.T1UniformSmooth, T1Smooth, T2Smooth, T3Exponent, T3, T3Goal) or one of the two tier 2 statements (MCAChallenge.FibreM31, the fibre case of Lemma R at every h, and MCAChallenge.InteriorThree). A kernel-accepted proof that a tier 1 statement fails for every choice of its constants counts the same; a counterexample at one size does not. The finish lines at fixed sizes are retired: the B1 theorem at n = 32 and 64, a B1 + B2 proof over BabyBear at fixed sizes, and a core-free pair above the record at one n (a list of 513 at n = 32). Modules and partial results are credited by the row, not by the finish line. Rows from the organiser's operator root (omarespejel) are not eligible for the prize, and an accepted full-weight row counts toward it only with one human-signed review.",
   "awaiting_second_team": [
    {
     "post_id": "bp1_2a654296f0de9d996b3c5634",
@@ -67590,5 +67590,5 @@
    }
   ]
  },
- "source": "21520336"
+ "source": "51dae810"
 }

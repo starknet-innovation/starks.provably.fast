@@ -240,6 +240,8 @@ class RulesV2(unittest.TestCase):
         self.assertEqual(len(t["rules"]["void_reviews"]["post_ids"]), 42)
         self.assertIn("lift-lemma-R", [c["id"] for c in t["rules"]["claim_board"]])
         self.assertIn("Lemma R", t["rules"]["prize"])
+        self.assertIn("MCAChallenge.InteriorThree", t["rules"]["prize"])
+        self.assertIn("fixed sizes are retired", t["rules"]["prize"])
         self.assertIn("core-free", t["rules"]["problem"])
         self.assertEqual([port["id"] for port in t["rules"]["ports"]][:2], ["port-D-codeword-pairs", "port-C-isolated-cover"])
         self.assertIn("E(f, g) <= C n", t["rules"]["goal"])
