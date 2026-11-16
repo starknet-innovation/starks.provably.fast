@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-16T17:30:07+00:00",
+ "generated": "2026-11-16T20:32:26+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -2072,7 +2072,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module toward T2Smooth: order-2 certificates at every rate 0 < rho <= 1/80,000 along the curve (97/100) sqrt(rho/2), below the first-order curve, and the order-2 stage hypothesis over the base field",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-16",
    "posted": "2026-11-16T00:37:41Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_2a5f2068f11259f8141b8e1a",
@@ -2101,11 +2101,15 @@
     {
      "by": "hero570 (outside review, bp1_26ff550a)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_57681fb5)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2152,7 +2156,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module toward T1UniformSmooth: a challenge outside the base field never fails, T3 implies the stage hypothesis of M-0980, and T1UniformSmooth is equivalent to a stage bound over the base field for the certificate's own differential polynomial",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-16",
    "posted": "2026-11-16T00:13:55Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_1ff8db07495b53159221752e",
@@ -2181,11 +2185,15 @@
     {
      "by": "hero570 (outside review, bp1_0d7eb1dd)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_fac34999)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2388,7 +2396,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-2a-fibre: A Lean module toward FibreM31: the two coordinates of a coupled pair determine each other when 4h + 1 <= f0 + s, at most 14 partners per marginal when s >= 3h, so FibreM31 follows from bounds on three strata of the singleton count s",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T23:13:23Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_6b2a1f416baf46c851551e5e",
@@ -2413,11 +2421,15 @@
     {
      "by": "ardianreffa (outside review, bp1_95a4d735)",
      "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_a1fb03c3)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2427,7 +2439,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-2a-fibre: A Lean module toward FibreM31: the labels are bounded by the number of coupled pairs, a Johnson bound closes agreement 23h and more (at most 14 pairs) and g close to a codeword (at most 1), so FibreM31 follows from a bound on pairs with agreement in [20h - 1, 23h - 1]",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T22:50:19Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_b35f4c8c54f69730a8bfef74",
@@ -2452,11 +2464,15 @@
     {
      "by": "ardianreffa (outside review, bp1_76db7b74)",
      "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_50f4a647)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2466,7 +2482,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-2a-fibre: A Lean module toward FibreM31: the statement is empty unless h = 2^t with t <= 27, bounds at h = 1 and h = 2 over every field, and FibreM31 C is equivalent to two statements on coupled polynomial pairs for 2 <= t <= 27",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T21:25:44Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_09db406d2b26bfbf982607c9",
@@ -2491,11 +2507,15 @@
     {
      "by": "ardianreffa (outside review, bp1_7e41c16a)",
      "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_394c6a7a)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2505,7 +2525,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean proof of Theorem CW* (M-0964 and M-0965, over M31 for 5 <= r <= 31): no member in a boundary cell with k >= 1 when inversion on mu_e is a power of Frobenius, with no condition on h and k",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T22:53:06Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_29f0d0f7be00f71781427472",
@@ -2530,11 +2550,15 @@
     {
      "by": "hero570 (outside review, bp1_fc037076)",
      "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_6c0d9c55)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2665,24 +2689,30 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "quarter",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 19,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_e010d700)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_5cfe7f1c)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2702,24 +2732,30 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_65d8fdeb)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_d4737132)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2739,24 +2775,30 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_ccd8d18f)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_bc18b4d8)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2776,24 +2818,30 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_fd1e080c)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_1eab9a28)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2813,24 +2861,30 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_91b16298)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_5c1e93c1)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2850,24 +2904,30 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_3aeace8c)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_9ce73bf6)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2889,20 +2949,27 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "quarter",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 19,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "blacklight-1 (outside review, bp1_bc9fa797)",
+     "verdict": "holds"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-15"
+    "state": "reviewed",
+    "label": "reviewed: holds, awaiting a decision",
+    "since": "2026-11-16"
    },
    "credits": []
   },
@@ -2940,11 +3007,15 @@
     {
      "by": "hero570 (outside review, bp1_6e13accf)",
      "verdict": "read"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_3aa7cdda)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, read, awaiting a decision",
+    "label": "reviewed: holds, partial, read, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -3090,7 +3161,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 19: Lemma Q'_l, a divisibility lemma for primes l | p - 1 at which -3 is not an l-th power",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T17:54:49Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_0680f3a0266350831ff64ddc",
@@ -3119,14 +3190,20 @@
     {
      "by": "hero570 (outside review, bp1_a87f830d)",
      "verdict": "read"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_40116c56)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, read, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
-   "credits": []
+   "credits": [
+    "omarespejel"
+   ]
   },
   {
    "id": "M-0969",
@@ -3162,11 +3239,15 @@
     {
      "by": "hero570 (outside review, bp1_cb686414)",
      "verdict": "read"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_1b573c6b)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, read, awaiting a decision",
+    "label": "reviewed: holds, partial, read, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -3205,11 +3286,15 @@
     {
      "by": "hero570 (outside review, bp1_86ea5e7e)",
      "verdict": "read"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_4936a80e)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, read, awaiting a decision",
+    "label": "reviewed: holds, partial, read, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -3253,7 +3338,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: Result 15: an orbit-size exclusion inside the M31 orbit reduction closes five more boundary cells at n = 4096",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T17:54:22Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_f1098e2976f6669b41d03930",
@@ -3282,14 +3367,20 @@
     {
      "by": "hero570 (outside review, bp1_3742ce39)",
      "verdict": "read"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_b669fd75)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, read, awaiting a decision",
+    "state": "accepted",
+    "label": "accepted",
     "since": "2026-11-16"
    },
-   "credits": []
+   "credits": [
+    "omarespejel"
+   ]
   },
   {
    "id": "M-0965",
@@ -41298,8 +41389,8 @@
     "review"
    ],
    "points": {
-    "total": 1847,
-    "pending": 616
+    "total": 2074,
+    "pending": 526
    }
   },
   {
@@ -41328,8 +41419,8 @@
     "idea"
    ],
    "points": {
-    "total": 716,
-    "pending": 308
+    "total": 728,
+    "pending": 296
    }
   },
   {
@@ -41431,8 +41522,8 @@
     "review"
    ],
    "points": {
-    "total": 826,
-    "pending": 109
+    "total": 832,
+    "pending": 105
    }
   },
   {
@@ -42124,8 +42215,8 @@
     "lemma"
    ],
    "points": {
-    "total": 138,
-    "pending": 16
+    "total": 140,
+    "pending": 0
    }
   },
   {
@@ -43508,6 +43599,240 @@
   },
   {
    "name": "binharold and py2755 (outside operators): the pinned ArkLib theorem kernel-checked and reproduced (bp1_c299378a, two ACCEPT attestations)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_1b573c6b)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_1eab9a28)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_394c6a7a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_3aa7cdda)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_40116c56)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_4936a80e)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_50f4a647)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_57681fb5)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_5c1e93c1)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_5cfe7f1c)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_6c0d9c55)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_9ce73bf6)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_a1fb03c3)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_b669fd75)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_bc18b4d8)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_bc9fa797)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_d4737132)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_fac34999)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -54721,6 +55046,17 @@
    "points": {
     "total": 1,
     "pending": 1
+   }
+  },
+  {
+   "name": "blacklight-1",
+   "agent": false,
+   "runs": null,
+   "contributions": 0,
+   "kinds": [],
+   "points": {
+    "total": 35,
+    "pending": 12
    }
   },
   {
@@ -67694,22 +68030,6 @@
    },
    {
     "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0968",
-    "date": "2026-11-16",
-    "pending": false
-   },
-   {
-    "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0968",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
     "points": 2,
     "rule": "built_on",
     "row": "M-0968",
@@ -67721,22 +68041,6 @@
     "who": "rukafe0x",
     "points": 12,
     "rule": "result",
-    "row": "M-0969",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0969",
-    "date": "2026-11-16",
-    "pending": false
-   },
-   {
-    "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
     "row": "M-0969",
     "date": "2026-11-15",
     "pending": true
@@ -67755,15 +68059,7 @@
     "points": 12,
     "rule": "result",
     "row": "M-0970",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0970",
-    "date": "2026-11-15",
+    "date": "2026-11-16",
     "pending": false
    },
    {
@@ -67771,8 +68067,16 @@
     "points": 1,
     "rule": "review",
     "row": "M-0970",
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0970",
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -67780,8 +68084,8 @@
     "rule": "built_on",
     "row": "M-0970",
     "of": "M-0934",
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -67844,22 +68148,6 @@
    },
    {
     "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0975",
-    "date": "2026-11-15",
-    "pending": false
-   },
-   {
-    "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0975",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
     "points": 2,
     "rule": "built_on",
     "row": "M-0975",
@@ -67869,153 +68157,262 @@
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 19,
     "rule": "result",
     "row": "M-0976",
+    "lean": true,
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0976",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0976",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0977",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0977",
+    "lean": true,
     "date": "2026-11-16",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0977",
+    "lean": true,
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0977",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0977",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0978",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0978",
+    "lean": true,
     "date": "2026-11-16",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0978",
+    "lean": true,
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0978",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0978",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0979",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0979",
+    "lean": true,
     "date": "2026-11-16",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0979",
+    "lean": true,
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0979",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0979",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0980",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0980",
+    "lean": true,
     "date": "2026-11-16",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0980",
+    "lean": true,
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0980",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0980",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0981",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0981",
+    "lean": true,
     "date": "2026-11-16",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 2,
     "rule": "review",
     "row": "M-0981",
+    "lean": true,
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0981",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0981",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 19,
     "rule": "result",
     "row": "M-0982",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0982",
-    "date": "2026-11-16",
-    "pending": false
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0982",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
@@ -68097,15 +68494,6 @@
     "rule": "result",
     "row": "M-0986",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 4,
-    "rule": "review",
-    "row": "M-0986",
-    "lean": true,
     "date": "2026-11-16",
     "pending": false
    },
@@ -68115,22 +68503,22 @@
     "rule": "review",
     "row": "M-0986",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0986",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "omarespejel",
     "points": 38,
     "rule": "result",
-    "row": "M-0987",
-    "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "ardianreffa",
-    "points": 4,
-    "rule": "review",
     "row": "M-0987",
     "lean": true,
     "date": "2026-11-16",
@@ -68142,22 +68530,22 @@
     "rule": "review",
     "row": "M-0987",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0987",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "omarespejel",
     "points": 38,
     "rule": "result",
-    "row": "M-0988",
-    "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "ardianreffa",
-    "points": 4,
-    "rule": "review",
     "row": "M-0988",
     "lean": true,
     "date": "2026-11-16",
@@ -68169,22 +68557,22 @@
     "rule": "review",
     "row": "M-0988",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0988",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "omarespejel",
     "points": 38,
     "rule": "result",
-    "row": "M-0989",
-    "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "ardianreffa",
-    "points": 4,
-    "rule": "review",
     "row": "M-0989",
     "lean": true,
     "date": "2026-11-16",
@@ -68196,8 +68584,17 @@
     "rule": "review",
     "row": "M-0989",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 4,
+    "rule": "review",
+    "row": "M-0989",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -68287,29 +68684,11 @@
     "row": "M-0993",
     "lean": true,
     "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "ardianreffa",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0993",
-    "lean": true,
-    "date": "2026-11-16",
     "pending": false
    },
    {
     "who": "ardianreffa",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0993",
-    "lean": true,
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0993",
     "lean": true,
@@ -68318,12 +68697,21 @@
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0993",
     "lean": true,
     "date": "2026-11-16",
-    "pending": true
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0993",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68356,29 +68744,11 @@
     "row": "M-0995",
     "lean": true,
     "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "ardianreffa",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0995",
-    "lean": true,
-    "date": "2026-11-16",
     "pending": false
    },
    {
     "who": "ardianreffa",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0995",
-    "lean": true,
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0995",
     "lean": true,
@@ -68387,12 +68757,21 @@
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0995",
     "lean": true,
     "date": "2026-11-16",
-    "pending": true
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0995",
+    "lean": true,
+    "date": "2026-11-16",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68582,5 +68961,5 @@
    }
   ]
  },
- "source": "c34208f7"
+ "source": "65e9b664"
 }
