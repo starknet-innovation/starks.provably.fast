@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-16T02:34:43+00:00",
+ "generated": "2026-11-16T05:31:09+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1902,10 +1902,15 @@
    "reviewed": false,
    "points": 12,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "hero570 (outside review, bp1_2a83650f)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2068,11 +2073,15 @@
     {
      "by": "omarespejel (outside review, bp1_aea3184c)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_ab706ed1)",
+     "verdict": "partial"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "label": "reviewed: holds, partial, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2101,11 +2110,16 @@
    "reviewed": false,
    "points": 12,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "hero570 (outside review, bp1_fb3b6bb3)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-15"
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
+    "since": "2026-11-16"
    },
    "credits": []
   },
@@ -2133,11 +2147,16 @@
    "reviewed": false,
    "points": 12,
    "advances": "result",
-   "reviews": [],
+   "reviews": [
+    {
+     "by": "hero570 (outside review, bp1_baad6473)",
+     "verdict": "partial"
+    }
+   ],
    "queue": {
-    "state": "posted",
-    "label": "posted, awaiting a reviewer",
-    "since": "2026-11-15"
+    "state": "reviewed",
+    "label": "reviewed: partial, awaiting a decision",
+    "since": "2026-11-16"
    },
    "credits": []
   },
@@ -2668,12 +2687,16 @@
     {
      "by": "omarespejel (outside review, bp1_c22cde4d)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_6e13accf)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "label": "reviewed: holds, read, awaiting a decision",
+    "since": "2026-11-16"
    },
    "credits": []
   },
@@ -2843,12 +2866,16 @@
     {
      "by": "omarespejel (outside review, bp1_d2465659)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_a87f830d)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "label": "reviewed: holds, read, awaiting a decision",
+    "since": "2026-11-16"
    },
    "credits": []
   },
@@ -2882,11 +2909,15 @@
     {
      "by": "omarespejel (outside review, bp1_e15d91db)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_cb686414)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "label": "reviewed: holds, read, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2921,11 +2952,15 @@
     {
      "by": "omarespejel (outside review, bp1_3da6d68a)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_86ea5e7e)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "label": "reviewed: holds, read, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -2994,11 +3029,15 @@
     {
      "by": "omarespejel (outside review, bp1_f8d57d39)",
      "verdict": "holds"
+    },
+    {
+     "by": "hero570 (outside review, bp1_3742ce39)",
+     "verdict": "read"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
+    "label": "reviewed: holds, read, awaiting a decision",
     "since": "2026-11-16"
    },
    "credits": []
@@ -41004,8 +41043,8 @@
     "review"
    ],
    "points": {
-    "total": 1842,
-    "pending": 437
+    "total": 1841,
+    "pending": 436
    }
   },
   {
@@ -41137,8 +41176,8 @@
     "review"
    ],
    "points": {
-    "total": 802,
-    "pending": 87
+    "total": 805,
+    "pending": 90
    }
   },
   {
@@ -48309,6 +48348,32 @@
    }
   },
   {
+   "name": "hero570 (outside review, bp1_2a83650f)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_3742ce39)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "hero570 (outside review, bp1_3808cc17)",
    "agent": false,
    "runs": null,
@@ -48517,6 +48582,19 @@
    }
   },
   {
+   "name": "hero570 (outside review, bp1_6e13accf)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "hero570 (outside review, bp1_748559ed)",
    "agent": false,
    "runs": null,
@@ -48583,6 +48661,19 @@
   },
   {
    "name": "hero570 (outside review, bp1_80c88c98)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_86ea5e7e)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -48699,6 +48790,19 @@
    }
   },
   {
+   "name": "hero570 (outside review, bp1_a87f830d)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "hero570 (outside review, bp1_a93a1be2)",
    "agent": false,
    "runs": null,
@@ -48713,6 +48817,19 @@
   },
   {
    "name": "hero570 (outside review, bp1_a9eebcda)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_ab706ed1)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -48803,6 +48920,19 @@
    }
   },
   {
+   "name": "hero570 (outside review, bp1_baad6473)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "hero570 (outside review, bp1_be767d42)",
    "agent": false,
    "runs": null,
@@ -48817,6 +48947,19 @@
   },
   {
    "name": "hero570 (outside review, bp1_c53a874a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_cb686414)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -48999,6 +49142,19 @@
   },
   {
    "name": "hero570 (outside review, bp1_f9d1fa42)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "hero570 (outside review, bp1_fb3b6bb3)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -67313,22 +67469,6 @@
    },
    {
     "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0990",
-    "date": "2026-11-16",
-    "pending": false
-   },
-   {
-    "who": "omarespejel",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0990",
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "omarespejel",
     "points": 2,
     "rule": "built_on",
     "row": "M-0990",
@@ -67385,9 +67525,41 @@
     "pending": true
    },
    {
+    "who": "hero570",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0996",
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0996",
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
     "who": "omarespejel",
     "points": 12,
     "rule": "result",
+    "row": "M-0997",
+    "date": "2026-11-15",
+    "pending": true
+   },
+   {
+    "who": "hero570",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0997",
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 1,
+    "rule": "review",
     "row": "M-0997",
     "date": "2026-11-15",
     "pending": true
@@ -67399,8 +67571,24 @@
     "row": "M-0998",
     "date": "2026-11-16",
     "pending": true
+   },
+   {
+    "who": "hero570",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0998",
+    "date": "2026-11-16",
+    "pending": false
+   },
+   {
+    "who": "hero570",
+    "points": 1,
+    "rule": "review",
+    "row": "M-0998",
+    "date": "2026-11-16",
+    "pending": true
    }
   ]
  },
- "source": "14435102"
+ "source": "21520336"
 }
