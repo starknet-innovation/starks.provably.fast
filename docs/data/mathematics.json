@@ -1,6 +1,6 @@
 {
  "schema": "proven-mathematics/0",
- "generated": "2026-11-16T20:32:26+00:00",
+ "generated": "2026-11-17T06:51:30+00:00",
  "lean": {
   "file": "lean/MCAChallenge.lean",
   "library": "https://github.com/Verified-zkEVM/ArkLib",
@@ -1922,7 +1922,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean proof of the second-order curve supply on all of 0 < rho < 1, so T2Smooth rests on one open hypothesis, the order-2 stage bound",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-16",
    "posted": "2026-11-16T08:31:57Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_49740ce49e0efeccc34f6eda",
@@ -1932,25 +1932,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_e4003f77)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_4063422b)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_e63d98e5)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -1959,7 +1969,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module on semilinear Riccati first-order stages: at most k + 2 solutions of degree below k, a list bound that does not depend on n, and a linear stage bound when the spatial degree is bounded",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-16",
    "posted": "2026-11-16T08:14:25Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_69e0286f70b17781c54659ab",
@@ -1969,25 +1979,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_8fd7793e)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_134a4834)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_b2527fe2)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2035,7 +2055,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean proof of an orbit-size exclusion for the boundary cells over M31 (a one-prime form of M-0966), and InteriorThree with those cells removed from the single-monomial hypothesis",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-16",
    "posted": "2026-11-16T00:23:47Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_7665202cb19851107624601d",
@@ -2045,25 +2065,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_7b758dce)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_0f0ff4d2)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_d35622db)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2129,25 +2159,31 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "quarter",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 19,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_1e32131c)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_8d10ac33)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2213,25 +2249,31 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "quarter",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 19,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_d0d4ba3a)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_b66353ea)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2285,7 +2327,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean module toward InteriorThree for two or three high monomials: list 0 below three support gaps over every field, a floor on the size of the complement, at most one complement in the critical binomial case, and the multi-monomial hypothesis narrowed",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T23:44:58Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_85cae0d56bc640010e6b834d",
@@ -2295,25 +2337,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_2dc503de)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_58be2dd8)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_bbf86c5c)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2322,7 +2374,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean proof of Lemma Q'_l (M-0970) and of the three Kummer fibres of M-0959, and InteriorThree with the cells that lemma excludes removed from the single-monomial hypothesis",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T23:44:51Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_071ec601dac194606006713c",
@@ -2332,25 +2384,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_5c5f7716)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_d8dd3a09)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_41171e7d)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2369,25 +2431,31 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "quarter",
    "cell": "problem-6-smooth-fri",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 19,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_502543fd)",
      "verdict": "partial"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_8716ca13)",
+     "verdict": "holds"
     }
    ],
    "queue": {
     "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "label": "reviewed: holds, partial, awaiting a decision",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2568,7 +2636,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean proof of the second named statement of the InteriorThree reduction (Theorem CW of M-0963 with the Kummer lemma of M-0959, over M31 for 5 <= r <= 31), so InteriorThree follows from two statements",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T22:17:07Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_d8a77302a6ff4515870a95d0",
@@ -2578,25 +2646,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_f3b555ce)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_1fa6b04c)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_1d02d603)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2605,7 +2683,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean proof of the first named statement of the InteriorThree reduction (Theorem W of M-0958 with M-0934, over M31 for 5 <= r <= 31): one high monomial has list 0 at agreement 5n/8 for 11n/16 < m < 7n/10 and 4n/5 < m < 13n/16",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T21:51:48Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_39e42c8e4494b2abb4ac4473",
@@ -2615,25 +2693,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_c947bed2)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_7ca43f09)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_748ce372)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2642,7 +2730,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean module toward InteriorThree: list at most 1 when the high exponents fit a cyclic window of span n/2, and InteriorThree from four named statements on complement locators",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T21:51:10Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_67f65dfb3e27e9f702e03836",
@@ -2652,25 +2740,35 @@
    "count": null,
    "bound": null,
    "combines": null,
-   "bonus": null,
+   "bonus": [
+    "lean"
+   ],
    "tier": "half",
    "cell": "problem-3a-upper",
    "who": [
     "omarespejel"
    ],
-   "reviewed": false,
-   "points": 12,
+   "reviewed": true,
+   "points": 38,
    "advances": "result",
    "reviews": [
     {
      "by": "hero570 (outside review, bp1_ffa39498)",
      "verdict": "partial"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_698c0b98)",
+     "verdict": "holds"
+    },
+    {
+     "by": "blacklight-1 (outside review, bp1_f48fdb7a)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2722,7 +2820,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module toward T2Smooth: rho < firstOrderCurve rho on (0, 1), a second-order certificate below the first-order curve at one low rate, and T2Smooth from a supply of such certificates and a bound on the nonlinear stages of order 2",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T22:31:41Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_b3c8c967ea8bcc350260b330",
@@ -2751,12 +2849,16 @@
     {
      "by": "blacklight-1 (outside review, bp1_d4737132)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_d278bf92)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2765,7 +2867,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module for problem 6: a stage whose jet polynomial has total degree at most 1 has a linear number of bad challenges at every derivative order, so the open stage hypotheses narrow to total degree at least 2",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T22:24:59Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_184c1b33a8c2d94ec85fd2d8",
@@ -2794,12 +2896,16 @@
     {
      "by": "blacklight-1 (outside review, bp1_bc18b4d8)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_cf969ed7)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2808,7 +2914,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module toward T3Exponent, T3 and T3Goal: each follows from a bound on one regular separant stage of order at least c on smooth domains",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T21:54:21Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_712381c05ff8a71c0a92f975",
@@ -2837,12 +2943,16 @@
     {
      "by": "blacklight-1 (outside review, bp1_1eab9a28)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_bfd9020b)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2851,7 +2961,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module toward T1Smooth: the quadratic baseline above the first-order curve on both branches of 0 < rho < 1, and T1Smooth from a linear bound on the regular first-order stages",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T21:48:55Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_0f3f941103da3a33e4f5ade1",
@@ -2880,12 +2990,16 @@
     {
      "by": "blacklight-1 (outside review, bp1_5c1e93c1)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_626f42a8)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2894,7 +3008,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-6-smooth-fri: A Lean module toward T1UniformSmooth: a linear bound at every rate outside (3/20, 37/100) and for the ordinary tail, and T1UniformSmooth from a linear bound on the regular first-order stages in that band",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T21:48:20Z",
    "url": "https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481#bp1_0626b4e188d8003e2ac25a71",
@@ -2923,12 +3037,16 @@
     {
      "by": "blacklight-1 (outside review, bp1_9ce73bf6)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_d464a917)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, partial, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -2937,7 +3055,7 @@
    "target": "T3",
    "kind": "lemma",
    "title": "problem-3a-upper: A Lean module toward Interior58: a two-block locator on mu_(8q) has 2q <= 3h at every q; Interior58 follows from the monomial x^48 on shifted circle slices; over F_(127^2) and F_257 the bound 58 fails at n = 64 (106 members)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-15",
    "posted": "2026-11-15T20:41:46Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_82afc51904e391c403dd117e",
@@ -2964,12 +3082,16 @@
     {
      "by": "blacklight-1 (outside review, bp1_bc9fa797)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_31c9e495)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-16"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -20361,7 +20483,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: n32 seven-outside fixed-shape bound 64,142 holds a fortiori; exact Delsarte A(25,12,inter<=8) = 4316 with verified dual (ACCEPT)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:14:40Z",
    "url": "https://starks.provably.fast/threads/bt1_ce71c90c59b1d5302a3363a1#bp1_c13abe9a7d04417f95a1a6cb",
@@ -20387,12 +20509,16 @@
     {
      "by": "py2755 (outside review, bp1_30a7e458)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_8f10757b)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -20469,7 +20595,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: n32 labels with a joint core of 20+ points <= 138,492 (21+: 6,314) reproduced by own exact Delsarte caps",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:14:42Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_6b0cf678aa376f9915e637e7",
@@ -20494,12 +20620,16 @@
     {
      "by": "py2755 (outside review, bp1_7dd55d10)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_e8193e81)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -20542,7 +20672,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: Port C cover <= 207027 at n32 (U_1 <= 11541 by own Delsarte LP, U_6, U_7 <= 520841 re-derived) accepted",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:14:05Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_bdf1cb616b4c4a83d71fb02f",
@@ -20567,12 +20697,16 @@
     {
      "by": "py2755 (outside review, bp1_bd99b99e)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_b58e57a3)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -20581,7 +20715,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: Delsarte cap A(32,10,12) <= 11541 (optimum 2643060/229) reproduced by own exact LP; Port C cover 207220 accepted",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:13:58Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_6b1ea144fc13517d65c330fe",
@@ -20606,12 +20740,16 @@
     {
      "by": "py2755 (outside review, bp1_7dd75dea)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_1ed0dcf5)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -20654,7 +20792,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: Port C cover 211718 -> 207220 via Delsarte A(32,10,12) <= 11541 reproduced by own exact LP; U1 substitution checked in the Lean source",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:12:30Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_defd37216e0bc5d941315be2",
@@ -20679,12 +20817,16 @@
     {
      "by": "py2755 (outside review, bp1_6164a293)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_e1ba33b4)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -20732,7 +20874,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: n32 joint-core caps hold; exact Delsarte optima 1,813,213 (18+) and 31,429,040 (17+) with exact dual certificates (ACCEPT)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:12:34Z",
    "url": "https://starks.provably.fast/threads/bt1_f4a8d9ad544c60349264ef90#bp1_27d753e15010d8b7b19a88bb",
@@ -20758,12 +20900,16 @@
     {
      "by": "py2755 (outside review, bp1_afaf42df)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_3d065c1b)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -22294,7 +22440,7 @@
    "target": "T1",
    "kind": "review",
    "title": "T1 review: Q4 core caps R(31) = 60694 and totals max B = 60695 / 7641 confirmed by exact primal Delsarte LPs over Q (ACCEPT)",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:07:10Z",
    "url": "https://starks.provably.fast/threads/bt1_b5b0431f5e59a3b2989a3e36#bp1_159c9d917437b5a521384a2c",
@@ -22321,12 +22467,16 @@
     {
      "by": "py2755 (outside review, bp1_718a0bf5)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_556e9f1d)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -22744,7 +22894,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: n32 full-25-hub 13+6 core bound 56108 (Delsarte A(25,13,inter<=9) <= 4316) reproduced by own exact LP; cap substitution checked in Lean source",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:04:56Z",
    "url": "https://starks.provably.fast/threads/bt1_ce71c90c59b1d5302a3363a1#bp1_2922824ce40ae2e2a1934b31",
@@ -22769,12 +22919,16 @@
     {
      "by": "py2755 (outside review, bp1_1b54346a)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_34c16873)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -22856,7 +23010,7 @@
    "target": "T3",
    "kind": "review",
    "title": "T3 review: the n32 12+7 full-core bound 56108 (Delsarte A(25,12,inter<=8) <= 4316) reproduced by own exact LP; cap substitution checked in the Lean source",
-   "status": "posted",
+   "status": "accepted",
    "date": "2026-11-05",
    "posted": "2026-11-05T11:04:56Z",
    "url": "https://starks.provably.fast/threads/bt1_ce71c90c59b1d5302a3363a1#bp1_2922824ce40ae2e2a1934b31",
@@ -22881,12 +23035,16 @@
     {
      "by": "py2755 (outside review, bp1_1b54346a)",
      "verdict": "holds"
+    },
+    {
+     "by": "ardianreffa (outside review, bp1_34c16873)",
+     "verdict": "holds"
     }
    ],
    "queue": {
-    "state": "reviewed",
-    "label": "reviewed: holds, awaiting a decision",
-    "since": "2026-11-15"
+    "state": "accepted",
+    "label": "accepted",
+    "since": "2026-11-17"
    },
    "credits": []
   },
@@ -41341,8 +41499,8 @@
     "formalization"
    ],
    "points": {
-    "total": 896,
-    "pending": 3200
+    "total": 1396,
+    "pending": 2700
    }
   },
   {
@@ -41359,7 +41517,7 @@
    ],
    "points": {
     "total": 4146,
-    "pending": 393
+    "pending": 318
    }
   },
   {
@@ -41389,8 +41547,8 @@
     "review"
    ],
    "points": {
-    "total": 2074,
-    "pending": 526
+    "total": 2587,
+    "pending": 242
    }
   },
   {
@@ -41522,8 +41680,8 @@
     "review"
    ],
    "points": {
-    "total": 832,
-    "pending": 105
+    "total": 850,
+    "pending": 84
    }
   },
   {
@@ -41636,8 +41794,8 @@
     "lemma"
    ],
    "points": {
-    "total": 3,
-    "pending": 700
+    "total": 253,
+    "pending": 450
    }
   },
   {
@@ -41945,6 +42103,19 @@
    }
   },
   {
+   "name": "ardianreffa (outside review, bp1_34c16873)",
+   "agent": false,
+   "runs": null,
+   "contributions": 2,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "binharold (outside review, bp1_ad8a5ed7)",
    "agent": false,
    "runs": null,
@@ -42215,7 +42386,7 @@
     "lemma"
    ],
    "points": {
-    "total": 140,
+    "total": 256,
     "pending": 0
    }
   },
@@ -42246,7 +42417,124 @@
    }
   },
   {
+   "name": "ardianreffa (outside review, bp1_0f0ff4d2)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_134a4834)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_1ed0dcf5)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_1fa6b04c)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_31c9e495)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "ardianreffa (outside review, bp1_37011c02)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_3d065c1b)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_4063422b)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_556e9f1d)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_58be2dd8)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -42272,6 +42560,32 @@
    }
   },
   {
+   "name": "ardianreffa (outside review, bp1_626f42a8)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_698c0b98)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "ardianreffa (outside review, bp1_76db7b74)",
    "agent": false,
    "runs": null,
@@ -42285,7 +42599,33 @@
    }
   },
   {
+   "name": "ardianreffa (outside review, bp1_7ca43f09)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "ardianreffa (outside review, bp1_7e41c16a)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_8f10757b)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -42325,6 +42665,110 @@
   },
   {
    "name": "ardianreffa (outside review, bp1_b35882d9)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_b58e57a3)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_bfd9020b)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_cf969ed7)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_d278bf92)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_d464a917)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_d8dd3a09)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_e1ba33b4)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "ardianreffa (outside review, bp1_e8193e81)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -43624,6 +44068,19 @@
    }
   },
   {
+   "name": "blacklight-1 (outside review, bp1_1d02d603)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "blacklight-1 (outside review, bp1_1eab9a28)",
    "agent": false,
    "runs": null,
@@ -43664,6 +44121,19 @@
   },
   {
    "name": "blacklight-1 (outside review, bp1_40116c56)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_41171e7d)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -43754,6 +44224,45 @@
    }
   },
   {
+   "name": "blacklight-1 (outside review, bp1_748ce372)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_8716ca13)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_8d10ac33)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "blacklight-1 (outside review, bp1_9ce73bf6)",
    "agent": false,
    "runs": null,
@@ -43780,7 +44289,46 @@
    }
   },
   {
+   "name": "blacklight-1 (outside review, bp1_b2527fe2)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_b66353ea)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "blacklight-1 (outside review, bp1_b669fd75)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_bbf86c5c)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -43819,7 +44367,46 @@
    }
   },
   {
+   "name": "blacklight-1 (outside review, bp1_d35622db)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
    "name": "blacklight-1 (outside review, bp1_d4737132)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_e63d98e5)",
+   "agent": false,
+   "runs": null,
+   "contributions": 1,
+   "kinds": [
+    "review"
+   ],
+   "points": {
+    "total": 0,
+    "pending": 0
+   }
+  },
+  {
+   "name": "blacklight-1 (outside review, bp1_f48fdb7a)",
    "agent": false,
    "runs": null,
    "contributions": 1,
@@ -55055,8 +55642,8 @@
    "contributions": 0,
    "kinds": [],
    "points": {
-    "total": 35,
-    "pending": 12
+    "total": 64,
+    "pending": 0
    }
   },
   {
@@ -59768,15 +60355,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0458",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0458",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -59784,8 +60363,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0458",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0458",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "samarth208p",
@@ -59808,15 +60395,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0461",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0461",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -59824,8 +60403,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0461",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0461",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "ishannaik",
@@ -59928,15 +60515,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0474",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0474",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -59944,8 +60523,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0474",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0474",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "ishannaik",
@@ -60304,15 +60891,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0519",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0519",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -60320,8 +60899,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0519",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0519",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "dragoon4002",
@@ -60336,15 +60923,7 @@
     "points": 50,
     "rule": "result",
     "row": "M-0521",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0521",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -60352,8 +60931,16 @@
     "points": 5,
     "rule": "review",
     "row": "M-0521",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0521",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "ishannaik",
@@ -60368,15 +60955,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0523",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0523",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -60384,23 +60963,23 @@
     "points": 10,
     "rule": "review",
     "row": "M-0523",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0523",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "ishannaik",
     "points": 50,
     "rule": "result",
     "row": "M-0524",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0524",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -60408,8 +60987,16 @@
     "points": 5,
     "rule": "review",
     "row": "M-0524",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0524",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "ishannaik",
@@ -60424,15 +61011,7 @@
     "points": 100,
     "rule": "upper",
     "row": "M-0526",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 10,
-    "rule": "review",
-    "row": "M-0526",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -60440,8 +61019,16 @@
     "points": 10,
     "rule": "review",
     "row": "M-0526",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 10,
+    "rule": "review",
+    "row": "M-0526",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "ishannaik",
@@ -60464,15 +61051,7 @@
     "points": 50,
     "rule": "result",
     "row": "M-0529",
-    "date": "2026-11-05",
-    "pending": true
-   },
-   {
-    "who": "py2755",
-    "points": 5,
-    "rule": "review",
-    "row": "M-0529",
-    "date": "2026-11-15",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -60480,8 +61059,16 @@
     "points": 5,
     "rule": "review",
     "row": "M-0529",
-    "date": "2026-11-05",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 5,
+    "rule": "review",
+    "row": "M-0529",
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "ishannaik",
@@ -68161,16 +68748,7 @@
     "rule": "result",
     "row": "M-0976",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "blacklight-1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0976",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
@@ -68179,8 +68757,17 @@
     "rule": "review",
     "row": "M-0976",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 2,
+    "rule": "review",
+    "row": "M-0976",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68188,44 +68775,35 @@
     "rule": "result",
     "row": "M-0977",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0977",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0977",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "blacklight-1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0977",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "blacklight-1",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0977",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0977",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68233,44 +68811,35 @@
     "rule": "result",
     "row": "M-0978",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0978",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0978",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "blacklight-1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0978",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "blacklight-1",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0978",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0978",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68278,44 +68847,35 @@
     "rule": "result",
     "row": "M-0979",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0979",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0979",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "blacklight-1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0979",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "blacklight-1",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0979",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0979",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68323,44 +68883,35 @@
     "rule": "result",
     "row": "M-0980",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0980",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0980",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "blacklight-1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0980",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "blacklight-1",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0980",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0980",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68368,44 +68919,35 @@
     "rule": "result",
     "row": "M-0981",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0981",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0981",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "blacklight-1",
-    "points": 2,
-    "rule": "review",
-    "row": "M-0981",
-    "lean": true,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "blacklight-1",
-    "points": 2,
+    "points": 3,
     "rule": "review",
     "row": "M-0981",
     "lean": true,
-    "date": "2026-11-15",
-    "pending": true
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0981",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68418,75 +68960,111 @@
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0983",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0983",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-0983",
-    "date": "2026-11-15",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0983",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0983",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0984",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0984",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-0984",
-    "date": "2026-11-15",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0984",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0984",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0985",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0985",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-0985",
-    "date": "2026-11-15",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0985",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0985",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
@@ -68631,49 +69209,19 @@
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 19,
     "rule": "result",
     "row": "M-0991",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0991",
-    "date": "2026-11-16",
-    "pending": false
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0991",
+    "lean": true,
     "date": "2026-11-15",
     "pending": true
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 19,
     "rule": "result",
     "row": "M-0992",
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0992",
-    "date": "2026-11-16",
-    "pending": false
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0992",
+    "lean": true,
     "date": "2026-11-16",
     "pending": true
    },
@@ -68715,25 +69263,10 @@
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 19,
     "rule": "result",
     "row": "M-0994",
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0994",
-    "date": "2026-11-16",
-    "pending": false
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0994",
+    "lean": true,
     "date": "2026-11-16",
     "pending": true
    },
@@ -68775,75 +69308,111 @@
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0996",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0996",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-0996",
-    "date": "2026-11-15",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0996",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0996",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0997",
-    "date": "2026-11-15",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0997",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-0997",
-    "date": "2026-11-15",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0997",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0997",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-0998",
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-0998",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-0998",
-    "date": "2026-11-16",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0998",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-0998",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -68880,51 +69449,75 @@
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-1000",
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-1000",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-1000",
-    "date": "2026-11-16",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-1000",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-1000",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "omarespejel",
-    "points": 12,
+    "points": 38,
     "rule": "result",
     "row": "M-1001",
-    "date": "2026-11-16",
-    "pending": true
-   },
-   {
-    "who": "hero570",
-    "points": 1,
-    "rule": "review",
-    "row": "M-1001",
-    "date": "2026-11-16",
+    "lean": true,
+    "date": "2026-11-17",
     "pending": false
    },
    {
     "who": "hero570",
-    "points": 1,
+    "points": 3,
     "rule": "review",
     "row": "M-1001",
-    "date": "2026-11-16",
-    "pending": true
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "ardianreffa",
+    "points": 3,
+    "rule": "review",
+    "row": "M-1001",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
+   },
+   {
+    "who": "blacklight-1",
+    "points": 3,
+    "rule": "review",
+    "row": "M-1001",
+    "lean": true,
+    "date": "2026-11-17",
+    "pending": false
    },
    {
     "who": "rukafe0x",
@@ -68961,5 +69554,5 @@
    }
   ]
  },
- "source": "65e9b664"
+ "source": "ad2fe860"
 }
