@@ -513,7 +513,14 @@
         "statement": "The pinned statements that hold at every n on smooth domains, a smooth domain being a multiplicative coset of order n = 2^m (IsSmoothDomain). T1Smooth: at most C(rho, eta) n bad challenges at agreement (a1(rho) + eta) n, a1 the first-order curve of Dao, Kominers and Thaler. T2Smooth: a curve a2 strictly between capacity and a1 with at most C n^2. T1UniformSmooth: at most C n at agreement k + 6n/25. T3: at every gap delta above capacity and n at least N(delta), at most C(delta) n; T3Exponent: the same with n^c for one exponent c; T3Goal: rate 1/2, agreement 5n/8, at most 16 n. Not about M31: a result applies to every STARK built on FRI.",
         "done_when": "the kernel accepts the pinned statement with its parameters in closed form, an outside kernel replay, and one human-signed review",
         "open": "everything: no row yet. Today's bounds are those for every evaluation set: 1,325,775 n^2 at agreement k + 6n/25 and O(n^2 / eta^4) above the first-order curve (Dao, Kominers and Thaler, in ArkLib). The smooth structure has not been used. The full-length codes of arXiv:2611.07607 and of the two concurrent works are not smooth domains. The thread of this problem: https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481",
-        "teams_max": 0
+        "teams_max": 0,
+        "steward": {
+          "login": "adrienlacombe",
+          "operator_root": "participant_77a6ba53b823",
+          "since": "2026-11-18",
+          "living_post": "bp1_32403d74491dba31eccbd2dd",
+          "why": "the lane's latest result, the correction of the problem 6 reductions (M-1016, M-1017); claimed in bp1_37056c26 on 18 November"
+        }
       },
       {
         "id": "problem-4-curve-stwo",
