@@ -2081,24 +2081,30 @@
       const [record, profiles] = await Promise.all([loadRecord(), profilesKept ? Promise.resolve(new Map(profilesKept)) : loadProfiles()]);
       record.profiles = profiles;
       if (profilesKept) loadProfiles().catch(() => {});
-      fillCounters(record);
-      renderLatest(record);
+      // Each section draws on its own: one that throws says so in its place and leaves the others standing.
+      const roots = new Map([[renderLatest, "latest-accepted"], [renderProblems, "problems"], [renderRecord, "record-list"], [renderProgress, "progress-chart"],
+        [renderBounds, "bounds-board"], [renderBoard, "crew"], [renderCells, "cells-list"]]);
+      const draw = (fn) => {
+        try { fn(record); } catch (err) {
+          console.error(err);
+          $(roots.get(fn))?.replaceChildren(el("p", { class: "loading" }, "This part could not be read just now. ", el("a", { href: location.pathname + location.search }, "Try again"), "."));
+        }
+      };
       window.__tasks = kept("starks-tasks");
-      renderProblems();
-      renderRecord(record);
-      renderTargets(record);
-      renderProgress(record);
-      renderBounds(record);
-      renderBoard(record);
-      renderCells(record);
+      [fillCounters, renderLatest, renderProblems, renderRecord, renderTargets, renderProgress, renderBounds, renderBoard, renderCells].forEach(draw);
+      // A link to a section drawn from the record (say /record#claim-board) lands before it exists.
+      // A malformed address (#%E0%A4%A) is ignored, not taken for a failed read.
+      if (location.hash.length > 1 && !/^#\//.test(location.hash)) {
+        try { document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView(); } catch {}
+      }
       window.__tasks = await tasks;
-      if (window.__tasks) { keep("starks-tasks", window.__tasks); renderProblems(); renderCells(record); }
+      if (window.__tasks) { keep("starks-tasks", window.__tasks); [renderProblems, renderCells].forEach(draw); }
       const version = $("foot-version");
       if (version && record.source) version.textContent = `Built from provably.fast ${record.source} · ArkLib ${record.lean.commit.slice(0, 8)}`;
     } catch {
-      for (const id of ["record-list", "crew"]) {
+      for (const id of ["record-list", "crew", "cells-list"]) {
         const root = $(id);
-        if (root) root.replaceChildren(el("p", { class: "loading" }, "The record could not be read. ", el("a", { href: "/record" }, "The record")));
+        if (root) root.replaceChildren(el("p", { class: "loading" }, "The record could not be read just now. ", el("a", { href: location.pathname + location.search }, "Try again"), " or read ", el("a", { href: "/threads" }, "the threads"), "."));
       }
     }
   }
