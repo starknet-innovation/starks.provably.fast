@@ -140,7 +140,9 @@ export default {
     }
     const digest = reading ? url.pathname.match(STATE_DIGEST) : null;
     if (digest || (reading && url.pathname === STATE_TASKS)) return cached(request, ctx, 120, () => state(env, digest ? digest[1] : null));
-    if (reading && (url.pathname === "/workshop" || url.pathname === "/workshop/")) return workshop(request, env);
+    // The page's links are relative, so /workshop/ would load none of its files: one address.
+    if (reading && url.pathname === "/workshop/") return Response.redirect(`${url.origin}/workshop${url.search}`, 301);
+    if (reading && url.pathname === "/workshop") return workshop(request, env);
     if (reading && url.pathname === "/") {
       const own = await env.ASSETS.fetch(request);
       return own.status === 404 ? workshop(request, env) : own;
@@ -149,9 +151,9 @@ export default {
       const own = await env.ASSETS.fetch(request);
       // The query too: the page names each script by its digest (v=), so a new deployment is
       // never served a cached copy of the last one.
-      if (own.status === 404) return fetch(PLATFORM + url.pathname + url.search, { method: request.method });
+      if (own.status === 404) return verified(url, await fetch(PLATFORM + url.pathname + url.search, { method: request.method }));
       // The program's front page on provably.fast reads a site's own public data (mathematics.json).
-      if (!url.pathname.startsWith("/data/")) return own;
+      if (!url.pathname.startsWith("/data/")) return served(url, own);
       const readable = new Response(own.body, own);
       readable.headers.set("access-control-allow-origin", PLATFORM);
       return readable;
@@ -161,7 +163,8 @@ export default {
     const write = request.method === "POST" && ANONYMOUS_WRITE.test(url.pathname);
     if (!read && !write) {
       if (url.pathname.startsWith("/api/")) return new Response("Not found", { status: 404 });
-      return env.ASSETS.fetch(request);
+      const asset = await env.ASSETS.fetch(request);
+      return asset.status === 404 && reading && !url.pathname.startsWith("/data/") ? notFound(request, env, asset) : served(url, asset);
     }
     // Only what the platform needs: no cookies, and the bearer only on writes.
     const headers = { accept: "application/json" };
@@ -233,6 +236,42 @@ async function state(env, name) {
   return new Response(blob.body, { status: blob.status, headers: { ...headers, "content-type": "application/json; charset=utf-8" } });
 }
 
+// A file named by its digest (?v=, the first twelve hex digits of its SHA-256, as every build stamps
+// them) never changes at that address. Source files (the evaluator's Rust, the kit's Python) read as text in the browser,
+// not as a download under some guessed type.
+const DIGEST = /^[0-9a-f]{12}$/;
+const SOURCE = /\.(rs|py|cairo|toml|lock)$/;
+// The site's own files are deployed with the pages that name them, so their names hold.
+function served(url, response, named = true) {
+  const digest = named && DIGEST.test(url.searchParams.get("v") || "");
+  const source = SOURCE.test(url.pathname);
+  if (response.status !== 200 || (!digest && !source)) return response;
+  const out = new Response(response.body, response);
+  if (digest) out.headers.set("cache-control", "public, max-age=31536000, immutable");
+  if (source) out.headers.set("content-type", "text/plain; charset=utf-8");
+  return out;
+}
+
+// A path nothing serves gets the site's own docs/404.html, with status 404. Not by wrangler's
+// not_found_handling: with it, a browser's navigation to a path with no file gets that page from
+// Cloudflare before this Worker runs (assets_navigation_prefers_asset_serving), which would hide
+// /workshop, /threads and, on a site without a landing page, its home. "/404" because
+// html_handling answers /404.html with a redirect to it.
+async function notFound(request, env, plain) {
+  const page = await env.ASSETS.fetch(new Request(new URL("/404", request.url), { method: request.method })).catch(() => null);
+  return page && page.ok ? new Response(page.body, { status: 404, headers: page.headers }) : plain;
+}
+
+// A file read from provably.fast may not be the one the digest names: a site deployed first names a
+// file provably.fast does not serve yet. Kept for a year only if its bytes match the name; else as sent.
+async function verified(url, response) {
+  const v = url.searchParams.get("v") || "";
+  if (!DIGEST.test(v) || response.status !== 200 || !response.body) return served(url, response, false);
+  const body = await response.arrayBuffer();
+  const hash = [...new Uint8Array(await crypto.subtle.digest("SHA-256", body))].map((b) => b.toString(16).padStart(2, "0")).join("");
+  return served(url, new Response(body, response), hash.slice(0, 12) === v);
+}
+
 function pick(source, names) {
   const headers = new Headers();
   for (const name of names) if (source.has(name)) headers.set(name, source.get(name));
@@ -299,13 +338,14 @@ async function workshop(request, env) {
     const set = (attribute, name, value) => {
       html = html.replace(new RegExp(`(<meta ${attribute}="${name}" content=")[^"]*(")`), `$1${esc(value)}$2`);
     };
-    html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(entry.title)} · ${esc(host)}</title>`);
     set("property", "og:site_name", host);
-    // The shared board's page keeps its own words and card, now at its own address.
+    // The shared board's page keeps its own words, title and card, now at its own address.
     if (!entry.topic) {
+      html = html.replace(/(<title>[^<]* · )[^<]*(<\/title>)/, `$1${esc(host)}$2`);
       set("property", "og:url", `https://${host}/`);
       return new Response(html, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-cache" } });
     }
+    html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(entry.title)} · ${esc(host)}</title>`);
     set("name", "description", entry.note);
     set("property", "og:url", `https://${host}/workshop`);
     // The Season 1 report is the shared board's, so a topic site's bar leaves it out.

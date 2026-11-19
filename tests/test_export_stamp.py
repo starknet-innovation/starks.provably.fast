@@ -37,6 +37,23 @@ class ExportStamp(unittest.TestCase):
                 rel = m.group(2).lstrip("/")
                 self.assertTrue((docs / rel).is_file() or (export.SHARED / rel).is_file(), f"{page.name}: {m.group(2)} is found nowhere")
 
+    def test_counters_follow_the_record(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            docs = Path(tmp)
+            (docs / "index.html").write_text('<span data-count="problem-posts">1</span> <span data-count="outside-reviews">2</span> '
+                                             '<span data-count="accepted">3</span> <span data-count="other">4</span>')
+            review = lambda verdict, by: {"verdict": verdict, "by": by}
+            record = {"contributions": [
+                {"cell": "a", "status": "accepted", "reviews": [review("ok", "x"), review("read", "y"), review("ok", "same operator")]},
+                {"cell": "b", "status": "open", "reviews": [review("ok", "Platform-certified")]},
+                {"cell": "c", "status": "withdrawn", "reviews": [review("ok", "x")]},
+                {"status": "accepted"},
+            ] + [{"cell": f"d{i}", "status": "accepted"} for i in range(1200)]}
+            export.fill_counters(docs, record)
+            self.assertEqual((docs / "index.html").read_text(),
+                             '<span data-count="problem-posts">1,202</span> <span data-count="outside-reviews">1</span> '
+                             '<span data-count="accepted">1,201</span> <span data-count="other">4</span>')
+
 
 if __name__ == "__main__":
     unittest.main()
