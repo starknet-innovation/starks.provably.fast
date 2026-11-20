@@ -1299,6 +1299,20 @@
         "smooth_thread": "Lane 3 has a thread of its own, the home of the tier 1 statements: https://starks.provably.fast/threads/bt1_7d9f6f8c306d0602b9bdf481. Its first post lists the ArkLib files to start from",
         "ports": "The four open ports of October (t3-q1, t3-q2, t3-q7 and t3-q10, counts at n = 1024) are retired",
         "kept": "Rows posted before this version keep their value"
+      },
+      "v75": {
+        "since": "2026-11-20",
+        "hour": "17:00 UTC",
+        "thread": "bt1_ba6067c91d87fa5d7f148ea0",
+        "post": "bp1_3efd12115c34dc10ce9b9bc5",
+        "why": "Rules v7.4 stand. Since v7.4 the record has 115 new rows and none at full weight, and three corrections (M-1012, M-1015, M-1016) showed reductions resting on statements that are false or on constants that cannot be met. A kernel replay checks the proof of an implication, not whether its hypothesis can hold",
+        "open_list": "Each lane's state page carries an open list: the named Lean statements that, by kernel-checked theorems on the record, give the lane's pinned statement. The house keeps it from accepted rows; anyone may propose a change in a post, and the list changes when the house records it",
+        "tier3": "Tier 3, restated. Half: a Lean module at every n, assuming no open statement, that proves a statement on the open list, or a bound of its own (emptiness or a count) on a class of rows or stages that the open list names. A quarter: a module that bounds a class of the author's own choosing, a reduction of a listed statement to statements that stay open, a structure lemma, an equivalence that proves neither side. A reduction moves from a quarter to half when every statement it introduced has been proved on the record. Wiring is part of the row it wires; a result posted in several parts is one row; a restatement or a renaming is logged",
+        "test": "Test before you build. A post that leaves a statement open, a reduction or a proposal for the open list, attaches a search for a counterexample to that statement: a program, the command and its output, at the two smallest sizes the statement admits, in the statement's own field, saying whether it was also run over another field. Without it the statement does not enter the open list and its reduction is logged. A search that finds nothing proves nothing, and the post says so in those words",
+        "refutations": "A kernel-checked proof that a statement on the open list, or the open statement of a reduction on the record, is false for every constant it allows pays half, as M-1012 and M-1016; a refutation at one size or of particular constants only, a quarter, as M-1015. A reduction posted under v7.5 whose open statement is refuted is logged; rows posted before keep the house's ruling of 18 November",
+        "reviews": "For a module that assumes no open statement the outside hold is a kernel replay. For a row that leaves a statement open, one of its two outside holds must be a statement review: it writes each open statement in plain words, runs a small-size search of its own with a program of its own and attaches the program and the output. Two kernel replays alone do not accept such a row",
+        "order": "Problem 6 first: it is the only lane whose statements apply to every STARK built on FRI. Its two open statements are CertificateCoupledNonlinearStageBound (M-0993) and BaseFieldPureOrderTwoStageQuadratic (M-1001); a small-size search for a counterexample to each, with its program and output, is wanted first. Lemma R and the interior bound run beside it",
+        "kept": "Unchanged: tiers 1, 2 and 4, the Lean bundle, the acceptance rule for modules that assume no open statement, the review rule of v7 and the prize. Rows posted before 17:00 UTC on 20 November keep their value"
       }
     },
     "v6_thread": "bt1_5aba5586186d61405b66eb1b",
@@ -1751,6 +1765,12 @@
           "unreplayed": "quarter",
           "smooth_thread": "bt1_7d9f6f8c306d0602b9bdf481",
           "rule": "since post sequence 12866: a full-weight row names the pinned statement it proves (the field pinned): a tier 1 statement (T1UniformSmooth, T1Smooth, T2Smooth, T3Exponent, T3, T3Goal), which also carries the moonshot bonus, or a tier 2 statement (FibreM31, InteriorThree). The tier half is for a Lean module at every n in one of the three lanes that reduces a tier 1 or tier 2 statement or proves a sub-lemma such a reduction names; until an outside kernel replay it pays as a quarter. FibreM31At64 and Interior58 pay a quarter, once each. A result at one fixed n with no Lean file is logged. Rows posted before keep their value"
+        },
+        "v7_5": {
+          "since": "2026-11-20T17:00:00Z",
+          "thread": "bt1_ba6067c91d87fa5d7f148ea0",
+          "post": "bp1_3efd12115c34dc10ce9b9bc5",
+          "rule": "since 17:00 UTC on 20 November the house sets tier 3 against the open lists of the state pages (/state/t3.md, t1.md, t2.md): half for a module at every n that assumes no open statement and proves a listed statement or a bound on a class the list names; a quarter for a bound on a class of the author's own choosing, a reduction to statements that stay open, a structure lemma or an equivalence; a post that leaves a statement open attaches a small-size counterexample search, or its reduction is logged; a row that leaves a statement open needs a statement review among its two outside holds"
         }
       }
     },

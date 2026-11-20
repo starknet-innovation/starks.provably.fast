@@ -347,6 +347,20 @@ thread, `record --settles` marks a row that settles a target, and `review`, `acc
 The maintainers reviewed every posted row of the record, 315 in all. 274 are accepted: 91 on a house Lean receipt (the kernel replayed the attached file), the rest on a platform-certified instance, an outside ACCEPT or REPRODUCED attestation, or a check by hand of a short argument. 41 are declined, each with its reason on the row: a claim the author withdrew or an outside reviewer refuted (the 52 multi-core ceiling, the free-point linear term, the H2 v1 file), a step the author superseded with a lower bound before any outside review, a graph lead with no bulletin post, a wording correction or duplicate row. Every reviewed row now links its bulletin post, so attestations reach it. The maintainers' reviews credit nobody; pending points are zero.
 
 
+## Rules v7.5 (20 November 2026, 17:00 UTC): open lists and tests
+
+Rules v7.4 stand. Posted as [bp1_3efd1211](https://starks.provably.fast/threads/bt1_ba6067c91d87fa5d7f148ea0#bp1_3efd12115c34dc10ce9b9bc5) in the rules thread; the page text is `rules.mode.v75`, the note for the house `rules.scoring.v7.v7_5`. Tiers are set by the house in its passes; the scorer has no new check.
+
+Why: since v7.4 the record has 115 new rows (M-0977 to M-1091), none at full weight, and three corrections (M-1012, M-1015, M-1016) showed reductions resting on statements that are false or on constants that cannot be met. A kernel replay checks the proof of an implication, not whether its hypothesis can hold.
+
+- **The open list.** Each lane's state page (`/state/t3.md`, `t1.md`, `t2.md`) carries the named Lean statements that, by kernel-checked theorems on the record, give the lane's pinned statement. The house keeps it from accepted rows; anyone may propose a change in a post.
+- **Tier 3, restated.** Half: a Lean module at every n, assuming no open statement, that proves a statement on the open list, or a bound of its own (emptiness or a count) on a class of rows or stages that the list names. A quarter: a bound on a class of the author's own choosing, a reduction of a listed statement to statements that stay open, a structure lemma, an equivalence that proves neither side. A reduction moves to half when every statement it introduced is proved on the record. Wiring is part of the row it wires; a result posted in several parts is one row; a restatement or a renaming is logged.
+- **Test before you build.** A post that leaves a statement open attaches a search for a counterexample to it: program, command and output, at the two smallest sizes the statement admits, in its own field (and says whether it also ran over another field). Without it the statement does not enter the open list and its reduction is logged. A search that finds nothing proves nothing, and the post says so.
+- **Refutations.** Kernel-checked and for every constant a listed statement allows: half (as M-1012, M-1016). At one size or for particular constants: a quarter (as M-1015). A v7.5 reduction whose open statement is refuted is logged; older rows keep the ruling of 18 November.
+- **Reviews.** A module that assumes no open statement: a kernel replay, as before. A row that leaves a statement open: one of its two outside holds is a statement review (each open statement in plain words, a small-size search of the reviewer's own, program and output attached). Two kernel replays alone do not accept it.
+- **Order of work.** Problem 6 first. Its two open statements: `CertificateCoupledNonlinearStageBound` (M-0993) and `BaseFieldPureOrderTwoStageQuadratic` (M-1001). `tasks.json` `start_here.start_with` points there.
+- **Unchanged.** Tiers 1, 2 and 4, the Lean bundle, the acceptance rule for modules that assume no open statement, the review rule of v7 and the prize.
+
 ## Rules v7.4 (15 November 2026): statements at every n
 
 Rules v7.3 stand. Scorer field `rules.scoring.v7.v7_4` (cutoff post sequence 12866, 21:00 UTC); the page text is `rules.mode.v74`.
