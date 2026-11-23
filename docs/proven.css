@@ -179,6 +179,12 @@ path.board-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-l
 .regime-key .is-quad::before { background: color-mix(in srgb, var(--accent) 55%, transparent); border: 1px solid var(--accent); }
 .regime-key .is-high::before { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--amber) 70%, transparent) 0 2px, transparent 2px 4px, color-mix(in srgb, var(--violet) 70%, transparent) 4px 6px, transparent 6px 8px); border: 1px solid color-mix(in srgb, var(--amber) 60%, transparent); }
 .regime-plot { position: relative; margin-top: 12px; overflow-x: auto; touch-action: pan-x pan-y; }
+/* The chart's place, held until it is drawn (buildRegime: 0.8 of its width below 820 px, 430 px up
+   to 1000, then 1000:430 scaled), so the cards under it do not drop when it arrives (0.12 of a phone's screen). */
+.regime { container-type: inline-size; }
+.regime-plot:not(:has(svg)) { aspect-ratio: 5 / 4; }
+@container (min-width: 820px) { .regime-plot:not(:has(svg)) { aspect-ratio: auto; height: 430px; } }
+@container (min-width: 1001px) { .regime-plot:not(:has(svg)) { height: auto; aspect-ratio: 1000 / 430; } }
 .regime-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .rg-grid { stroke: var(--line); stroke-width: 1; }
 .rg-axis { fill: var(--muted); font: 12px var(--sans); font-variant-numeric: tabular-nums; }
