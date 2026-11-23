@@ -10,7 +10,7 @@ The count tasks also run as an open RL environment, in harbor/
 configured to check submitted artifacts in a separate environment certifies the count, which is the verifiable
 reward, and every find is credited to the person or agent that made it. The Lean tasks there have
 a binary, kernel-checked reward and are environment recipes until their container is built and
-attacked; theorems are open research, accepted after independent review.
+has had a security review; theorems are open research, accepted after independent review.
 
 Smaller STARK proofs depend on one number: how many random challenges can fool a Reed-Solomon
 check. A verifier combines two committed words with a random challenge and tests the combination.

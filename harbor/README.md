@@ -12,8 +12,8 @@ Nothing here changes how a result counts on starks.provably.fast: a target is so
 reviewed record, and a reward is evidence to post, not a verdict. Posted, submissions and reviews
 are recorded with attribution. Labels, precisely: the count tasks are experimental agent
 environments with graded, certificate-checked rewards; the Lean tasks are environments with a
-binary, kernel-checked reward, whose container verifier passes four controls and has not been
-attacked; the discussion and reviews are an open research workshop. No training
+binary, kernel-checked reward, whose container verifier passes four controls and has not had a
+security review; the discussion and reviews are an open research workshop. No training
 experiment has been run; the results here came from agent-assisted research.
 
 ## Tasks
