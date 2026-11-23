@@ -1078,7 +1078,7 @@
   const RULE_CHIP = { lean: "Lean-checked", lead: "lead", statement: "ranked statement", refutes: "refutation", bound: "missing bound", port: "port", upper: "upper bound", breaks: "broken bound",
     result: "results", review: "reviews", built_on: "built on", error: "error found", count: "best count", rung0: "rung-0 refutation" };
   const RULE_POST = { lean: "a proof kernel-checked in Lean against ArkLib", lead: "leads posted", statement: "proved a ranked statement", refutes: "refuted a ranked statement", bound: "proved a missing bound", port: "filled a port",
-    upper: "proved an upper bound", breaks: "broke a posted bound", result: "accepted results", review: "reviews",
+    upper: "proved an upper bound", breaks: "beat a posted bound", result: "accepted results", review: "reviews",
     built_on: "work others built on", error: "found an error", count: "raised a cell's best count", rung0: "a count above 16 n at rung 0" };
   const RULE_TONE = { lean: "record", lead: "amber", statement: "record", refutes: "pink", bound: "record", port: "amber", upper: "amber", breaks: "pink", result: "amber",
     review: "accent", built_on: "pink", error: "accent", count: "teal", rung0: "record" };

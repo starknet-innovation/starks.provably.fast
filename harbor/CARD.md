@@ -79,7 +79,7 @@ Count tasks need a small Python image; Lean tasks build a 13 GB image and need a
 - The Lean grader is FineEnvs/openai-math's, adapted; the closed-form check was run on six sample
   constants and the whole verifier flow on four controls, natively and again in Docker with the
   sandbox, the unprivileged grader and its network block (a real proof scores 1; `sorry`, a changed
-  statement and a constant set by choice score 0). The container has not been attacked.
+  statement and a constant set by choice score 0). The container has not had a security review.
 - An outside reviewer rebuilt the four-pair baseline independently and checked 2,852 certificates
   at n = 32 to 1,024.
 
