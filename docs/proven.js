@@ -44,6 +44,15 @@
       label();
       try { localStorage.setItem("pf-theme", next); } catch { /* storage unavailable */ }
     });
+    // ⌘K or / opens the research page's search, as it does there.
+    const search = document.querySelector("a.kbar-open");
+    if (search) document.addEventListener("keydown", (event) => {
+      const typing = event.target instanceof Element && event.target.closest("input, textarea, [contenteditable]");
+      if (((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") || (event.key === "/" && !typing)) {
+        event.preventDefault();
+        location.href = search.href;
+      }
+    });
   }
 
   // Scroll reveals: one observer for every block that animates in.
