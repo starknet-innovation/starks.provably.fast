@@ -149,8 +149,19 @@ export default {
         // The query goes along: a thread's ?reply=, the listing's search, status and page (?q=, ?status=,
         // ?page=). Dropping it served page 1 of every thread to every search (23 November 2026).
         const query = url.pathname.endsWith("sitemap.xml") ? "" : url.search;
-        const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + query, { method: request.method, redirect: "manual", headers }));
-        return new Response(upstream.body, { status: upstream.status, headers: pick(upstream.headers, ["content-type", "cache-control", "location"]) });
+        const [upstream, app] = await Promise.all([
+          env.THREADS.fetch(new Request(PLATFORM + url.pathname + query, { method: request.method, redirect: "manual", headers })),
+          fetch(`${PLATFORM}/app`).then((r) => (r.ok ? r.text() : "")).catch(() => "")]);
+        const kept = pick(upstream.headers, ["content-type", "cache-control", "location"]);
+        if (!(kept.get("content-type") || "").startsWith("text/html") || request.method === "HEAD") return new Response(upstream.body, { status: upstream.status, headers: kept });
+        // The shared files a thread page links (v2.css, auth-nav.js...) take the version the research
+        // page names: a browser keeps them four hours, so an unversioned link showed a thread page
+        // with the stylesheet from before a change for that long.
+        const html = (await upstream.text()).replace(/(href|src)="\/([\w-]+\.(?:css|js))"/g, (whole, attr, file) => {
+          const named = app.match(new RegExp(`["/]${file.replace(/\./g, "\\.")}\\?v=(\\w+)"`));
+          return named ? `${attr}="/${file}?v=${named[1]}"` : whole;
+        });
+        return new Response(html, { status: upstream.status, headers: kept });
       };
       // A page of a long thread is a few platform reads, seconds to build, so this Worker keeps it:
       // the renderer, reached through a binding, kept nothing in its own cache (a second read of a
@@ -227,7 +238,8 @@ async function recordRows(env, threadId) {
     const record = await own.json();
     const rows = (Array.isArray(record.contributions) ? record.contributions : [])
       .filter((row) => row && row.thread === threadId && typeof row.id === "string")
-      .map((row) => ({ id: row.id, kind: row.kind, title: String(row.title || "").slice(0, 120), status: row.status, queue: row.queue || null }));
+      // A title goes one character past the renderer's 120, so it knows to cut it at a word, with an ellipsis.
+      .map((row) => ({ id: row.id, kind: row.kind, title: String(row.title || "").slice(0, 121), status: row.status, queue: row.queue || null }));
     const json = JSON.stringify(rows);
     return json.length > 8192 ? JSON.stringify(rows.slice(0, 8)) : json;
   } catch {
