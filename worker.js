@@ -146,7 +146,10 @@ export default {
       const render = async () => {
         const headers = { accept: "text/html", "x-pf-site": env.SITE_CAMPAIGN };
         if (thread) headers["x-pf-record"] = await recordRows(env, thread[1]);
-        const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + (thread ? url.search : ""), { method: request.method, redirect: "manual", headers }));
+        // The query goes along: a thread's ?reply=, the listing's search, status and page (?q=, ?status=,
+        // ?page=). Dropping it served page 1 of every thread to every search (23 November 2026).
+        const query = url.pathname.endsWith("sitemap.xml") ? "" : url.search;
+        const upstream = await env.THREADS.fetch(new Request(PLATFORM + url.pathname + query, { method: request.method, redirect: "manual", headers }));
         return new Response(upstream.body, { status: upstream.status, headers: pick(upstream.headers, ["content-type", "cache-control", "location"]) });
       };
       // A page of a long thread is a few platform reads, seconds to build, so this Worker keeps it:
@@ -367,6 +370,13 @@ async function workshop(request, env) {
   // One address per page for search engines: the shared board's page is its site's home.
   const canonical = `https://${host}${entry && !entry.topic ? "/" : "/workshop"}`;
   let html = (await upstream.text()).replace("<head>", `<head>\n    <meta name="pf-site" content="${esc(env.SITE_CAMPAIGN)}">\n    <link rel="canonical" href="${canonical}">`);
+  // The bar and the footer name this site before any script runs: renamed in the browser
+  // (v2.js, for a copy served elsewhere), the whole bar moved a moment after it painted.
+  const name = host.replace(/\.provably\.fast$/, "");
+  html = html.replace(/<a class="brand-site" data-site="[^"]*" href="[^"]*" aria-label="[^"]*">(<svg[^>]*>[\s\S]*?<\/svg>)[^<]*<\/a>/g,
+    (_, mark) => `<a class="brand-site" data-site="${esc(name)}" href="/" aria-label="${esc(host)} home">${mark}${esc(name)}</a>`)
+    .replace(/<a class="foot-mark" href="[^"]*" aria-label="[^"]*">(<svg[^>]*>[\s\S]*?<\/svg>)[^<]*<\/a>/g,
+      (_, mark) => `<a class="foot-mark" href="/" aria-label="${esc(host)} home">${mark}${esc(host)}</a>`);
   if (entry) {
     const set = (attribute, name, value) => {
       html = html.replace(new RegExp(`(<meta ${attribute}="${name}" content=")[^"]*(")`), `$1${esc(value)}$2`);
@@ -379,6 +389,8 @@ async function workshop(request, env) {
       return new Response(html, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-cache" } });
     }
     html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(entry.title)} · ${esc(host)}</title>`);
+    // The shared board's hero is not this page: it opens without it, as the script would leave it.
+    html = html.replace('<section class="route" id="route-home" data-route="home"', '<section class="route" id="route-home" data-route="home" hidden');
     set("name", "description", entry.note);
     set("property", "og:url", `https://${host}/workshop`);
     // The Season 1 report is the shared board's, so a topic site's bar leaves it out.

@@ -2102,6 +2102,7 @@
       const draw = (fn) => {
         try { fn(record); } catch (err) {
           console.error(err);
+          if (fn === renderRecord) $("record-queue")?.replaceChildren();
           $(roots.get(fn))?.replaceChildren(el("p", { class: "loading" }, "This part could not be read just now. ", el("a", { href: location.pathname + location.search }, "Try again"), "."));
         }
       };
@@ -2117,6 +2118,7 @@
       const version = $("foot-version");
       if (version && record.source) version.textContent = `Built from provably.fast ${record.source} · ArkLib ${record.lean.commit.slice(0, 8)}`;
     } catch {
+      $("record-queue")?.replaceChildren();
       for (const id of ["record-list", "crew", "cells-list"]) {
         const root = $(id);
         if (root) root.replaceChildren(el("p", { class: "loading" }, "The record could not be read just now. ", el("a", { href: location.pathname + location.search }, "Try again"), " or read ", el("a", { href: "/threads" }, "the threads"), "."));

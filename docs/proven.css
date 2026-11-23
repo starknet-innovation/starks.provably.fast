@@ -288,6 +288,10 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .prompt-status:empty { display: none; }
 
 /* The record: every contribution, newest first. */
+/* The review queue and the table fill a screen once read; the queue's place keeps that room while the
+   record is read, so nothing below shows and then jumps down the page (a layout shift of 0.57 on
+   every visit). */
+#record-queue:has(> .loading) { min-height: 100svh; }
 .record-list { margin: 0; padding: 4px; list-style: none; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); }
 .record-row { --tone: var(--accent); display: grid; grid-template-columns: 120px 40px minmax(0, 1fr) auto; align-items: center; gap: 4px 14px; padding: 12px 14px; }
 .record-row + .record-row { border-top: 1px solid var(--line); }
@@ -300,6 +304,7 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .record-kind { justify-self: start; padding: 2px 9px; border: 1px solid color-mix(in srgb, var(--tone) 55%, transparent); border-radius: 999px; color: var(--tone); font-size: 12px; font-weight: 600; white-space: nowrap; }
 .record-target { color: var(--ink-2); font-size: 13px; font-weight: 600; }
 .record-title { display: grid; gap: 2px; min-width: 0; color: var(--ink); font-size: 14.5px; }
+.record-title > * { min-width: 0; overflow-wrap: anywhere; }
 .record-title a { color: inherit; text-decoration-color: color-mix(in srgb, var(--ink) 30%, transparent); text-underline-offset: 2px; }
 .record-title small { color: var(--muted); font-size: 12.5px; }
 .record-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0 0 22px; padding: 0; list-style: none; }
@@ -406,7 +411,7 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .certmap-pace.is-slow { fill: var(--pace-slow); }
 .certmap-pace.is-one { fill: var(--bg-2); stroke: var(--ink-2); stroke-width: 1.4; }
 .certmap-pace.is-many { stroke: var(--ink-2); stroke-width: 1.4; }
-.certmap-many { fill: var(--ink); font: 650 9.5px var(--sans); font-variant-numeric: tabular-nums; pointer-events: none; paint-order: stroke; stroke: var(--bg-2); stroke-width: 3px; }
+.certmap-many { fill: var(--ink); font: 650 10px var(--sans); font-variant-numeric: tabular-nums; pointer-events: none; paint-order: stroke; stroke: var(--bg-2); stroke-width: 3px; }
 .certmap-pace.is-drift { stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 2 2; }
 .certmap-svg a:hover .certmap-pace, .certmap-svg a:focus-visible .certmap-pace { stroke: var(--ink); stroke-width: 2.5; }
 .certmap .is-z-open { --hue: var(--amber); }
@@ -486,14 +491,14 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .record-reviews .verdict { font-size: 11.5px; }
 .record-open { font-weight: 600; }
 @media (max-width: 700px) { .record-table th.is-id, .record-table td.is-id, .record-table th.is-reviews, .record-table td.is-reviews { display: none; } .record-table { min-width: 680px; } }
-.verdict.is-accepted { border-color: var(--record); background: color-mix(in srgb, var(--record) 12%, transparent); color: var(--record); }
+.verdict.is-accepted { border-color: var(--record); background: color-mix(in srgb, var(--record) 12%, transparent); color: color-mix(in srgb, var(--record) 80%, var(--ink)); }
 .verdict.is-reviewed { border-color: color-mix(in srgb, var(--record) 55%, transparent); color: var(--record); }
 .verdict.is-refuted { border-color: color-mix(in srgb, var(--coral) 55%, transparent); color: var(--coral); }
 .chip.is-claimed { border-color: color-mix(in srgb, var(--amber) 60%, transparent); color: var(--amber); }
 .chip.is-solved { border-color: var(--record); background: color-mix(in srgb, var(--record) 14%, transparent); color: var(--record); }
 .chip.is-refuted { border-color: color-mix(in srgb, var(--coral) 60%, transparent); color: var(--coral); }
 .chip.is-lean { border-color: color-mix(in srgb, var(--platform) 60%, transparent); color: var(--platform); }
-@media (max-width: 640px) { .record-row { grid-template-columns: auto auto minmax(0, 1fr); } .record-row .verdict { grid-column: 1 / -1; justify-self: start; } }
+@media (max-width: 640px) { .record-row { grid-template-columns: auto minmax(0, 1fr); } .record-row .verdict { grid-column: 1 / -1; justify-self: start; } }
 
 /* Reveal on scroll. */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform 1s var(--spring-soft); }
@@ -568,6 +573,8 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .tgt-card.is-t2 { --fam: var(--violet); }
 .tgt-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; margin: 0; }
 .tgt-top .kit-pill[hidden] { display: none; }
+/* A long pill (four teams by name) wraps inside the card instead of running off a phone's edge. */
+.tgt-top .kit-pill { max-width: 100%; white-space: normal; }
 .tgt-id { display: inline-flex; align-items: center; gap: 8px; color: var(--fam); font-size: 12.5px; font-weight: 600; }
 .tgt-id::before { content: ""; width: 8px; height: 8px; flex: none; border-radius: 50%; background: var(--fam); }
 .tgt-name { margin: 0; font: 600 21px/1.25 var(--display); letter-spacing: -.01em; text-wrap: balance; }
@@ -649,13 +656,13 @@ button.rec-who[aria-pressed="true"] { border-color: var(--accent); background: c
 .starks-built a:hover, .starks-built a:focus-visible { color: var(--ink); }
 .built-lean { display: inline-flex; align-items: flex-start; gap: 2px; }
 .built-lean svg { width: auto; height: 20px; fill: none; stroke: #386ee0; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-.built-lean sup { color: var(--muted); font-size: 9px; line-height: 1; }
+.built-lean sup { color: var(--muted); font-size: 10px; line-height: 1; }
 .built-name { font-size: 16px; font-weight: 700; letter-spacing: -.02em; }
 .built-name.is-harbor { font: 500 16px var(--code); letter-spacing: -.01em; }
 /* The professor at the board, wider than the kit's standing pets: a little taller, so the board reads. */
 .kit-art img.starks-professor { height: clamp(220px, 22vw, 320px); }
 @media (max-width: 900px) { .kit-art img.starks-professor { height: 210px; } }
-.starks-face.is-anon { display: inline-grid; place-items: center; color: var(--muted); font: 600 calc(var(--s, 32px) * .36) var(--sans); }
+.starks-face.is-anon { display: inline-grid; place-items: center; color: var(--muted); font: 600 max(10px, calc(var(--s, 32px) * .36)) var(--sans); }
 /* Bring your agent as on postquantum.provably.fast: the copy and its button beside the prompt in a terminal. */
 .starks-agent { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: center; gap: 24px clamp(32px, 5vw, 72px); }
 .starks-agent-copy { display: grid; gap: 10px; align-content: start; }
