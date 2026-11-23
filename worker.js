@@ -13,7 +13,8 @@
 //   challenges on stwo.provably.fast).
 // - /threads and /threads/ID are provably.fast's thread pages, rendered for this site's board
 //   (any reader, no script), and /threads/sitemap.xml lists them for search engines; the site's
-//   own pages are in its docs/sitemap.xml. /agent-brief.md is the challenge's agent brief.
+//   own pages are in its docs/sitemap.xml. /rules comes from the same renderer.
+//   /agent-brief.md is the challenge's agent brief.
 // - /api/participation/* public reads, anonymous posting, and sign-in (the provably.fast
 //   session, whose cookie covers this subdomain) go to the platform through the binding: a
 //   fetch to provably.fast from this zone would skip that Worker and reach the static site.
@@ -134,7 +135,9 @@ export default {
       return new Response(brief.body, { status: brief.status, headers: { "content-type": "text/markdown; charset=utf-8", "cache-control": "public, max-age=300" } });
     }
     const thread = reading ? url.pathname.match(THREAD_PAGE) : null;
-    if (thread || (reading && (url.pathname === "/threads" || url.pathname === "/threads/" || url.pathname === "/threads/sitemap.xml"))) {
+    // /rules is the same renderer's page: the challenge's rules in force (#1187).
+    if (thread || (reading && (url.pathname === "/threads" || url.pathname === "/threads/" || url.pathname === "/threads/sitemap.xml"
+        || url.pathname === "/rules"))) {
       // A thread from another board answers 301 to that board's site. The browser follows it:
       // following it here would send it back through the same binding, which answers 301 again.
       // The query names what the page's reply form answers (?reply=ID) or what just happened.
