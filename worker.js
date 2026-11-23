@@ -90,6 +90,33 @@ async function cached(request, ctx, ttl, build) {
   return put();
 }
 
+// The event log's pages (/api/participation/bulletin/events?since=C&limit=N), which every visit to
+// a research page reads by the dozen: a full page (N events after C) never changes, so it is kept a
+// day; the newest page, still filling, fifteen seconds. Without this a long board's page waited
+// 3 s for forty reads of 0.4 s each (starks.provably.fast, 23 November 2026).
+const EVENTS = "/api/participation/bulletin/events";
+async function cachedEvents(request, ctx, build) {
+  const store = typeof caches === "undefined" ? null : caches.default;
+  const url = new URL(request.url);
+  const limit = Number(url.searchParams.get("limit"));
+  if (!store || request.method !== "GET" || url.searchParams.has("tail") || !Number.isSafeInteger(limit) || limit < 1) return build();
+  const key = new Request(url.origin + url.pathname + url.search, { method: "GET" });
+  const hit = await store.match(key).catch(() => undefined);
+  if (hit && (hit.headers.get("x-page") === "full" || Date.now() - Number(hit.headers.get("x-built-at") || 0) < 15000)) return new Response(hit.body, hit);
+  const fresh = await build();
+  if (!fresh.ok) return fresh;
+  const text = await fresh.text();
+  let full = false;
+  try { const body = JSON.parse(text); full = Array.isArray(body.events) && body.events.length >= limit; } catch { /* kept briefly */ }
+  const headers = new Headers(fresh.headers);
+  headers.set("x-built-at", String(Date.now()));
+  headers.set("x-page", full ? "full" : "open");
+  headers.set("cache-control", full ? "public, max-age=86400" : "public, max-age=15");
+  const out = new Response(text, { status: fresh.status, headers });
+  if (ctx) ctx.waitUntil(store.put(key, out.clone()).catch(() => {}));
+  return out;
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -175,6 +202,9 @@ export default {
     }
     if (read && CACHED_READ.test(url.pathname) && !request.headers.has("authorization")) {
       return cached(request, ctx, 60, () => forward(request, env, url, headers, false));
+    }
+    if (read && url.pathname === EVENTS && !request.headers.has("authorization")) {
+      return cachedEvents(request, ctx, () => forward(request, env, url, headers, false));
     }
     return forward(request, env, url, headers, write);
   },

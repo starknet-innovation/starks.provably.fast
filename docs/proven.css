@@ -112,6 +112,12 @@ main:focus { outline: none; }
    below 1061px sign-in keeps its mark, and between 861 and 960px, where the sections still sit in
    the bar, the call to action steps out (the hero carries it). */
 @media (max-width: 1239px) { .bar .tg-link { gap: 0; width: 36px; padding: 0; justify-content: center; font-size: 0; } }
+/* Search, as on the research page (v2.css): here a link that opens it there (/workshop#/search). */
+.kbar-open { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 8px 0 12px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; color: var(--muted); font: 500 13px var(--sans); text-decoration: none; white-space: nowrap; }
+.kbar-open:hover { color: var(--ink); border-color: var(--muted); }
+.kbar-open svg { width: 15px; height: 15px; }
+.kbar-open kbd { padding: 2px 6px; border: 1px solid var(--line-2); border-radius: 6px; color: var(--muted); font: 500 11.5px var(--sans); }
+@media (max-width: 1320px) { .kbar-open span, .kbar-open kbd { display: none; } .kbar-open { width: 36px; padding: 0; justify-content: center; } }
 @media (max-width: 1060px) { .auth-label { display: none; } .auth-button { padding: 0 9px; } }
 @media (min-width: 861px) and (max-width: 960px) { .bar .cta { display: none; } }
 .cta {
