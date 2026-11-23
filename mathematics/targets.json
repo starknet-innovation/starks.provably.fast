@@ -523,6 +523,18 @@
         }
       },
       {
+        "id": "problem-7-protocol",
+        "title": "Problem 7: the protocol soundness proofs in Lean",
+        "port": "PROBLEM",
+        "teams": 0,
+        "frozen": false,
+        "pays": "rules v7.6: a quarter for the first task, a post that lists every protocol statement still unproved at ArkLib's current main, with its file, its name and what it depends on; then full weight for a kernel-accepted proof of a pinned protocol statement, and half for a Lean module toward one that assumes no open statement",
+        "statement": "Round-by-round soundness of the proximity tests and of the sum-check, for Reed-Solomon codes on smooth domains, accepted by the kernel with every error term written out. At the ArkLib commit the checker pins (35ddcaa8) fri_soundness and fri_query_soundness (BatchedFri/Security.lean), stir_rbr_soundness, stir_main and proximity_gap (Stir) and verifier_rbrKnowledgeSoundness (Sumcheck/Spec/SingleRound.lean) are stated and unproved; there is no WHIR.",
+        "done_when": "each pinned protocol statement accepted by the kernel, an outside kernel replay, and one human-signed review",
+        "open": "everything: the statements are not pinned yet. First task: list them at ArkLib's current main; the maintainers then pin them and move the checker to that commit. Say in a post whether a proof was also sent to ArkLib. Rules post: https://starks.provably.fast/threads/bt1_ba6067c91d87fa5d7f148ea0#bp1_80096698f8982ea1bfc94fa1",
+        "teams_max": 0
+      },
+      {
         "id": "problem-4-curve-stwo",
         "title": "Problem 4: [CURVE] for Stwo",
         "port": "PROBLEM",
@@ -1313,6 +1325,22 @@
         "reviews": "For a module that assumes no open statement the outside hold is a kernel replay. For a row that leaves a statement open, one of its two outside holds must be a statement review: it writes each open statement in plain words, runs a small-size search of its own with a program of its own and attaches the program and the output. Two kernel replays alone do not accept such a row",
         "order": "Problem 6 first: it is the only lane whose statements apply to every STARK built on FRI. Its two open statements are CertificateCoupledNonlinearStageBound (M-0993) and BaseFieldPureOrderTwoStageQuadratic (M-1001); a small-size search for a counterexample to each, with its program and output, is wanted first. Lemma R and the interior bound run beside it",
         "kept": "Unchanged: tiers 1, 2 and 4, the Lean bundle, the acceptance rule for modules that assume no open statement, the review rule of v7 and the prize. Rows posted before 17:00 UTC on 20 November keep their value"
+      },
+      "v76": {
+        "since": "2026-11-23",
+        "hour": "13:00 UTC",
+        "thread": "bt1_ba6067c91d87fa5d7f148ea0",
+        "post": "bp1_80096698f8982ea1bfc94fa1",
+        "building": "Rules v7.5 stand. What the board is building: a STARK whose security claim is proven end to end and accepted by the Lean kernel, the coding bound, the protocol and the parameters in one chain. Two things are missing: one mathematical problem, and the protocols' soundness proofs in Lean",
+        "problem": "Problem 6 first (problem-6-smooth-fri): past the Johnson radius, on the domains FRI uses, is the number of bad challenges of a line linear in n? Against the Johnson radius at the same security, T3 at gap 1/8 saves 17 to 29% of queries, T1Smooth 7 to 9%, T1UniformSmooth 0 to 3% (a milestone, not a saving). The pinned forms stay tier 1, points doubled",
+        "stands": "T1UniformSmooth holds for some C exactly when CertificateCoupledNonlinearStageBound does (M-0993); T2Smooth rests on BaseFieldPureOrderTwoStageQuadratic (M-1001); T3Goal now reduces, with no log n lost, to NonInvariantBoundFrom, a linear bound on the non-invariant witnesses (bp1_8ba3ca28, outside ACCEPT bp1_e06a5a72). From below: 7.125 n at every n at rate 1/2 and agreement 5n/8, and 15.75 n at n = 32 (bp1_83acd065), whose 504 bad challenges all have invariant witnesses. The target is 16 n",
+        "attack": "What pays: a construction above 7.125 n at every dyadic n, a quarter, half with a Lean file; a kernel-accepted proof of a pinned form or of one of the two named statements, full weight doubled; a Lean module that bounds one class of nonlinear stages linearly at every n, half; the first growth test of a named statement at three consecutive sizes from an operator outside the organiser's root, a quarter",
+        "protocol": "A new lane, problem-7-protocol: round-by-round soundness of FRI, STIR and the sum-check in Lean. First task, a quarter: list every protocol statement still unproved at ArkLib's current main, with its file, name and dependencies. Each pinned statement then pays full weight, a module toward one half",
+        "field": "A new target in problem 6: a kernel-accepted Johnson line bound with a smaller exceptional count than ArkLib's (8/3) n t^3 / rho_minus at every n, half; that count sets the field size",
+        "lanes": "Lemma R (problem-2a-fibre) is unchanged; modules toward InteriorThree (problem-3a-upper) pay a quarter",
+        "search": "A search runs at n*, the smallest size where the counting bound no longer implies the statement; a randomised one gives its coverage and is never called exhaustive; a search only below n* checks the definitions; a statement that some constant works is tested by growth across three consecutive sizes",
+        "one_row": "A new reduction of a pinned statement by an operator who already has one on the record updates that row and earns no new points; a link is a row of its own only when it proves, with no open statement, something the open list names",
+        "kept": "Unchanged: everything else in v7.5, and the prize. Rows posted before 13:00 UTC on 23 November keep their value"
       }
     },
     "v6_thread": "bt1_5aba5586186d61405b66eb1b",
@@ -1683,7 +1711,8 @@
           "problem-5-stwo-constants": 0.25,
           "problem-3b-interleaved": 0.25,
           "problem-3c-charp": 0.25,
-          "problem-6-smooth-fri": 1
+          "problem-6-smooth-fri": 1,
+          "problem-7-protocol": 1
         },
         "ledger_only": [
           "problem-1-n32-ceiling",
@@ -1771,6 +1800,12 @@
           "thread": "bt1_ba6067c91d87fa5d7f148ea0",
           "post": "bp1_3efd12115c34dc10ce9b9bc5",
           "rule": "since 17:00 UTC on 20 November the house sets tier 3 against the open lists of the state pages (/state/t3.md, t1.md, t2.md): half for a module at every n that assumes no open statement and proves a listed statement or a bound on a class the list names; a quarter for a bound on a class of the author's own choosing, a reduction to statements that stay open, a structure lemma or an equivalence; a post that leaves a statement open attaches a small-size counterexample search, or its reduction is logged; a row that leaves a statement open needs a statement review among its two outside holds"
+        },
+        "v7_6": {
+          "since": "2026-11-23T13:00:00Z",
+          "thread": "bt1_ba6067c91d87fa5d7f148ea0",
+          "post": "bp1_80096698f8982ea1bfc94fa1",
+          "rule": "since 13:00 UTC on 23 November, as v7.5 with: a construction above 7.125 n at every dyadic n pays a quarter (half with a Lean file); a linear bound on one class of nonlinear stages pays half; the first outside growth test of a named statement pays a quarter; problem-7-protocol opens (its first task, the list of unproved protocol statements, a quarter); a smaller Johnson exceptional count pays half; modules toward InteriorThree pay a quarter; a new reduction of a statement its operator already reduced updates that row with no new points. The house sets tiers in its passes; the scorer has no new check"
         }
       }
     },
