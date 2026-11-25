@@ -1521,7 +1521,10 @@
   function certifiedMap(instances, who) {
     const subs = instances.filter((i) => i && [i.n, i.k, i.A, i.certified, i.per_n, i.created_at].every(Number.isFinite) && i.certified > 0 && i.n > 0 && i.per_n > 0).sort((a, b) => a.created_at - b.created_at);
     if (!subs.length) return null;
-    const colOf = (i) => `${family(i.k, i.n)}|${family(i.A, i.n)}`;
+    // Each submission's setting is named once: the views below ask for it per setting and per dot,
+    // and naming it each time held starks.provably.fast's record page for 0.4 s (25 November 2026).
+    const named = new Map();
+    const colOf = (i) => { if (!named.has(i)) named.set(i, `${family(i.k, i.n)}|${family(i.A, i.n)}`); return named.get(i); };
     // A rate a few points off a simple fraction takes that fraction's colour.
     const hue = (c) => RATE_HUES[c.split("|")[0].split(/[+−]/)[0]] || "other";
     const cols = [...new Map(subs.map((i) => [colOf(i), i])).entries()]
